@@ -1,0 +1,26 @@
+<?php
+/*
+|--------------------------------------------------------------------------
+| Application Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register all of the routes for an application.
+| It's a breeze. Simply tell Laravel the URIs it should respond to
+| and give it the Closure to execute when that URI is requested.
+|
+*/
+
+Route::get('signup', 'registroController@index');
+Route::get('signup/requisitos/{id}', 'registroController@productos');
+
+Route::group(array('before' => array('auth', 'cancerbero', 'menu')), function() {
+	Route::get('/', array('as'=>'index.index', 'uses'=>'homeController@index'));
+
+	//=== CATALOGOS
+	Route::resource('catalogos/productos', 'productosController');
+	Route::resource('catalogos/requerimientos', 'requerimientosController');
+	Route::resource('catalogos/tratados', 'tratadosController');
+	Route::resource('catalogos/periodos', 'periodosController');
+	Route::resource('catalogos/movimientos', 'movimientosController');
+
+});

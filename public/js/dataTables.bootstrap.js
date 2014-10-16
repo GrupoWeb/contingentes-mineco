@@ -1,0 +1,1 @@
+/var/www/html/CORE/js/dataTables.bootstrap.js
