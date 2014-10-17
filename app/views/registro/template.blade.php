@@ -24,7 +24,7 @@
   </head>
   <body>
     <?php
-      $params = array('id'=>'frmLogin','class'=>'form-horizontal');
+      $params = array('id'=>'frmLogin','class'=>'form-horizontal', 'files'=>true);
       if ($route) $params['route'] = $route;
     ?>
     {{Form::open($params) }}
@@ -40,13 +40,23 @@
               <div class="form-group">
                 <label for="txNombre" class="col-sm-4 control-label">Nombre</label>
                 <div class="col-sm-8">
-                  {{ Form::text('txNombre', '', array('class'=>'form-control')) }}
+                  {{ Form::text('txNombre', '', array('class'=>'form-control', 
+                    'data-bv-notEmpty'=>'true',
+                    'data-bv-notEmpty-message' => 'El nombre es requerido',
+                    'autocomplete' => 'off'
+                    )) }}
                 </div>
               </div>
               <div class="form-group">
-                <label for="txPassword" class="col-sm-4 control-label">Password</label>
+                <label for="email" class="col-sm-4 control-label">Email</label>
                 <div class="col-sm-8">
-                  {{ Form::password('txPassword', array('class'=>'form-control')) }}
+                  {{ Form::text('email', '', array('class'=>'form-control',
+                    'data-bv-emailaddress' => 'true',
+                    'data-bv-emailaddress-message' => 'Email con formato incorrecto',
+                    'data-bv-remote' => 'true',
+                    'data-bv-remote-url' => '/signup/checkEmail',
+                    'data-bv-remote-message' => 'Email ya existe en la base de datos'
+                  )) }}
                 </div>
               </div>
               <div class="form-group">
@@ -63,15 +73,28 @@
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="txNombre" class="col-sm-4 control-label">Email</label>
+                <label for="txPassword" class="col-sm-4 control-label">Contrase&ntilde;a</label>
                 <div class="col-sm-8">
-                  {{ Form::text('txNombre', '', array('class'=>'form-control')) }}
+                  {{ Form::password('txPassword', array('class'=>'form-control', 'placeholder' => 'M&iacute;nimo 6 caracteres',
+                    'data-bv-notempty'             => 'true',
+                    'data-bv-notempty-message'     => 'Contrase&ntilde;a es requerida',
+                    'data-bv-stringlength'         => 'true',
+                    'data-bv-stringlength-min'     => '6',
+                    'data-bv-stringlength-message' => 'La contrase&ntilde;a debe tener al menos 6 caracteres.'
+                  )) }}
                 </div>
               </div>
               <div class="form-group">
-                <label for="txPasswordrepeat" class="col-sm-4 control-label">Repetir Password</label>
+                <label for="txPasswordrepeat" class="col-sm-4 control-label">&nbsp;</label>
                 <div class="col-sm-8">
-                  {{ Form::password('txPasswordrepeat', array('class'=>'form-control')) }}
+                  {{ Form::password('txPasswordrepeat', array('class'=>'form-control', 
+                    'placeholder'               => 'Repetir contrase&ntilde;a',
+                    'data-bv-notempty'          => 'true', 
+                    'data-bv-notempty-message'  => 'Contrase&ntilde;a es un campo requerido',
+                    'data-bv-identical'         => "true",
+                    'data-bv-identical-field'   => "txPassword",
+                    'data-bv-identical-message' => "Las contrase&ntilde;as no concuerdan"
+                  )) }}
                 </div>
               </div>
             </div>
@@ -101,6 +124,8 @@
         $("#cmbProductos").change(function() {
           $.get('/signup/requisitos/' + $(this).val(), function(data){
             $('#especificos').html(data);
+            //Esto no sirve
+            $('#frmLogin').bootstrapValidator('revalidateField', 'file1');
           });
         });
 
@@ -113,10 +138,7 @@
         });
 
         $('.selectpicker').selectpicker();
-
         $("#cmbProductos").change();
-
-        //$('.documento').on("change", function(){ alert('menene') });
       });
     </script>
   </body>

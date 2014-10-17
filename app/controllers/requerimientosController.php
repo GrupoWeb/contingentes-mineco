@@ -15,7 +15,7 @@ class requerimientosController extends BaseController {
 		$this->crud->setCampo(array('nombre'=>'Nombre','campo'=>'nombre','reglas' => array('notEmpty'), 'reglasmensaje'=>'El nombre es requerido', 'tipo'=>'string'));
 		$this->crud->setCampo(array('nombre'=>'Activo','campo'=>'activo','tipo'=>'bool'));
 		
-		$this->crud->setPermisos($this->cancerbero->tienePermisosCrud('usuarios'));
+		$this->crud->setPermisos($this->cancerbero->tienePermisosCrud('catalogos.requerimientos'));
 	}
 
 	public function index() {

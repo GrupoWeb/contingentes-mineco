@@ -8,7 +8,7 @@ class periodosController extends BaseController {
 		$this->crud       = new Crud;
 
 		$this->crud->setExport(false);
-		$this->crud->setTitulo('Periodos');
+		$this->crud->setTitulo('Per&iacute;odos');
 		$this->crud->setTabla('periodos');
 		$this->crud->setTablaId('periodoid');
 
@@ -23,7 +23,7 @@ class periodosController extends BaseController {
 
 		$this->crud->setCampo(array('nombre'=>'Tipo','campo'=>'periodos.tipo','tipo'=>'enum','enumarray'=>array('Exportación'=>'Exportación','Importación'=>'Importación')));
 		
-		$this->crud->setPermisos($this->cancerbero->tienePermisosCrud('usuarios'));
+		$this->crud->setPermisos($this->cancerbero->tienePermisosCrud('catalogos.periodos'));
 	}
 
 	public function index() {

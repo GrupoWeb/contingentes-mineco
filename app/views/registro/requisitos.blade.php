@@ -2,7 +2,13 @@
 	@foreach($requisitos as $requisito)
 		<li class="list-group-item">
 	    <span class="text-left">{{ $requisito->nombre }}</span><br />
-	    {{ Form::file('file'.$requisito->priid, array('class'=>'documento','id'=>'file'.$requisito->priid)); }}
+	    {{ Form::file('file'.$requisito->priid, array(
+					'class'                => 'documento',
+					'id'                   => 'file'.$requisito->priid,
+					'data-bv-notempty'     => 'true',
+					'data-bv-file'         => 'true',
+					'data-bv-file-message' => 'El archivo es requerido'
+	    	)); }}
 	  </li>
 	@endforeach
 </ul>
