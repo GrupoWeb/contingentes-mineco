@@ -6,7 +6,7 @@ class Productorequerimiento extends Eloquent {
 
 	public static function getRequerimientos($aProducto){
 		return DB::table('productorequerimientos AS pr')
-			->select('priid', 'nombre')
+			->select('priid', 'nombre','pr.requerimientoid As requerimientoid')
 			->leftJoin('requerimientos AS r', 'pr.requerimientoid', '=', 'r.requerimientoid')
 			->where('productoid', $aProducto)
 			->orderBy('priid')

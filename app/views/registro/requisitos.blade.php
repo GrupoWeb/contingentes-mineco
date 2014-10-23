@@ -1,17 +1,17 @@
 <ul class="list-group">
 	@foreach($requisitos as $requisito)
-		<li class="list-group-item" id="li{{$requisito->priid}}">
+		<li class="list-group-item" id="li{{$requisito->requerimientoid}}">
 	    <span class="text-left">{{ $requisito->nombre }}</span><br />
-	    {{ Form::file('file'.$requisito->priid, array(
+	    {{ Form::file('file'.$requisito->requerimientoid, array(
 					'class'                => 'documento',
-					'id'                   => 'file'.$requisito->priid,
+					'id'                   => 'file'.$requisito->requerimientoid,
 					'data-bv-notempty'     => 'true',
 					'data-bv-file'         => 'true',
 					'data-bv-file-message' => 'El archivo es requerido'
 	    	)); }}
 	  </li>
 	  <script>
-	  	files.push('{{$requisito->priid}}');
+	  	files.push('{{$requisito->requerimientoid}}');
 	  </script>
 	@endforeach
 </ul>
