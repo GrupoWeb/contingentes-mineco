@@ -23,8 +23,8 @@ class CreateAuthusuariosTable extends Migration {
 			$table->boolean('cambiopassword')->default(1);
 			$table->boolean('notificar')->default(0);
 			$table->string('remember_token')->nullable();
-			$table->string('twostepsecret');
-			$table->string('facebookid');
+			$table->string('twostepsecret')->nullable();
+			$table->string('facebookid')->nullable();
 			$table->timestamps();
 			$table->softDeletes();
 		});
