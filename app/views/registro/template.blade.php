@@ -111,21 +111,28 @@
         </div>
         <div class="panel-footer">
           <div class="row">
+            <div class="col-xs-4 pull-left">
+              <div id="mensajes"></div>
+            </div>
             <div class="col-xs-4 pull-right">
-              <button type="submit" class="btn btn-large btn-success pull-right">{{Config::get('login::botonsignup')}}</button>
+              <input id="submit" type="submit" class="btn btn-large btn-success pull-right" value="{{Config::get('login::botonsignup')}}">
             </div>
           </div>
         </div>
     </div>
     {{Form::close()}}
     <script>
+      var files = [];
       $(document).ready(function(){
 
         $("#cmbProductos").change(function() {
           $.get('/signup/requisitos/' + $(this).val(), function(data){
             $('#especificos').html(data);
             //Esto no sirve
-            $('#frmLogin').bootstrapValidator('revalidateField', 'file1');
+            // var file1 = document.getElementById('file1');
+            // console.log(file1);
+           // $('#frmLogin').bootstrapValidator('revalidateField', 'file1');
+           //$('#frmLogin').bootstrapValidator('updateStatus', $('#file1'), 'NOT_VALIDATED').bootstrapValidator('validateField', $('#file1'));
           });
         });
 
