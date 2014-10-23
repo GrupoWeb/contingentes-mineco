@@ -52,8 +52,6 @@ class signupController extends BaseController {
 	}
 
 	public function store() {
-    //dd(Input::all());
-   
     $usuario = DB::table('authusuarios');
     $arr = array(
       'email'      => Input::get('email'),
