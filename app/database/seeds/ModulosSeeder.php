@@ -67,6 +67,14 @@
 				'descripcion'    => 'Catálogo de movimientos',
 				'created_at'     => date_create(), 'updated_at' => date_create()
 			));
+
+			DB::table('authmodulos')->insert(array(
+				'moduloid'       => 9,
+				'nombre'         => 'catalogos.solicitudespendientes',
+				'nombrefriendly' => 'Catálogo de Solicitudes Pendientes',
+				'descripcion'    => 'Catálogo de solicitudes pendientes de aprobación',
+				'created_at'     => date_create(), 'updated_at' => date_create()
+			));
 		  		DB::statement('SET FOREIGN_KEY_CHECKS=1');
 		}
 	}

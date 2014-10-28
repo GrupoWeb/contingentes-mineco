@@ -10,6 +10,7 @@
     {{ HTML::script('js/jquery.min.js'); }}
     {{ HTML::script('js/bootstrap.min.js'); }}
     {{ HTML::script('js/bootstrap-select.min.js'); }}
+    {{ HTML::style('css/bootstrapValidator.min.css'); }}
     {{ HTML::script('js/bootstrapValidator.min.js') }}
     <style>
       body { margin: 5px; }
@@ -24,7 +25,7 @@
   </head>
   <body>
     <?php
-      $params = array('id'=>'frmLogin','class'=>'form-horizontal', 'files'=>true);
+      $params = array('id'=>'frmRegistro','class'=>'form-horizontal', 'files'=>true);
       if ($route) $params['route'] = $route;
     ?>
     {{Form::open($params) }}
@@ -115,7 +116,7 @@
               <div id="mensajes"></div>
             </div>
             <div class="col-xs-4 pull-right">
-              <input id="submit" type="submit" class="btn btn-large btn-success pull-right" value="{{Config::get('login::botonsignup')}}">
+              <input id="submit2" type="submit" class="btn btn-large btn-success pull-right" value="{{Config::get('login::botonsignup')}}">
             </div>
           </div>
         </div>
@@ -133,10 +134,12 @@
             // console.log(file1);
            // $('#frmLogin').bootstrapValidator('revalidateField', 'file1');
            //$('#frmLogin').bootstrapValidator('updateStatus', $('#file1'), 'NOT_VALIDATED').bootstrapValidator('validateField', $('#file1'));
+          }).done(function(){
+
           });
         });
 
-        $('#frmLogin').bootstrapValidator({
+        $('#frmRegistro').bootstrapValidator({
           feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
             invalid: 'glyphicon glyphicon-remove',
@@ -145,7 +148,7 @@
         });
 
         $('.selectpicker').selectpicker();
-        $("#cmbProductos").change();
+       $("#cmbProductos").change();
       });
     </script>
   </body>

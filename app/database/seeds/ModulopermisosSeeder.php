@@ -353,7 +353,70 @@
 				'permisoid' 			=> 1,
 				'created_at'     	=> date_create(), 'updated_at' => date_create()
 			));
-		  		DB::statement('SET FOREIGN_KEY_CHECKS=1');
+
+			DB::table('authmodulopermisos')->insert(array(
+				'modulopermisoid'	=> 51,
+				'moduloid'        => 9,
+				'permisoid' 			=> 1,
+				'created_at'     	=> date_create(), 'updated_at' => date_create()
+			));
+
+			DB::table('authmodulopermisos')->insert(array(
+				'modulopermisoid'	=> 52,
+				'moduloid'        => 9,
+				'permisoid' 			=> 2,
+				'created_at'     	=> date_create(), 'updated_at' => date_create()
+			));
+
+			DB::table('authmodulopermisos')->insert(array(
+				'modulopermisoid'	=> 53,
+				'moduloid'        => 9,
+				'permisoid' 			=> 3,
+				'created_at'     	=> date_create(), 'updated_at' => date_create()
+			));
+
+			DB::table('authmodulopermisos')->insert(array(
+				'modulopermisoid'	=> 54,
+				'moduloid'        => 9,
+				'permisoid' 			=> 4,
+				'created_at'     	=> date_create(), 'updated_at' => date_create()
+			));
+
+			DB::table('authmodulopermisos')->insert(array(
+				'modulopermisoid'	=> 55,
+				'moduloid'        => 9,
+				'permisoid' 			=> 5,
+				'created_at'     	=> date_create(), 'updated_at' => date_create()
+			));
+
+			DB::table('authmodulopermisos')->insert(array(
+				'modulopermisoid'	=> 56,
+				'moduloid'        => 9,
+				'permisoid' 			=> 6,
+				'created_at'     	=> date_create(), 'updated_at' => date_create()
+			));
+
+			DB::table('authmodulopermisos')->insert(array(
+				'modulopermisoid'	=> 57,
+				'moduloid'        => 9,
+				'permisoid' 			=> 7,
+				'created_at'     	=> date_create(), 'updated_at' => date_create()
+			));
+
+			DB::table('authmodulopermisos')->insert(array(
+				'modulopermisoid'	=> 58,
+				'moduloid'        => 9,
+				'permisoid' 			=> 8,
+				'created_at'     	=> date_create(), 'updated_at' => date_create()
+			));
+			DB::table('authmodulopermisos')->insert(array(
+				'modulopermisoid'	=> 59,
+				'moduloid'        => 9,
+				'permisoid' 			=> 9,
+				'created_at'     	=> date_create(), 'updated_at' => date_create()
+			));
+		  
+		  DB::statement('SET FOREIGN_KEY_CHECKS=1');
 		}
 	}
 //Termina ModuloPermisosSeeder.php
