@@ -27,13 +27,13 @@
 		  <div class="panel-heading">
 		    <h2>Inscripciones pendientes</h2>
 		    <ul class="pager">
-				  <li><a href="../catalogos/solicitudespendientes">Revisar solicitudes</a></li>
+				  <li><a href="/catalogos/solicitudespendientes">Revisar solicitudes</a></li>
 				</ul>
 		  </div>
 		  <div class="panel-body">
 				<div class="row">
 		  		@foreach ($solicitudes as $solicitud)
-						<div class="col-md-4">
+						<div class="col-md-6">
 							<a href="../catalogos/solicitudespendientes/datossolicitud/{{Crypt::encrypt($solicitud->usuarioid)}}" style="text-decoration:none;">
 								<div class="bs-callout bs-callout-danger">
 										<dl class="dl-horizontal">

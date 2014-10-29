@@ -9,6 +9,6 @@ class registroController extends BaseController {
 	}
 
 	public function productos($id) {
-		return Response::json(Productorequerimiento::getRequerimientos(Crypt::decrypt($id)));
+		return Response::json(Productorequerimiento::getRequerimientos(Crypt::decrypt($id), 'Inscripción'));
 	}
 }
