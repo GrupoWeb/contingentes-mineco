@@ -61,21 +61,23 @@ class solicitudesPendientesController extends BaseController {
 	public function autorizar($id){
 		if(Input::get('act')==1)
 		{
-			$usuario = Solicitudpendiente::find(Crypt::decrypt($id));
-			$nombre  = $usuario->nombre;
-			$email   = $usuario->email;
+			$usuario         = Solicitudpendiente::find(Crypt::decrypt($id));
 			$usuario->activo = 1;
-			$result = $usuario->save();
-			if($result)
-			{
+			$result          = $usuario->save();
+
+			$email   = $usuario->email;
+
+			if($result) {
 				Session::flash('type','success');
 				Session::flash('message','Se autorizó el usuario con éxito');
 
 				Mail::send('emails/autorizacion', array(
-					'nombre' => $nombre), function($msg) use ($email){
-		       			$msg->to($email)->subject('Solicitud de inscripción autorizada');
+					'nombre'        => $usuario->nombre,
+					'fecha'         => $usuario->created_at,
+					'estado'        => 'Aprobada',
+					'observaciones' => Input::get('txObservaciones')), function($msg) use ($email){
+		       			$msg->to($email)->subject('Solicitud de Inscripción DACE - MINECO');
 				});
-
 			}
 			else
 			{
@@ -95,9 +97,12 @@ class solicitudesPendientesController extends BaseController {
 				Session::flash('type','success');
 				Session::flash('message','Se rechazó la solicitud con éxito');
 
-				Mail::send('emails/rechazo', array(
-					'nombre' => $nombre, 'observaciones'=>Input::get('txObservaciones')), function($msg) use ($email){
-		       			$msg->to($email)->subject('Solicitud de inscripción rechazada');
+				Mail::send('emails/autorizacion', array(
+					'nombre'        => $usuario->nombre,
+					'fecha'         => $usuario->created_at,
+					'estado'        => 'Rechazada',
+					'observaciones' => Input::get('txObservaciones')), function($msg) use ($email){
+		       			$msg->to($email)->subject('Solicitud de Inscripción DACE - MINECO');
 				});
 
 			}

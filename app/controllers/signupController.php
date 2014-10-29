@@ -54,8 +54,6 @@ class signupController extends BaseController {
 	}
 
 	public function store() {
-        //dd(Input::file());
-
     $usuario = DB::table('authusuarios');
    
     $arr = array(
