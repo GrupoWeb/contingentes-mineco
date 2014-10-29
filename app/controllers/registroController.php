@@ -9,7 +9,6 @@ class registroController extends BaseController {
 	}
 
 	public function productos($id) {
-		return View::make('registro/requisitos')
-			->with('requisitos', Productorequerimiento::getRequerimientos(Crypt::decrypt($id)));
+		return Response::json(Productorequerimiento::getRequerimientos(Crypt::decrypt($id)));
 	}
 }
