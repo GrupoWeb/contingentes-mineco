@@ -15,6 +15,7 @@ class productosController extends BaseController {
 		$this->crud->setCampo(array('nombre'=>'Nombre','campo'=>'nombre','reglas' => array('notEmpty'), 'reglasmensaje'=>'El nombre es requerido', 'tipo'=>'string'));
 		$this->crud->setCampo(array('nombre'=>'Activo','campo'=>'activo','tipo'=>'bool'));
 		
+		$this->crud->setBotonExtra(array('url'=>'productorequerimiento', 'titulo'=>'Requerimientos de Producto', 'icon'=>'glyphicon glyphicon-ok', 'class'=>'warning'));
 		$this->crud->setPermisos($this->cancerbero->tienePermisosCrud('catalogos.productos'));
 	}
 
