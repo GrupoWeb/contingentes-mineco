@@ -10,6 +10,15 @@
 |
 */
 
+Route::get('correo', function(){
+	return View::make('emails/autorizacion')
+		->with('nombre', 'Erick Marroquin')
+		->with('fecha', '10/10/14 13:30')
+		->with('estado', 'Aprobada')
+		->with('observaciones', 'Aprobada sin problemas');
+});
+
+
 Route::get('signup', 'registroController@index');
 Route::get('signup/requisitos/{id}', 'registroController@productos');
 
