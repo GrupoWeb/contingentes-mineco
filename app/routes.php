@@ -22,5 +22,6 @@ Route::group(array('before' => array('auth', 'cancerbero', 'menu')), function() 
 	Route::resource('catalogos/tratados', 'tratadosController');
 	Route::resource('catalogos/periodos', 'periodosController');
 	Route::resource('catalogos/movimientos', 'movimientosController');
-
+	//=== CERTIFICADOS
+	Route::get('certificados/generarpdf','certificadosController@generarPDF');
 });
