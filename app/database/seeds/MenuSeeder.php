@@ -63,6 +63,16 @@
 				'icono'         	=> null,
 				'created_at'     	=> date_create(), 'updated_at' => date_create()
 			));
+
+			DB::table('authmenu')->insert(array(
+				'menuid'					=> 7,
+				'padreid'        	=> 2,
+				'modulopermisoid' => 51,
+				'nombre'         	=> 'Solicitudes Pendientes',
+				'orden' 					=> 500,
+				'icono'         	=> null,
+				'created_at'     	=> date_create(), 'updated_at' => date_create()
+			));
 		  		DB::statement('SET FOREIGN_KEY_CHECKS=1');
 		}
 	}

@@ -22,5 +22,9 @@ Route::group(array('before' => array('auth', 'cancerbero', 'menu')), function() 
 	Route::resource('catalogos/tratados', 'tratadosController');
 	Route::resource('catalogos/periodos', 'periodosController');
 	Route::resource('catalogos/movimientos', 'movimientosController');
+	Route::resource('catalogos/solicitudespendientes', 'solicitudesPendientesController');
+
+	Route::get('catalogos/solicitudespendientes/datossolicitud/{id}', array('as'=>'catalogos.solicitudespendientes.datossolicitud', 'uses'=>'solicitudesPendientesController@datosSolicitud'));
+	Route::post('catalogos/solicitudespendientes/autorizar/{id}', array('as'=>'catalogos.solicitudespendientes.autorizar', 'uses'=>'solicitudesPendientesController@autorizar'));
 
 });

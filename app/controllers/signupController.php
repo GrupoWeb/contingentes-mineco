@@ -78,7 +78,7 @@ class signupController extends BaseController {
       if ($key=='txArchivo') continue;
     	if ($val) {
 				$arch   = Input::file($key);
-				$nombre = date('YmdHis') . '.' . $arch->getClientOriginalExtension();
+				$nombre = date('YmdHis').$arch->getClientOriginalName(). '.' . $arch->getClientOriginalExtension();
 				$res    = $arch->move(public_path() . '/archivos/' . $usuarioId, $nombre);
 				DB::table('usuariorequerimientos')->insert(array(
 					'usuarioid'=>$usuarioId,

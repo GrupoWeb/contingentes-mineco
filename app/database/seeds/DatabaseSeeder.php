@@ -7,6 +7,5 @@ class DatabaseSeeder extends Seeder {
 		$this->call('PermisosSeeder');
 		$this->call('ModulopermisosSeeder');
 		$this->call('MenuSeeder');
-		$this->call('UsuarioSeeder');
 	}
 }
