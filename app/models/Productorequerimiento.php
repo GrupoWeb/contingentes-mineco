@@ -12,4 +12,36 @@ class Productorequerimiento extends Eloquent {
 			->orderBy('priid')
 			->get();
 	}
+
+	public static function getProductoRequerimientos() {
+		return DB::table('productorequerimientos')
+			->select('*')
+			->orderBy('priid')
+			->get();
+	}
+
+	public static function getRequerimientosAsignados($id){
+		return DB::table('productorequerimientos')
+			->select('*')
+			->where('productoid','=',$id)
+			->where('tipo','=' , 'Asignación')
+			->get();
+	}
+
+	public static function getRequerimientosEmision($id){
+		return DB::table('productorequerimientos')
+			->select('*')
+			->where('productoid','=',$id)
+			->where('tipo','=' , 'Emisión')
+			->get();
+	}
+
+		public static function getRequerimientosInscripcion($id){
+		return DB::table('productorequerimientos')
+			->select('*')
+			->where('productoid','=',$id)
+			->where('tipo','=' , 'Inscripción')
+			->get();
+	}
+
 }

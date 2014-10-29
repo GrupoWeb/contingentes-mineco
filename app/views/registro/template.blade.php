@@ -138,6 +138,8 @@
       $(document).ready(function(){
 
         $("#cmbProductos").change(function() {
+          $('.nuevos').remove();
+
           $.get('/signup/requisitos/' + $(this).val(), function(data){
 
             $.each(data, function(key, datos){
@@ -145,7 +147,7 @@
 
               $('#fileSeed .control-label').html(datos.nombre);
               
-              var $clone    = $template.clone().removeClass('hide').removeAttr('id').insertAfter($template);
+              var $clone    = $template.clone().removeClass('hide').removeAttr('id').addClass('nuevos').insertAfter($template);
               var $option   = $clone.find('[name="txArchivo[]"]');
 
               
@@ -154,8 +156,6 @@
 
               $('#frmRegistro').bootstrapValidator('addField', $option);
             });
-
-
             
           });
         });
