@@ -12,7 +12,7 @@
 		"csgt/cancerbero": "dev-master",
 		"csgt/crud": "dev-master",
 		"csgt/components": "dev-master",
-		 "xethron/migrations-generator": "dev-master"
+		"maxxscho/laravel-tcpdf": "0.*"
 	},
 	"autoload": {
 		"classmap": [
@@ -20,8 +20,7 @@
 			"app/controllers",
 			"app/models",
 			"app/database/migrations",
-			"app/database/seeds",
-			"app/tests/TestCase.php"
+			"app/database/seeds"
 		]
 	},
 	"scripts": {

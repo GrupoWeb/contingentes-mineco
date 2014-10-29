@@ -126,8 +126,7 @@ return array(
 		'Csgt\Cancerbero\CancerberoServiceProvider',
 		'Csgt\Crud\CrudServiceProvider',
 		'Csgt\Components\ComponentsServiceProvider',
-		'Way\Generators\GeneratorsServiceProvider',
-		'Xethron\MigrationsGenerator\MigrationsGeneratorServiceProvider',
+		'Maxxscho\LaravelTcpdf\LaravelTcpdfServiceProvider',
 	),
 
 	/*

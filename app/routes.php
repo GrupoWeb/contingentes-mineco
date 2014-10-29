@@ -24,16 +24,20 @@ Route::get('signup/requisitos/{id}', 'registroController@productos');
 
 Route::group(array('before' => array('auth', 'cancerbero', 'menu')), function() {
 	Route::get('/', array('as'=>'index.index', 'uses'=>'homeController@index'));
-
 	//=== CATALOGOS
 	Route::resource('catalogos/productos', 'productosController');
 	Route::resource('catalogos/requerimientos', 'requerimientosController');
 	Route::resource('catalogos/tratados', 'tratadosController');
 	Route::resource('catalogos/periodos', 'periodosController');
 	Route::resource('catalogos/movimientos', 'movimientosController');
-	Route::resource('catalogos/solicitudespendientes', 'solicitudesPendientesController');
+	Route::get('catalogos/productorequerimiento/{id}', array('as'=>'catalogos.productorequerimiento.index', 'uses'=>'productorequerimientosController@index'));
+	Route::post('catalogos/productorequerimiento/crear', array('as'=>'catalogos.productorequerimiento.store', 'uses'=>'productorequerimientosController@store'));	
 
+	//=== CERTIFICADOS
+	Route::get('certificados/generar',array('as'=>'certificados.generar','uses'=>'certificadosController@generarPDF'));
+	//=== SOLICITUDES 
+	Route::resource('catalogos/solicitudespendientes', 'solicitudesPendientesController');
+	Route::get('solicitudespendientes/inscripciones', array('as'=>'solicitudespendientes.inscripciones', 'uses'=>'solicitudesPendientesController@inscripcionesPendientes'));
 	Route::get('catalogos/solicitudespendientes/datossolicitud/{id}', array('as'=>'catalogos.solicitudespendientes.datossolicitud', 'uses'=>'solicitudesPendientesController@datosSolicitud'));
 	Route::post('catalogos/solicitudespendientes/autorizar/{id}', array('as'=>'catalogos.solicitudespendientes.autorizar', 'uses'=>'solicitudesPendientesController@autorizar'));
-
 });

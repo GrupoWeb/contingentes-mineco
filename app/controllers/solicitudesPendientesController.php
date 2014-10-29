@@ -51,6 +51,11 @@ class solicitudesPendientesController extends BaseController {
 		return $this->crud->destroy($id);
 	}
 
+	public function inscripcionesPendientes() {
+		$solicitudesInscripcion = Solicitudpendiente::getSolicitudesPendientes();
+		return View::make('solicitudespendientes/inscripciones')->with('solicitudes', $solicitudesInscripcion);
+	}
+
 	public function datosSolicitud($id){
 		$solicitud = Solicitudpendiente::getSolicitudPendiente(Crypt::decrypt($id));
 		$requerimientos = Usuariorequerimiento::getUsuarioRequerimientos(Crypt::decrypt($id));

@@ -409,10 +409,25 @@
 				'permisoid' 			=> 8,
 				'created_at'     	=> date_create(), 'updated_at' => date_create()
 			));
+
 			DB::table('authmodulopermisos')->insert(array(
 				'modulopermisoid'	=> 59,
 				'moduloid'        => 9,
 				'permisoid' 			=> 9,
+				'created_at'     	=> date_create(), 'updated_at' => date_create()
+			));
+
+			DB::table('authmodulopermisos')->insert(array(
+				'modulopermisoid'	=> 60,
+				'moduloid'        => 10,
+				'permisoid' 			=> 10,
+				'created_at'     	=> date_create(), 'updated_at' => date_create()
+			));
+
+			DB::table('authmodulopermisos')->insert(array(
+				'modulopermisoid'	=> 61,
+				'moduloid'        => 11,
+				'permisoid' 			=> 11,
 				'created_at'     	=> date_create(), 'updated_at' => date_create()
 			));
 		  

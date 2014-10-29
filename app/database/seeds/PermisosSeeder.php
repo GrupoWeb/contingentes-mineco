@@ -66,7 +66,22 @@
 				'nombrefriendly' => 'Autorizar solicitud',
 				'created_at'     => date_create(), 'updated_at' => date_create()
 			));
+
+			DB::table('authpermisos')->insert(array(
+				'permisoid'       => 10,
+				'nombre'         => 'inscripciones',
+				'nombrefriendly' => 'Ver Inscripciones pendientes',
+				'created_at'     => date_create(), 'updated_at' => date_create()
+			));
 		  
+		  DB::table('authpermisos')->insert(array(
+				'permisoid'       => 11,
+				'nombre'         => 'generar',
+				'nombrefriendly' => 'Generar',
+				'created_at'     => date_create(), 'updated_at' => date_create()
+			));
+		  
+
 		  DB::statement('SET FOREIGN_KEY_CHECKS=1');
 		}
 	}
