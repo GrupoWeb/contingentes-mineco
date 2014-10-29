@@ -86,9 +86,9 @@ return array(
 
 	'textosignup' => 'Ingresa tus datos',
 
-	'botonsignup' => 'Reg&iacute;strate',
+	'botonsignup' => 'Solicitud de inscripción',
 
-	'signupexitoso' => 'Usuario creado exitosamente',
+	'signupexitoso' => 'Tu solicitud fué recibida y se encuentra en revisión.',
 	
 	/*
 	|--------------------------------------------------------------------------
@@ -239,7 +239,7 @@ return array(
 	
 	'registro' => array(
 		'habilitado' => true,
-		'titulo'     => 'Reg&iacute;strate'
+		'titulo'     => 'Solicitud de inscripción'
 	),
 
 	/*
