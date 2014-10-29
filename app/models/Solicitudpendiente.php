@@ -7,7 +7,7 @@ class Solicitudpendiente extends Eloquent {
 
 	public static function getSolicitudesPendientes(){
 		return DB::table('authusuarios As u')
-			->select('u.nombre','u.email','u.created_at', 'p.nombre')
+			->select('u.nombre','u.email','u.created_at', 'p.nombre', 'u.usuarioid')
 			->leftJoin('usuarioproductos As up','up.usuarioid','=','u.usuarioid')
 			->leftJoin('productos As p','p.productoid','=','up.productoid')
 			->where('u.activo',0)

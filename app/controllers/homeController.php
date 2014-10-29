@@ -3,9 +3,9 @@
 class homeController extends BaseController {
 	public function index() {
     //dd(Session::all());
-    $solicitudes = Solicitudpendiente::getSolicitudesPendientes();
+    
 		return View::make('home/index')
-			->with('usuario', Auth::user())->with('solicitudes', $solicitudes);
+			->with('usuario', Auth::user());
 	}
 
 	public function about() {
