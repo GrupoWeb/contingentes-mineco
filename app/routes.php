@@ -25,7 +25,7 @@ Route::group(array('before' => array('auth', 'cancerbero', 'menu')), function() 
 	Route::post('catalogos/productorequerimiento/crear', array('as'=>'catalogos.productorequerimiento.store', 'uses'=>'productorequerimientosController@store'));	
 
 	//=== CERTIFICADOS
-	Route::get('certificados/generar','certificadosController@generarPDF');
+	Route::get('certificados/generar',array('as'=>'certificados.generar','uses'=>'certificadosController@generarPDF'));
 	//=== SOLICITUDES 
 	Route::resource('catalogos/solicitudespendientes', 'solicitudesPendientesController');
 	Route::get('solicitudespendientes/inscripciones', array('as'=>'solicitudespendientes.inscripciones', 'uses'=>'solicitudesPendientesController@inscripcionesPendientes'));
