@@ -84,6 +84,14 @@
 				'created_at'     => date_create(), 'updated_at' => date_create()
 			));
 
+			DB::table('certificados')->insert(array(
+				'moduloid'       => 11,
+				'nombre'         => 'certificados',
+				'nombrefriendly' => 'Certificados',
+				'created_at'     => date_create(), 'updated_at' => date_create()
+			));
+
+
 		  DB::statement('SET FOREIGN_KEY_CHECKS=1');
 		}
 	}
