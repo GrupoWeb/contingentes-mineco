@@ -36,6 +36,8 @@ class signupController extends BaseController {
       }      
     }
 
+    dd('here');
+
 		return View::make('login::login')
 			->with('route', 'signup.store')
 			->with('mainPartial', 'signupPartial')
@@ -52,9 +54,10 @@ class signupController extends BaseController {
 	}
 
 	public function store() {
-    //dd(Input::all());
-   
+        //dd(Input::file());
+
     $usuario = DB::table('authusuarios');
+   
     $arr = array(
       'email'      => Input::get('email'),
       'nombre'     => Input::get('txNombre'),
@@ -72,9 +75,10 @@ class signupController extends BaseController {
     ));
 
     foreach (Input::file() as $key=>$val) { 
+      if ($key=='txArchivo') continue;
     	if ($val) {
 				$arch   = Input::file($key);
-				$nombre = date('YmdHis') . '.' . $arch->getClientOriginalExtension();
+				$nombre = date('YmdHis').$arch->getClientOriginalName(). '.' . $arch->getClientOriginalExtension();
 				$res    = $arch->move(public_path() . '/archivos/' . $usuarioId, $nombre);
 				DB::table('usuariorequerimientos')->insert(array(
 					'usuarioid'=>$usuarioId,
