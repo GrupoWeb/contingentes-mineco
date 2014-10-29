@@ -10,7 +10,7 @@ return array(
 	|
 	*/
 
-	'nombreapplicacion' => 'Core CS',
+	'nombreapplicacion' => 'Mineco_Dace',
 	
 	'tabla' => 'authusuarios',
 
@@ -223,7 +223,7 @@ return array(
 	*/
 
 	'twostep' => array(
-		'habilitado' => false,
+		'habilitado' => true,
 		'titulo'     => 'Escribe el c&oacute;digo de verificaci&oacute;n generado por tu aplicaci&oacute;n para dispositivos m&oacute;viles de dos pasos.<br> (Google Authenticator)',
 		'boton'      => 'Verificar'
 	),
