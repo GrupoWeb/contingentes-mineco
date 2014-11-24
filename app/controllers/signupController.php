@@ -1,7 +1,7 @@
 <?php namespace Csgt\Login;
 
 use BaseController, View, Auth, Redirect, Config, 
-Validator, Input, Password, Session, Hash, DB, Crypt;
+Validator, Input, Password, Session, Hash, DB, Crypt, Mail;
 
 class signupController extends BaseController {
 	public function index() {
@@ -54,8 +54,6 @@ class signupController extends BaseController {
 	}
 
 	public function store() {
-        //dd(Input::file());
-
     $usuario = DB::table('authusuarios');
    
     $arr = array(
@@ -82,13 +80,19 @@ class signupController extends BaseController {
 				$res    = $arch->move(public_path() . '/archivos/' . $usuarioId, $nombre);
 				DB::table('usuariorequerimientos')->insert(array(
 					'usuarioid'=>$usuarioId,
-					'requerimientoid'=>substr($key,4),
+					'priid'=>substr($key,4),
 					'archivo' => $nombre,
 					'created_at' => date_create(),
       		'updated_at' => date_create()
 				));
 			}
     }
+
+    $email = Input::get('email');
+    Mail::send('emails/autorizacion', array(
+          'nombre' => Input::get('txNombre')), function($msg) use ($email){
+                $msg->to($email)->subject('Solicitud de inscripción');
+        });
 
 
     return Redirect::to('/login')

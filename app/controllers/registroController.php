@@ -7,4 +7,8 @@ class registroController extends BaseController {
 			->with('route', 'signup.store')
 			->with('productos', Producto::where('activo', 1)->get());
 	}
+
+	public function productos($id) {
+		return Response::json(Productorequerimiento::getRequerimientos(Crypt::decrypt($id), 'Inscripción'));
+	}
 }
