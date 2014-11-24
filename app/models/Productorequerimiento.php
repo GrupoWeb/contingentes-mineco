@@ -2,13 +2,14 @@
 
 class Productorequerimiento extends Eloquent {
 
-	protected $primryKey = 'priid';
+	protected $primaryKey = 'priid';
 
-	public static function getRequerimientos($aProducto){
+	public static function getRequerimientos($aProducto, $aTipo){
 		return DB::table('productorequerimientos AS pr')
 			->select('priid', 'nombre','pr.requerimientoid As requerimientoid')
 			->leftJoin('requerimientos AS r', 'pr.requerimientoid', '=', 'r.requerimientoid')
 			->where('productoid', $aProducto)
+			->where('tipo', $aTipo)
 			->orderBy('priid')
 			->get();
 	}

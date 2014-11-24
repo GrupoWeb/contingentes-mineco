@@ -11,18 +11,25 @@
 */
 
 Route::get('signup', 'registroController@index');
-Route::get('signup/requisitos/{id}', 'registroController@productos');
+Route::get('requerimientos/{id}/{tipo}', 'requerimientosController@getProductos');
+Route::get('contingente/partidas/{id}', 'partidasController@getPartidas');
 
 Route::group(array('before' => array('auth', 'cancerbero', 'menu')), function() {
 	Route::get('/', array('as'=>'index.index', 'uses'=>'homeController@index'));
+	//=== SOLICITUD DE EMISION
+	Route::get('solicitud/emision', array('as'=>'solicitud.emision.index', 'uses'=>'emisionController@index'));
+	//=== CONTINGENTES
+	Route::resource('contingentes', 'contingentesController');
+	Route::get('contingente/requerimientos/{id}', array('as'=>'contingente.requerimientos.index', 
+		'uses'=>'contingenterequerimientosController@index'));
+	Route::post('contingente/requerimientos/store', array('as'=>'contingente.requerimientos.store', 
+		'uses'=>'contingenterequerimientosController@store'));
 	//=== CATALOGOS
-	Route::resource('catalogos/productos', 'productosController');
-	Route::resource('catalogos/requerimientos', 'requerimientosController');
-	Route::resource('catalogos/tratados', 'tratadosController');
-	Route::resource('catalogos/periodos', 'periodosController');
+	
+	Route::resource('requerimientos', 'requerimientosController');
+	Route::resource('tratados', 'tratadosController');
+	Route::resource('periodos', 'periodosController');
 	Route::resource('catalogos/movimientos', 'movimientosController');
-	Route::get('catalogos/productorequerimiento/{id}', array('as'=>'catalogos.productorequerimiento.index', 'uses'=>'productorequerimientosController@index'));
-	Route::post('catalogos/productorequerimiento/crear', array('as'=>'catalogos.productorequerimiento.store', 'uses'=>'productorequerimientosController@store'));	
 
 	//=== CERTIFICADOS
 	Route::get('certificados/generar',array('as'=>'certificados.generar','uses'=>'certificadosController@generarPDF'));

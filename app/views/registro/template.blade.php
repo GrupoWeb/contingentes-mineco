@@ -33,7 +33,8 @@
           <div class="text-center">
             {{HTML::image(Config::get('login::logo.path'),Config::get('login::logo.alt'))}}
           </div>
-          <h5>Datos Generales</h5>
+          <h3 class="text-primary">Solicitud de inscripci&oacute;n</h3>
+          <h4 class="text-warning">Datos Generales</h4>
           <hr>
           <div class="row">
             <div class="col-md-6">
@@ -107,7 +108,7 @@
               </div>
             </div>
           </div>
-          <h5>Datos Específicos</h5>
+          <h4 class="text-warning">Datos Específicos</h4>
           <hr>
           
           <div class="form-group hide" id="fileSeed">

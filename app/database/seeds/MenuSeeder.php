@@ -28,7 +28,7 @@
 				'menuid'					=> 3,
 				'padreid'        	=> '2',
 				'modulopermisoid' => '22',
-				'nombre'         	=> 'Productos',
+				'nombre'         	=> 'Contingentes',
 				'orden' 					=> 100,
 				'icono'         	=> null,
 				'created_at'     	=> date_create(), 'updated_at' => date_create()
@@ -80,6 +80,26 @@
 				'modulopermisoid' => '60',
 				'nombre'         	=> 'Inscripciones pendientes',
 				'orden' 					=> 3000,
+				'icono'         	=> null,
+				'created_at'     	=> date_create(), 'updated_at' => date_create()
+			));
+
+			DB::table('authmenu')->insert(array(
+				'menuid'					=> 9,
+				'padreid'        	=> null,
+				'modulopermisoid' => null,
+				'nombre'         	=> 'Solicitudes',
+				'orden' 					=> 2000,
+				'icono'         	=> null,
+				'created_at'     	=> date_create(), 'updated_at' => date_create()
+			));
+
+		DB::table('authmenu')->insert(array(
+				'menuid'					=> 10,
+				'padreid'        	=> 9,
+				'modulopermisoid' => '62',
+				'nombre'         	=> 'Solicitud de emisión',
+				'orden' 					=> 100,
 				'icono'         	=> null,
 				'created_at'     	=> date_create(), 'updated_at' => date_create()
 			));
