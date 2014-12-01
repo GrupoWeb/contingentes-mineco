@@ -8,7 +8,6 @@
 				'moduloid'       => 1,
 				'nombre'         => 'index',
 				'nombrefriendly' => 'Inicio',
-				'descripcion'    => 'Modulo de index',
 				'created_at'     => date_create(), 'updated_at' => date_create()
 			));
 		
@@ -29,40 +28,35 @@
 			DB::table('authmodulos')->insert(array(
 				'moduloid'       => 4,
 				'nombre'         => 'contingentes',
-				'nombrefriendly' => 'Catálogo de Contingentes',
-				'descripcion'    => 'Catalogo de Contingentes',
+				'nombrefriendly' => 'Contingentes',
 				'created_at'     => date_create(), 'updated_at' => date_create()
 			));
 		
 			DB::table('authmodulos')->insert(array(
 				'moduloid'       => 5,
 				'nombre'         => 'requerimientos',
-				'nombrefriendly' => 'Catálogo de Requerimientos',
-				'descripcion'    => 'Catálogo de Requerimientos',
+				'nombrefriendly' => 'Requerimientos',
 				'created_at'     => date_create(), 'updated_at' => date_create()
 			));
 		
 			DB::table('authmodulos')->insert(array(
 				'moduloid'       => 6,
 				'nombre'         => 'tratados',
-				'nombrefriendly' => 'Catálogo de Tratados',
-				'descripcion'    => 'Catálogo de Tratados',
+				'nombrefriendly' => 'Tratados',
 				'created_at'     => date_create(), 'updated_at' => date_create()
 			));
 		
 			DB::table('authmodulos')->insert(array(
 				'moduloid'       => 7,
 				'nombre'         => 'periodos',
-				'nombrefriendly' => 'Catálogo de periodos',
-				'descripcion'    => 'Catálogo de periodos',
+				'nombrefriendly' => 'Periodos',
 				'created_at'     => date_create(), 'updated_at' => date_create()
 			));
-		
+
 			DB::table('authmodulos')->insert(array(
 				'moduloid'       => 8,
-				'nombre'         => 'movimientos',
-				'nombrefriendly' => 'Catálogo de movimientos',
-				'descripcion'    => 'Catálogo de movimientos',
+				'nombre'         => 'productos',
+				'nombrefriendly' => 'Productos',
 				'created_at'     => date_create(), 'updated_at' => date_create()
 			));
 
@@ -97,7 +91,7 @@
 			DB::table('authmodulos')->insert(array(
 				'moduloid'       => 13,
 				'nombre'         => 'contingente.requerimientos',
-				'nombrefriendly' => 'Asignación de requerimientos a contingentes',
+				'nombrefriendly' => 'Contingentes - Requerimientos',
 				'created_at'     => date_create(), 'updated_at' => date_create()
 			));
 

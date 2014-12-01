@@ -26,39 +26,39 @@
 
 			DB::table('authmenu')->insert(array(
 				'menuid'					=> 3,
-				'padreid'        	=> '2',
-				'modulopermisoid' => '22',
-				'nombre'         	=> 'Contingentes',
+				'padreid'        	=> 2,
+				'modulopermisoid' => 50,
+				'nombre'         	=> 'Productos',
 				'orden' 					=> 100,
 				'icono'         	=> null,
 				'created_at'     	=> date_create(), 'updated_at' => date_create()
 			));
-		
+
 			DB::table('authmenu')->insert(array(
 				'menuid'					=> 4,
-				'padreid'        	=> '2',
-				'modulopermisoid' => '29',
-				'nombre'         	=> 'Requerimientos',
+				'padreid'        	=> 2,
+				'modulopermisoid' => 36,
+				'nombre'         	=> 'Tratados',
 				'orden' 					=> 200,
 				'icono'         	=> null,
 				'created_at'     	=> date_create(), 'updated_at' => date_create()
 			));
-		
+
 			DB::table('authmenu')->insert(array(
 				'menuid'					=> 5,
-				'padreid'        	=> '2',
-				'modulopermisoid' => '36',
-				'nombre'         	=> 'Tratados',
+				'padreid'        	=> 2,
+				'modulopermisoid' => 36,
+				'nombre'         	=> 'Requerimientos',
 				'orden' 					=> 300,
 				'icono'         	=> null,
 				'created_at'     	=> date_create(), 'updated_at' => date_create()
 			));
-		
+
 			DB::table('authmenu')->insert(array(
 				'menuid'					=> 6,
-				'padreid'        	=> '2',
-				'modulopermisoid' => '43',
-				'nombre'         	=> 'Periodos',
+				'padreid'        	=> 2,
+				'modulopermisoid' => 22,
+				'nombre'         	=> 'Contingentes',
 				'orden' 					=> 400,
 				'icono'         	=> null,
 				'created_at'     	=> date_create(), 'updated_at' => date_create()
@@ -67,22 +67,12 @@
 			DB::table('authmenu')->insert(array(
 				'menuid'					=> 7,
 				'padreid'        	=> 2,
-				'modulopermisoid' => 51,
-				'nombre'         	=> 'Solicitudes Pendientes',
+				'modulopermisoid' => 43,
+				'nombre'         	=> 'Períodos',
 				'orden' 					=> 500,
 				'icono'         	=> null,
 				'created_at'     	=> date_create(), 'updated_at' => date_create()
 			));
-/*
-			DB::table('authmenu')->insert(array(
-				'menuid'					=> 8,
-				'padreid'        	=> null,
-				'modulopermisoid' => '60',
-				'nombre'         	=> 'Inscripciones pendientes',
-				'orden' 					=> 3000,
-				'icono'         	=> null,
-				'created_at'     	=> date_create(), 'updated_at' => date_create()
-			));*/
 
 			DB::table('authmenu')->insert(array(
 				'menuid'					=> 9,

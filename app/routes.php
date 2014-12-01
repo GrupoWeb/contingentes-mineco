@@ -34,17 +34,20 @@ Route::group(array('before' => array('auth', 'cancerbero', 'menu')), function() 
 	Route::resource('solicitudespendientes/inscripcion', 'solicitudesinscripcionController');
 	Route::resource('solicitudespendientes/asignacion', 'solicitudesasignacionController');
 	//=== CONTINGENTES
-	Route::resource('contingentes', 'contingentesController');
 	Route::get('contingente/requerimientos/{id}', array('as'=>'contingente.requerimientos.index', 
 		'uses'=>'contingenterequerimientosController@index'));
 	Route::post('contingente/requerimientos/store', array('as'=>'contingente.requerimientos.store', 
 		'uses'=>'contingenterequerimientosController@store'));
 
 	//=== CATALOGOS
-	Route::resource('requerimientos', 'requerimientosController');
+	Route::resource('productos', 'productosController');
 	Route::resource('tratados', 'tratadosController');
+	Route::resource('requerimientos', 'requerimientosController');
+	Route::resource('contingentes', 'contingentesController');
 	Route::resource('periodos', 'periodosController');
-	Route::resource('catalogos/movimientos', 'movimientosController');
+
+
+	//Route::resource('catalogos/movimientos', 'movimientosController');
 
 	//=== CERTIFICADOS
 	Route::get('certificados/generar',array('as'=>'certificados.generar','uses'=>'certificadosController@generarPDF')); 
