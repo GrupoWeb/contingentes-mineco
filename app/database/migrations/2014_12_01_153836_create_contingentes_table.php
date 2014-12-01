@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateTratadosproductosTable extends Migration {
+class CreateContingentesTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,9 +12,9 @@ class CreateTratadosproductosTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('tratadosproductos', function(Blueprint $table)
+		Schema::create('contingentes', function(Blueprint $table)
 		{
-			$table->increments('tratadoproductoid');
+			$table->increments('contingenteid');
 			$table->integer('tratadoid')->unsigned()->index('tratadoint');
 			$table->integer('productoid')->unsigned()->index('productoid');
 		});
@@ -28,7 +28,7 @@ class CreateTratadosproductosTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('tratadosproductos');
+		Schema::drop('contingentes');
 	}
 
 }

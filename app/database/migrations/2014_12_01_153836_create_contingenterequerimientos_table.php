@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateTratadoproductorequerimientosTable extends Migration {
+class CreateContingenterequerimientosTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,10 +12,10 @@ class CreateTratadoproductorequerimientosTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('tratadoproductorequerimientos', function(Blueprint $table)
+		Schema::create('contingenterequerimientos', function(Blueprint $table)
 		{
-			$table->increments('tratadoproductorequerimientoid');
-			$table->integer('tratadoproductoid')->unsigned()->index('productorequerimientos_ibfk_1');
+			$table->increments('contingenterequerimientoid');
+			$table->integer('contingenteid')->unsigned()->index('productorequerimientos_ibfk_1');
 			$table->integer('requerimientoid')->unsigned()->index('requerimientoid');
 			$table->enum('tipo', array('inscripcion','asignacion','emision'))->default('inscripcion');
 		});
@@ -29,7 +29,7 @@ class CreateTratadoproductorequerimientosTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('tratadoproductorequerimientos');
+		Schema::drop('contingenterequerimientos');
 	}
 
 }

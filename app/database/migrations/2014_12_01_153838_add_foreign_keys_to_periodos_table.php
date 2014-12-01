@@ -14,7 +14,7 @@ class AddForeignKeysToPeriodosTable extends Migration {
 	{
 		Schema::table('periodos', function(Blueprint $table)
 		{
-			$table->foreign('tratadoproductoid', 'periodos_ibfk_1')->references('tratadoproductoid')->on('tratadosproductos')->onUpdate('CASCADE')->onDelete('RESTRICT');
+			$table->foreign('contingenteid', 'periodos_ibfk_1')->references('contingenteid')->on('contingentes')->onUpdate('CASCADE')->onDelete('RESTRICT');
 		});
 	}
 
@@ -28,7 +28,7 @@ class AddForeignKeysToPeriodosTable extends Migration {
 	{
 		Schema::table('periodos', function(Blueprint $table)
 		{
-			$table->dropForeign('tratadoproductoid');
+			$table->dropForeign('contingenteid');
 		});
 	}
 

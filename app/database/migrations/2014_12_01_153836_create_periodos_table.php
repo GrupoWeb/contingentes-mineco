@@ -15,7 +15,7 @@ class CreatePeriodosTable extends Migration {
 		Schema::create('periodos', function(Blueprint $table)
 		{
 			$table->increments('periodoid');
-			$table->integer('tratadoproductoid')->unsigned()->index('productoid');
+			$table->integer('contingenteid')->unsigned()->index('productoid');
 			$table->string('nombre', 200)->nullable();
 			$table->enum('tipo', array('Exportación','Importación'))->default('Exportación');
 			$table->date('fechainicio')->nullable();
