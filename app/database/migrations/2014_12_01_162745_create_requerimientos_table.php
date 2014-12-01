@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateProductosTable extends Migration {
+class CreateRequerimientosTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,11 +12,10 @@ class CreateProductosTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('productos', function(Blueprint $table)
+		Schema::create('requerimientos', function(Blueprint $table)
 		{
-			$table->increments('productoid');
-			$table->string('nombre', 200)->nullable();
-			$table->boolean('activo')->default(1);
+			$table->increments('requerimientoid');
+			$table->string('nombre', 300)->nullable();
 			$table->timestamps();
 		});
 	}
@@ -29,7 +28,7 @@ class CreateProductosTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('productos');
+		Schema::drop('requerimientos');
 	}
 
 }

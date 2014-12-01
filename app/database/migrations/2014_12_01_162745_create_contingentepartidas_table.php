@@ -18,7 +18,7 @@ class CreateContingentepartidasTable extends Migration {
 			$table->integer('contingenteid')->unsigned()->index('productoid');
 			$table->string('partida', 200)->nullable();
 			$table->string('nombre', 200);
-			$table->boolean('activo')->default(1);
+			$table->boolean('activa')->default(1);
 		});
 	}
 

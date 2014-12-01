@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateTratadosTable extends Migration {
+class CreateProductosTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,11 +12,10 @@ class CreateTratadosTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('tratados', function(Blueprint $table)
+		Schema::create('productos', function(Blueprint $table)
 		{
-			$table->increments('tratadoid');
+			$table->increments('productoid');
 			$table->string('nombre', 200)->nullable();
-			$table->boolean('activo')->default(1);
 			$table->timestamps();
 		});
 	}
@@ -29,7 +28,7 @@ class CreateTratadosTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('tratados');
+		Schema::drop('productos');
 	}
 
 }

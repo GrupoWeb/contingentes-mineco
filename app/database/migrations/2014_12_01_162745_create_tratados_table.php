@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateRequerimientosTable extends Migration {
+class CreateTratadosTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,10 +12,11 @@ class CreateRequerimientosTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('requerimientos', function(Blueprint $table)
+		Schema::create('tratados', function(Blueprint $table)
 		{
-			$table->increments('requerimientoid');
-			$table->string('nombre', 300)->nullable();
+			$table->increments('tratadoid');
+			$table->string('nombre', 200);
+			$table->enum('tipo', array('Importación','Exportación'));
 			$table->boolean('activo')->default(1);
 			$table->timestamps();
 		});
@@ -29,7 +30,7 @@ class CreateRequerimientosTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('requerimientos');
+		Schema::drop('tratados');
 	}
 
 }

@@ -17,7 +17,6 @@ class CreatePeriodosTable extends Migration {
 			$table->increments('periodoid');
 			$table->integer('contingenteid')->unsigned()->index('productoid');
 			$table->string('nombre', 200)->nullable();
-			$table->enum('tipo', array('Exportación','Importación'))->default('Exportación');
 			$table->date('fechainicio')->nullable();
 			$table->date('fechafin')->nullable();
 		});
