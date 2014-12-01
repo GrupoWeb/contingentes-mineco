@@ -1,5 +1,5 @@
 <?php
-class solicitudesPendientesController extends BaseController {
+class solicitudesasignacionController extends BaseController {
 
 	private $crud, $cancerbero;
 
@@ -20,7 +20,7 @@ class solicitudesPendientesController extends BaseController {
 
 		$this->crud->setBotonExtra(array('url'=>'solicitudespendientes/datossolicitud','icon'=>'glyphicon glyphicon-list-alt','titulo'=>'Ver detalle'));
 		
-		$this->crud->setPermisos($this->cancerbero->tienePermisosCrud('catalogos.solicitudespendientes'));
+		$this->crud->setPermisos($this->cancerbero->tienePermisosCrud('solicitudespendientes.asignacion'));
 	}
 
 	public function index() {

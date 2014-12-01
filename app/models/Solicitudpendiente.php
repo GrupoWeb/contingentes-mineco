@@ -16,10 +16,10 @@ class Solicitudpendiente extends Eloquent {
 
 	public static function getSolicitudPendiente($id){
 		return DB::table('authusuarios As u')
-			->select('u.nombre','u.email','u.created_at', 'p.nombre', 'u.usuarioid')
-			->leftJoin('usuarioproductos As up','up.usuarioid','=','u.usuarioid')
-			->leftJoin('productos As p','p.productoid','=','up.productoid')
+			->select('u.nombre','u.email','u.created_at', 'u.usuarioid',
+				DB::raw('(SELECT GROUP_CONCAT(p.nombre) FROM usuarioproductos up 
+					LEFT JOIN productos p USING(productoid) WHERE up.usuarioid=u.usuarioid) AS productos'))
 			->where('u.usuarioid',$id)
-			->get();
+			->first();
 	}
 }

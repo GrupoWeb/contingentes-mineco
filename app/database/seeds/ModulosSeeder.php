@@ -15,16 +15,14 @@
 			DB::table('authmodulos')->insert(array(
 				'moduloid'       => 2,
 				'nombre'         => 'usuarios',
-				'nombrefriendly' => 'Administración de usuarios',
-				'descripcion'    => 'Modulo de usuarios',
+				'nombrefriendly' => 'Usuarios',
 				'created_at'     => date_create(), 'updated_at' => date_create()
 			));
 		
 			DB::table('authmodulos')->insert(array(
 				'moduloid'       => 3,
 				'nombre'         => 'roles',
-				'nombrefriendly' => 'Administración de roles',
-				'descripcion'    => 'Modulo de roles',
+				'nombrefriendly' => 'Roles',
 				'created_at'     => date_create(), 'updated_at' => date_create()
 			));
 		
@@ -70,17 +68,15 @@
 
 			DB::table('authmodulos')->insert(array(
 				'moduloid'       => 9,
-				'nombre'         => 'catalogos.solicitudespendientes',
-				'nombrefriendly' => 'Catálogo de Solicitudes Pendientes',
-				'descripcion'    => 'Catálogo de solicitudes pendientes de aprobación',
+				'nombre'         => 'solicitudespendientes.asignacion',
+				'nombrefriendly' => 'Solicitudes asignación',
 				'created_at'     => date_create(), 'updated_at' => date_create()
 			));
 
 			DB::table('authmodulos')->insert(array(
 				'moduloid'       => 10,
-				'nombre'         => 'solicitudespendientes',
-				'nombrefriendly' => 'Dashboard Inscripciones',
-				'descripcion'    => 'Solicitudes de Inscripción pendientes',
+				'nombre'         => 'solicitudespendientes.inscripcion',
+				'nombrefriendly' => 'Solicitudes inscripción',
 				'created_at'     => date_create(), 'updated_at' => date_create()
 			));
 

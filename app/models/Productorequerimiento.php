@@ -7,9 +7,10 @@ class Productorequerimiento extends Eloquent {
 
 	public static function getRequerimientos($aProducto,$aTipo=null){
 		$query = DB::table('productorequerimientos AS pr')
-			->select('priid', 'nombre','pr.requerimientoid As requerimientoid')
+			->select('r.nombre','r.requerimientoid')
 			->leftJoin('requerimientos AS r', 'pr.requerimientoid', '=', 'r.requerimientoid')
-			->where('productoid', $aProducto);
+			->whereIn('productoid', explode(',',$aProducto))
+			->groupBy('r.requerimientoid');
 			
 			if($aTipo)
 				$query->where('tipo', $aTipo);

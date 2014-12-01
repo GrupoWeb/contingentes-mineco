@@ -404,27 +404,6 @@
 			));
 
 			DB::table('authmodulopermisos')->insert(array(
-				'modulopermisoid'	=> 58,
-				'moduloid'        => 9,
-				'permisoid' 			=> 8,
-				'created_at'     	=> date_create(), 'updated_at' => date_create()
-			));
-
-			DB::table('authmodulopermisos')->insert(array(
-				'modulopermisoid'	=> 59,
-				'moduloid'        => 9,
-				'permisoid' 			=> 9,
-				'created_at'     	=> date_create(), 'updated_at' => date_create()
-			));
-
-			DB::table('authmodulopermisos')->insert(array(
-				'modulopermisoid'	=> 60,
-				'moduloid'        => 10,
-				'permisoid' 			=> 10,
-				'created_at'     	=> date_create(), 'updated_at' => date_create()
-			));
-
-			DB::table('authmodulopermisos')->insert(array(
 				'modulopermisoid'	=> 61,
 				'moduloid'        => 11,
 				'permisoid' 			=> 11,
@@ -449,6 +428,34 @@
 				'modulopermisoid'	=> 64,
 				'moduloid'        => 13,
 				'permisoid' 			=> 3,
+				'created_at'     	=> date_create(), 'updated_at' => date_create()
+			));
+
+			DB::table('authmodulopermisos')->insert(array(
+				'modulopermisoid'	=> 65,
+				'moduloid'        => 10,
+				'permisoid' 			=> 1,
+				'created_at'     	=> date_create(), 'updated_at' => date_create()
+			));
+
+			DB::table('authmodulopermisos')->insert(array(
+				'modulopermisoid'	=> 66,
+				'moduloid'        => 10,
+				'permisoid' 			=> 3,
+				'created_at'     	=> date_create(), 'updated_at' => date_create()
+			));
+
+			DB::table('authmodulopermisos')->insert(array(
+				'modulopermisoid'	=> 67,
+				'moduloid'        => 10,
+				'permisoid' 			=> 4,
+				'created_at'     	=> date_create(), 'updated_at' => date_create()
+			));
+
+			DB::table('authmodulopermisos')->insert(array(
+				'modulopermisoid'	=> 68,
+				'moduloid'        => 10,
+				'permisoid' 			=> 7,
 				'created_at'     	=> date_create(), 'updated_at' => date_create()
 			));
 		  

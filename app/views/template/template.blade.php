@@ -16,6 +16,7 @@
 	{{ HTML::style('css/bootstrap-select.min.css'); }}
 	{{ HTML::style('css/dataTables.bootstrap.css'); }}
 	{{ HTML::style('css/dataTables.tableTools.min.css'); }}
+	{{ HTML::style('css/font-awesome.min.css'); }}
 	{{ HTML::style('css/core.css'); }}
 	{{ HTML::style('css/bootstrapValidator.min.css'); }}
 

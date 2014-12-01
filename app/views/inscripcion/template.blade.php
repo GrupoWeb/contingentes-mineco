@@ -15,6 +15,9 @@
       body { margin: 5px; }
       .form-signin { max-width: 850px;margin: 0 auto;display: block;margin-top: 30px; }
       .form-control-feedback{ z-index: 2000; }
+      .form-horizontal .has-feedback .div-contingente .form-control-feedback {
+        right: -15px;
+      }
     </style>
     <script>
       $(document).ready(function(){
@@ -53,6 +56,8 @@
                 <div class="col-sm-8">
                   {{ Form::text('email', '', array(
                     'class'                        =>'form-control',
+                    'data-bv-notEmpty'             => 'true',
+                    'data-bv-notEmpty-message'     => 'El email es requerido',
                     'data-bv-emailaddress'         => 'true',
                     'data-bv-emailaddress-message' => 'Email con formato incorrecto',
                     'data-bv-remote'               => 'true',
@@ -63,14 +68,19 @@
                 </div>
               </div>
               <div class="form-group">
-                <label for="cmbProductos" class="col-sm-4 control-label">Producto</label>
-                <div class="col-sm-8">
+                <label for="contingentes" class="col-sm-4 control-label">Contingente(s)</label>
+                <div class="col-sm-8 div-contingente">
                   <?php 
                     $prods = array();
                     foreach($productos as $producto)
-                      $prods[Crypt::encrypt($producto->productoid)] = $producto->nombre;
+                      $prods[$producto->productoid] = $producto->nombre;
                   ?>
-                  {{ Form::select('cmbProductos', $prods, null, array('class'=>'selectpicker form-control','id'=>'cmbProductos')) }}
+                  {{ Form::select('contingentes[]', $prods, null, array(
+                    'class'                     => 'form-control',
+                    'id'                        => 'contingentes',
+                    'multiple'                  => 'true',
+                    'title'                     => 'Seleccione uno o varios'
+                    )) }}
                 </div>
               </div>
             </div>
@@ -99,7 +109,7 @@
                     'class'                     => 'form-control', 
                     'placeholder'               => 'Repetir contrase&ntilde;a',
                     'data-bv-notempty'          => 'true', 
-                    'data-bv-notempty-message'  => 'Contrase&ntilde;a es un campo requerido',
+                    'data-bv-notempty-message'  => 'Contrase&ntilde;a es requerida',
                     'data-bv-identical'         => 'true',
                     'data-bv-identical-field'   => 'txPassword',
                     'data-bv-identical-message' => 'Las contrase&ntilde;as no concuerdan'
@@ -108,15 +118,11 @@
               </div>
             </div>
           </div>
-          <h4 class="text-warning">Datos Específicos</h4>
+          <h4 class="text-warning">Requerimientos</h4>
           <hr>
-          
-          <div class="form-group hide" id="fileSeed">
-            <label class="col-sm-7 control-label"></label>
-            <div class="col-sm-5">{{ Form::file('txArchivo[]', array('data-bv-notempty'=>'true')) }}</div>
+          <div class="requerimientos">
+            
           </div>
-
-
         </div>
         <div class="panel-footer">
           <div class="row">
@@ -130,50 +136,53 @@
         </div>
     </div>
 
-
-
-
-
     {{Form::close()}}
     <script>
       $(document).ready(function(){
-
-        $("#cmbProductos").change(function() {
+        $("#contingentes").change(function() {
           $('.nuevos').remove();
-
-          $.get('/signup/requisitos/' + $(this).val(), function(data){
-
-            $.each(data, function(key, datos){
-              var $template = $('#fileSeed');
-
-              $('#fileSeed .control-label').html(datos.nombre);
-              
-              var $clone    = $template.clone().removeClass('hide').removeAttr('id').addClass('nuevos').insertAfter($template);
-              var $option   = $clone.find('[name="txArchivo[]"]');
-
-              
-              //console.log('#'+ $clone.attr('id') + ' .control-label');
-              $option.attr('name', 'file'+datos.priid);
-
-              $('#frmRegistro').bootstrapValidator('addField', $option);
-            });
-            
+          $('#frmRegistro').bootstrapValidator('revalidateField', 'contingentes');
+          $.get('/requerimientos/productos/' + $(this).val() + '/inscripcion', function(data){
+              $.each(data, function(key, datos){
+                $.get('/requerimientos/productos/vacio?nombre=' + datos.nombre + '&id=' + datos.requerimientoid, function(template){
+                  $('.requerimientos').append(template);
+                  $('#frmRegistro').bootstrapValidator('addField', 'file' + datos.requerimientoid);
+                });     
+              });       
           });
         });
-
-        
+    
+        $('#contingentes').selectpicker();
         $('#frmRegistro')
           .bootstrapValidator({
-              feedbackIcons: {
-                  valid: 'glyphicon glyphicon-ok',
-                  invalid: 'glyphicon glyphicon-remove',
-                  validating: 'glyphicon glyphicon-refresh'
+            excluded: ':disabled',
+            feedbackIcons: {
+              valid: 'glyphicon glyphicon-ok',
+              invalid: 'glyphicon glyphicon-remove',
+              validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+              contingentes: {
+                validators: {
+                  callback: {
+                    message: 'Porfavor seleccione al menos un contingente',
+                    callback: function(value, validator, $field) {
+                      var options = validator.getFieldElements('contingentes').val();
+                      return (options !=null && options.length >=1);
+                    }
+                  }
+                }
               }
+            },
+        })
+        .on('error.field.bv', function(e, data) {
+          data.bv.disableSubmitButtons(false);
+        })
+        .on('success.field.bv', function(e, data) {
+          data.bv.disableSubmitButtons(false);
         });
 
-
-        $('.selectpicker').selectpicker();
-        $("#cmbProductos").change();
+      $('#contingentes').change();
       });
     </script>
   </body>

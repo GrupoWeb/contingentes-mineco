@@ -73,7 +73,7 @@
 				'icono'         	=> null,
 				'created_at'     	=> date_create(), 'updated_at' => date_create()
 			));
-
+/*
 			DB::table('authmenu')->insert(array(
 				'menuid'					=> 8,
 				'padreid'        	=> null,
@@ -82,7 +82,7 @@
 				'orden' 					=> 3000,
 				'icono'         	=> null,
 				'created_at'     	=> date_create(), 'updated_at' => date_create()
-			));
+			));*/
 
 			DB::table('authmenu')->insert(array(
 				'menuid'					=> 9,

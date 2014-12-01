@@ -52,27 +52,6 @@
 				'nombrefriendly' => 'Mostrar datos',
 				'created_at'     => date_create(), 'updated_at' => date_create()
 			));
-
-			DB::table('authpermisos')->insert(array(
-				'permisoid'       => 8,
-				'nombre'         => 'datossolicitud',
-				'nombrefriendly' => 'Mostrar datos de Solicitud',
-				'created_at'     => date_create(), 'updated_at' => date_create()
-			));
-
-			DB::table('authpermisos')->insert(array(
-				'permisoid'       => 9,
-				'nombre'         => 'autorizar',
-				'nombrefriendly' => 'Autorizar solicitud',
-				'created_at'     => date_create(), 'updated_at' => date_create()
-			));
-
-			DB::table('authpermisos')->insert(array(
-				'permisoid'       => 10,
-				'nombre'         => 'inscripciones',
-				'nombrefriendly' => 'Ver Inscripciones pendientes',
-				'created_at'     => date_create(), 'updated_at' => date_create()
-			));
 		  
 		  DB::table('authpermisos')->insert(array(
 				'permisoid'       => 11,

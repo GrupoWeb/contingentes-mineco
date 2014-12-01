@@ -1,53 +1,49 @@
 @extends('template/template')
-
 @section('content')
-<style>
-	/* unvisited link */
-	a:link {
-	    color: #000;
-	}
-
-	/* visited link */
-	a:visited {
-	    color: #000;
-	}
-
-	/* mouse over link */
-	a:hover {
-	    color: #000;
-	}
-
-	/* selected link */
-	a:active {
-	    color: #000;
-	}
-</style>
-  <div class="col-md-12">
-		<div class="panel panel-warning">
-		  <div class="panel-heading">
-		    <h2>Inscripciones pendientes</h2>
-		    <ul class="pager">
-				  <li><a href="/catalogos/solicitudespendientes">Revisar solicitudes</a></li>
-				</ul>
-		  </div>
-		  <div class="panel-body">
-				<div class="row">
-		  		@foreach ($solicitudes as $solicitud)
-						<div class="col-md-6">
-							<a href="../catalogos/solicitudespendientes/datossolicitud/{{Crypt::encrypt($solicitud->usuarioid)}}" style="text-decoration:none;">
-								<div class="bs-callout bs-callout-danger">
-										<dl class="dl-horizontal">
-											<dt>Fecha:</dt><dd>{{$solicitud->created_at}}</dd>
-											<dt>Nombre:</dt><dd>{{$solicitud->nombre}}</dd>
-									    <dt>Email:</dt><dd>{{$solicitud->email}}</dd>
-									    <dt>Producto:</dt><dd>{{$solicitud->nombre}}</dd>
-										</dl>
-								</div>
-							</a>
-						</div>
-		  		@endforeach
-				</div>
-		  </div>
-		</div>
+<?php $usuarioid = Crypt::encrypt($solicitud->usuarioid); ?>
+<h3 class="text-primary">Detalle solicitud - Inscripción</h3>
+<div class="col-sm-12">
+	<dl class="dl-horizontal">
+		<dt>Fecha:</dt><dd>{{$solicitud->created_at}}</dd>
+		<dt>Nombre:</dt><dd>{{$solicitud->nombre}}</dd>
+    <dt>Email:</dt><dd>{{$solicitud->email}}</dd>
+    <dt>Contingente(s):</dt><dd>{{$solicitud->productos}}</dd>
+	</dl>
+</div>
+<h4 class="text-warning">Documentos</h4>
+<ul class="list-group">
+	@foreach ($requerimientos as $requerimiento)
+    <li class="list-group-item">
+    	<a class="btn btn-default btn-xs" target="_blank" href="/archivos/{{$requerimiento->usuarioid. '/' . $requerimiento->archivo}}">
+    	<span class="fa fa-cloud-download"></span>
+    	</a>&nbsp;{{$requerimiento->nombre}}
+    </li>
+	@endforeach
+</ul>
+<h4 class="text-warning">Observaciones</h4>
+{{Form::open(array('id'=>'frmAuto', 'route'=>'solicitudespendientes.inscripcion.store'))}}
+	<div class="form-group" id="divObservaciones">
+	  <textarea class="form-control" rows="3" name="txObservaciones" id="txObservaciones" 
+	  	data-bv-notempty="true"
+	  	data-bv-notempty-message="La observación es requerida para rechazos"></textarea>
 	</div>
+	<button type="submit" class="btn btn-success" name="btnAutorizar" value="1" id="btnAutorizar" autocomplete="off">Autorizar</button>
+	<button type="submit" class="btn btn-danger" name="btnRechazar" value="1" id="btnRechazar" autocomplete="off">Rechazar</button>
+	{{Form::hidden('id',Request::segment(3))}}
+{{Form::close()}}
+<script>
+	$(document).ready(function(){
+		$('#btnAutorizar').click(function(){
+			$('#txObservaciones').hide();
+		});
+		$('#frmAuto').bootstrapValidator({
+			feedbackIcons: {
+        valid: 'glyphicon glyphicon-ok',
+        invalid: 'glyphicon glyphicon-remove',
+        validating: 'glyphicon glyphicon-refresh'
+      },
+    });
+	});
+</script>
+
 @stop
