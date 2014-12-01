@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateUsuarioproductosTable extends Migration {
+class CreateUsuariotratadoproductosTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,11 +12,11 @@ class CreateUsuarioproductosTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('usuarioproductos', function(Blueprint $table)
+		Schema::create('usuariotratadoproductos', function(Blueprint $table)
 		{
-			$table->increments('upid');
+			$table->increments('usuariotratadoproductoid');
 			$table->integer('usuarioid')->unsigned()->index('usuarioid');
-			$table->integer('productoid')->unsigned()->index('productoid');
+			$table->integer('tratadoproductoid')->unsigned()->index('productoid');
 		});
 	}
 
@@ -28,7 +28,7 @@ class CreateUsuarioproductosTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('usuarioproductos');
+		Schema::drop('usuariotratadoproductos');
 	}
 
 }

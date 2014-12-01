@@ -19,12 +19,14 @@ class CreateAuthusuariosTable extends Migration {
 			$table->string('password');
 			$table->integer('rolid')->unsigned()->index('authusuarios_rolid_foreign');
 			$table->string('nombre');
+			$table->binary('firma')->nullable();
+			$table->text('certificado')->nullable();
 			$table->boolean('activo')->default(1);
 			$table->boolean('cambiopassword')->default(1);
 			$table->boolean('notificar')->default(0);
-			$table->string('remember_token')->nullable();
-			$table->string('twostepsecret')->nullable();
-			$table->string('facebookid')->nullable();
+			$table->string('remember_token');
+			$table->string('twostepsecret');
+			$table->string('facebookid');
 			$table->timestamps();
 			$table->softDeletes();
 		});

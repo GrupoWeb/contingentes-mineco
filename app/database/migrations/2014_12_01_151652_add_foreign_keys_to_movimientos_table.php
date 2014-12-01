@@ -14,8 +14,8 @@ class AddForeignKeysToMovimientosTable extends Migration {
 	{
 		Schema::table('movimientos', function(Blueprint $table)
 		{
-			$table->foreign('usuarioid', 'movimientos_ibfk_2')->references('usuarioid')->on('authusuarios')->onUpdate('CASCADE')->onDelete('RESTRICT');
 			$table->foreign('periodoid', 'movimientos_ibfk_1')->references('periodoid')->on('periodos')->onUpdate('CASCADE')->onDelete('RESTRICT');
+			$table->foreign('usuarioid', 'movimientos_ibfk_2')->references('usuarioid')->on('authusuarios')->onUpdate('CASCADE')->onDelete('RESTRICT');
 		});
 	}
 
@@ -29,8 +29,8 @@ class AddForeignKeysToMovimientosTable extends Migration {
 	{
 		Schema::table('movimientos', function(Blueprint $table)
 		{
-			$table->dropForeign('usuarioid');
 			$table->dropForeign('periodoid');
+			$table->dropForeign('usuarioid');
 		});
 	}
 

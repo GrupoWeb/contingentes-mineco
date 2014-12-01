@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateProductopartidasTable extends Migration {
+class CreateTratadoproductopartidasTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,10 +12,10 @@ class CreateProductopartidasTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('productopartidas', function(Blueprint $table)
+		Schema::create('tratadoproductopartidas', function(Blueprint $table)
 		{
 			$table->increments('partidaid');
-			$table->integer('productoid')->unsigned()->index('productoid');
+			$table->integer('tratadoproductoid')->unsigned()->index('productoid');
 			$table->string('partida', 200)->nullable();
 			$table->string('nombre', 200);
 			$table->boolean('activo')->default(1);
@@ -30,7 +30,7 @@ class CreateProductopartidasTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('productopartidas');
+		Schema::drop('tratadoproductopartidas');
 	}
 
 }

@@ -14,8 +14,8 @@ class CreateTratadosproductosTable extends Migration {
 	{
 		Schema::create('tratadosproductos', function(Blueprint $table)
 		{
-			$table->increments('tpid');
-			$table->integer('tratadoint')->unsigned()->index('tratadoint');
+			$table->increments('tratadoproductoid');
+			$table->integer('tratadoid')->unsigned()->index('tratadoint');
 			$table->integer('productoid')->unsigned()->index('productoid');
 		});
 	}

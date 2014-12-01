@@ -14,8 +14,8 @@ class AddForeignKeysToTratadosproductosTable extends Migration {
 	{
 		Schema::table('tratadosproductos', function(Blueprint $table)
 		{
-			$table->foreign('tratadoint', 'tratadosproductos_ibfk_1')->references('tratadoid')->on('tratados')->onUpdate('CASCADE')->onDelete('RESTRICT');
 			$table->foreign('productoid', 'tratadosproductos_ibfk_2')->references('productoid')->on('productos')->onUpdate('CASCADE')->onDelete('RESTRICT');
+			$table->foreign('tratadoid', 'tratadosproductos_ibfk_1')->references('tratadoid')->on('tratados')->onUpdate('CASCADE')->onDelete('RESTRICT');
 		});
 	}
 
@@ -29,8 +29,8 @@ class AddForeignKeysToTratadosproductosTable extends Migration {
 	{
 		Schema::table('tratadosproductos', function(Blueprint $table)
 		{
-			$table->dropForeign('tratadoint');
 			$table->dropForeign('productoid');
+			$table->dropForeign('tratadoid');
 		});
 	}
 

@@ -14,8 +14,8 @@ class AddForeignKeysToAuthmodulopermisosTable extends Migration {
 	{
 		Schema::table('authmodulopermisos', function(Blueprint $table)
 		{
-			$table->foreign('permisoid')->references('permisoid')->on('authpermisos')->onUpdate('CASCADE')->onDelete('CASCADE');
 			$table->foreign('moduloid')->references('moduloid')->on('authmodulos')->onUpdate('CASCADE')->onDelete('CASCADE');
+			$table->foreign('permisoid')->references('permisoid')->on('authpermisos')->onUpdate('CASCADE')->onDelete('CASCADE');
 		});
 	}
 
@@ -29,8 +29,8 @@ class AddForeignKeysToAuthmodulopermisosTable extends Migration {
 	{
 		Schema::table('authmodulopermisos', function(Blueprint $table)
 		{
-			$table->dropForeign('authmodulopermisos_permisoid_foreign');
 			$table->dropForeign('authmodulopermisos_moduloid_foreign');
+			$table->dropForeign('authmodulopermisos_permisoid_foreign');
 		});
 	}
 

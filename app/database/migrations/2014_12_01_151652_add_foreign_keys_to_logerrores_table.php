@@ -14,9 +14,9 @@ class AddForeignKeysToLogerroresTable extends Migration {
 	{
 		Schema::table('logerrores', function(Blueprint $table)
 		{
-			$table->foreign('usuarioid')->references('usuarioid')->on('authusuarios')->onUpdate('CASCADE')->onDelete('RESTRICT');
 			$table->foreign('moduloid')->references('moduloid')->on('authmodulos')->onUpdate('CASCADE')->onDelete('RESTRICT');
 			$table->foreign('permisoid')->references('permisoid')->on('authpermisos')->onUpdate('CASCADE')->onDelete('RESTRICT');
+			$table->foreign('usuarioid')->references('usuarioid')->on('authusuarios')->onUpdate('CASCADE')->onDelete('RESTRICT');
 		});
 	}
 
@@ -30,9 +30,9 @@ class AddForeignKeysToLogerroresTable extends Migration {
 	{
 		Schema::table('logerrores', function(Blueprint $table)
 		{
-			$table->dropForeign('logerrores_usuarioid_foreign');
 			$table->dropForeign('logerrores_moduloid_foreign');
 			$table->dropForeign('logerrores_permisoid_foreign');
+			$table->dropForeign('logerrores_usuarioid_foreign');
 		});
 	}
 
