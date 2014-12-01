@@ -12,7 +12,9 @@
 		"csgt/cancerbero": "dev-master",
 		"csgt/crud": "dev-master",
 		"csgt/components": "dev-master",
-		"maxxscho/laravel-tcpdf": "0.*"
+		"maxxscho/laravel-tcpdf": "0.*",
+		"xethron/migrations-generator": "dev-master"
+
 	},
 	"autoload": {
 		"classmap": [

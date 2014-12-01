@@ -127,6 +127,9 @@ return array(
 		'Csgt\Crud\CrudServiceProvider',
 		'Csgt\Components\ComponentsServiceProvider',
 		'Maxxscho\LaravelTcpdf\LaravelTcpdfServiceProvider',
+		'Way\Generators\GeneratorsServiceProvider',
+		'Xethron\MigrationsGenerator\MigrationsGeneratorServiceProvider',
+
 	),
 
 	/*
