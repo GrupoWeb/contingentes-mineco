@@ -10,6 +10,14 @@ class productosController extends crudController {
 
 		
 	 	Crud::setCampo(array('nombre'=>'Nombre','campo'=>'nombre'));
+	 	
+	 	Crud::setCampo(array('nombre'=>'Unidad de Medida',
+	 						 'campo'=>'productos.unidadmedidaid' ,
+	 						 'tipo'=>'combobox', 
+	 						 'query'=>'SELECT  CONCAT(nombre,"-",nombrecorto), unidadmedidaid FROM  unidadesmedida', 
+	 						 'combokey'=>'unidadmedidaid',
+	 						 'show'=>false));
+
 	 	Crud::setPermisos(Cancerbero::tienePermisosCrud('productos'));
 	}
 
