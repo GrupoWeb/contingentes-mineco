@@ -8,12 +8,11 @@ class requerimientosController extends crudController {
 		Crud::setTablaId('requerimientoid');
 
 		Crud::setCampo(array('nombre'=>'Nombre','campo'=>'nombre','reglas' => array('notEmpty'), 'reglasmensaje'=>'El nombre es requerido', 'tipo'=>'string'));
-		Crud::setCampo(array('nombre'=>'Activo','campo'=>'activo','tipo'=>'bool'));
-		
+				
 		Crud::setPermisos(Cancerbero::tienePermisosCrud('requerimientos'));
 	}
 
-	public function getProductos($id, $tipo) {
+	public function getContingentes($id, $tipo) {
 		return Response::json(Contingenterequerimiento::getRequerimientos($id, $tipo));
 	}
 

@@ -1,49 +1,37 @@
 <?php
-class contingentesController extends BaseController {
 
-	private $crud, $cancerbero;
-
+class contingentesController extends crudController {
+	
 	public function __construct() {
-		$this->cancerbero = new Cancerbero;
-		$this->crud       = new Crud;
-
-		$this->crud->setExport(true);
-		$this->crud->setTitulo('Contingentes');
-		$this->crud->setTabla('productos');
-		$this->crud->setTablaId('productoid');
-
-		$this->crud->setCampo(array('nombre'=>'Nombre','campo'=>'nombre','reglas' => array('notEmpty'), 'reglasmensaje'=>'El nombre es requerido', 'tipo'=>'string'));
-		$this->crud->setCampo(array('nombre'=>'Activo','campo'=>'activo','tipo'=>'bool'));
+		Crud::setExport(true); 
+		Crud::setTitulo('Contingentes');
+		Crud::setTablaId('contingenteid');
+		Crud::setTabla('contingentes');
+	
+		//Crud::setLeftJoin('productos AS p', 'periodos.productoid', '=', 'p.productoid');
 		
-		$this->crud->setBotonExtra(array('url'=>'contingente/requerimientos/', 'titulo'=>'Requerimientos Contingente', 'icon'=>'glyphicon glyphicon-ok', 'class'=>'warning'));
-		$this->crud->setPermisos($this->cancerbero->tienePermisosCrud('contingentes'));
+	 	Crud::setCampo(array('nombre'=>'Producto','campo'=>'(SELECT nombre FROM productos WHERE productoid=contingentes.productoid)', 'editable'=>false, 'show'=>true));
+	 	Crud::setCampo(array('nombre'=>'Tratado','campo'=>'(SELECT nombre FROM tratados WHERE tratadoid=contingentes.tratadoid)', 'editable'=>false, 'show'=>true));
+
+	 	Crud::setCampo(array('nombre' =>'Producto', 'campo'=>'productoid', 'tipo'=>'combobox', 'query'=>'SELECT nombre, productoid FROM productos', 'combokey'=>'productoid', 'editable'=>true, 'show'=>false));
+
+	 	Crud::setCampo(array('nombre' =>'Tratado', 'campo'=>'tratadoid', 'tipo'=>'combobox', 'query'=>'SELECT nombre, tratadoid FROM tratados', 'combokey'=>'tratadoid', 'editable'=>true, 'show'=>false));
+
+	 	Crud::setBotonExtra(array('url'=>'contingente/requerimientos/','icon'=>'glyphicon glyphicon-list-alt','titulo'=>'Ver detalle'));
+	 	
+	 	Crud::setPermisos(Cancerbero::tienePermisosCrud('contingentes'));
 	}
 
-	public function index() {
-		return $this->crud->index();
-	}
+	public function asignarrequerimientos($id){
+		//dd(Crypt::decrypt($id));
+		  return View::make('contingentes/asignarrequerimientos');
+	}	
 
-	public function create() {
-		return $this->crud->create(0);
-	}
+	public function getSaldo($contingenteid) {
+		$disponible             = DB::select(DB::raw('SELECT getSaldo('.$contingenteid.','.Auth::id().') AS disponible'));
+		$response['disponible'] = $disponible[0]->disponible;
+		$response['unidad']     = Contingente::getUnidadMedida($contingenteid);
 
-	public function store() {
-		return $this->crud->store();
-	}
-
-	public function show($id) {
-		return $this->crud->getData($id);
-	}
-
-	public function edit($id) {
-		return $this->crud->create($id);
-	}
-
-	public function update($id) {
-		return $this->crud->store($id);
-	}
-
-	public function destroy($id) {
-		return $this->crud->destroy($id);
+		return Response::json($response);
 	}
 }

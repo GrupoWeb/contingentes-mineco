@@ -1,7 +1,17 @@
 <?php
 class emisionController extends BaseController {
-	function index(){
+	
+	function index() {
 		return View::make('emision.index')
-			->with('productos', Producto::where('activo', 1)->get());
+			->with('contingentes', Usuariocontingente::getContingentes());
+	}
+
+	function store() {
+		//dd(Input::all());
+
+		$query      = DB::select(DB::raw('SELECT getSaldo('.Input::get('contingentes').','.Auth::id().') AS disponible'));
+		$disponible = $query[0]->disponible;
+
+		dd($disponible);
 	}
 }

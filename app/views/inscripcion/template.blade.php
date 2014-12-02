@@ -145,9 +145,9 @@
         $("#contingentes").change(function() {
           $('.nuevos').remove();
           $('#frmRegistro').bootstrapValidator('revalidateField', 'contingentes');
-          $.get('/requerimientos/productos/' + $(this).val() + '/inscripcion', function(data){
+          $.get('/requerimientos/contingentes/' + $(this).val() + '/inscripcion', function(data){
               $.each(data, function(key, datos){
-                $.get('/requerimientos/productos/vacio?nombre=' + datos.nombre + '&id=' + datos.requerimientoid, function(template){
+                $.get('/requerimientos/contingentes/vacio?nombre=' + datos.nombre + '&id=' + datos.requerimientoid, function(template){
                   $('.requerimientos').append(template);
                   $('#frmRegistro').bootstrapValidator('addField', 'file' + datos.requerimientoid);
                 });     

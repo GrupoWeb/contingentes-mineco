@@ -23,19 +23,23 @@ Route::resource('signup', 'inscripcionController');
 Route::get('signup/checkEmail', 'inscripcionController@validateEmail');
 
 //=== REQUERIMIENTOS
-Route::get('requerimientos/productos/{id}/{tipo}', 'requerimientosController@getProductos');
-Route::get('requerimientos/productos/vacio', 'requerimientosController@getVacio');
+Route::get('requerimientos/contingentes/{id}/{tipo}', 'requerimientosController@getContingentes');
+Route::get('requerimientos/contingentes/vacio', 'requerimientosController@getVacio');
 
 //=== CONTINGENTES
 Route::get('contingente/partidas/{id}', 'partidasController@getPartidas');
+Route::get('contingente/saldo/{id}', 'contingentesController@getSaldo');
+
 
 Route::group(array('before' => array('auth', 'cancerbero', 'menu')), function() {
 	Route::get('/', array('as'=>'index.index', 'uses'=>'dashboardController@index'));
 	
 	//=== SOLICITUDES
-	Route::get('solicitud/emision', array('as'=>'solicitud.emision.index', 'uses'=>'emisionController@index'));
+	Route::resource('solicitud/asignacion', 'asignacionController', array('only'=>array('index','store')));
+	Route::resource('solicitud/emision', 'emisionController', array('only'=>array('index','store')));
 	Route::resource('solicitudespendientes/inscripcion', 'solicitudesinscripcionController');
 	Route::resource('solicitudespendientes/asignacion', 'solicitudesasignacionController');
+	Route::resource('solicitudespendientes/emision', 'solicitudesemisionController');
 	
 	//=== CONTINGENTES
 	Route::get('contingente/requerimientos/{id}', array('as'=>'contingente.requerimientos.index','uses'=>'contingenterequerimientosController@index'));
@@ -47,8 +51,6 @@ Route::group(array('before' => array('auth', 'cancerbero', 'menu')), function() 
 	Route::resource('requerimientos','requerimientosController');
 	Route::resource('contingentes','contingentesController');
 	Route::resource('periodos','periodosController');
-
-
 	//Route::resource('catalogos/movimientos', 'movimientosController');
 
 	//=== CERTIFICADOS
