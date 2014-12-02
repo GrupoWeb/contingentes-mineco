@@ -46,4 +46,12 @@ class contingentesController extends BaseController {
 	public function destroy($id) {
 		return $this->crud->destroy($id);
 	}
+
+	public function getSaldo($contingenteid) {
+		$disponible             = DB::select(DB::raw('SELECT getSaldo('.$contingenteid.','.Auth::id().') AS disponible'));
+		$response['disponible'] = $disponible[0]->disponible;
+		$response['unidad']     = Contingente::getUnidadMedida($contingenteid);
+
+		return Response::json($response);
+	}
 }
