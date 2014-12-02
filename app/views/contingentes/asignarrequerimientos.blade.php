@@ -1,10 +1,15 @@
 @extends('template/template')
 
 @section('content')
+
+
 <ol class="breadcrumb">
 	  <li><a href="/contingentes">Contingentes</a></li>
 	  <li>Asignar Requerimientos</li>
-	  <li class="active">{{$productoN->nombre}}</li>
+	  <!-- <li class="active">{{$ContingenteN->contingenteid}}</li> -->
+	  <li class="active">
+	 	{{$nombreContingente[0]->nombre}}
+	  </li>
 </ol>
 
 @if(Session::get('message'))
@@ -15,7 +20,7 @@
 @endif
 
 	{{ Form::open(array('route' => 'contingente.requerimientos.store')) }}
-	{{ Form::hidden('productoid', Crypt::encrypt($productoN->productoid)) }}
+	{{ Form::hidden('contingenteid', Crypt::encrypt($ContingenteN->contingenteid)) }}
 			<div class="col-md-4">
 				<div class="panel panel-default">
 				  <div class="panel-heading">
@@ -23,13 +28,13 @@
 				  </div>
 				  <div class="panel-body">
 				  		<div class="pull-right">
-				  		<a href="javascript:void(0);" id="tod{{$productoN->productoid}}" class="lnkTodosI">Todos</a> | 
-				  		<a href="javascript:void(0);" id="nin{{$productoN->productoid}}" class="lnkNingunoI">Ninguno</a>
+				  		<a href="javascript:void(0);" id="tod{{$ContingenteN->contingenteid}}" class="lnkTodosI">Todos</a> | 
+				  		<a href="javascript:void(0);" id="nin{{$ContingenteN->contingenteid}}" class="lnkNingunoI">Ninguno</a>
 				  	</div>
 					@foreach($requerimientos as $requerimiento)
 						<div>
 							<label>
-								<input type="checkbox" value="{{$productoN->productoid}}-{{$requerimiento->requerimientoid}}"  name='reqInscripcion[]' id="mp{{$productoN->productoid.'-'.$requerimiento->requerimientoid}}" class="chkIn{{$productoN->productoid}}" 
+								<input type="checkbox" value="{{$ContingenteN->contingenteid}}-{{$requerimiento->requerimientoid}}"  name='reqInscripcion[]' id="mp{{$ContingenteN->contingenteid.'-'.$requerimiento->requerimientoid}}" class="chkIn{{$ContingenteN->contingenteid}}" 
 								{{ (in_array($requerimiento->requerimientoid, $aInscripcion)) ? 'checked="true"' : '' }}> {{$requerimiento->nombre}}
 							</label>
 						</div>
@@ -44,13 +49,13 @@
 				  </div>
 				  <div class="panel-body">
 				  		<div class="pull-right">
-				  		<a href="javascript:void(0);" id="tod{{$productoN->productoid}}" class="lnkTodosA">Todos</a> | 
-				  		<a href="javascript:void(0);" id="nin{{$productoN->productoid}}" class="lnkNingunoA">Ninguno</a>
+				  		<a href="javascript:void(0);" id="tod{{$ContingenteN->contingenteid}}" class="lnkTodosA">Todos</a> | 
+				  		<a href="javascript:void(0);" id="nin{{$ContingenteN->contingenteid}}" class="lnkNingunoA">Ninguno</a>
 				  	</div>
 					@foreach($requerimientos as $requerimiento)
 						<div>
 							<label>
-								<input type="checkbox" value="{{$productoN->productoid}}-{{$requerimiento->requerimientoid}}"  name='reqAsignacion[]' id="mp{{$productoN->productoid.'-'.$requerimiento->requerimientoid}}" class="chkAsig{{$productoN->productoid}}" v
+								<input type="checkbox" value="{{$ContingenteN->contingenteid}}-{{$requerimiento->requerimientoid}}"  name='reqAsignacion[]' id="mp{{$ContingenteN->contingenteid.'-'.$requerimiento->requerimientoid}}" class="chkAsig{{$ContingenteN->contingenteid}}" v
 								{{ (in_array($requerimiento->requerimientoid, $aAsignacion)) ? 'checked="true"' : '' }}> {{$requerimiento->nombre}}
 							</label>
 						</div>
@@ -65,13 +70,13 @@
 				  </div>
 				  <div class="panel-body">
 				  		<div class="pull-right">
-				  		<a href="javascript:void(0);" id="tod{{$productoN->productoid}}" class="lnkTodosE">Todos</a> | 
-				  		<a href="javascript:void(0);" id="nin{{$productoN->productoid}}" class="lnkNingunoE">Ninguno</a>
+				  		<a href="javascript:void(0);" id="tod{{$ContingenteN->contingenteid}}" class="lnkTodosE">Todos</a> | 
+				  		<a href="javascript:void(0);" id="nin{{$ContingenteN->contingenteid}}" class="lnkNingunoE">Ninguno</a>
 				  	</div>
 					@foreach($requerimientos as $requerimiento)
 						<div>
 							<label>
-								<input type="checkbox" value="{{$productoN->productoid}}-{{$requerimiento->requerimientoid}}"  name='reqEmision[]' id="mp{{$productoN->productoid.'-'.$requerimiento->requerimientoid}}" class="chkEmi{{$productoN->productoid}}" v
+								<input type="checkbox" value="{{$ContingenteN->contingenteid}}-{{$requerimiento->requerimientoid}}"  name='reqEmision[]' id="mp{{$ContingenteN->contingenteid.'-'.$requerimiento->requerimientoid}}" class="chkEmi{{$ContingenteN->contingenteid}}" v
 								{{ (in_array($requerimiento->requerimientoid, $aEmision)) ? 'checked="true"' : '' }}> {{$requerimiento->nombre}}
 							</label>
 						</div>
