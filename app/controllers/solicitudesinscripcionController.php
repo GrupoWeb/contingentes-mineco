@@ -17,7 +17,7 @@ class solicitudesinscripcionController extends crudController {
 	}
 
 	public function edit($id){
-		$solicitud 			= Solicitudpendiente::getSolicitudPendiente(Crypt::decrypt($id));
+		$solicitud 			= Inscripcionpendiente::getSolicitudPendiente(Crypt::decrypt($id));
 		$requerimientos = Usuariorequerimiento::getUsuarioRequerimientos(Crypt::decrypt($id));
 
 		return View::make('solicitudespendientes/inscripciones')
@@ -26,11 +26,10 @@ class solicitudesinscripcionController extends crudController {
 	}
 
 	public function store(){
-		//dd(Input::all());
 		$elID = Crypt::decrypt(Input::get('id'));
 
 		if(Input::has('btnAutorizar')) {
-			$usuario         = Solicitudpendiente::find($elID);
+			$usuario         = Inscripcionpendiente::find($elID);
 			$usuario->activo = 1;
 			$result          = $usuario->save();
 
@@ -54,10 +53,10 @@ class solicitudesinscripcionController extends crudController {
 			}
 		}
 		else {
-			$affectedRows  = Usuarioproducto::where('usuarioid', $elID)->delete();
+			$affectedRows  = Usuariocontingente::where('usuarioid', $elID)->delete();
 			$affectedRows2 = Usuariorequerimiento::where('usuarioid',$elID)->delete();
 			//Se borra el usuario
-			$usuario = Solicitudpendiente::find($elID);
+			$usuario = Inscripcionpendiente::find($elID);
 			$nombre  = $usuario->nombre;
 			$email   = $usuario->email;
 			$result  = $usuario->delete();
