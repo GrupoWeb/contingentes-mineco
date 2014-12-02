@@ -13,7 +13,7 @@ class requerimientosController extends crudController {
 		Crud::setPermisos(Cancerbero::tienePermisosCrud('requerimientos'));
 	}
 
-	public function getProductos($id, $tipo) {
+	public function getContingentes($id, $tipo) {
 		return Response::json(Contingenterequerimiento::getRequerimientos($id, $tipo));
 	}
 
