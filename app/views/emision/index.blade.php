@@ -8,12 +8,20 @@
     <div class="form-group col-sm-6">
       <label for="cmbProductos" class="col-sm-4 control-label">Contingente</label>
       <div class="col-sm-8">
-        <?php 
-          $prods = array();
-          foreach($productos as $producto)
-            $prods[Crypt::encrypt($producto->productoid)] = $producto->nombre;
-        ?>
-        {{ Form::select('cmbProductos', $prods, null, array('class'=>'selectpicker form-control','id'=>'cmbProductos')) }}
+        <?php $grupoActual = 'primero'; ?>
+        <select name="contingentes" class="selectpicker form-control" id="cmbContingentes" title="Seleccione uno">
+          @foreach($contingentes as $contingente)
+            @if($contingente->tratado <> $grupoActual)
+              @if($grupoActual <> 'primero')
+                </optgroup>
+              @endif
+              <optgroup label="{{ $contingente->tratado }}">
+              <?php $grupoActual = $contingente->tratado; ?>  
+            @endif
+            <option value="{{ $contingente->contingenteid }}">{{ $contingente->producto }}</option>
+          @endforeach
+          </optgroup>
+        </select>
       </div>
     </div>
     <div class="clearfix"></div>
@@ -26,16 +34,18 @@
     <div class="form-group col-sm-6">
       <label for="cantidad" class="col-sm-4 control-label">Cantidad</label>
       <div class="col-sm-8">
-        {{ Form::text('cantidad', '', array('class'=>'form-control', 
-          'data-bv-notEmpty'         =>'true',
-          'data-bv-notEmpty-message' => 'La cantidad es incorrecta',
-          'data-bv-numeric'          => 'true',
-          'data-bv-numeric-message'  => 'Solo se aceptan dígitos',
-          'autocomplete'             => 'off'
+        {{ Form::text('cantidad', '', array('class'=>'form-control',
+          'data-bv-notEmpty'           => 'true',
+          'data-bv-notEmpty-message'   => 'La cantidad es incorrecta',
+          'data-bv-numeric'            => 'true',
+          'data-bv-numeric-message'    => 'Solo se aceptan dígitos',
+          'autocomplete'               => 'off'
           )) }}
+          
+          {{ Form::hidden('disponible', '') }}
       </div>
       <div class="col-sm-4"></div>
-      <span id="helpBlock" class="help-block">&nbsp;&nbsp;&nbsp;&nbsp;Máximo disponible: 1,200TM</span>
+      <span id="helpBlock" class="help-block">&nbsp;&nbsp;&nbsp;&nbsp;Máximo disponible: <span name="disponible-span"></span><span id="unidades"></span></span>
     </div>
     <div class="clearfix"></div>
     <h4 class="text-warning">Requisitos Adicionales</h4>
@@ -51,9 +61,23 @@
   {{Form::close()}}
   <script>
     $(document).ready(function(){
-      $("#cmbProductos").change(function() {
+      $('#frmSolicitud').bootstrapValidator({
+        fields: {
+          cantidad: {
+            validators: {
+              lessThan: {
+                  value: 'disponible',
+                  message: 'La cantidad no puede sobrepasar el monto disponible'
+              }
+            }
+          }
+        }
+      });
+
+
+      $("#cmbContingentes").change(function() {
         $('.nuevos').remove();
-        $.get('/requerimientos/' + $(this).val() + '/emision', function(data){
+        $.get('/requerimientos/contingentes/' + $(this).val() + '/emision', function(data){
           $.each(data, function(key, datos){
             var $template = $('#fileSeed');
             $('#fileSeed .control-label').html(datos.nombre);
@@ -69,17 +93,31 @@
           $('.cmb-partida').selectpicker({'showSubtext': true});
           $('#frmSolicitud').bootstrapValidator('addField', 'partidas[]');
         });
+
+        $.get('/contingente/saldo/' + $(this).val(), function(data){
+          $('[name="disponible"]').val(data.disponible);
+          $('[name="disponible-span"]').text(data.disponible);
+          $('#unidades').text(data.unidad);
+
+          $('#frmSolicitud').bootstrapValidator('revalidateField', 'cantidad');
+        });
       });
 
-      $('#frmSolicitud').bootstrapValidator({
+      /*$('#frmSolicitud').bootstrapValidator({
         feedbackIcons: {
           valid: 'glyphicon glyphicon-ok',
           invalid: 'glyphicon glyphicon-remove',
           validating: 'glyphicon glyphicon-refresh'
         }
-      });
+      });*/
       $('.selectpicker').selectpicker();
-      $("#cmbProductos").change();
+
+      $("#cmbContingentes").change();
+
+      $('[name="cantidad"]').change(function(){
+        $('#frmSolicitud').bootstrapValidator('revalidateField', 'cantidad');
+      });
+
     });
   </script>
 @stop
