@@ -6,14 +6,19 @@ class contingenterequerimientosController extends BaseController {
 		$aEmision = array();
 		$aInscripcion =array();
 
-		$productoN = DB::table('productos')->where('productoid', Crypt::decrypt($id))->first();
+		$ContingenteN = DB::table('contingentes')->where('contingenteid', Crypt::decrypt($id))->first();
+
 		
 		$requerimientos = Requerimiento::getRequerimientos();
-		
 		$id=Crypt::decrypt($id);
-		$requerimientosAsignacion 	= productorequerimiento::getRequerimientosAsignados($id);
-		$requerimientosEmision 			= productorequerimiento::getRequerimientosEmision($id);
-		$requerimientosInscripcion 	= productorequerimiento::getRequerimientosInscripcion($id);
+		$nombreContingente = Contingenterequerimiento::getNombre($id);
+
+		
+
+		$requerimientosAsignacion 	= Contingenterequerimiento::getRequerimientosAsignados($id);
+		$requerimientosEmision 		= Contingenterequerimiento::getRequerimientosEmision($id);
+		$requerimientosInscripcion 	= Contingenterequerimiento::getRequerimientosInscripcion($id);
+//dd($requerimientosAsignacion);
 
 		foreach ($requerimientosAsignacion as $requAsignados) {
 			$aAsignacion[]=$requAsignados->requerimientoid;
@@ -28,59 +33,67 @@ class contingenterequerimientosController extends BaseController {
 		}
 
 		return View::make('contingentes.asignarrequerimientos')
-			->with('productoN',$productoN)
+			->with('ContingenteN',$ContingenteN)
 			->with('requerimientos', $requerimientos)
 			->with('aAsignacion', $aAsignacion)
 			->with('aEmision', $aEmision)
-			->with('aInscripcion', $aInscripcion);
+			->with('aInscripcion', $aInscripcion)
+			->with('nombreContingente',$nombreContingente);
+			
 	}
 
 
 	public function store() {
-		$productoid = Crypt::decrypt(Input::get('productoid'));
-			DB::table('productorequerimientos')->where('productoid', '=', $productoid)->delete();
+		$contingenteid = Crypt::decrypt(Input::get('contingenteid'));
+			DB::table('contingenterequerimientos')->where('contingenteid', '=', $contingenteid)->delete();
+ //dd($contingenteid);
 			$aAsignacion = Input::get('reqAsignacion');
 			$aEmision    = Input::get('reqEmision');
 			$aInscripcion= Input::get('reqInscripcion');
 
+			//dd(Input::all());
+			//dd($aAsignacion);
 			if($aAsignacion==null){
-				DB::table('productorequerimientos')
-					->where('productoid', '=', $productoid)
-					->where('tipo', '=', 'Asignación')
+				DB::table('contingenterequerimientos')
+					->where('contingenteid', '=', $contingenteid)
+					->where('tipo', '=', 'asignacion')
 					->delete();
 			}else{
-				foreach ($aAsignacion as $producto) {
-					$datos = (explode('-', $producto));
-					DB::table('productorequerimientos')->insert(
-	    				array('productoid' => $datos[0], 'requerimientoid' => $datos[1], 'tipo'=>'Asignación')
-					);
+				//dd($aAsignacion);
+				 foreach ($aAsignacion as $contingenteid) {
+				$datos = (explode('-', $contingenteid));
+					//dd($datos);
+					DB::table('contingenterequerimientos')->insert(
+	   			 	array('contingenteid' => $datos[0], 'requerimientoid' => $datos[1], 'tipo'=>'asignacion')
+				 	);
 				}
+			
 			}
 			
 			if($aEmision==null){
-				DB::table('productorequerimientos')
-					->where('productoid', '=', $productoid)
-					->where('tipo', '=', 'Emisión')
+				DB::table('contingenterequerimientos')
+					->where('contingenteid', '=', $contingenteid)
+					->where('tipo', '=', 'emision')
 					->delete();
 			}else{
-				foreach ($aEmision as $producto) {
-					$datos = (explode('-', $producto));
-					DB::table('productorequerimientos')->insert(
-		    			array('productoid' => $datos[0], 'requerimientoid' => $datos[1], 'tipo'=>'Emisión')
+				foreach ($aEmision as $contingenteid) {
+					$datos = (explode('-', $contingenteid));
+					DB::table('contingenterequerimientos')->insert(
+		    			array('contingenteid' => $datos[0], 'requerimientoid' => $datos[1], 'tipo'=>'emision')
 					);
 				}
 			}
 
 			if($aInscripcion==null){
-				DB::table('productorequerimientos')
-					->where('productoid', '=', $productoid)
-					->where('tipo', '=', 'Inscripción')
+				DB::table('contingenterequerimientos')
+					->where('contingenteid', '=', $contingenteid)
+					->where('tipo', '=', 'inscripcion')
 					->delete();
 			}else{
-				foreach ($aInscripcion as $producto) {
-					$datos = (explode('-', $producto));
-					DB::table('productorequerimientos')->insert(
-		    			array('productoid' => $datos[0], 'requerimientoid' => $datos[1], 'tipo'=>'Inscripción')
+				foreach ($aInscripcion as $contingenteid) {
+					$datos = (explode('-', $contingenteid));
+					DB::table('contingenterequerimientos')->insert(
+		    			array('contingenteid' => $datos[0], 'requerimientoid' => $datos[1], 'tipo'=>'inscripcion')
 					);
 				}
 			}

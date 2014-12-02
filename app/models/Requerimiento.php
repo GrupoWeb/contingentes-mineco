@@ -8,7 +8,6 @@ class Requerimiento extends Eloquent {
 		return DB::table('requerimientos')
 			->select('nombre','requerimientoid')
 			->orderBy('nombre')
-			->where('activo', 1)
 			->get();
 	}
 }
