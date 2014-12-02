@@ -21,9 +21,11 @@ Route::get('correo', function(){
 //=== SOLICITUD DE INSCRIPCION
 Route::resource('signup', 'inscripcionController');
 Route::get('signup/checkEmail', 'inscripcionController@validateEmail');
+
 //=== REQUERIMIENTOS
 Route::get('requerimientos/productos/{id}/{tipo}', 'requerimientosController@getProductos');
 Route::get('requerimientos/productos/vacio', 'requerimientosController@getVacio');
+
 //=== CONTINGENTES
 Route::get('contingente/partidas/{id}', 'partidasController@getPartidas');
 Route::get('asignarrequerimientos/contigente/{id}', 'contingentesController@asignarrequerimientos');
@@ -31,22 +33,22 @@ Route::get('asignarrequerimientos/contigente/{id}', 'contingentesController@asig
 
 Route::group(array('before' => array('auth', 'cancerbero', 'menu')), function() {
 	Route::get('/', array('as'=>'index.index', 'uses'=>'dashboardController@index'));
+	
 	//=== SOLICITUDES
 	Route::get('solicitud/emision', array('as'=>'solicitud.emision.index', 'uses'=>'emisionController@index'));
 	Route::resource('solicitudespendientes/inscripcion', 'solicitudesinscripcionController');
 	Route::resource('solicitudespendientes/asignacion', 'solicitudesasignacionController');
+	
 	//=== CONTINGENTES
-	Route::get('contingente/requerimientos/{id}', array('as'=>'contingente.requerimientos.index', 
-		'uses'=>'contingenterequerimientosController@index'));
-	Route::post('contingente/requerimientos/store', array('as'=>'contingente.requerimientos.store', 
-		'uses'=>'contingenterequerimientosController@store'));
+	Route::get('contingente/requerimientos/{id}', array('as'=>'contingente.requerimientos.index','uses'=>'contingenterequerimientosController@index'));
+	Route::post('contingente/requerimientos/store', array('as'=>'contingente.requerimientos.store','uses'=>'contingenterequerimientosController@store'));
 
 	//=== CATALOGOS
-	Route::resource('productos', 'productosController');
-	Route::resource('tratados', 'tratadosController');
-	Route::resource('requerimientos', 'requerimientosController');
-	Route::resource('contingentes', 'contingentesController');
-	Route::resource('periodos', 'periodosController');
+	Route::resource('productos','productosController');
+	Route::resource('tratados','tratadosController');
+	Route::resource('requerimientos','requerimientosController');
+	Route::resource('contingentes','contingentesController');
+	Route::resource('periodos','periodosController');
 
 
 	//Route::resource('catalogos/movimientos', 'movimientosController');

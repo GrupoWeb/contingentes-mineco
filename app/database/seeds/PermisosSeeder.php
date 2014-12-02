@@ -64,4 +64,3 @@
 		  DB::statement('SET FOREIGN_KEY_CHECKS=1');
 		}
 	}
-//Termina PermisosSeeder.php

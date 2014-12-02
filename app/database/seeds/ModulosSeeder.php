@@ -63,14 +63,14 @@
 			DB::table('authmodulos')->insert(array(
 				'moduloid'       => 9,
 				'nombre'         => 'solicitudespendientes.asignacion',
-				'nombrefriendly' => 'Solicitudes asignación',
+				'nombrefriendly' => 'Solicitudes pendientes asignación',
 				'created_at'     => date_create(), 'updated_at' => date_create()
 			));
 
 			DB::table('authmodulos')->insert(array(
 				'moduloid'       => 10,
 				'nombre'         => 'solicitudespendientes.inscripcion',
-				'nombrefriendly' => 'Solicitudes inscripción',
+				'nombrefriendly' => 'Solicitudes pendientes inscripción',
 				'created_at'     => date_create(), 'updated_at' => date_create()
 			));
 
@@ -92,6 +92,20 @@
 				'moduloid'       => 13,
 				'nombre'         => 'contingente.requerimientos',
 				'nombrefriendly' => 'Contingentes - Requerimientos',
+				'created_at'     => date_create(), 'updated_at' => date_create()
+			));
+
+			DB::table('authmodulos')->insert(array(
+				'moduloid'       => 14,
+				'nombre'         => 'solicitud.asignacion',
+				'nombrefriendly' => 'Solicitud de asignación',
+				'created_at'     => date_create(), 'updated_at' => date_create()
+			));
+
+			DB::table('authmodulos')->insert(array(
+				'moduloid'       => 15,
+				'nombre'         => 'solicitudespendientes.emision',
+				'nombrefriendly' => 'Solicitudes pendientes emisión',
 				'created_at'     => date_create(), 'updated_at' => date_create()
 			));
 

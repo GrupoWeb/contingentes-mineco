@@ -13,7 +13,7 @@ class requerimientosController extends crudController {
 	}
 
 	public function getProductos($id, $tipo) {
-		return Response::json(Productorequerimiento::getRequerimientos($id, $tipo));
+		return Response::json(Contingenterequerimiento::getRequerimientos($id, $tipo));
 	}
 
 	public function getVacio() {

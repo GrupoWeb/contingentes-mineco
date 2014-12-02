@@ -70,17 +70,20 @@
               <div class="form-group">
                 <label for="contingentes" class="col-sm-4 control-label">Contingente(s)</label>
                 <div class="col-sm-8 div-contingente">
-                  <?php 
-                    $prods = array();
-                    foreach($productos as $producto)
-                      $prods[$producto->productoid] = $producto->nombre;
-                  ?>
-                  {{ Form::select('contingentes[]', $prods, null, array(
-                    'class'                     => 'form-control',
-                    'id'                        => 'contingentes',
-                    'multiple'                  => 'true',
-                    'title'                     => 'Seleccione uno o varios'
-                    )) }}
+                  <?php $grupoActual = 'primero'; ?>
+                  <select name="contingentes[]" class="selectpicker form-control" id="contingentes" multiple="true" title="Seleccione uno o varios">
+                    @foreach($contingentes as $contingente)
+                      @if($contingente->tratado <> $grupoActual)
+                        @if($grupoActual <> 'primero')
+                          </optgroup>
+                        @endif
+                        <optgroup label="{{ $contingente->tratado }}">
+                        <?php $grupoActual = $contingente->tratado; ?>  
+                      @endif
+                      <option value="{{ $contingente->contingenteid }}">{{ $contingente->producto }}</option>
+                    @endforeach
+                    </optgroup>
+                  </select>
                 </div>
               </div>
             </div>

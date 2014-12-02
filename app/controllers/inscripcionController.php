@@ -5,7 +5,7 @@ class inscripcionController extends BaseController {
 	public function index() {
 		return View::make('inscripcion/template')
 			->with('route', 'signup.store')
-			->with('productos', Producto::where('activo', 1)->get());
+			->with('contingentes', Contingente::getContingentes());
 	}
 
 	public function validateEmail() {
@@ -32,9 +32,9 @@ class inscripcionController extends BaseController {
 	    $usuarioId = $usuario->insertGetId($arr);
 
 	    foreach (Input::get('contingentes') as $val) {
-	    	DB::table('usuarioproductos')->insert(array(
-		      'usuarioid'=>$usuarioId, 
-		      'productoid'=>$val)
+	    	DB::table('usuariocontingentes')->insert(array(
+					'usuarioid'     => $usuarioId, 
+					'contingenteid' => $val)
 	    	);
 	    }
 	    
@@ -42,7 +42,7 @@ class inscripcionController extends BaseController {
 	      if ($key=='txArchivo') continue;
 	    	if ($val) {
 					$arch   = Input::file($key);
-					$nombre = date('YmdHis').$arch->getClientOriginalName(). '.' . $arch->getClientOriginalExtension();
+					$nombre = date('YmdHis').$arch->getClientOriginalName();
 					$res    = $arch->move(public_path() . '/archivos/' . $usuarioId, $nombre);
 					DB::table('usuariorequerimientos')->insert(array(
 						'usuarioid'        => $usuarioId,
@@ -54,6 +54,7 @@ class inscripcionController extends BaseController {
 				}
 	    }
 	  }); //DB Transaction
+
     $email = Input::get('email');
     Mail::send('emails/solicitudinscripcion', array(
       'nombre' => Input::get('txNombre'),

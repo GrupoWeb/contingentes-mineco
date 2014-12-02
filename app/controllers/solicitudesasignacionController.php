@@ -52,21 +52,20 @@ class solicitudesasignacionController extends BaseController {
 	}
 
 	public function inscripcionesPendientes() {
-		$solicitudesInscripcion = Solicitudpendiente::getSolicitudesPendientes();
-		return View::make('solicitudespendientes/inscripciones')->with('solicitudes', $solicitudesInscripcion);
+		return View::make('solicitudespendientes/inscripciones')
+			->with('solicitudes', $solicitudesInscripcion);
 	}
 
 	public function datosSolicitud($id){
-		$solicitud = Solicitudpendiente::getSolicitudPendiente(Crypt::decrypt($id));
+		$solicitud      = Inscripcionependiente::getSolicitudPendiente(Crypt::decrypt($id));
 		$requerimientos = Usuariorequerimiento::getUsuarioRequerimientos(Crypt::decrypt($id));
 
 		return View::make('solicitudespendientes/create')->with('solicitud',$solicitud)->with('requerimientos',$requerimientos);
 	}
 
 	public function autorizar($id){
-		if(Input::get('act')==1)
-		{
-			$usuario         = Solicitudpendiente::find(Crypt::decrypt($id));
+		if(Input::get('act')==1) {
+			$usuario         = Inscripcionependiente::find(Crypt::decrypt($id));
 			$usuario->activo = 1;
 			$result          = $usuario->save();
 
@@ -84,21 +83,19 @@ class solicitudesasignacionController extends BaseController {
 		       			$msg->to($email)->subject('Solicitud de Inscripción DACE - MINECO');
 				});
 			}
-			else
-			{
+			else {
 				Session::flash('type','warning');
 				Session::flash('message','Ocurrió un error al intentar autorizar, intente de nuevo.');
 			}
 		}
 		else{
-			$affectedRows = Usuarioproducto::where('usuarioid', '=', Crypt::decrypt($id))->delete();
+			$affectedRows  = Usuariocontingente::where('usuarioid', '=', Crypt::decrypt($id))->delete();
 			$affectedRows2 = Usuariorequerimiento::where('usuarioid', '=', Crypt::decrypt($id))->delete();
-			$usuario = Solicitudpendiente::find(Crypt::decrypt($id));
-			$nombre  = $usuario->nombre;
-			$email   = $usuario->email;
-			$result = $usuario->delete();
-			if($result)
-			{
+			$usuario       = Inscripcionependiente::find(Crypt::decrypt($id));
+			$nombre        = $usuario->nombre;
+			$email         = $usuario->email;
+			$result        = $usuario->delete();
+			if($result) {
 				Session::flash('type','success');
 				Session::flash('message','Se rechazó la solicitud con éxito');
 
@@ -111,8 +108,7 @@ class solicitudesasignacionController extends BaseController {
 				});
 
 			}
-			else
-			{
+			else {
 				Session::flash('type','warning');
 				Session::flash('message','Ocurrió un error al intentar rechazar, intente de nuevo.');
 			}
