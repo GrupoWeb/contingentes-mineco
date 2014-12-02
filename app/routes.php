@@ -26,6 +26,8 @@ Route::get('requerimientos/productos/{id}/{tipo}', 'requerimientosController@get
 Route::get('requerimientos/productos/vacio', 'requerimientosController@getVacio');
 //=== CONTINGENTES
 Route::get('contingente/partidas/{id}', 'partidasController@getPartidas');
+Route::get('asignarrequerimientos/contigente/{id}', 'contingentesController@asignarrequerimientos');
+
 
 Route::group(array('before' => array('auth', 'cancerbero', 'menu')), function() {
 	Route::get('/', array('as'=>'index.index', 'uses'=>'dashboardController@index'));
