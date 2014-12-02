@@ -1,56 +1,29 @@
 <?php
-class periodosController extends BaseController {
-
-	private $crud, $cancerbero;
+class periodosController extends crudController {
 
 	public function __construct() {
-		$this->cancerbero = new Cancerbero;
-		$this->crud       = new Crud;
 
-		$this->crud->setExport(false);
-		$this->crud->setTitulo('Per&iacute;odos');
-		$this->crud->setTabla('periodos');
-		$this->crud->setTablaId('periodoid');
+		Crud::setExport(false);
+		Crud::setTitulo('Per&iacute;odos');
+		Crud::setTabla('periodos');
+		Crud::setTablaId('periodoid');
 
-		$this->crud->setLeftJoin('productos AS p', 'periodos.productoid', '=', 'p.productoid');
+		Crud::setLeftJoin('contingentes AS c', 'c.contingenteid', '=', 'periodos.contingenteid'); 
 
-		$this->crud->setCampo(array('nombre'=>'Producto','campo'=>'p.nombre','tipo'=>'combobox',
-				'query'=>'SELECT nombre,productoid FROM productos ORDER BY nombre','combokey'=>'productoid'));
+		Crud::setCampo(array('nombre'=>'Contingente','campo'=>"(SELECT CONCAT(t.nombre,' - ', p.nombre) FROM tratados t, productos p, contingentes c2 WHERE p.productoid=c2.productoid AND t.tratadoid = c2.tratadoid AND c2.contingenteid = c.contingenteid)",'tipo'=>'combobox',
+			'query'=>"SELECT (SELECT CONCAT(t.nombre,' - ', p.nombre) FROM tratados t, productos p, contingentes c2 WHERE p.productoid=c2.productoid AND t.tratadoid = c2.tratadoid) as nombre, contingenteid FROM contingentes ORDER BY nombre",'combokey'=>'contingenteid','editable'=>false));
 
-		$this->crud->setCampo(array('nombre'=>'Nombre','campo'=>'periodos.nombre','tipo'=>'string','reglas' => array('notEmpty'), 'reglasmensaje'=>'El nombre es requerido' ));
-		$this->crud->setCampo(array('nombre'=>'Fechainicio','campo'=>'periodos.fechainicio','tipo'=>'date'));
-		$this->crud->setCampo(array('nombre'=>'Fechafin','campo'=>'periodos.fechafin','tipo'=>'date'));
+		Crud::setCampo(array('nombre'=>'Contingente','campo'=>"c.contingenteid",'tipo'=>'combobox',
+			'query'=>"SELECT (SELECT CONCAT(t.nombre,' - ', p.nombre) FROM tratados t, productos p, contingentes c2 WHERE p.productoid=c2.productoid AND t.tratadoid = c2.tratadoid) as nombre, contingenteid FROM contingentes ORDER BY nombre",'combokey'=>'contingenteid','editable'=>true,'show'=>false));
 
-		$this->crud->setCampo(array('nombre'=>'Tipo','campo'=>'periodos.tipo','tipo'=>'enum','enumarray'=>array('Exportación'=>'Exportación','Importación'=>'Importación')));
+		Crud::setCampo(array('nombre'=>'Nombre','campo'=>'periodos.nombre','tipo'=>'string','reglas' => array('notEmpty'), 'reglasmensaje'=>'El nombre es requerido' ));
+		Crud::setCampo(array('nombre'=>'Fechainicio','campo'=>'periodos.fechainicio','tipo'=>'date'));
+		Crud::setCampo(array('nombre'=>'Fechafin','campo'=>'periodos.fechafin','tipo'=>'date'));
 		
-		$this->crud->setPermisos($this->cancerbero->tienePermisosCrud('catalogos.periodos'));
-	}
-
-	public function index() {
-		return $this->crud->index();
-	}
-
-	public function create() {
-		return $this->crud->create(0);
-	}
-
-	public function store() {
-		return $this->crud->store();
-	}
-
-	public function show($id) {
-		return $this->crud->getData($id);
+		Crud::setPermisos(Cancerbero::tienePermisosCrud('periodos'));
 	}
 
 	public function edit($id) {
-		return $this->crud->create($id);
-	}
-
-	public function update($id) {
-		return $this->crud->store($id);
-	}
-
-	public function destroy($id) {
-		return $this->crud->destroy($id);
+		return Crud::create($id);
 	}
 }
