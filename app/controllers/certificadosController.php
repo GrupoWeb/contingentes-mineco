@@ -41,7 +41,7 @@ class certificadosController extends crudController {
 		PDF::line(80,245, 200,245);
 		PDF::writeHTMLCell(0,0, 80, 250, 
 			$datos->nombrecompleto . '<br>' . $datos->puesto, 0, 1, 0, true,'C', true);
-		PDF::write2DBarcode('http://contingentes.cs.com.gt:8000/c/' . $id,'QRCODE,M',10,233,25,25);
+		PDF::write2DBarcode(url('c/' . $id),'QRCODE,M',10,233,25,25);
 
 		PDF::Output('certificado.pdf');
 	}

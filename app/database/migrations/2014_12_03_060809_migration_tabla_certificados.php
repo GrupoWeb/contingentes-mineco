@@ -10,7 +10,7 @@ class MigrationTablaCertificados extends Migration {
 			$table->increments('certificadoid');
 			$table->integer('usuarioid')->unsigned();
 			$table->integer('correlativo')->unsigned();
-			$table->string('titulo')->nullable();
+			$table->string('tratado')->nullable();
 			$table->string('nombre')->nullable();
 			$table->string('direccion')->nullable();
 			$table->string('nit')->nullable();
