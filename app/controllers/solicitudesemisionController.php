@@ -42,18 +42,39 @@ class solicitudesemisionController extends crudController {
 			$cantidad   = Input::get('txCanidad');
 			$comentario = Input::get('txObservaciones');
 			
+			//TRANSACTION ===
 			$emision                = Emisionpendiente::find($elID);
 			$emision->emitido       = $cantidad;
 			$emision->observaciones = Input::get('txObservaciones');
 			$emision->estado        = 'Aprobada';
 			$result                 = $emision->save();
 
-			$movimiento             = new Movimiento;
-			$movimiento->periodoid  = $emision->periodoid;
-			$movimiento->usuarioid  = $emision->usuarioid;
-			$movimiento->cantidad   = ($cantidad * -1);
-			$movimiento->comentario = $comentario;
-			$result2                = $movimiento->save();
+			$certificado                     = new Certificado;
+			$certificado->tratado            = 'Nombre tratado';
+			$certificado->usuarioid          = $emision->usuarioid;
+			$certificado->nombre             = 'Erick Marroquin';
+			$certificado->direccion          = '4 ave. 11-28 z. 14';
+			$certificado->nit                = '4530406-8';
+			$certificado->telefono           = '57661044';
+			$certificado->volumen            = $cantidad;
+			$certificado->volumenletras      = 'Un mil dos cientos';
+			$certificado->fraccion           = '0200.10.10 - Otros';
+			$certificado->paisprocedencia    = 'E.E.U.U.';
+			$certificado->tratadodescripcion = 'Segun el diario oficial 2006...';
+			$certificado->fecha              = date_create();
+			$certificado->fechavencimiento   = '2014-12-31';
+			$certificado->save();
+
+			$movimiento                = new Movimiento;
+			$movimiento->periodoid     = $emision->periodoid;
+			$movimiento->usuarioid     = $emision->usuarioid;
+			$movimiento->certificadoid = $certificado->id;
+			$movimiento->cantidad      = ($cantidad * -1);
+			$movimiento->comentario    = $comentario;
+			$result2                   = $movimiento->save();
+
+
+			//====
 
 			if($result && $result2) {
 				$usuario = Authusuario::find($emision->usuarioid);
@@ -65,6 +86,7 @@ class solicitudesemisionController extends crudController {
 				Mail::send('emails/solicitudemisionresultado', array(
 					'nombre'        => $usuario->nombre,
 					'fecha'         => $emision->created_at,
+					'url'           => url('c/'.Crypt::encrypt($certificado->id)),
 					'estado'        => 'Aprobada',
 					'observaciones' => Input::get('txObservaciones')), function($msg) use ($email){
 		       	$msg->to($email)->subject('Solicitud de Emisión DACE - MINECO');

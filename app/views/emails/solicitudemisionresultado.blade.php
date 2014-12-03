@@ -5,6 +5,9 @@
 	<strong>Fecha:</strong> {{$fecha}}<br>
 	<strong>Nombre:</strong> {{$nombre}}<br>
 	ha sido <h3 style="color: {{ $estado == 'Aprobada' ? 'green' : 'red' }}">{{ $estado }}</h3>
+
+	<p><a href="{{ $url }}">{{ $url }}</a></p>
+
 	@if ($observaciones<>'')
 	con las siguientes observaciones: <br />
 		{{ $observaciones }}
