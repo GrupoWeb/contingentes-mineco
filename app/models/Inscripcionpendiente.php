@@ -1,9 +1,8 @@
 <?php
 
 class Inscripcionpendiente extends Eloquent {
-
-	protected $primaryKey = 'usuarioid';
 	protected $table      = 'authusuarios';
+	protected $primaryKey = 'usuarioid';
 
 	public static function getSolicitudesPendientes(){
 		return DB::table('authusuarios AS u')

@@ -83,7 +83,7 @@
             $('#fileSeed .control-label').html(datos.nombre);
             var $clone    = $template.clone().removeClass('hide').removeAttr('id').addClass('nuevos').insertAfter($template);
             var $option   = $clone.find('[name="txArchivo[]"]');
-            $option.attr('name', 'file'+datos.priid);
+            $option.attr('name', 'file'+datos.requerimientoid);
             $('#frmSolicitud').bootstrapValidator('addField', $option);
           });
         });

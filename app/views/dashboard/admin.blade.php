@@ -1,6 +1,11 @@
 @extends('template/template')
 
 @section('content')
+	@if(Session::has('message'))
+		<div class="alert alert-{{ Session::get('type') }} alert-dismissable">
+			{{ Session::get('message') }}
+		</div>
+	@endif
 	<h3 class="text-primary">Dashboard</h3>
 	<h4 class="text-warning">Solicitudes pendientes</h4>
 	
@@ -27,7 +32,7 @@
 			</a>
 		</div>
 		<div class="col-md-4">
-			<a class="btn btn-xs btn-{{ $emision > 0 ? 'success' : 'default disabled' }}" href="#" title="Revisar">
+			<a class="btn btn-xs btn-{{ $emision > 0 ? 'success' : 'default disabled' }}" href="/solicitudespendientes/emision" title="Revisar">
 				<span class="fa fa-file-pdf-o"></span>&nbsp;Revisar
 			</a>
 		</div>

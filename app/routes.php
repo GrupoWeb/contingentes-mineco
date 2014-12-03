@@ -10,6 +10,8 @@
 |
 */
 
+Route::get('c/{id}',array('as'=>'certificados.generar','uses'=>'certificadosController@generarPDF'));
+
 Route::get('correo', function(){
 	return View::make('emails/autorizacion')
 		->with('nombre', 'Erick Marroquin')
@@ -54,5 +56,5 @@ Route::group(array('before' => array('auth', 'cancerbero', 'menu')), function() 
 	//Route::resource('catalogos/movimientos', 'movimientosController');
 
 	//=== CERTIFICADOS
-	Route::get('certificados/generar',array('as'=>'certificados.generar','uses'=>'certificadosController@generarPDF')); 
+	Route::resource('certificados', 'certificadosController', array('only'=>array('index','show')));
 });
