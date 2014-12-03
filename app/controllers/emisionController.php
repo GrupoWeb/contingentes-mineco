@@ -49,6 +49,14 @@ class emisionController extends BaseController {
 			
 			$message = 'Solicitud ingresada exitosamente';
 			$type    = 'success';
+
+			$email = Auth::user()->email;
+	    Mail::send('emails/solicitudemision', array(
+	      'nombre' => Auth::user()->nombre,
+	      'fecha'  => date('d-m-Y H:i')
+	      ), function($msg) use ($email){
+	            $msg->to($email)->subject('Solicitud de emisión');
+	    });
 		}
 
 		Session::flash('message', $message);
