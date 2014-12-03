@@ -63,7 +63,7 @@ return [
     */
 
     'page_font'                   => 'helvetica',
-    'page_font_size'              => 10,
+    'page_font_size'              => 12,
     'small_font_ratio'            => 2 / 3,
     'font_monospaced'             => 'courier',
 
@@ -98,9 +98,9 @@ return [
     |
     */
 
-    'header_on'                   => true,
-    'header_title'                => 'DACE - Ministerio de Economía',
-    'header_string'               => 'Guatemala',
+    'header_on'                   => false,
+    'header_title'                => '',
+    'header_string'               => '',
     'header_font'                 => 'helvetica',
     'header_font_size'            => 10,
     'header_logo'                 => '',
@@ -117,7 +117,7 @@ return [
     |
     */
 
-    'footer_on'                   => true,
+    'footer_on'                   => false,
     'footer_font'                 => 'helvetica',
     'footer_font_size'            => 8,
     'footer_margin'               => 10,

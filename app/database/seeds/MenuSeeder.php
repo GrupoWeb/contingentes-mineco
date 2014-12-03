@@ -175,6 +175,16 @@
 				'created_at'     	=> date_create(), 'updated_at' => date_create()
 			));
 
+			DB::table('authmenu')->insert(array(
+				'menuid'					=> 20,
+				'padreid'        	=> null,
+				'modulopermisoid' => 79,
+				'nombre'         	=> 'Certificados',
+				'orden' 					=> 3000,
+				'icono'         	=> null,
+				'created_at'     	=> date_create(), 'updated_at' => date_create()
+			));
+
 		  DB::statement('SET FOREIGN_KEY_CHECKS=1');
 		}
 	}
