@@ -37,26 +37,38 @@ class solicitudesemisionController extends crudController {
 
 	public function store() {
 		$elID = Crypt::decrypt(Input::get('id'));
-		dd($elID);
 
-		/*if(Input::has('btnAutorizar')) {
-			$usuario         = Inscripcionpendiente::find($elID);
-			$usuario->activo = 1;
-			$result          = $usuario->save();
+		if(Input::has('btnAutorizar')) {
+			$cantidad   = Input::get('txCanidad');
+			$comentario = Input::get('txObservaciones');
+			
+			$emision                = Emisionpendiente::find($elID);
+			$emision->emitido       = $cantidad;
+			$emision->observaciones = Input::get('txObservaciones');
+			$emision->estado        = 'Aprobada';
+			$result                 = $emision->save();
 
-			if($result) {
-				$email = $usuario->email;
+			$movimiento             = new Movimiento;
+			$movimiento->periodoid  = $emision->periodoid;
+			$movimiento->usuarioid  = $emision->usuarioid;
+			$movimiento->cantidad   = ($cantidad * -1);
+			$movimiento->comentario = $comentario;
+			$result2                = $movimiento->save();
+
+
+			if($result && $result2) {
+				$email = $emision->email;
 
 				Session::flash('type','success');
 				Session::flash('message','La solicitud de inscripción fue procesada correctamente');
 
-				Mail::send('emails/solicitudinscripcionresultado', array(
+				/*Mail::send('emails/solicitudinscripcionresultado', array(
 					'nombre'        => $usuario->nombre,
 					'fecha'         => $usuario->created_at,
 					'estado'        => 'Aprobada',
 					'observaciones' => Input::get('txObservaciones')), function($msg) use ($email){
 		       	$msg->to($email)->subject('Solicitud de Inscripción DACE - MINECO');
-				});
+				});*/
 			}
 			else {
 				Session::flash('type','warning');
@@ -64,30 +76,29 @@ class solicitudesemisionController extends crudController {
 			}
 		}
 		else {
-			$affectedRows  = Usuariocontingente::where('usuarioid', $elID)->delete();
-			$affectedRows2 = Usuariorequerimiento::where('usuarioid',$elID)->delete();
-			//Se borra el usuario
-			$usuario = Inscripcionpendiente::find($elID);
-			$nombre  = $usuario->nombre;
-			$email   = $usuario->email;
-			$result  = $usuario->delete();
+			$emision                = Emisionpendiente::find($elID);
+			$emision->observaciones = Input::get('txObservaciones');
+			$emision->estado        = 'Rechazada';
+			$result                 = $emision->save();
+
 			if($result) {
 				Session::flash('type','success');
 				Session::flash('message','La solicitud de inscripción fue rechazada');
 
-				Mail::send('emails/solicitudinscripcionresultado', array(
+				/*Mail::send('emails/solicitudinscripcionresultado', array(
 					'nombre'        => $usuario->nombre,
 					'fecha'         => $usuario->created_at,
 					'estado'        => 'Rechazada',
 					'observaciones' => Input::get('txObservaciones')), function($msg) use ($email){
 		       	$msg->to($email)->subject('Solicitud de Inscripción DACE - MINECO');
-				});
+				});*/
 			}
 			else {
 				Session::flash('type','warning');
 				Session::flash('message','Ocurrió un error al intentar rechazar, intente de nuevo.');
 			}
 		}
-		return Redirect::route('solicitudespendientes.inscripcion.index');*/
+		
+		return Redirect::route('solicitudespendientes.emision.index');
 	}
 }
