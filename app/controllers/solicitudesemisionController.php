@@ -55,20 +55,20 @@ class solicitudesemisionController extends crudController {
 			$movimiento->comentario = $comentario;
 			$result2                = $movimiento->save();
 
-
 			if($result && $result2) {
-				$email = $emision->email;
+				$usuario = Authusuario::find($emision->usuarioid);
+				$email   = $usuario->email;
 
 				Session::flash('type','success');
 				Session::flash('message','La solicitud de inscripción fue procesada correctamente');
 
-				/*Mail::send('emails/solicitudinscripcionresultado', array(
+				Mail::send('emails/solicitudemisionresultado', array(
 					'nombre'        => $usuario->nombre,
-					'fecha'         => $usuario->created_at,
+					'fecha'         => $emision->created_at,
 					'estado'        => 'Aprobada',
 					'observaciones' => Input::get('txObservaciones')), function($msg) use ($email){
-		       	$msg->to($email)->subject('Solicitud de Inscripción DACE - MINECO');
-				});*/
+		       	$msg->to($email)->subject('Solicitud de Emisión DACE - MINECO');
+				});
 			}
 			else {
 				Session::flash('type','warning');
@@ -85,13 +85,15 @@ class solicitudesemisionController extends crudController {
 				Session::flash('type','success');
 				Session::flash('message','La solicitud de inscripción fue rechazada');
 
-				/*Mail::send('emails/solicitudinscripcionresultado', array(
+				$usuario = Authusuario::find($emision->usuarioid);
+				$email   = $usuario->email;
+				Mail::send('emails/solicitudemisionresultado', array(
 					'nombre'        => $usuario->nombre,
-					'fecha'         => $usuario->created_at,
+					'fecha'         => $emision->created_at,
 					'estado'        => 'Rechazada',
 					'observaciones' => Input::get('txObservaciones')), function($msg) use ($email){
-		       	$msg->to($email)->subject('Solicitud de Inscripción DACE - MINECO');
-				});*/
+		       	$msg->to($email)->subject('Solicitud de Emisión DACE - MINECO');
+				});
 			}
 			else {
 				Session::flash('type','warning');
