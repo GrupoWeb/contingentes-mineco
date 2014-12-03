@@ -4,12 +4,10 @@ class dashboardController extends BaseController {
 		$admin = in_array(Auth::user()->rolid, Config::get('contingentes.roladmin'));
 
 		if($admin){
-			$inscripciones = Inscripcionpendiente::getSolicitudesPendientes();
-
 			return View::make('dashboard.admin')
-				->with('inscripcion', count($inscripciones))
-				->with('asignacion', 2)
-				->with('emision', 0);
+				->with('inscripcion', Authusuario::where('activo', 0)->count())
+				->with('asignacion', 0)
+				->with('emision', Solicitudesemision::where('estado', 'Pendiente')->count());
 		}
 		
 		return View::make('dashboard.index')
