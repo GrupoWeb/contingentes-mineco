@@ -26,6 +26,15 @@ class inscripcionController extends BaseController {
 	      'password'   => Hash::make(Input::get('txPassword')),
 	      'rolid'      => 3,
 	      'activo'     => 0,
+	      'nit'				 => Input::get('txNIT'),
+	      'domiciliofiscal' => Input::get('txDomicilioFiscal'),
+	      'razonsocial' => Input::get('txRazonSocial'),
+	      'domiciliocomercial' => Input::get('txDomicilioComercial'),
+	      'propietario' => Input::get('txPropietario'),
+	      'direccionnotificaciones' => Input::get('txDireccionNotificaciones'),
+	      'telefono' => Input::get('txTelefono'),
+	      'fax' => Input::get('txFax'),
+	      'encargadoimportaciones' => Input::get('txEncargadoImportaciones'),
 	      'created_at' => date_create(),
 	      'updated_at' => date_create()
 	    );
