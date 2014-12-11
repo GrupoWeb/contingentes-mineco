@@ -11,7 +11,7 @@
     {{ HTML::script('js/bootstrap.min.js'); }}
     {{ HTML::script('js/bootstrap-select.min.js'); }}
     {{ HTML::script('js/bootstrapValidator.min.js') }}
-    {{ HTML::script('js/jquery.mask.min.js') }}
+    {{ HTML::script('packages/csgt/components/js/bootstrapValidatorExtra.js') }}
     <style>
       body { margin: 5px; }
       .form-signin { max-width: 850px;margin: 0 auto;display: block;margin-top: 30px; }
@@ -40,9 +40,8 @@
           <h3 class="text-primary">Solicitud de inscripci&oacute;n</h3>
           <h4 class="text-warning">Datos Generales</h4>
           <hr>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
+        
+              <div class="form-group col-md-6">
                 <label for="txNombre" class="col-sm-4 control-label">Nombre</label>
                 <div class="col-sm-8">
                   {{ Form::text('txNombre', '', array('class'=>'form-control', 
@@ -52,7 +51,7 @@
                     )) }}
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group col-md-6">
                 <label for="email" class="col-sm-4 control-label">Email</label>
                 <div class="col-sm-8">
                   {{ Form::text('email', '', array(
@@ -68,20 +67,28 @@
                   )) }}
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group col-md-6">
                 <label for="txNombre" class="col-sm-4 control-label">NIT</label>
                 <div class="col-sm-8">
                   {{ Form::text('txNIT', '', array('class'=>'form-control', 
                     'data-bv-notEmpty'         =>'true',
                     'data-bv-notEmpty-message' => 'El NIT es requerido',
-                    'data-bv-stringlength'         => 'true',
-                    'data-bv-stringlength-min'     => '8',
-                    'data-bv-stringlength-message' => 'El NIT debe contener 8 caracteres',
+                    'data-bv-nit'              => 'true',
                     'autocomplete'             => 'off'
                     )) }}
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group col-md-12">
+                <label for="txNombre" class="col-sm-2 control-label">Propietario o Representante Legal</label>
+                <div class="col-sm-10">
+                  {{ Form::text('txPropietario', '', array('class'=>'form-control', 
+                    'data-bv-notEmpty'         =>'true',
+                    'data-bv-notEmpty-message' => 'El nombre es requerido',
+                    'autocomplete'             => 'off',
+                    )) }}
+                </div>
+              </div>
+              <div class="form-group col-md-6">
                 <label for="txNombre" class="col-sm-4 control-label">Razón Social</label>
                 <div class="col-sm-8">
                   {{ Form::text('txRazonSocial', '', array('class'=>'form-control', 
@@ -91,19 +98,8 @@
                     )) }}
                 </div>
               </div>
-              <div class="form-group">
-                <label for="txNombre" class="col-sm-4 control-label">Nombre del Propietario o Representante Legal</label>
-                <div class="col-sm-8">
-                  {{ Form::textarea('txPropietario', '', array('class'=>'form-control', 
-                    'data-bv-notEmpty'         =>'true',
-                    'data-bv-notEmpty-message' => 'El nombre del propietario o representante legal es requerido',
-                    'autocomplete'             => 'off',
-                    'rows'                     => '3',
-                    )) }}
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="txTelefono" class="col-sm-4 control-label">Número de Teléfono</label>
+              <div class="form-group col-md-6">
+                <label for="txTelefono" class="col-sm-4 control-label">Teléfono</label>
                 <div class="col-sm-8">
                   {{ Form::text('txTelefono', '', array('class'=>'form-control', 
                     'data-bv-notEmpty'         =>'true',
@@ -114,7 +110,7 @@
                     )) }}
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group col-md-6">
                 <label for="contingentes" class="col-sm-4 control-label">Contingente(s)</label>
                 <div class="col-sm-8 div-contingente">
                   <?php $grupoActual = 'primero'; ?>
@@ -133,9 +129,9 @@
                   </select>
                 </div>
               </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
+           
+            
+              <div class="form-group col-md-6">
                 <label for="txPassword" class="col-sm-4 control-label">Contrase&ntilde;a</label>
                 <div class="col-sm-8">
                   {{ Form::password('txPassword', array(
@@ -152,7 +148,7 @@
                   )) }}
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group col-md-6">
                 <label for="txPasswordrepeat" class="col-sm-4 control-label">&nbsp;</label>
                 <div class="col-sm-8">
                   {{ Form::password('txPasswordrepeat', array(
@@ -166,27 +162,29 @@
                   )) }}
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group col-md-6">
                 <label for="txNombre" class="col-sm-4 control-label">Domicilio Fiscal</label>
                 <div class="col-sm-8">
-                  {{ Form::text('txDomicilioFiscal', '', array('class'=>'form-control', 
+                  {{ Form::textarea('txDomicilioFiscal', '', array('class'=>'form-control', 
                     'data-bv-notEmpty'         =>'true',
                     'data-bv-notEmpty-message' => 'El domicilio fiscal es requerido',
-                    'autocomplete'             => 'off'
+                    'autocomplete'             => 'off',
+                    'rows'                     => 3,
                     )) }}
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group col-md-6">
                 <label for="txNombre" class="col-sm-4 control-label">Domicilio Comercial</label>
                 <div class="col-sm-8">
-                  {{ Form::text('txDomicilioComercial', '', array('class'=>'form-control', 
+                  {{ Form::textarea('txDomicilioComercial', '', array('class'=>'form-control', 
                     'data-bv-notEmpty'         =>'true',
                     'data-bv-notEmpty-message' => 'El domicilio fiscal es requerido',
-                    'autocomplete'             => 'off'
+                    'autocomplete'             => 'off',
+                    'rows'                     => 3,
                     )) }}
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group col-md-6">
                 <label for="txDireccionNotificaciones" class="col-sm-4 control-label">Lugar para recibir notificaciones y comunicaciones</label>
                 <div class="col-sm-8">
                   {{ Form::textarea('txDireccionNotificaciones', '', array('class'=>'form-control', 
@@ -197,7 +195,7 @@
                     )) }}
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group col-md-6">
                 <label for="txFax" class="col-sm-4 control-label">FAX</label>
                 <div class="col-sm-8">
                   {{ Form::text('txFax', '', array('class'=>'form-control', 
@@ -207,7 +205,7 @@
                     )) }}
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group col-md-6">
                 <label for="txNombre" class="col-sm-4 control-label">Encargado Importaciones</label>
                 <div class="col-sm-8">
                   {{ Form::text('txEncargadoImportaciones', '', array('class'=>'form-control', 
@@ -217,8 +215,7 @@
                     )) }}
                 </div>
               </div>
-            </div>
-          </div>
+          <div class="clearfix"></div>
           <h4 class="text-warning">Requerimientos</h4>
           <hr>
           <div class="requerimientos">
@@ -282,9 +279,6 @@
         .on('success.field.bv', function(e, data) {
           data.bv.disableSubmitButtons(false);
         });
-
-        $('#frmRegistro').find('[name="txNIT"]').mask('0000000-0');
-
       $('#contingentes').change();
       });
     </script>
