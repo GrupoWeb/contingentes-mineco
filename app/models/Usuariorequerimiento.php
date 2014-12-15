@@ -11,6 +11,16 @@ class Usuariorequerimiento extends Eloquent {
 			->leftJoin('requerimientos As r','r.requerimientoid','=','ur.requerimientoid')
 			->where('ur.usuarioid',$id)
 			->get();
+	}	
+	public static function getUsuarioContingenteRequerimientos($id,$contingenteid){
+		return DB::table('usuariorequerimientos As ur')
+			->select('ur.archivo','r.nombre', 'ur.usuarioid','uc.contingenteid')
+			->leftJoin('requerimientos As r','r.requerimientoid','=','ur.requerimientoid')
+			->leftJoin('usuariocontingentes As uc','ur.usuarioid','=','uc.usuarioid')
+			->where('ur.usuarioid',$id)
+			->where('uc.contingenteid',$contingenteid)
+			->whereRaw("ur.requerimientoid IN (SELECT requerimientoid FROM contingenterequerimientos cr WHERE cr.contingenteid=$contingenteid)")
+			->get();
 	}
 
 	public static function getSolicitudPendiente($id){

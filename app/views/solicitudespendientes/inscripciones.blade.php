@@ -22,6 +22,7 @@
 </ul>
 <h4 class="text-warning">Observaciones</h4>
 {{Form::open(array('id'=>'frmAuto', 'route'=>'solicitudespendientes.inscripcion.store'))}}
+	{{ Form::hidden('cid', $cid) }}
 	<div class="form-group" id="divObservaciones">
 	  <textarea class="form-control" rows="3" name="txObservaciones" id="txObservaciones" 
 	  	data-bv-notempty="true"

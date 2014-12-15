@@ -15,24 +15,49 @@ class solicitudesinscripcionController extends crudController {
 		Crud::setCampo(array('nombre'=>'Activo','campo'=>'activo','tipo'=>'bool'));
 		Crud::setPermisos(Cancerbero::tienePermisosCrud('solicitudespendientes.inscripcion'));
 	}
-
+	public function index(){
+		$solicitudes = Inscripcionpendiente::getSolicitudesPendientes();
+		$columnas = array(
+			array("tipo"=>"string"),
+			array("tipo"=>"string"),
+			array("tipo"=>"datetime"),
+			array("tipo"=>"bool")
+			
+			
+		);
+		return View::make('solicitudespendientes/inscripcionesindex')
+			->with("solicitudes",$solicitudes)
+			->with("columnas",$columnas);
+	
+	}
 	public function edit($id){
-		$solicitud 			= Inscripcionpendiente::getSolicitudPendiente(Crypt::decrypt($id));
-		$requerimientos = Usuariorequerimiento::getUsuarioRequerimientos(Crypt::decrypt($id));
+		$arr = explode("+",Crypt::decrypt($id));
+		$userID = $arr[0];
+		$contingenteid = $arr[1];
+		$solicitud 			= Inscripcionpendiente::getSolicitudPendiente($userID,$contingenteid);
+		$requerimientos 	= Usuariorequerimiento::getUsuarioContingenteRequerimientos($userID,$contingenteid);
+
+		
 
 		return View::make('solicitudespendientes/inscripciones')
 			->with('solicitud',$solicitud)
+			->with('cid',Crypt::encrypt($contingenteid))
 			->with('requerimientos',$requerimientos);
 	}
 
 	public function store(){
 		$elID = Crypt::decrypt(Input::get('id'));
-
+		$contingenteid = Crypt::decrypt(Input::get('cid'));
 		if(Input::has('btnAutorizar')) {
 			$usuario         = Inscripcionpendiente::find($elID);
-			$usuario->activo = 1;
-			$result          = $usuario->save();
-
+			if($usuario->activo==0){
+				$usuario->activo = 1;
+				$result  = $usuario->save();
+			}
+			
+			$solicitud = Usuariocontingente::where("usuarioid",$elID)->where("contingenteid",$contingenteid)->first();
+			$solicitud->activo = 1;
+			$result = $solicitud->save();
 			if($result) {
 				$email = $usuario->email;
 
@@ -53,14 +78,38 @@ class solicitudesinscripcionController extends crudController {
 			}
 		}
 		else {
-			$affectedRows  = Usuariocontingente::where('usuarioid', $elID)->delete();
-			$affectedRows2 = Usuariorequerimiento::where('usuarioid',$elID)->delete();
-			//Se borra el usuario
-			$usuario = Inscripcionpendiente::find($elID);
-			$nombre  = $usuario->nombre;
-			$email   = $usuario->email;
-			$result  = $usuario->delete();
-			if($result) {
+			$affectedRows = Usuariocontingente::where('usuarioid', $elID)->where('contingenteid', $contingenteid)->delete();
+			$requerimientos = Contingenterequerimiento::getRequerimientos($contingenteid);
+			$reqIDs= array();
+			foreach($requerimientos as $r){
+				array_push($reqIDs,$r->requerimientoid);
+			}
+			// $reqIDs=implode($reqIDs,",");
+			
+			
+			foreach($reqIDs as $rid){
+				$affectedRows2 = Usuariorequerimiento::leftJoin("contingenterequerimientos AS cr","usuariorequerimientos.requerimientoid","=","cr.requerimientoid")
+					->leftJoin("usuariocontingentes AS uc","cr.contingenteid","=","uc.contingenteid")
+					->where("usuariorequerimientos.requerimientoid","=",$rid)
+					->where("usuariorequerimientos.usuarioid","=",$elID)
+					->where("uc.contingenteid","!=",$contingenteid)->count();
+					if($affectedRows2==0)
+						Usuariorequerimiento::where('usuarioid', $elID)->where("usuariorequerimientos.requerimientoid","=",$rid)->delete();
+			}
+
+
+				
+			
+				$usuario = Inscripcionpendiente::find($elID);
+				$nombre  = $usuario->nombre;
+				$email   = $usuario->email;
+			
+			//revisar si no hay otras solicitudes
+			$pendientes = Usuariocontingente::where('usuarioid', $elID)->count();
+			if($pendientes==0){
+				$result  = $usuario->delete();
+			}
+			if($affectedRows || $result) {
 				Session::flash('type','success');
 				Session::flash('message','La solicitud de inscripción fue rechazada');
 
