@@ -1,9 +1,11 @@
 <?php
 
 class Inscripcionpendiente extends Eloquent {
-	protected $table      = 'usuariocontingentes';
-	protected $primaryKey = 'usuariocontingenteid';
+	protected $table      = 'authusuarios';
+	protected $primaryKey = 'usuarioid';
 
+	
+	
 	public static function getSolicitudesPendientes(){
 		return DB::table('authusuarios AS u')
 			->select('u.nombre','u.email','u.created_at', 'p.nombre AS producto', 'u.usuarioid','c.contingenteid','u.activo')
