@@ -54,6 +54,7 @@ Route::group(array('before' => array('auth', 'cancerbero', 'menu')), function() 
 	Route::resource('requerimientos','requerimientosController');
 	Route::resource('contingentes','contingentesController');
 	Route::resource('periodos','periodosController');
+	Route::resource('partidasarancelarias','contingentepartidaController');
 	//Route::resource('catalogos/movimientos', 'movimientosController');
 
 	//=== CERTIFICADOS
