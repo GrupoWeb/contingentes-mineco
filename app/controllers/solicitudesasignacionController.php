@@ -1,7 +1,11 @@
 <?php
 class solicitudesasignacionController extends BaseController {
 
-	private $crud, $cancerbero;
+	public function index() {
+		
+	}
+
+	/*private $crud, $cancerbero;
 
 	public function __construct() {
 		$this->cancerbero = new Cancerbero;
@@ -115,5 +119,5 @@ class solicitudesasignacionController extends BaseController {
 		}
 
 		return Redirect::to('catalogos/solicitudespendientes');
-	}
+	}*/
 }
