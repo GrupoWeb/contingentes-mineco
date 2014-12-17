@@ -4,12 +4,9 @@
 
 
 <ol class="breadcrumb">
-	  <li><a href="/contingentes">Contingentes</a></li>
-	  <li>Asignar Requerimientos</li>
-	  <!-- <li class="active">{{$ContingenteN->contingenteid}}</li> -->
-	  <li class="active">
-	 	{{$nombreContingente[0]->nombre}}
-	  </li>
+  <li><a href="/contingentes">Contingentes</a></li>
+  <li>Asignar Requerimientos</li>
+  <li class="active">{{ $nombreContingente[0]->nombre }}</li>
 </ol>
 
 @if(Session::get('message'))

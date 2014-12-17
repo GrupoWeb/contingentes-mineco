@@ -8,17 +8,13 @@ class contingenterequerimientosController extends BaseController {
 
 		$ContingenteN = DB::table('contingentes')->where('contingenteid', Crypt::decrypt($id))->first();
 
-		
-		$requerimientos = Requerimiento::getRequerimientos();
-		$id=Crypt::decrypt($id);
+		$requerimientos    = Requerimiento::getRequerimientos();
+		$id                = Crypt::decrypt($id);
 		$nombreContingente = Contingenterequerimiento::getNombre($id);
 
-		
-
-		$requerimientosAsignacion 	= Contingenterequerimiento::getRequerimientosAsignados($id);
-		$requerimientosEmision 		= Contingenterequerimiento::getRequerimientosEmision($id);
-		$requerimientosInscripcion 	= Contingenterequerimiento::getRequerimientosInscripcion($id);
-//dd($requerimientosAsignacion);
+		$requerimientosAsignacion  = Contingenterequerimiento::getRequerimientosAsignados($id);
+		$requerimientosEmision     = Contingenterequerimiento::getRequerimientosEmision($id);
+		$requerimientosInscripcion = Contingenterequerimiento::getRequerimientosInscripcion($id);
 
 		foreach ($requerimientosAsignacion as $requAsignados) {
 			$aAsignacion[]=$requAsignados->requerimientoid;
@@ -45,63 +41,62 @@ class contingenterequerimientosController extends BaseController {
 
 	public function store() {
 		$contingenteid = Crypt::decrypt(Input::get('contingenteid'));
-			DB::table('contingenterequerimientos')->where('contingenteid', '=', $contingenteid)->delete();
- //dd($contingenteid);
-			$aAsignacion = Input::get('reqAsignacion');
-			$aEmision    = Input::get('reqEmision');
-			$aInscripcion= Input::get('reqInscripcion');
+			DB::table('contingenterequerimientos')->where('contingenteid', $contingenteid)->delete();
 
-			//dd(Input::all());
-			//dd($aAsignacion);
-			if($aAsignacion==null){
-				DB::table('contingenterequerimientos')
-					->where('contingenteid', '=', $contingenteid)
-					->where('tipo', '=', 'asignacion')
-					->delete();
-			}else{
-				//dd($aAsignacion);
-				 foreach ($aAsignacion as $contingenteid) {
+		$aAsignacion  = Input::get('reqAsignacion');
+		$aEmision     = Input::get('reqEmision');
+		$aInscripcion = Input::get('reqInscripcion');
+
+		if($aAsignacion==null) {
+			DB::table('contingenterequerimientos')
+				->where('contingenteid', '=', $contingenteid)
+				->where('tipo', '=', 'asignacion')
+				->delete();
+		}
+
+		else {
+			 foreach ($aAsignacion as $contingenteid) {
+					$datos = (explode('-', $contingenteid));
+					DB::table('contingenterequerimientos')->insert(array('contingenteid'=>$datos[0], 
+						'requerimientoid'=>$datos[1], 
+						'tipo'           =>'asignacion'));
+			}
+		}
+		
+		if($aEmision==null) {
+			DB::table('contingenterequerimientos')
+				->where('contingenteid', $contingenteid)
+				->where('tipo', '=', 'emision')
+				->delete();
+		}
+
+		else{
+			foreach ($aEmision as $contingenteid) {
 				$datos = (explode('-', $contingenteid));
-					//dd($datos);
-					DB::table('contingenterequerimientos')->insert(
-	   			 	array('contingenteid' => $datos[0], 'requerimientoid' => $datos[1], 'tipo'=>'asignacion')
-				 	);
-				}
-			
+				DB::table('contingenterequerimientos')->insert(
+	    			array('contingenteid' => $datos[0], 'requerimientoid' => $datos[1], 'tipo'=>'emision')
+				);
 			}
-			
-			if($aEmision==null){
-				DB::table('contingenterequerimientos')
-					->where('contingenteid', '=', $contingenteid)
-					->where('tipo', '=', 'emision')
-					->delete();
-			}else{
-				foreach ($aEmision as $contingenteid) {
-					$datos = (explode('-', $contingenteid));
-					DB::table('contingenterequerimientos')->insert(
-		    			array('contingenteid' => $datos[0], 'requerimientoid' => $datos[1], 'tipo'=>'emision')
-					);
-				}
-			}
+		}
 
-			if($aInscripcion==null){
-				DB::table('contingenterequerimientos')
-					->where('contingenteid', '=', $contingenteid)
-					->where('tipo', '=', 'inscripcion')
-					->delete();
-			}else{
-				foreach ($aInscripcion as $contingenteid) {
-					$datos = (explode('-', $contingenteid));
-					DB::table('contingenterequerimientos')->insert(
-		    			array('contingenteid' => $datos[0], 'requerimientoid' => $datos[1], 'tipo'=>'inscripcion')
-					);
-				}
+		if($aInscripcion==null) {
+			DB::table('contingenterequerimientos')
+				->where('contingenteid', '=', $contingenteid)
+				->where('tipo', '=', 'inscripcion')
+				->delete();
+		}
+
+		else{
+			foreach ($aInscripcion as $contingenteid) {
+				$datos = (explode('-', $contingenteid));
+				DB::table('contingenterequerimientos')->insert(
+	    			array('contingenteid' => $datos[0], 'requerimientoid' => $datos[1], 'tipo'=>'inscripcion')
+				);
 			}
-			
-			Session::flash('message', 'Se asignaron los requerimientos con éxito.');
-			Session::flash('type', 'success');
-			return Redirect::route('contingentes.index');
+		}
+		
+		Session::flash('message', 'Se asignaron los requerimientos con éxito.');
+		Session::flash('type', 'success');
+		return Redirect::route('contingentes.index');
 	}
-
-	
 }
