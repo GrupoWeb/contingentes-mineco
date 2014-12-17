@@ -501,6 +501,55 @@
 				'created_at'     	=> date_create(), 'updated_at' => date_create()
 			));
 
+			DB::table('authmodulopermisos')->insert(array(
+				'modulopermisoid'	=> 81,
+				'moduloid'        => 16,
+				'permisoid' 			=> 1,
+				'created_at'     	=> date_create(), 'updated_at' => date_create()
+			));
+
+			DB::table('authmodulopermisos')->insert(array(
+				'modulopermisoid'	=> 82,
+				'moduloid'        => 16,
+				'permisoid' 			=> 2,
+				'created_at'     	=> date_create(), 'updated_at' => date_create()
+			));
+
+			DB::table('authmodulopermisos')->insert(array(
+				'modulopermisoid'	=> 83,
+				'moduloid'        => 16,
+				'permisoid' 			=> 3,
+				'created_at'     	=> date_create(), 'updated_at' => date_create()
+			));
+
+			DB::table('authmodulopermisos')->insert(array(
+				'modulopermisoid'	=> 84,
+				'moduloid'        => 16,
+				'permisoid' 			=> 4,
+				'created_at'     	=> date_create(), 'updated_at' => date_create()
+			));
+
+			DB::table('authmodulopermisos')->insert(array(
+				'modulopermisoid'	=> 85,
+				'moduloid'        => 16,
+				'permisoid' 			=> 5,
+				'created_at'     	=> date_create(), 'updated_at' => date_create()
+			));
+
+			DB::table('authmodulopermisos')->insert(array(
+				'modulopermisoid'	=> 86,
+				'moduloid'        => 16,
+				'permisoid' 			=> 6,
+				'created_at'     	=> date_create(), 'updated_at' => date_create()
+			));
+
+			DB::table('authmodulopermisos')->insert(array(
+				'modulopermisoid'	=> 87,
+				'moduloid'        => 16,
+				'permisoid' 			=> 7,
+				'created_at'     	=> date_create(), 'updated_at' => date_create()
+			));
+
 		  DB::statement('SET FOREIGN_KEY_CHECKS=1');
 		}
 	}
