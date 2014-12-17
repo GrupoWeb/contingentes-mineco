@@ -16,7 +16,7 @@ class Emisionpendiente extends Eloquent {
 
 	public static function getSolicitudPendiente($id){
 		return DB::table('solicitudesemision AS se')
-			->select('u.nombre','u.email','se.created_at', 'se.usuarioid', 'se.solicitado', 't.nombre AS tratado', 'p.nombre AS periodo', 'd.nombre AS producto','m.nombrecorto AS unidad')
+			->select('u.nombre','u.email','se.created_at', 'se.usuarioid', 'se.solicitado', 't.nombrecorto AS tratado', 'p.nombre AS periodo', 'd.nombre AS producto','m.nombrecorto AS unidad')
 			->leftJoin('authusuarios AS u', 'se.usuarioid', '=', 'u.usuarioid')
 			->leftJoin('periodos AS p', 'se.periodoid', '=', 'p.periodoid')
 			->leftJoin('contingentes AS c', 'p.contingenteid', '=', 'c.contingenteid')

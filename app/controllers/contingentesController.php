@@ -9,9 +9,9 @@ class contingentesController extends crudController {
 		Crud::setTabla('contingentes');
 	
 		Crud::setCampo(array('nombre'=>'Producto','campo'=>'(SELECT nombre FROM productos WHERE productoid=contingentes.productoid)', 'editable'=>false, 'show'=>true));
-	 	Crud::setCampo(array('nombre'=>'Tratado','campo'=>'(SELECT nombre FROM tratados WHERE tratadoid=contingentes.tratadoid)', 'editable'=>false, 'show'=>true));
+	 	Crud::setCampo(array('nombre'=>'Tratado','campo'=>'(SELECT nombrecorto FROM tratados WHERE tratadoid=contingentes.tratadoid)', 'editable'=>false, 'show'=>true));
 		Crud::setCampo(array('nombre' =>'Producto', 'campo'=>'productoid', 'tipo'=>'combobox', 'query'=>'SELECT nombre, productoid FROM productos', 'combokey'=>'productoid', 'editable'=>true, 'show'=>false));
-	 	Crud::setCampo(array('nombre' =>'Tratado', 'campo'=>'tratadoid', 'tipo'=>'combobox', 'query'=>'SELECT nombre, tratadoid FROM tratados', 'combokey'=>'tratadoid', 'editable'=>true, 'show'=>false));
+	 	Crud::setCampo(array('nombre' =>'Tratado', 'campo'=>'tratadoid', 'tipo'=>'combobox', 'query'=>'SELECT nombrecorto as nombre, tratadoid FROM tratados', 'combokey'=>'tratadoid', 'editable'=>true, 'show'=>false));
 
 	 	Crud::setBotonExtra(array('url'=>'contingente/requerimientos/','icon'=>'glyphicon glyphicon-list-alt','titulo'=>'Ver detalle'));
 	 	

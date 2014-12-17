@@ -19,7 +19,7 @@ class Inscripcionpendiente extends Eloquent {
 	public static function getSolicitudPendiente($id,$contingenteid){
 		return DB::table('authusuarios AS u')
 			->select('u.nombre','u.email','u.created_at', 'u.usuarioid',
-				DB::raw('(SELECT GROUP_CONCAT( CONCAT(t.nombre, " - ", p.nombre) SEPARATOR "<br>") FROM usuariocontingentes uc 
+				DB::raw('(SELECT GROUP_CONCAT( CONCAT(t.nombrecorto, " - ", p.nombre) SEPARATOR "<br>") FROM usuariocontingentes uc 
 					LEFT JOIN contingentes AS c USING(contingenteid)
 					LEFT JOIN tratados AS t USING(tratadoid)
 					LEFT JOIN productos p USING(productoid) 
