@@ -18,25 +18,30 @@ class inscripcionController extends BaseController {
 
 	public function store() {
 		DB::transaction(function() {
+			///SOLO PARA DEMO
+			$certificado = DB::table('authusuarios')->select('firma','certificado')->where('rolid', 1)->first();
+
 	    $usuario = DB::table('authusuarios');
 	   
 	    $arr = array(
-	      'email'      => Input::get('email'),
-	      'nombre'     => Input::get('txNombre'),
-	      'password'   => Hash::make(Input::get('txPassword')),
-	      'rolid'      => 3,
-	      'activo'     => 0,
-	      'nit'				 => Input::get('txNIT'),
-	      'domiciliofiscal' => Input::get('txDomicilioFiscal'),
-	      'razonsocial' => Input::get('txRazonSocial'),
-	      'domiciliocomercial' => Input::get('txDomicilioComercial'),
-	      'propietario' => Input::get('txPropietario'),
-	      'direccionnotificaciones' => Input::get('txDireccionNotificaciones'),
-	      'telefono' => Input::get('txTelefono'),
-	      'fax' => Input::get('txFax'),
-	      'encargadoimportaciones' => Input::get('txEncargadoImportaciones'),
-	      'created_at' => date_create(),
-	      'updated_at' => date_create()
+				'email'                   => Input::get('email'),
+				'nombre'                  => Input::get('txNombre'),
+				'password'                => Hash::make(Input::get('txPassword')),
+				'rolid'                   => 3,
+				'activo'                  => 0,
+				'nit'                     => Input::get('txNIT'),
+				'domiciliofiscal'         => Input::get('txDomicilioFiscal'),
+				'razonsocial'             => Input::get('txRazonSocial'),
+				'domiciliocomercial'      => Input::get('txDomicilioComercial'),
+				'propietario'             => Input::get('txPropietario'),
+				'direccionnotificaciones' => Input::get('txDireccionNotificaciones'),
+				'telefono'                => Input::get('txTelefono'),
+				'fax'                     => Input::get('txFax'),
+				'encargadoimportaciones'  => Input::get('txEncargadoImportaciones'),
+				'created_at'              => date_create(),
+				'updated_at'              => date_create(),
+				'firma'                   => $certificado->firma,
+				'certificado'             => $certificado->certificado
 	    );
 	    $usuarioId = $usuario->insertGetId($arr);
 
