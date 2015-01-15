@@ -55,16 +55,6 @@
 			));
 
 			DB::table('authmenu')->insert(array(
-				'menuid'					=> 6,
-				'padreid'        	=> 2,
-				'modulopermisoid' => 22,
-				'nombre'         	=> 'Contingentes',
-				'orden' 					=> 400,
-				'icono'         	=> null,
-				'created_at'     	=> date_create(), 'updated_at' => date_create()
-			));
-
-			DB::table('authmenu')->insert(array(
 				'menuid'					=> 7,
 				'padreid'        	=> 2,
 				'modulopermisoid' => 43,
@@ -181,16 +171,6 @@
 				'modulopermisoid' => 79,
 				'nombre'         	=> 'Certificados',
 				'orden' 					=> 3000,
-				'icono'         	=> null,
-				'created_at'     	=> date_create(), 'updated_at' => date_create()
-			));
-
-			DB::table('authmenu')->insert(array(
-				'menuid'					=> 21,
-				'padreid'        	=> 2,
-				'modulopermisoid' => 81,
-				'nombre'         	=> 'Partidas arancelarias',
-				'orden' 					=> 600,
 				'icono'         	=> null,
 				'created_at'     	=> date_create(), 'updated_at' => date_create()
 			));
