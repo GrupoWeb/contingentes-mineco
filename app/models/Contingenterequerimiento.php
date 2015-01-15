@@ -44,10 +44,8 @@ class Contingenterequerimiento extends Eloquent {
 
 	public static function getNombre($id){
 		return DB::table('contingentes AS c')
-			->select(DB::raw('CONCAT(p.nombre," ",t.nombrecorto) AS nombre'))
-			->leftJoin('tratados AS t', 'c.tratadoid', '=', 't.tratadoid')
 			->leftJoin('productos AS p', 'c.productoid', '=', 'p.productoid')
 			->where('contingenteid','=',$id)
-			->get();
+			->pluck('p.nombre');
 	}
 }

@@ -28,13 +28,17 @@ class contingenterequerimientosController extends BaseController {
 			$aInscripcion[]=$requInscripcion->requerimientoid;
 		}
 
+		$tratadoid = Input::get('tratado');
+
 		return View::make('contingentes.asignarrequerimientos')
 			->with('ContingenteN',$ContingenteN)
 			->with('requerimientos', $requerimientos)
 			->with('aAsignacion', $aAsignacion)
 			->with('aEmision', $aEmision)
 			->with('aInscripcion', $aInscripcion)
-			->with('nombreContingente',$nombreContingente);
+			->with('nombreContingente',$nombreContingente)
+			->with('tratadoid', $tratadoid)
+			->with('tratado', Tratado::getNombre(Crypt::decrypt($tratadoid)));
 			
 	}
 
@@ -97,6 +101,7 @@ class contingenterequerimientosController extends BaseController {
 		
 		Session::flash('message', 'Se asignaron los requerimientos con éxito.');
 		Session::flash('type', 'success');
-		return Redirect::route('contingentes.index');
+
+		return Redirect::to('contingentes?tratado='.Input::get('tratado'));
 	}
 }

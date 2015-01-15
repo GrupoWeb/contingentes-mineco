@@ -2,11 +2,12 @@
 
 @section('content')
 
-
 <ol class="breadcrumb">
-  <li><a href="/contingentes">Contingentes</a></li>
-  <li>Asignar Requerimientos</li>
-  <li class="active">{{ $nombreContingente[0]->nombre }}</li>
+  <li><a href="/tratados">Tratados</a></li>
+  <li class="active">{{ $tratado }}</li>
+  <li><a href="/contingentes?tratado={{ $tratadoid }}">Contingentes</a></li>
+  <li class="active">{{ $nombreContingente }}</li>
+  <li class="active">Asignar Requerimientos</li>
 </ol>
 
 @if(Session::get('message'))
@@ -18,6 +19,7 @@
 
 	{{ Form::open(array('route' => 'contingente.requerimientos.store')) }}
 	{{ Form::hidden('contingenteid', Crypt::encrypt($ContingenteN->contingenteid)) }}
+	{{ Form::hidden('tratado', $tratadoid) }}
 			<div class="col-md-4">
 				<div class="panel panel-default">
 				  <div class="panel-heading">
