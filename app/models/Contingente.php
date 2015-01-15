@@ -20,4 +20,12 @@ class Contingente extends Eloquent {
 			->leftJoin('unidadesmedida AS u', 'p.unidadmedidaid', '=', 'u.unidadmedidaid')
 			->pluck('u.nombrecorto');
 	}
+
+	public static function getNombre($aContingenteId) {
+		return DB::table('contingentes AS c')
+			->leftJoin('tratados AS t', 'c.tratadoid', '=', 't.tratadoid')
+			->leftJoin('productos AS p', 'c.productoid', '=', 'p.productoid')
+			->selectRaw('CONCAT(t.nombrecorto, " - ", p.nombre) AS nombre')
+			->first();
+	}
 }
