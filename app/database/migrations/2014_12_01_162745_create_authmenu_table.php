@@ -10,8 +10,7 @@ class CreateAuthmenuTable extends Migration {
 	 *
 	 * @return void
 	 */
-	public function up()
-	{
+	public function up() {
 		Schema::create('authmenu', function(Blueprint $table)
 		{
 			$table->increments('menuid');
@@ -30,8 +29,7 @@ class CreateAuthmenuTable extends Migration {
 	 *
 	 * @return void
 	 */
-	public function down()
-	{
+	public function down() {
 		Schema::drop('authmenu');
 	}
 
