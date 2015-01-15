@@ -5,24 +5,18 @@ use Illuminate\Database\Migrations\Migration;
 
 class MigrationPasosContingente extends Migration {
 
-	/**
-	 * Run the migrations.
-	 *
-	 * @return void
-	 */
-	public function up()
-	{
-		//
+	public function up() {
+		Schema::table('contingentes', function(Blueprint $table) {
+			$table->dropColumn('mesesvalido');
+			$table->tinyinteger('asignacion')->unsigned()->default(0)->after('productoid');
+		});
 	}
 
-	/**
-	 * Reverse the migrations.
-	 *
-	 * @return void
-	 */
-	public function down()
-	{
-		//
+	public function down() {
+		Schema::table('contingentes', function(Blueprint $table) {
+			$table->dropColumn('asignacion');
+			$table->integer('mesesvalido')->unsigned()->nullable()->after('tipotratadoid');
+		});
 	}
 
 }
