@@ -26,6 +26,7 @@ class Contingente extends Eloquent {
 			->leftJoin('tratados AS t', 'c.tratadoid', '=', 't.tratadoid')
 			->leftJoin('productos AS p', 'c.productoid', '=', 'p.productoid')
 			->selectRaw('CONCAT(t.nombrecorto, " - ", p.nombre) AS nombre')
+			->where('c.contingenteid', $aContingenteId)
 			->first();
 	}
 }
