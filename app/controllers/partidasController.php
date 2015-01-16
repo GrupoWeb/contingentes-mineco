@@ -1,4 +1,5 @@
 <?php
+
 class partidasController extends crudController {
 	function getPartidas($aProductoId) {
 		$html = '';
