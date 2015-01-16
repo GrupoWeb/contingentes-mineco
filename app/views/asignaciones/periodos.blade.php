@@ -36,7 +36,7 @@
 
     @if($periodo->tipotratadoid == 2)
 			<div class="form-group col-sm-6">
-	      <label for="txCantidad" class="col-sm-4 control-label">Cantidad:</label>
+	      <label for="txCantidad" class="col-sm-4 control-label">Importador/Exportador:</label>
 	      <div class="col-sm-8">
 	      	<select name="cmbUsuario" class="selectpicker form-control" title="Seleccione un usuario" data-bv-notEmpty="true" data-bv-notempty-message="El usuario es requerido">
             @foreach($usuarios as $usuario)
