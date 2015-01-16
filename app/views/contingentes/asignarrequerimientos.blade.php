@@ -41,7 +41,7 @@
 				  </div>
 				</div>
 			</div>
-			@if(count($aAsignacion) > 0)
+			@if($mostrarAsignacion <> 0)
 				<div class="col-md-4">
 					<div class="panel panel-default">
 					  <div class="panel-heading">

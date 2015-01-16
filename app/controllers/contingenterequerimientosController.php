@@ -12,25 +12,19 @@ class contingenterequerimientosController extends BaseController {
 		$id                = Crypt::decrypt($id);
 		$nombreContingente = Contingenterequerimiento::getNombre($id);
 
-		if($ContingenteN->asignacion <> 0) {
-			$requerimientosAsignacion  = Contingenterequerimiento::getRequerimientosAsignados($id);
-
-			foreach ($requerimientosAsignacion as $requAsignados) {
-				$aAsignacion[] = $requAsignados->requerimientoid;
-			}
-		}
 		
+		$requerimientosAsignacion  = Contingenterequerimiento::getRequerimientosAsignados($id);
 		$requerimientosEmision     = Contingenterequerimiento::getRequerimientosEmision($id);
 		$requerimientosInscripcion = Contingenterequerimiento::getRequerimientosInscripcion($id);
 
+		foreach ($requerimientosAsignacion as $requAsignados)
+			$aAsignacion[] = $requAsignados->requerimientoid;
 
-		foreach ($requerimientosEmision as $requEmision) {
+		foreach ($requerimientosEmision as $requEmision)
 			$aEmision[]=$requEmision->requerimientoid;
-		}
 
-		foreach ($requerimientosInscripcion as $requInscripcion) {
+		foreach ($requerimientosInscripcion as $requInscripcion)
 			$aInscripcion[]=$requInscripcion->requerimientoid;
-		}
 
 		$tratadoid = Input::get('tratado');
 
@@ -42,7 +36,8 @@ class contingenterequerimientosController extends BaseController {
 			->with('aInscripcion', $aInscripcion)
 			->with('nombreContingente',$nombreContingente)
 			->with('tratadoid', $tratadoid)
-			->with('tratado', Tratado::getNombre(Crypt::decrypt($tratadoid)));
+			->with('tratado', Tratado::getNombre(Crypt::decrypt($tratadoid)))
+			->with('mostrarAsignacion', $ContingenteN->asignacion);
 			
 	}
 
