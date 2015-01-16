@@ -4,7 +4,7 @@ class contingenterequerimientosController extends BaseController {
 	public function index($id) {
 		$aAsignacion  = array();
 		$aEmision     = array();
-		$aInscripcion =array();
+		$aInscripcion = array();
 
 		$ContingenteN = DB::table('contingentes')->where('contingenteid', Crypt::decrypt($id))->first();
 
