@@ -39,7 +39,7 @@
 				'padreid'        	=> 2,
 				'modulopermisoid' => 36,
 				'nombre'         	=> 'Tratados',
-				'orden' 					=> 200,
+				'orden' 					=> 300,
 				'icono'         	=> null,
 				'created_at'     	=> date_create(), 'updated_at' => date_create()
 			));
@@ -49,7 +49,7 @@
 				'padreid'        	=> 2,
 				'modulopermisoid' => 29,
 				'nombre'         	=> 'Requerimientos',
-				'orden' 					=> 300,
+				'orden' 					=> 200,
 				'icono'         	=> null,
 				'created_at'     	=> date_create(), 'updated_at' => date_create()
 			));
