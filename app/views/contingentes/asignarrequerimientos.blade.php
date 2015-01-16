@@ -40,28 +40,30 @@
 					@endforeach
 				  </div>
 				</div>
-			</div>	
-			<div class="col-md-4">
-				<div class="panel panel-default">
-				  <div class="panel-heading">
-				    <h3 class="panel-title">Asignación</h3>
-				  </div>
-				  <div class="panel-body">
-				  		<div class="pull-right">
-				  		<a href="javascript:void(0);" id="tod{{$ContingenteN->contingenteid}}" class="lnkTodosA">Todos</a> | 
-				  		<a href="javascript:void(0);" id="nin{{$ContingenteN->contingenteid}}" class="lnkNingunoA">Ninguno</a>
-				  	</div>
-					@foreach($requerimientos as $requerimiento)
-						<div>
-							<label>
-								<input type="checkbox" value="{{$ContingenteN->contingenteid}}-{{$requerimiento->requerimientoid}}"  name='reqAsignacion[]' id="mp{{$ContingenteN->contingenteid.'-'.$requerimiento->requerimientoid}}" class="chkAsig{{$ContingenteN->contingenteid}}" v
-								{{ (in_array($requerimiento->requerimientoid, $aAsignacion)) ? 'checked="true"' : '' }}> {{$requerimiento->nombre}}
-							</label>
-						</div>
-					@endforeach
-				  </div>
-				</div>
 			</div>
+			@if(count($aAsignacion) > 0)
+				<div class="col-md-4">
+					<div class="panel panel-default">
+					  <div class="panel-heading">
+					    <h3 class="panel-title">Asignación</h3>
+					  </div>
+					  <div class="panel-body">
+					  		<div class="pull-right">
+					  		<a href="javascript:void(0);" id="tod{{$ContingenteN->contingenteid}}" class="lnkTodosA">Todos</a> | 
+					  		<a href="javascript:void(0);" id="nin{{$ContingenteN->contingenteid}}" class="lnkNingunoA">Ninguno</a>
+					  	</div>
+						@foreach($requerimientos as $requerimiento)
+							<div>
+								<label>
+									<input type="checkbox" value="{{$ContingenteN->contingenteid}}-{{$requerimiento->requerimientoid}}"  name='reqAsignacion[]' id="mp{{$ContingenteN->contingenteid.'-'.$requerimiento->requerimientoid}}" class="chkAsig{{$ContingenteN->contingenteid}}" v
+									{{ (in_array($requerimiento->requerimientoid, $aAsignacion)) ? 'checked="true"' : '' }}> {{$requerimiento->nombre}}
+								</label>
+							</div>
+						@endforeach
+					  </div>
+					</div>
+				</div>
+			@endif
 			<div class="col-md-4">
 				<div class="panel panel-default">
 				  <div class="panel-heading">

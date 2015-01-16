@@ -2,8 +2,8 @@
 class contingenterequerimientosController extends BaseController {
 
 	public function index($id) {
-		$aAsignacion = array();
-		$aEmision = array();
+		$aAsignacion  = array();
+		$aEmision     = array();
 		$aInscripcion =array();
 
 		$ContingenteN = DB::table('contingentes')->where('contingenteid', Crypt::decrypt($id))->first();
@@ -12,13 +12,17 @@ class contingenterequerimientosController extends BaseController {
 		$id                = Crypt::decrypt($id);
 		$nombreContingente = Contingenterequerimiento::getNombre($id);
 
-		$requerimientosAsignacion  = Contingenterequerimiento::getRequerimientosAsignados($id);
+		if($ContingenteN->asignacion <> 0) {
+			$requerimientosAsignacion  = Contingenterequerimiento::getRequerimientosAsignados($id);
+
+			foreach ($requerimientosAsignacion as $requAsignados) {
+				$aAsignacion[] = $requAsignados->requerimientoid;
+			}
+		}
+		
 		$requerimientosEmision     = Contingenterequerimiento::getRequerimientosEmision($id);
 		$requerimientosInscripcion = Contingenterequerimiento::getRequerimientosInscripcion($id);
 
-		foreach ($requerimientosAsignacion as $requAsignados) {
-			$aAsignacion[]=$requAsignados->requerimientoid;
-		}
 
 		foreach ($requerimientosEmision as $requEmision) {
 			$aEmision[]=$requEmision->requerimientoid;
