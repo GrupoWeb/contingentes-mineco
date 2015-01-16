@@ -116,6 +116,13 @@
 				'created_at'     => date_create(), 'updated_at' => date_create()
 			));
 
+			DB::table('authmodulos')->insert(array(
+				'moduloid'       => 17,
+				'nombre'         => 'periodosasignaciones',
+				'nombrefriendly' => 'Periodo asignaciones',
+				'created_at'     => date_create(), 'updated_at' => date_create()
+			));
+
 		  DB::statement('SET FOREIGN_KEY_CHECKS=1');
 		}
 	}

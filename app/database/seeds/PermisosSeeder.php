@@ -5,56 +5,56 @@
 			DB::table('authpermisos')->truncate();
 
 			DB::table('authpermisos')->insert(array(
-				'permisoid'       => 1,
+				'permisoid'      => 1,
 				'nombre'         => 'index',
 				'nombrefriendly' => 'Ver',
 				'created_at'     => date_create(), 'updated_at' => date_create()
 			));
 		
 			DB::table('authpermisos')->insert(array(
-				'permisoid'       => 2,
+				'permisoid'      => 2,
 				'nombre'         => 'create',
 				'nombrefriendly' => 'Crear',
 				'created_at'     => date_create(), 'updated_at' => date_create()
 			));
 		
 			DB::table('authpermisos')->insert(array(
-				'permisoid'       => 3,
+				'permisoid'      => 3,
 				'nombre'         => 'store',
 				'nombrefriendly' => 'Guardar',
 				'created_at'     => date_create(), 'updated_at' => date_create()
 			));
 		
 			DB::table('authpermisos')->insert(array(
-				'permisoid'       => 4,
+				'permisoid'      => 4,
 				'nombre'         => 'edit',
 				'nombrefriendly' => 'Editar',
 				'created_at'     => date_create(), 'updated_at' => date_create()
 			));
 		
 			DB::table('authpermisos')->insert(array(
-				'permisoid'       => 5,
+				'permisoid'      => 5,
 				'nombre'         => 'update',
 				'nombrefriendly' => 'Actualizar',
 				'created_at'     => date_create(), 'updated_at' => date_create()
 			));
 		
 			DB::table('authpermisos')->insert(array(
-				'permisoid'       => 6,
+				'permisoid'      => 6,
 				'nombre'         => 'destroy',
 				'nombrefriendly' => 'Borrar',
 				'created_at'     => date_create(), 'updated_at' => date_create()
 			));
 		
 			DB::table('authpermisos')->insert(array(
-				'permisoid'       => 7,
+				'permisoid'      => 7,
 				'nombre'         => 'show',
 				'nombrefriendly' => 'Mostrar datos',
 				'created_at'     => date_create(), 'updated_at' => date_create()
 			));
 		  
 		  DB::table('authpermisos')->insert(array(
-				'permisoid'       => 11,
+				'permisoid'      => 11,
 				'nombre'         => 'generar',
 				'nombrefriendly' => 'Generar',
 				'created_at'     => date_create(), 'updated_at' => date_create()
