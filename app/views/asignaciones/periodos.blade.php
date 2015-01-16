@@ -1,7 +1,7 @@
 @extends('template/template')
 
 @section('content')
-	<h2>Asignación de cuotas para períodos</h2>
+	<h3 class="text-primary">Asignación de cuotas para períodos</h3>
 	{{ Form::open(array('url'=>'periodosasignaciones?periodo='.$periodoid, 'class'=>'form-horizontal', 'id'=>'frmAsignacion')) }}
 		<div class="form-group col-sm-6">
       <label for="txPeriodo" class="col-sm-4 control-label">Período:</label>
