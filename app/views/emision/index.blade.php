@@ -18,7 +18,7 @@
               <optgroup label="{{ $contingente->tratado }}">
               <?php $grupoActual = $contingente->tratado; ?>  
             @endif
-            <option value="{{ $contingente->contingenteid }}">{{ $contingente->producto }}</option>
+            <option value="{{ Crypt::encrypt($contingente->contingenteid) }}">{{ $contingente->producto }}</option>
           @endforeach
           </optgroup>
         </select>
