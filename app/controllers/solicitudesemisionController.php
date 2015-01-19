@@ -49,20 +49,22 @@ class solicitudesemisionController extends crudController {
 			$emision->estado        = 'Aprobada';
 			$result                 = $emision->save();
 
+			$info = Emisionpendiente::getSolicitudPendiente($elID);
+
 			$certificado                     = new Certificado;
-			$certificado->tratado            = 'Nombre tratado';
+			$certificado->tratado            = $info->tratadolargo;
 			$certificado->usuarioid          = $emision->usuarioid;
-			$certificado->nombre             = 'Erick Marroquin';
-			$certificado->direccion          = '4 ave. 11-28 z. 14';
-			$certificado->nit                = '4530406-8';
-			$certificado->telefono           = '57661044';
+			$certificado->nombre             = $info->nombre;
+			$certificado->direccion          = $info->domiciliocomercial;
+			$certificado->nit                = $info->nit;
+			$certificado->telefono           = $info->telefono;
 			$certificado->volumen            = $cantidad;
 			$certificado->volumenletras      = 'Un mil dos cientos';
-			$certificado->fraccion           = '0200.10.10 - Otros';
+			$certificado->fraccion           = $info->fraccion;
 			$certificado->paisprocedencia    = 'E.E.U.U.';
 			$certificado->tratadodescripcion = 'Segun el diario oficial 2006...';
 			$certificado->fecha              = date_create();
-			$certificado->fechavencimiento   = '2014-12-31';
+			$certificado->fechavencimiento   = $info->vencimiento;
 			$certificado->save();
 
 			$movimiento                = new Movimiento;
@@ -71,6 +73,7 @@ class solicitudesemisionController extends crudController {
 			$movimiento->certificadoid = $certificado->id;
 			$movimiento->cantidad      = ($cantidad * -1);
 			$movimiento->comentario    = $comentario;
+			$movimiento->created_by    = Auth::id();
 			$result2                   = $movimiento->save();
 
 

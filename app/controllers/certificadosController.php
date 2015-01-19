@@ -20,7 +20,7 @@ class certificadosController extends crudController {
 	}
 
 	public function generarPDF($id) {
-		$elId = Crypt::decrypt($id);
+		$elId  = Crypt::decrypt($id);
 		$datos = Certificado::getCertificado($elId);
 
 		PDF::SetTitle('Certificado');

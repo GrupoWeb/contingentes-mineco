@@ -7,9 +7,10 @@ class emisionController extends BaseController {
 	}
 
 	function store() {
-		$query      = DB::select(DB::raw('SELECT getSaldo('.Input::get('contingentes').','.Auth::id().') AS disponible'));
-		$disponible = $query[0]->disponible;
-		$solicitado = Input::get('cantidad');
+		$contingente = Crypt::decrypt(Input::get('contingentes'));
+		$query       = DB::select(DB::raw('SELECT getSaldo('.$contingente.','.Auth::id().') AS disponible'));
+		$disponible  = $query[0]->disponible;
+		$solicitado  = Input::get('cantidad');
 
 		if($solicitado > $disponible){
 			$message = 'No es posible procesar la solicitud ya que el monto disponible no es suficiente';
@@ -17,10 +18,10 @@ class emisionController extends BaseController {
 		}
 
 		else {
-			DB::transaction(function() use($solicitado) {
+			DB::transaction(function() use($solicitado, $contingente) {
 				$solicitud             = new Solicitudesemision;
 				$solicitud->usuarioid  = Auth::id();
-				$solicitud->periodoid  = Periodo::getPeriodo(Input::get('contingentes'));
+				$solicitud->periodoid  = Periodo::getPeriodo($contingente);
 				$solicitud->solicitado = $solicitado;
 				$solicitud->estado     = 'Pendiente';
 				$solicitud->save();
