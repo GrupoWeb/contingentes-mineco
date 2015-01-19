@@ -18,7 +18,7 @@
               <optgroup label="{{ $contingente->tratado }}">
               <?php $grupoActual = $contingente->tratado; ?>  
             @endif
-            <option value="{{ Crypt::encrypt($contingente->contingenteid) }}">{{ $contingente->producto }}</option>
+            <option value="{{ Crypt::encrypt($contingente->contingenteid) }}" data-tratado="{{Crypt::encrypt($contingente->tratadoid) }}">{{ $contingente->producto }}</option>
           @endforeach
           </optgroup>
         </select>
@@ -94,7 +94,8 @@
           $('#frmSolicitud').bootstrapValidator('addField', 'partidas[]');
         });
 
-        $.get('/contingente/saldo/' + $(this).val(), function(data){
+        console.log($("#cmbContingentes option:selected"));
+        $.get('/contingente/saldo/' + $(this).val() + '?tratado=' + $("#cmbContingentes option:selected").attr('data-tratado'), function(data){
           $('[name="disponible"]').val(data.disponible);
           $('[name="disponible-span"]').text(data.disponible);
           $('#unidades').text(data.unidad);
