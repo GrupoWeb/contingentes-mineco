@@ -29,7 +29,7 @@ class contingentesController extends crudController {
 	}
 
 	public function getSaldo($contingenteid) {
-		$disponible             = DB::select(DB::raw('SELECT getSaldo('.$contingenteid.','.Auth::id().') AS disponible'));
+		$disponible             = DB::select(DB::raw('SELECT getSaldo('.Crypt::decrypt($contingenteid).','.Auth::id().') AS disponible'));
 		$response['disponible'] = $disponible[0]->disponible;
 		$response['unidad']     = Contingente::getUnidadMedida($contingenteid);
 

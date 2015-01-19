@@ -13,7 +13,8 @@
 		"csgt/crud": "dev-master",
 		"csgt/components": "dev-master",
 		"maxxscho/laravel-tcpdf": "0.*",
-		"xethron/migrations-generator": "dev-master"
+		"xethron/migrations-generator": "dev-master",
+		"maatwebsite/excel": "~1.2.1"
 
 	},
 	"autoload": {
