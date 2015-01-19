@@ -129,7 +129,6 @@ return array(
 		'Maxxscho\LaravelTcpdf\LaravelTcpdfServiceProvider',
 		'Way\Generators\GeneratorsServiceProvider',
 		'Xethron\MigrationsGenerator\MigrationsGeneratorServiceProvider',
-		'Maatwebsite\Excel\ExcelServiceProvider',
 
 	),
 
@@ -197,7 +196,6 @@ return array(
 		'URL'             => 'Illuminate\Support\Facades\URL',
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
-		'Excel'           => 'Maatwebsite\Excel\Facades\Excel',
 
 	),
 
