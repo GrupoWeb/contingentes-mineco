@@ -3,6 +3,7 @@
 class Contingente extends Eloquent {
 
 	protected $primryKey = 'contingenteid';
+	protected $fillable = array('tratadoid');
 
 	public static function getContingentes() {
 		return DB::table('contingentes AS c')

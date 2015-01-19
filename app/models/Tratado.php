@@ -2,6 +2,7 @@
 
 class Tratado extends Eloquent {
 	protected $primryKey = 'tratadoid';
+	protected $fillable = array('nombrecorto');
 
 	public static function getNombre($aTratadoId) {
 		return DB::table('tratados')

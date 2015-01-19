@@ -6,7 +6,8 @@ class Certificado extends Eloquent {
 
 	public static function getCertificado($aId) {
 		return DB::table('certificados AS c')
-			->leftJoin('authusuarios AS u','c.usuarioid','=','u.usuarioid')
+			->leftJoin('movimientos AS m','c.certificadoid','=','m.certificadoid')
+			->leftJoin('authusuarios AS u','m.created_by','=','u.usuarioid')
 			->select('c.certificadoid','c.tratado','c.tratadodescripcion', 'c.nombre',
 				'c.direccion','c.nit','c.telefono',
 				'c.volumen','c.volumenletras','c.fraccion','c.paisprocedencia',
