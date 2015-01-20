@@ -3,7 +3,7 @@
 class cuentacorrienteController extends BaseController {
 	
 	public function index() {
-		$contingente = Contingente::find(1);
+		$contingente = Contingente::find(7);
 		$producto    = Producto::find($contingente->productoid);
 		$tratado     = Tratado::find($contingente->tratadoid);
 
