@@ -175,6 +175,26 @@
 				'created_at'     	=> date_create(), 'updated_at' => date_create()
 			));
 
+			DB::table('authmenu')->insert(array(
+				'menuid'					=> 21,
+				'padreid'        	=> null,
+				'modulopermisoid' => null,
+				'nombre'         	=> 'Reportes',
+				'orden' 					=> 3600,
+				'icono'         	=> null,
+				'created_at'     	=> date_create(), 'updated_at' => date_create()
+			));
+
+			DB::table('authmenu')->insert(array(
+				'menuid'					=> 22,
+				'padreid'        	=> 21,
+				'modulopermisoid' => 90,
+				'nombre'         	=> 'Cuenta corriente',
+				'orden' 					=> 3600,
+				'icono'         	=> null,
+				'created_at'     	=> date_create(), 'updated_at' => date_create()
+			));
+
 		  DB::statement('SET FOREIGN_KEY_CHECKS=1');
 		}
 	}

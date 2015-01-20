@@ -9,7 +9,7 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
-Route::get('importer', 'importerController@import');
+//Route::get('importer', 'importerController@import');
 Route::get('c/{id}',array('as'=>'certificados.generar','uses'=>'certificadosController@generarPDF'));
 
 Route::get('correo', function(){
@@ -60,4 +60,7 @@ Route::group(array('before' => array('auth', 'cancerbero', 'menu')), function() 
 
 	//=== CERTIFICADOS
 	Route::resource('certificados', 'certificadosController', array('only'=>array('index','show')));
+
+	//=== REPORTES
+	Route::resource('cuentacorriente', 'cuentacorrienteController', array('only'=>array('index','store')));
 });

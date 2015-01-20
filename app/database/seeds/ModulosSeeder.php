@@ -123,6 +123,13 @@
 				'created_at'     => date_create(), 'updated_at' => date_create()
 			));
 
+			DB::table('authmodulos')->insert(array(
+				'moduloid'       => 18,
+				'nombre'         => 'cuentacorriente',
+				'nombrefriendly' => 'Cuenta corriente',
+				'created_at'     => date_create(), 'updated_at' => date_create()
+			));
+
 		  DB::statement('SET FOREIGN_KEY_CHECKS=1');
 		}
 	}
