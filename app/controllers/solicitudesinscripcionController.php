@@ -22,8 +22,6 @@ class solicitudesinscripcionController extends crudController {
 			array("tipo"=>"string"),
 			array("tipo"=>"datetime"),
 			array("tipo"=>"bool")
-			
-			
 		);
 		return View::make('solicitudespendientes/inscripcionesindex')
 			->with("solicitudes",$solicitudes)
@@ -31,13 +29,11 @@ class solicitudesinscripcionController extends crudController {
 	
 	}
 	public function edit($id){
-		$arr = explode("+",Crypt::decrypt($id));
-		$userID = $arr[0];
-		$contingenteid = $arr[1];
-		$solicitud 			= Inscripcionpendiente::getSolicitudPendiente($userID,$contingenteid);
-		$requerimientos 	= Usuariorequerimiento::getUsuarioContingenteRequerimientos($userID,$contingenteid);
-
-		
+		$arr            = explode("+",Crypt::decrypt($id));
+		$userID         = $arr[0];
+		$contingenteid  = $arr[1];
+		$solicitud      = Inscripcionpendiente::getSolicitudPendiente($userID,$contingenteid);
+		$requerimientos = Usuariorequerimiento::getUsuarioContingenteRequerimientos($userID,$contingenteid);
 
 		return View::make('solicitudespendientes/inscripciones')
 			->with('solicitud',$solicitud)
