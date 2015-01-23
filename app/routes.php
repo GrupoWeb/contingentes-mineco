@@ -10,6 +10,7 @@
 |
 */
 Route::get('c/{id}',array('as'=>'certificados.generar','uses'=>'certificadosController@generarPDF'));
+Route::get('cuentacorriente/periodos/{id}', 'cuentacorrienteController@getPeriodos');
 
 Route::get('correo', function(){
 	return View::make('emails/autorizacion')

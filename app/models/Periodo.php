@@ -21,4 +21,11 @@ class Periodo extends Eloquent {
 			->where('p.periodoid', $aPeriodoId)
 			->first();
 	}
+
+	public static function getPeriodosContingente($aContingenteId) {
+		return DB::table('periodos')
+			->select('periodoid', DB::raw('YEAR(fechainicio) AS nombre'))
+			->where('contingenteid', $aContingenteId)
+			->get();
+	}
 }
