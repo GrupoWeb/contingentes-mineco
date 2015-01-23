@@ -9,7 +9,6 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
-//Route::get('importer', 'importerController@import');
 Route::get('c/{id}',array('as'=>'certificados.generar','uses'=>'certificadosController@generarPDF'));
 
 Route::get('correo', function(){

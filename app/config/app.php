@@ -13,7 +13,7 @@ return array(
 	|
 	*/
 
-	'debug' => true,
+	'debug' => false,
 
 	/*
 	|--------------------------------------------------------------------------
@@ -129,6 +129,7 @@ return array(
 		'Maxxscho\LaravelTcpdf\LaravelTcpdfServiceProvider',
 		'Way\Generators\GeneratorsServiceProvider',
 		'Xethron\MigrationsGenerator\MigrationsGeneratorServiceProvider',
+		'Maatwebsite\Excel\ExcelServiceProvider',
 
 	),
 

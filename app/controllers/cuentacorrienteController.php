@@ -3,7 +3,14 @@
 class cuentacorrienteController extends BaseController {
 	
 	public function index() {
-		$contingente = Contingente::find(7);
+		return View::make('reportes/filtros')
+			->with('titulo', 'Cuenta Corriente')
+			->with('contingentes', Contingente::getContingentes())
+			->with('filters', array('fechaini', 'fechafin', 'contingentes'));
+	}
+
+	public function store() {
+		$contingente = Contingente::find(1);
 		$producto    = Producto::find($contingente->productoid);
 		$tratado     = Tratado::find($contingente->tratadoid);
 

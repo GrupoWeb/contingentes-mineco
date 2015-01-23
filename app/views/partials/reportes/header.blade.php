@@ -8,9 +8,9 @@
 			<th colspan="3" class="text-center"><h4>{{$titulo}}</h4></th>
 		</tr>
 		<tr>
-			<th width="30%">{{ $tratado }}</th>
-			<th width="30%">{{ $producto }}</th>
-			<th width="30%">Reporte generado {{ date('d/m/Y') }}</th>
+			<th width="30%" class="text-center">{{ $tratado }}</th>
+			<th width="30%" class="text-center">{{ $producto }}</th>
+			<th width="30%" class="text-center">Reporte generado {{ date('d/m/Y') }}</th>
 		</tr>
 	</thead>
 </table>
