@@ -38,7 +38,7 @@
 				'menuid'					=> 4,
 				'padreid'        	=> 2,
 				'modulopermisoid' => 36,
-				'nombre'         	=> 'Tratados',
+				'nombre'         	=> 'Tratados & contingentes',
 				'orden' 					=> 300,
 				'icono'         	=> null,
 				'created_at'     	=> date_create(), 'updated_at' => date_create()
@@ -58,7 +58,7 @@
 				'menuid'					=> 7,
 				'padreid'        	=> 2,
 				'modulopermisoid' => 43,
-				'nombre'         	=> 'Períodos',
+				'nombre'         	=> 'Períodos & cuotas',
 				'orden' 					=> 500,
 				'icono'         	=> null,
 				'created_at'     	=> date_create(), 'updated_at' => date_create()

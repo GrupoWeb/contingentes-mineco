@@ -16,8 +16,12 @@ class periodosController extends crudController {
 			'query'=>"SELECT (SELECT CONCAT(t.nombrecorto,' - ', p.nombre) FROM tratados t, productos p, contingentes c2 WHERE p.productoid=c2.productoid AND t.tratadoid = c2.tratadoid AND c2.contingenteid = con.contingenteid LIMIT 1) as nombre, contingenteid FROM contingentes con ORDER BY nombre",'combokey'=>'contingenteid','editable'=>true,'show'=>false));
 		Crud::setCampo(array('nombre'=>'Fechainicio','campo'=>'fechainicio','tipo'=>'date', 'default'=>'01/01/'.date('Y')));
 		Crud::setCampo(array('nombre'=>'Fechafin','campo'=>'fechafin','tipo'=>'date', 'default'=>'31/12/'.date('Y')));
+		Crud::setCampo(array('nombre'=>'Cuota total', 
+			'campo'=>'(SELECT SUM(m.cantidad) FROM movimientos AS m 
+				WHERE certificadoid IS NULL AND cantidad>0 AND m.periodoid=periodos.periodoid)', 
+			'editable'=>false,'tipo'=>'numeric','class'=>'text-right'));
 
-		Crud::setBotonExtra(array('url'=>'periodosasignaciones?periodo={id}','icon'=>'glyphicon glyphicon-check','titulo'=>'Asignar','class'=>'success'));
+		Crud::setBotonExtra(array('url'=>'periodosasignaciones?periodo={id}','icon'=>'glyphicon glyphicon-check','titulo'=>'Cuotas','class'=>'success'));
 		
 		Crud::setPermisos(Cancerbero::tienePermisosCrud('periodos'));
 	}
