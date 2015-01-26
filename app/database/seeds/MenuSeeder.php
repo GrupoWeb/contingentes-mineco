@@ -204,6 +204,16 @@
 				'icono'         	=> null,
 				'created_at'     	=> date_create(), 'updated_at' => date_create()
 			));
+          
+			DB::table('authmenu')->insert(array(
+				'menuid'					=> 24,
+				'padreid'        	=> 21,
+				'modulopermisoid' => 95,
+				'nombre'         	=> 'Empresas',
+				'orden' 					=> 3700,
+				'icono'         	=> null,
+				'created_at'     	=> date_create(), 'updated_at' => date_create()
+			));
 
 		  DB::statement('SET FOREIGN_KEY_CHECKS=1');
 		}
