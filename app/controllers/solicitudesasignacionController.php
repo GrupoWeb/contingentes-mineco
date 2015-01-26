@@ -1,90 +1,79 @@
 <?php
-class solicitudesasignacionController extends BaseController {
-
-	public function index() {
-		
-	}
-
-	/*private $crud, $cancerbero;
+class solicitudesasignacionController extends crudController {
 
 	public function __construct() {
-		$this->cancerbero = new Cancerbero;
-		$this->crud       = new Crud;
-
-		$this->crud->setExport(true);
-		$this->crud->setTitulo('Solicitudes Pendientes');
-		$this->crud->setTabla('authusuarios');
-		$this->crud->setTablaId('usuarioid');
-		$this->crud->setWhere('authusuarios.activo',0);
-
-		$this->crud->setCampo(array('nombre'=>'Nombre','campo'=>'nombre','reglas' => array('notEmpty'), 'reglasmensaje'=>'El nombre es requerido', 'tipo'=>'string'));
-		$this->crud->setCampo(array('nombre'=>'Email','campo'=>'email','reglas' => array('notEmpty'), 'reglasmensaje'=>'El nombre es requerido', 'tipo'=>'string'));
-		$this->crud->setCampo(array('nombre'=>'Fecha de solicitud','campo'=>'created_at','reglas' => array('notEmpty'), 'reglasmensaje'=>'El nombre es requerido', 'tipo'=>'string'));
-		$this->crud->setCampo(array('nombre'=>'Activo','campo'=>'activo','tipo'=>'bool'));
-
-		$this->crud->setBotonExtra(array('url'=>'solicitudespendientes/datossolicitud','icon'=>'glyphicon glyphicon-list-alt','titulo'=>'Ver detalle'));
+		Crud::setExport(false);
+		Crud::setSearch(false);
+		Crud::setTitulo('Solicitudes pendientes - Asignación');
+		Crud::setTabla('solicitudasignacion');
+		Crud::setTablaId('solicitudasignacionid');
 		
-		$this->crud->setPermisos($this->cancerbero->tienePermisosCrud('solicitudespendientes.asignacion'));
-	}
+		Crud::setLeftJoin('authusuarios AS u', 'solicitudasignacion.usuarioid', '=', 'u.usuarioid');
+		Crud::setLeftJoin('periodos AS p', 'solicitudasignacion.periodoid', '=', 'p.periodoid');
+		Crud::setLeftJoin('contingentes AS c', 'p.contingenteid', '=', 'c.contingenteid');
+		Crud::setLeftJoin('tratados AS t', 'c.tratadoid', '=', 't.tratadoid');
+		Crud::setLeftJoin('productos AS d', 'c.productoid', '=', 'd.productoid');
 
-	public function index() {
-		return $this->crud->index();
-	}
+		Crud::setWhere('estado', 'Pendiente');
 
-	public function create() {
-		return $this->crud->create(0);
-	}
-
-	public function store() {
-		return $this->crud->store();
-	}
-
-	public function show($id) {
-		return $this->crud->getData($id);
+		Crud::setCampo(array('nombre'=>'Usuario','campo'=>'u.nombre'));
+		Crud::setCampo(array('nombre'=>'Periodo','campo'=>'p.nombre'));
+		Crud::setCampo(array('nombre'=>'Tratado','campo'=>'t.nombrecorto'));
+		Crud::setCampo(array('nombre'=>'Producto','campo'=>'d.nombre','class'=>'text-right'));
+		Crud::setCampo(array('nombre'=>'Monto Solicitado','campo'=>'solicitado','tipo'=>'numeric','class'=>'text-right'));
+		Crud::setCampo(array('nombre'=>'Fecha de solicitud','campo'=>'solicitudasignacion.created_at', 'tipo'=>'datetime','class'=>'text-right'));
+		
+		Crud::setPermisos(Cancerbero::tienePermisosCrud('solicitudespendientes.emision'));
 	}
 
 	public function edit($id) {
-		return $this->crud->create($id);
+		$solicitud 			= Asignacionpendiente::getSolicitudPendiente(Crypt::decrypt($id));
+		$requerimientos = Asignacionrequerimiento::getRequerimientos(Crypt::decrypt($id));
+
+		return View::make('solicitudespendientes/asignaciones')
+			->with('solicitud',$solicitud)
+			->with('requerimientos',$requerimientos);
 	}
 
-	public function update($id) {
-		return $this->crud->store($id);
-	}
+	public function store() {
+		$elId = Crypt::decrypt(Input::get('id'));
+		
+		if(Input::has('btnAutorizar')) {
+			$cantidad   = Input::get('txCanidad');
+			$comentario = Input::get('txObservaciones');
+			
+			//TRANSACTION ===
+			$asignacion                = Asignacionpendiente::find($elID);
+			$asignacion->asignado      = $cantidad;
+			$asignacion->observaciones = Input::get('txObservaciones');
+			$asignacion->estado        = 'Aprobada';
+			$result                    = $asignacion->save();
 
-	public function destroy($id) {
-		return $this->crud->destroy($id);
-	}
+			$movimiento                = new Movimiento;
+			$movimiento->periodoid     = $asignacion->periodoid;
+			$movimiento->usuarioid     = $asignacion->usuarioid;
+			$movimiento->certificadoid = $certificado->id;
+			$movimiento->cantidad      = ($cantidad * -1);
+			$movimiento->comentario    = $comentario;
+			$movimiento->created_by    = Auth::id();
+			$movimiento->tipo          = 'Asignación';
+			$result2                   = $movimiento->save();
+			//====
 
-	public function inscripcionesPendientes() {
-		return View::make('solicitudespendientes/inscripciones')
-			->with('solicitudes', $solicitudesInscripcion);
-	}
+			if($result && $result2) {
+				$usuario = Authusuario::find($asignacion->usuarioid);
+				$email   = $usuario->email;
 
-	public function datosSolicitud($id){
-		$solicitud      = Inscripcionependiente::getSolicitudPendiente(Crypt::decrypt($id));
-		$requerimientos = Usuariorequerimiento::getUsuarioRequerimientos(Crypt::decrypt($id));
-
-		return View::make('solicitudespendientes/create')->with('solicitud',$solicitud)->with('requerimientos',$requerimientos);
-	}
-
-	public function autorizar($id){
-		if(Input::get('act')==1) {
-			$usuario         = Inscripcionependiente::find(Crypt::decrypt($id));
-			$usuario->activo = 1;
-			$result          = $usuario->save();
-
-			$email   = $usuario->email;
-
-			if($result) {
 				Session::flash('type','success');
-				Session::flash('message','Se autorizó el usuario con éxito');
+				Session::flash('message','La solicitud de inscripción fue procesada correctamente');
 
-				Mail::send('emails/autorizacion', array(
+				Mail::send('emails/solicitudemisionresultado', array(
 					'nombre'        => $usuario->nombre,
-					'fecha'         => $usuario->created_at,
+					'fecha'         => $asignacion->created_at,
+					'url'           => url('c/'.Crypt::encrypt($certificado->id)),
 					'estado'        => 'Aprobada',
 					'observaciones' => Input::get('txObservaciones')), function($msg) use ($email){
-		       			$msg->to($email)->subject('Solicitud de Inscripción DACE - MINECO');
+		       	$msg->to($email)->subject('Solicitud de Emisión DACE - MINECO');
 				});
 			}
 			else {
@@ -92,32 +81,11 @@ class solicitudesasignacionController extends BaseController {
 				Session::flash('message','Ocurrió un error al intentar autorizar, intente de nuevo.');
 			}
 		}
-		else{
-			$affectedRows  = Usuariocontingente::where('usuarioid', '=', Crypt::decrypt($id))->delete();
-			$affectedRows2 = Usuariorequerimiento::where('usuarioid', '=', Crypt::decrypt($id))->delete();
-			$usuario       = Inscripcionependiente::find(Crypt::decrypt($id));
-			$nombre        = $usuario->nombre;
-			$email         = $usuario->email;
-			$result        = $usuario->delete();
-			if($result) {
-				Session::flash('type','success');
-				Session::flash('message','Se rechazó la solicitud con éxito');
 
-				Mail::send('emails/autorizacion', array(
-					'nombre'        => $usuario->nombre,
-					'fecha'         => $usuario->created_at,
-					'estado'        => 'Rechazada',
-					'observaciones' => Input::get('txObservaciones')), function($msg) use ($email){
-		       			$msg->to($email)->subject('Solicitud de Inscripción DACE - MINECO');
-				});
 
-			}
-			else {
-				Session::flash('type','warning');
-				Session::flash('message','Ocurrió un error al intentar rechazar, intente de nuevo.');
-			}
-		}
 
-		return Redirect::to('catalogos/solicitudespendientes');
-	}*/
+
+
+
+	}
 }
