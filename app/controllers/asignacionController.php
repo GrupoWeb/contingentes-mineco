@@ -3,7 +3,64 @@
 class asignacionController extends BaseController {
 
 	public function index() {
-		return View::make('asignaciones/index')
-			->with('contingentes', Usuariocontingente::getContingentes());
+		return View::make('asignaciones.index')
+			->with('contingentes', Usuariocontingente::getContingentes(true));
+	}
+
+	public function store() {
+		$contingente = Crypt::decrypt(Input::get('contingentes'));
+		$query       = DB::select(DB::raw('SELECT getSaldo('.$contingente.','.Auth::id().') AS disponible'));
+		$disponible  = $query[0]->disponible;
+		$solicitado  = Input::get('cantidad');
+
+		if($solicitado > $disponible){
+			$message = 'No es posible procesar la solicitud ya que el monto disponible no es suficiente';
+			$type    = 'danger';
+		}
+
+		else {
+			DB::transaction(function() use($solicitado, $contingente) {
+				$solicitud             = new Solicitudasignacion;
+				$solicitud->usuarioid  = Auth::id();
+				$solicitud->periodoid  = Periodo::getPeriodo($contingente);
+				$solicitud->estado     = 'Pendiente';
+				$solicitud->solicitado = $solicitado;
+				$solicitud->save();
+
+				foreach (Input::file() as $key=>$val) { 
+		      if ($key=='txArchivo') continue;
+		    	if ($val) {
+						$arch   = Input::file($key);
+						$nombre = date('YmdHis').$arch->getClientOriginalName();
+						$res    = $arch->move(public_path() . '/archivos/' . Auth::id(), $nombre);
+						DB::table('solicitudasignacionrequerimientos')->insert(array(
+							'solicitudasignacionid' => $solicitud->id,
+							'requerimientoid'       => substr($key,4),
+							'archivo'               => $nombre,
+							'created_at'            => date_create(),
+							'updated_at'            => date_create()
+						));
+					}
+		    }
+		  });
+
+			$message = 'Solicitud ingresada exitosamente';
+			$type    = 'success';
+			$nombre  = Contingente::getNombre($contingente);
+			$email   = Auth::user()->email;
+	    Mail::send('emails/solicitudasignacion', array(
+				'nombre'      => Auth::user()->nombre,
+				'fecha'       => date('d-m-Y H:i'),
+				'contingente' => $nombre->nombre,
+				'monto'       => $solicitado
+	      ), function($msg) use ($email){
+	            $msg->to($email)->subject('Solicitud de asignación');
+	    });
+		}
+
+		Session::flash('message', $message);
+		Session::flash('type', $type);
+
+		return Redirect::to('/');
 	}
 }

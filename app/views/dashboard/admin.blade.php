@@ -27,7 +27,7 @@
 			</a>
 		</div>
 		<div class="col-md-4">
-			<a class="btn btn-xs btn-{{ $asignacion > 0 ? 'success' : 'default disabled' }}" href="#" title="Revisar">
+			<a class="btn btn-xs btn-{{ $asignacion > 0 ? 'success' : 'default disabled' }}" href="/solicitudespendientes/asignacion/" title="Revisar">
 				<span class="fa fa-sign-in"></span>&nbsp;Revisar
 			</a>
 		</div>

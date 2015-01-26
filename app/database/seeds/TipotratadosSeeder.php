@@ -7,12 +7,14 @@
 			DB::table('tipotratados')->insert(array(
 				'tipotratadoid'  => 1,
 				'nombre'         => 'Primero en tiempo, primero en derecho',
+				'asignacion'     => 0,
 				'created_at'     => date_create(), 'updated_at' => date_create()
 			));
 		
 			DB::table('tipotratados')->insert(array(
-				'tipotratadoid'       => 2,
-				'nombre'         => 'Cuota',
+				'tipotratadoid'  => 2,
+				'nombre'         => 'Cuenta corriente',
+				'asignacion'     => 1,
 				'created_at'     => date_create(), 'updated_at' => date_create()
 			));
 
