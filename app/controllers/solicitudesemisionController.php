@@ -59,10 +59,10 @@ class solicitudesemisionController extends crudController {
 			$certificado->nit                = $info->nit;
 			$certificado->telefono           = $info->telefono;
 			$certificado->volumen            = $cantidad;
-			$certificado->volumenletras      = 'Un mil dos cientos';
+			$certificado->volumenletras      = Components::numeroALetras($cantidad,'', 2);
 			$certificado->fraccion           = $info->fraccion;
-			$certificado->paisprocedencia    = 'E.E.U.U.';
-			$certificado->tratadodescripcion = 'Segun el diario oficial 2006...';
+			$certificado->paisprocedencia    = $info->paisprocedencia;
+			$certificado->tratadodescripcion = $info->textocertificado;
 			$certificado->fecha              = date_create();
 			$certificado->fechavencimiento   = $info->vencimiento;
 			$certificado->save();
@@ -73,6 +73,7 @@ class solicitudesemisionController extends crudController {
 			$movimiento->certificadoid = $certificado->id;
 			$movimiento->cantidad      = ($cantidad * -1);
 			$movimiento->comentario    = $comentario;
+			$movimiento->tipo          = 'Certificado';
 			$movimiento->created_by    = Auth::id();
 			$result2                   = $movimiento->save();
 

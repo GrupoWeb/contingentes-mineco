@@ -2,5 +2,5 @@
 
 class Solicitudesemision extends Eloquent {
 	protected $table     = 'solicitudesemision';
-	protected $primryKey = 'Solicitudesemisionid';
+	protected $primaryKey = 'Solicitudesemisionid';
 }
