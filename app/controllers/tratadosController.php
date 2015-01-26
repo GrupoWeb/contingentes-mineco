@@ -4,7 +4,7 @@ class tratadosController extends crudController {
 	
 	public function __construct() {
 		Crud::setExport(true); 
-		Crud::setTitulo('Tratados');
+		Crud::setTitulo('Tratados & contingentes');
 		Crud::setTablaId('tratadoid');
 		Crud::setTabla('tratados');
 
