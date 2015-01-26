@@ -7,10 +7,12 @@ class productosController extends crudController {
 		Crud::setTitulo('Productos');
 		Crud::setTablaId('productoid');
 		Crud::setTabla('productos');
+		Crud::setLeftJoin('unidadesmedida AS u','u.unidadmedidaid','=','productos.unidadmedidaid');
 
 		
-	 	Crud::setCampo(array('nombre'=>'Nombre','campo'=>'nombre'));
-	 	
+	 	Crud::setCampo(array('nombre'=>'Nombre','campo'=>'productos.nombre'));
+	 	Crud::setCampo(array('nombre'=>'Unidad de Medida','campo'=>'u.nombre','editable'=>false));
+
 	 	Crud::setCampo(array('nombre'=>'Unidad de Medida',
 	 						 'campo'=>'productos.unidadmedidaid' ,
 	 						 'tipo'=>'combobox', 
