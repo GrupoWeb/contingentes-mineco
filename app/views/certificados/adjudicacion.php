@@ -56,19 +56,19 @@
 	</tr>
 	<tr>
 		<td colspan="2">
-			<strong>TELEFONO:</strong> <?php echo $datos->telefono ?>
+			<strong>TELÉFONO:</strong> <?php echo $datos->telefono ?>
 		</td>
 	</tr>
 	<tr>
 		<td colspan="2">
-			<strong>VOLUMEN A IMPORTAR:</strong> <?php echo $datos->volumenletras ?>(<?php echo $datos->volumen ?>) +/- 5% de variación<br><br>
-			<strong>FRACCION ARANCELARIA:</strong> <?php echo $datos->fraccion ?><br><br>
+			<strong>VOLÚMEN A IMPORTAR:</strong> <?php echo $datos->volumenletras ?>(<?php echo $datos->volumen ?>) +/- 5% de variación<br><br>
+			<strong>FRACCIÓN ARANCELARIA:</strong> <?php echo $datos->fraccion ?><br><br>
 			<?php echo $datos->tratadodescripcion ?> <br><br>
-			<strong>PAIS DE PROCEDENCIA:</strong> <?php echo $datos->paisprocedencia ?><br><br>
+			<strong>PAÍS DE PROCEDENCIA:</strong> <?php echo $datos->paisprocedencia ?><br><br>
 		</td>
 	</tr>
 	<tr>
-		<td colspan="2"><strong>FECHA DE EMISION:</strong> <?php echo $datos->fecha ?></td>
+		<td colspan="2"><strong>FECHA DE EMISIÓN:</strong> <?php echo $datos->fecha ?></td>
 	</tr>
 	<tr>
 		<td colspan="2"><strong>VENCIMIENTO:</strong> <?php echo $datos->fechavencimiento ?></td>
