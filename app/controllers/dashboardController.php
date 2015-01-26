@@ -8,7 +8,7 @@ class dashboardController extends BaseController {
 		if($admin){
 			return View::make('dashboard.admin')
 				->with('inscripcion', count(Inscripcionpendiente::getSolicitudesPendientes()))
-				->with('asignacion', 0)
+				->with('asignacion', Solicitudasignacion::where('estado', 'Pendiente')->count())
 				->with('emision', Solicitudesemision::where('estado', 'Pendiente')->count());
 		}
 		
