@@ -195,6 +195,16 @@
 				'created_at'     	=> date_create(), 'updated_at' => date_create()
 			));
 
+			DB::table('authmenu')->insert(array(
+				'menuid'					=> 23,
+				'padreid'        	=> 16,
+				'modulopermisoid' => 92,
+				'nombre'         	=> 'Histórico de solicitudes',
+				'orden' 					=> 400,
+				'icono'         	=> null,
+				'created_at'     	=> date_create(), 'updated_at' => date_create()
+			));
+
 		  DB::statement('SET FOREIGN_KEY_CHECKS=1');
 		}
 	}
