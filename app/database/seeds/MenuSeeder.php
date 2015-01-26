@@ -197,7 +197,7 @@
 
 			DB::table('authmenu')->insert(array(
 				'menuid'					=> 23,
-				'padreid'        	=> 16,
+				'padreid'        	=> 9,
 				'modulopermisoid' => 92,
 				'nombre'         	=> 'Histórico de solicitudes',
 				'orden' 					=> 400,

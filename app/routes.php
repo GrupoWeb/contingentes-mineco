@@ -43,6 +43,7 @@ Route::group(array('before' => array('auth', 'cancerbero', 'menu')), function() 
 	//Route::get('solicitudespendientes/inscripcion/',array('as'=>'solicitudespendientes.inscripcion.index','uses'=>'solicitudesinscripcionController@index'));
 	Route::resource('solicitudespendientes/asignacion', 'solicitudesasignacionController');
 	Route::resource('solicitudespendientes/emision', 'solicitudesemisionController');
+	Route::resource('historicosolicitudes', 'historicosolicitudesController');
 	
 	//=== CONTINGENTES
 	Route::get('contingente/requerimientos/{id}', array('as'=>'contingente.requerimientos.index','uses'=>'contingenterequerimientosController@index'));

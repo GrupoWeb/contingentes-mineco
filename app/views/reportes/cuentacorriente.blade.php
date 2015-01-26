@@ -10,8 +10,8 @@
 				<th class="text-center">Acreditado a</th>
 				<th class="text-center">Acreditado por</th>
 				<th class="text-center">Comentario</th>
-				<th class="text-center">Débito</th>
 				<th class="text-center">Crédito</th>
+				<th class="text-center">Débito</th>
 				<th class="text-center">Saldo</th>
 			</tr>
 		</thead>
