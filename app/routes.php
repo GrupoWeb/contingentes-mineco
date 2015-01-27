@@ -65,4 +65,7 @@ Route::group(array('before' => array('auth', 'cancerbero', 'menu')), function() 
 	//=== REPORTES
 	Route::resource('cuentacorriente', 'cuentacorrienteController', array('only'=>array('index','store')));
 	Route::resource('empresas', 'empresasController', array('only'=>array('index','store')));
+  
+    //=== DOCUMENTOS
+    Route::get('usuarios/perfil/{id}', array('as'=>'usuarios.perfil','uses'=>'usuariosController@perfil'));
 });
