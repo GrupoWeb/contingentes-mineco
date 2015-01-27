@@ -36,7 +36,7 @@ class solicitudesasignacionController extends crudController {
 	}
 
 	public function store() {
-		$elId = Crypt::decrypt(Input::get('id'));
+		$elID = Crypt::decrypt(Input::get('id'));
 		
 		if(Input::has('btnAutorizar')) {
 			$cantidad   = Input::get('txCanidad');
@@ -52,7 +52,6 @@ class solicitudesasignacionController extends crudController {
 			$movimiento                = new Movimiento;
 			$movimiento->periodoid     = $asignacion->periodoid;
 			$movimiento->usuarioid     = $asignacion->usuarioid;
-			$movimiento->certificadoid = $certificado->id;
 			$movimiento->cantidad      = ($cantidad * -1);
 			$movimiento->comentario    = $comentario;
 			$movimiento->created_by    = Auth::id();
@@ -65,15 +64,14 @@ class solicitudesasignacionController extends crudController {
 				$email   = $usuario->email;
 
 				Session::flash('type','success');
-				Session::flash('message','La solicitud de inscripción fue procesada correctamente');
+				Session::flash('message','La solicitud de asignación fue procesada correctamente');
 
-				Mail::send('emails/solicitudemisionresultado', array(
+				Mail::send('emails/solicitudasignacionresultado', array(
 					'nombre'        => $usuario->nombre,
 					'fecha'         => $asignacion->created_at,
-					'url'           => url('c/'.Crypt::encrypt($certificado->id)),
 					'estado'        => 'Aprobada',
 					'observaciones' => Input::get('txObservaciones')), function($msg) use ($email){
-		       	$msg->to($email)->subject('Solicitud de Emisión DACE - MINECO');
+		       	$msg->to($email)->subject('Solicitud de Asignación DACE - MINECO');
 				});
 			}
 			else {
@@ -82,10 +80,32 @@ class solicitudesasignacionController extends crudController {
 			}
 		}
 
+		else {
+			$asignacion                = Asignacionpendiente::find($elID);
+			$asignacion->observaciones = Input::get('txObservaciones');
+			$asignacion->estado        = 'Rechazada';
+			$result                    = $asignacion->save();
 
+			if($result) {
+				Session::flash('type','success');
+				Session::flash('message','La solicitud de inscripción fue rechazada');
 
+				$usuario = Authusuario::find($asignacion->usuarioid);
+				$email   = $usuario->email;
+				Mail::send('emails/solicitudasignacionresultado', array(
+					'nombre'        => $usuario->nombre,
+					'fecha'         => $asignacion->created_at,
+					'estado'        => 'Rechazada',
+					'observaciones' => Input::get('txObservaciones')), function($msg) use ($email){
+		       	$msg->to($email)->subject('Solicitud de Asignación DACE - MINECO');
+				});
+			}
+			else {
+				Session::flash('type','warning');
+				Session::flash('message','Ocurrió un error al intentar rechazar, intente de nuevo.');
+			}
+		}
 
-
-
+		return Redirect::route('solicitudespendientes.asignacion.index');
 	}
 }
