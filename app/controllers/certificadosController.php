@@ -15,6 +15,7 @@ class certificadosController extends crudController {
 		Crud::setCampo(array('nombre'=>'Volúmen','campo'=>'certificados.volumen'));
 		
 	 	Crud::setBotonExtra(array('url'=>'c/{id}','icon'=>'fa fa-file-pdf-o','titulo'=>'Generar','class'=>'primary'));
+	 	Crud::setBotonExtra(array('url'=>'certificados/anular/{id}','icon'=>'fa fa-minus-square-o','titulo'=>'Anular','class'=>'danger'));
 
 		Crud::setPermisos(array('edit'=>false,'add'=>false,'delete'=>false));
 	}
@@ -22,6 +23,10 @@ class certificadosController extends crudController {
 	public function generarPDF($id) {
 		$elId  = Crypt::decrypt($id);
 		$datos = Certificado::getCertificado($elId);
+
+		if($datos->anulado == 1){
+			return "El certificado ha sido anulado";
+		}
 
 		PDF::SetTitle('Certificado');
 		PDF::AddPage();
@@ -44,5 +49,11 @@ class certificadosController extends crudController {
 		PDF::write2DBarcode(url('c/' . $id),'QRCODE,M',10,233,25,25);
 
 		PDF::Output('certificado.pdf');
+	}
+
+	public function anular($id){
+		$certificadoid = Crypt::decrypt($id);
+
+
 	}
 }

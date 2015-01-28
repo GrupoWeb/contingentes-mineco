@@ -78,3 +78,10 @@ Route::filter('csrf', function()
 		throw new Illuminate\Session\TokenMismatchException;
 	}
 });
+
+Route::filter('tratados', function(){
+	if(!Session::has('tratados')){
+		Session::put('tratados', Tratado::getTratados());
+		Session::put('tselected', 0);
+	}
+});

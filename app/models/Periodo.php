@@ -28,4 +28,10 @@ class Periodo extends Eloquent {
 			->where('contingenteid', $aContingenteId)
 			->get();
 	}
+
+	public static function getCountPeriodos($aContingentes) {
+		return DB::table('periodos')
+			->whereIn('contingenteid', $aContingentes)
+			->count();
+	}
 }

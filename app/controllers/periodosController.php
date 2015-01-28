@@ -9,6 +9,12 @@ class periodosController extends crudController {
 
 		Crud::setLeftJoin('contingentes AS c', 'c.contingenteid', '=', 'periodos.contingenteid'); 
 
+		$tselected = Session::get('tselected');
+		if($tselected <> 0) {
+			Crud::setWhere('c.tratadoid', $tselected);
+			Crud::setTitulo('Per&iacute;odos & cuotas - '.Tratado::getNombre($tselected));
+		}
+
 		Crud::setCampo(array('nombre'=>'Contingente','campo'=>"(SELECT CONCAT(t.nombrecorto,' - ', p.nombre) FROM tratados t, productos p, contingentes c2 WHERE p.productoid=c2.productoid AND t.tratadoid = c2.tratadoid AND c2.contingenteid = c.contingenteid)",'tipo'=>'combobox',
 			'query'=>"SELECT (SELECT CONCAT(t.nombrecorto,' - ', p.nombre) FROM tratados t, productos p, contingentes c2 WHERE p.productoid=c2.productoid AND t.tratadoid = c2.tratadoid AND c2.contingenteid = con.contingenteid LIMIT 1) as nombre, contingenteid FROM contingentes con ORDER BY nombre",'combokey'=>'contingenteid','editable'=>false));
 		Crud::setCampo(array('nombre'=>'Contingente','campo'=>"c.contingenteid",'tipo'=>'combobox',
