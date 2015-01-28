@@ -34,6 +34,7 @@ class usuariosController extends crudController {
     $contingentes = Usuariocontingente::contingentesUsuario($userID);
     $requerimientos = Usuariorequerimiento::getUsuarioRequerimientos($userID);
     
+//    $emisiones = DB::table('solicitudemision')
     $emisionRequerimientos = DB::table('solicitudemisionrequerimientos AS ser')
 			->select('ser.archivo','r.nombre')
 			->leftJoin('requerimientos AS r','ser.requerimientoid','=','r.requerimientoid')
@@ -41,6 +42,14 @@ class usuariosController extends crudController {
 			->where('se.usuarioid',$userID)
 			->get();
         
+    $asignaciones = DB::table('solicitudasignacion AS sa')
+            ->select('sa.solicitado','sa.estado',DB::raw('DATE_FORMAT(p.fechainicio,"%d-%m-%Y") AS fechainicio'),DB::raw('DATE_FORMAT(p.fechafin,"%d-%m-%Y") AS fechafin'),DB::raw('CONCAT(t.nombrecorto," - ",pro.nombre) AS contingente'))
+            ->leftJoin('periodos AS p','p.periodoid','=','sa.periodoid')
+            ->leftJoin('contingentes AS c','p.contingenteid','=','c.contingenteid')
+            ->leftJoin('tratados AS t','t.tratadoid','=','c.tratadoid')
+            ->leftJoin('productos AS pro','pro.productoid','=','c.productoid')
+            ->where('sa.usuarioid',$userID)
+            ->get();
     $asignacionRequerimientos = DB::table('solicitudasignacionrequerimientos AS sar')
 			->select('sar.archivo','r.nombre', 'sar.solicitudasignacionrequerimientoid')
 			->leftJoin('requerimientos AS r','sar.requerimientoid','=','r.requerimientoid')
@@ -53,6 +62,7 @@ class usuariosController extends crudController {
       ->with('contingentes', $contingentes)
       ->with('requerimientos', $requerimientos)
       ->with('emisionRequerimientos', $emisionRequerimientos)
+      ->with('asignaciones', $asignaciones)
       ->with('asignacionRequerimientos', $asignacionRequerimientos)
       ->with('usuario', $datos);
     

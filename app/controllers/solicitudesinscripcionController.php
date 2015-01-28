@@ -96,8 +96,7 @@ class solicitudesinscripcionController extends crudController {
 					if($affectedRows2==0)
 						Usuariorequerimiento::where('usuarioid', $elID)->where("usuariorequerimientos.requerimientoid","=",$rid)->delete();
 			}
-              echo $contingenteid;
-                exit;	
+              	
 
 				
 			
@@ -106,10 +105,12 @@ class solicitudesinscripcionController extends crudController {
 				$email   = $usuario->email;
 			
 			//revisar si no hay otras solicitudes
+         
 			$pendientes = Usuariocontingente::where('usuarioid', $elID)->count();
-			if($pendientes==0){
+			if($pendientes==0 && $usuario->activo!=1){
 				$result  = $usuario->delete();
 			}
+           
           
 			if($affectedRows || $result) {
 				Session::flash('type','success');
@@ -140,7 +141,6 @@ class solicitudesinscripcionController extends crudController {
           array_push($usuarioCon,$v->contingenteid);
         
     return View::make('inscripcion/reinscripcion')
-        ->with('route', 'solicitud.inscripcion.update')
         ->with('contingentes', Contingente::getContingentes($usuarioCon));
 	
   }

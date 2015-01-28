@@ -19,7 +19,7 @@
         </dd>
 	</dl>
 </div>
-
+@if(count($contingentes)) 
 <div class="col-md-12">
   <h4 class="text-success">Solicitudes de inscripción</h4>
   <ul class="list-group">
@@ -46,7 +46,7 @@
 
   </ul>
 </div>  
-   
+@endif
   @if(count($emisionRequerimientos)) 
  <div class="col-md-12">
   <h4 class="text-success">Solicitudes de emisión</h4>
@@ -64,12 +64,34 @@
   </ul>
 </div> 
 @endif
+
  
- @if(count($asignacionRequerimientos))
+ @if(count($asignaciones))
  <div class="col-md-12">
   <h4 class="text-success">Solicitudes de asignación</h4>
   <ul class="list-group">
-
+    <h5 class="text-warning">Solicitudes</h5>
+       @foreach($asignaciones as $asignacion)
+      <li class="list-group-item">
+        <dl class="dl-horizontal">
+          <dt>Fecha inicio:</dt><dd>{{$asignacion->fechainicio}}</dd>
+          <dt>Fecha fin:</dt><dd>{{$asignacion->fechafin}}</dd>
+          <dt>Contingente:</dt><dd>{{$asignacion->contingente}}</dd>
+          <dt>Solicitado:</dt><dd>{{$asignacion->solicitado}}</dd>
+          <dt>Estado:</dt>
+            <dd>
+              @if($asignacion->estado=="Aprobada")
+                <span class="label label-success" >Aprobada</span>
+              @elseif($asignacion->estado=="Rechazada")
+                <span class="label label-danger" >Rechazada</span>
+              @else
+                <span class="label label-default" >{{$asignacion->estado}}</span>
+              @endif
+            </dd>
+        </dl>
+      </li>    
+      @endforeach
+      
       <h5 class="text-warning">Documentos</h5>
        @foreach($asignacionRequerimientos as $requerimiento)
       <li class="list-group-item">

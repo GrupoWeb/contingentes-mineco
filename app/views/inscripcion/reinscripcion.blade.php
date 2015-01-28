@@ -9,16 +9,14 @@
   <body>
     <?php
       $params = array('id'=>'frmRegistro','class'=>'form-horizontal', 'files'=>true,'method'=>'POST');
-      if ($route) $params['route'] = "solicitud.inscripcion.update";
+      $params['route'] = "solicitud.inscripcion.update";
     ?>
     {{Form::open($params) }}
     <input type="hidden" name="_method" value="PUT">
     <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
       <div class="panel panel-default form-signin">
         <div class="panel-body">
-          <div class="text-center">
-            {{HTML::image(Config::get('login::logo.path'),Config::get('login::logo.alt'))}}
-          </div>
+          
           <h3 class="text-primary">Solicitud de inscripci&oacute;n</h3>
        
               <div class="col-md-12">
