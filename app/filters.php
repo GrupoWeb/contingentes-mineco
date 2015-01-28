@@ -80,7 +80,7 @@ Route::filter('csrf', function()
 });
 
 Route::filter('tratados', function(){
-	if(!Session::has('tratados')){
+	if(!Session::has('tselected')){
 		Session::put('tratados', Tratado::getTratados());
 		Session::put('tselected', 0);
 	}
