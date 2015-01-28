@@ -39,6 +39,7 @@ Route::group(array('before' => array('auth', 'cancerbero', 'menu')), function() 
 	//=== SOLICITUDES
 	Route::resource('solicitud/asignacion', 'asignacionController', array('only'=>array('index','store')));
 	Route::resource('solicitud/emision', 'emisionController', array('only'=>array('index','store')));
+	Route::resource('solicitud/inscripcion', 'solicitudesinscripcionController', array('only'=>array('create','update')));
 	Route::resource('solicitudespendientes/inscripcion', 'solicitudesinscripcionController',array('names' => array('index' => 'solicitudespendientes.inscripcion.index')));
 	//Route::get('solicitudespendientes/inscripcion/',array('as'=>'solicitudespendientes.inscripcion.index','uses'=>'solicitudesinscripcionController@index'));
 	Route::resource('solicitudespendientes/asignacion', 'solicitudesasignacionController');
