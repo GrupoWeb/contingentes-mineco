@@ -58,10 +58,12 @@ Route::group(array('before' => array('auth', 'cancerbero', 'menu')), function() 
 	Route::resource('periodos','periodosController');
 	Route::resource('periodosasignaciones', 'periodosasignacionesController', array('only'=>array('index','store')));
 	Route::resource('partidasarancelarias','contingentepartidaController');
+	Route::resource('paises','paisesController');
 	//Route::resource('catalogos/movimientos', 'movimientosController');
 
 	//=== CERTIFICADOS
 	Route::resource('certificados', 'certificadosController', array('only'=>array('index','show')));
+	Route::get('certificados/anular/{id}', array('as'=>'certificados.anular', 'uses'=>'certificadosController@anular'));
 
 	//=== REPORTES
 	Route::resource('cuentacorriente', 'cuentacorrienteController', array('only'=>array('index','store')));

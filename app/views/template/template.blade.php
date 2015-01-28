@@ -53,7 +53,7 @@
 		{{Session::get('menu')}} 
 		<div class="main">
 			<div class="container">
-				@if(Request::segment(1) <> 'cuentacorriente' && Request::segment(1) <> 'empresas')
+				@if(!in_array(Request::segment(1), Config::get('contingentes.tratadosExclude')))
 					<div class="pull-right">
 						<?php $tratados = Session::get('tratados'); $selected = Session::get('tselected'); ?>
 						<select class="selectpicker" id="cmbTratado">

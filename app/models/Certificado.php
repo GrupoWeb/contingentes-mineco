@@ -2,7 +2,7 @@
 
 class Certificado extends Eloquent {
 
-	protected $primryKey = 'certificadoid';
+	protected $primaryKey = 'certificadoid';
 
 	public static function getCertificado($aId) {
 		return DB::table('certificados AS c')

@@ -59,6 +59,13 @@
 				'nombrefriendly' => 'Generar',
 				'created_at'     => date_create(), 'updated_at' => date_create()
 			));
+
+			DB::table('authpermisos')->insert(array(
+				'permisoid'      => 12,
+				'nombre'         => 'anular',
+				'nombrefriendly' => 'Anular',
+				'created_at'     => date_create(), 'updated_at' => date_create()
+			));
 		  
 
 		  DB::statement('SET FOREIGN_KEY_CHECKS=1');

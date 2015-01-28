@@ -7,7 +7,9 @@ class certificadosController extends crudController {
 		Crud::setTabla('certificados');
 		Crud::setTablaId('certificadoid');
 
-		Crud::setLeftJoin('authusuarios AS u', 'u.usuarioid', '=', 'certificados.usuarioid'); 
+		Crud::setLeftJoin('authusuarios AS u', 'u.usuarioid', '=', 'certificados.usuarioid');
+
+		Crud::setWhere('anulado', 0);
 
 		Crud::setCampo(array('nombre'=>'No.','campo'=>'certificados.certificadoid'));
 		Crud::setCampo(array('nombre'=>'Fecha','campo'=>'certificados.fecha','tipo'=>'date'));
@@ -52,8 +54,32 @@ class certificadosController extends crudController {
 	}
 
 	public function anular($id){
-		$certificadoid = Crypt::decrypt($id);
+		$certificado          = Certificado::find(Crypt::decrypt($id));
+		$certificado->anulado = 1;
+		$certificado->save();
 
+		$movimientop = Movimiento::where('certificadoid', $certificado->certificadoid)->first();
 
+		if(!$movimientop) {
+			Session::flash('message', 'El certificado no existe en el sistema');
+			Session::flash('type', 'danger');
+
+			return Redirect::to('certificados');
+		}
+
+		$movimiento                = new Movimiento;
+		$movimiento->periodoid     = $movimientop->periodoid;
+		$movimiento->usuarioid     = $certificado->usuarioid;
+		$movimiento->certificadoid = $certificado->certificadoid;
+		$movimiento->cantidad      = $certificado->volumen;
+		$movimiento->comentario    = 'Adjuditado por anulación de certificado '.number_format($certificado->certificadoid);
+		$movimiento->tipo          = 'Certificado';
+		$movimiento->created_by    = Auth::id();
+		$movimiento->save();
+
+		Session::flash('message', 'Certificado anulado exitosamente');
+		Session::flash('type', 'success');
+
+		return Redirect::to('certificados');
 	}
 }

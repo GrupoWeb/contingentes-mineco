@@ -137,10 +137,17 @@
 				'created_at'     => date_create(), 'updated_at' => date_create()
 			));			
           
-          DB::table('authmodulos')->insert(array(
+      DB::table('authmodulos')->insert(array(
 				'moduloid'       => 20,
 				'nombre'         => 'empresas',
 				'nombrefriendly' => 'Reporte de empresas inscritas',
+				'created_at'     => date_create(), 'updated_at' => date_create()
+			));
+
+			DB::table('authmodulos')->insert(array(
+				'moduloid'       => 21,
+				'nombre'         => 'paises',
+				'nombrefriendly' => 'Países',
 				'created_at'     => date_create(), 'updated_at' => date_create()
 			));
 

@@ -215,6 +215,16 @@
 				'created_at'     	=> date_create(), 'updated_at' => date_create()
 			));
 
+			DB::table('authmenu')->insert(array(
+				'menuid'					=> 25,
+				'padreid'        	=> 2,
+				'modulopermisoid' => 98,
+				'nombre'         	=> 'Países',
+				'orden' 					=> 50,
+				'icono'         	=> null,
+				'created_at'     	=> date_create(), 'updated_at' => date_create()
+			));
+
 		  DB::statement('SET FOREIGN_KEY_CHECKS=1');
 		}
 	}
