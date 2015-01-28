@@ -3,7 +3,7 @@
 class Contingenterequerimiento extends Eloquent {
 	protected $primryKey = 'contingenterequerimientoid';
 
-	public static function getRequerimientos($aContingenteId, $aTipo=null){
+	public static function getRequerimientos($aContingenteId, $aTipo=null,$aReq=null){
 		if($aContingenteId=='null') return;
 
 		$vals =  explode(',',$aContingenteId);
@@ -19,6 +19,8 @@ class Contingenterequerimiento extends Eloquent {
 			
 			if($aTipo)
 				$query->where('tipo', $aTipo);
+            if(count($aReq))
+				$query->whereNotIn('r.requerimientoid',$aReq);
 			
 			$query->orderBy('contingenterequerimientoid');
 			return $query->get();

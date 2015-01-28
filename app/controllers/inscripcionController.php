@@ -48,7 +48,7 @@ class inscripcionController extends BaseController {
 	    foreach (Input::get('contingentes') as $val) {
 	    	DB::table('usuariocontingentes')->insert(array(
 					'usuarioid'     => $usuarioId, 
-					'contingenteid' => $val)
+					'contingenteid' => Crypt::decrypt($val))
 	    	);
 	    }
 	    
