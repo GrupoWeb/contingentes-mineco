@@ -31,4 +31,10 @@ class Contingente extends Eloquent {
 			->where('c.contingenteid', $aContingenteId)
 			->first();
 	}
+
+	public static function getContingentesTratado($aTratadoId) {
+		return DB::table('contingentes')
+			->where('tratadoid', $aTratadoId)
+			->lists('contingenteid');
+	}
 }

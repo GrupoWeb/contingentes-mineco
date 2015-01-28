@@ -15,8 +15,13 @@ class historicosolicitudesController extends crudController {
 		Crud::setLeftJoin('tratados AS t', 'c.tratadoid', '=', 't.tratadoid');
 		Crud::setLeftJoin('productos AS d', 'c.productoid', '=', 'd.productoid');
 
+		$tselected = Session::get('tselected');
+		if($tselected <> 0) {
+			Crud::setWhere('c.tratadoid', $tselected);
+			Crud::setTitulo('Histórico de solicitudes - '.Tratado::getNombre($tselected));
+		}
+
 		Crud::setCampo(array('nombre'=>'Usuario','campo'=>'u.nombre'));
-		Crud::setCampo(array('nombre'=>'Periodo','campo'=>'p.nombre'));
 		Crud::setCampo(array('nombre'=>'Tratado','campo'=>'t.nombrecorto'));
 		Crud::setCampo(array('nombre'=>'Producto','campo'=>'d.nombre','class'=>'text-right'));
 		Crud::setCampo(array('nombre'=>'Monto Solicitado','campo'=>'solicitado','tipo'=>'numeric','class'=>'text-right'));

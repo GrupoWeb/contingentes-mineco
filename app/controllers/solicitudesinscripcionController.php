@@ -7,17 +7,20 @@ class solicitudesinscripcionController extends crudController {
 		Crud::setTitulo('Solicitudes pendientes - Inscripción');
 		Crud::setTabla('authusuarios');
 		Crud::setTablaId('usuarioid');
+
 		Crud::setWhere('authusuarios.activo',0);
 
 		Crud::setCampo(array('nombre'=>'Nombre','campo'=>'nombre'));
 		Crud::setCampo(array('nombre'=>'Email','campo'=>'email'));
 		Crud::setCampo(array('nombre'=>'Fecha de solicitud','campo'=>'created_at', 'tipo'=>'datetime'));
 		Crud::setCampo(array('nombre'=>'Activo','campo'=>'activo','tipo'=>'bool'));
+
 		Crud::setPermisos(Cancerbero::tienePermisosCrud('solicitudespendientes.inscripcion'));
 	}
+
 	public function index(){
 		$solicitudes = Inscripcionpendiente::getSolicitudesPendientes();
-		$columnas = array(
+		$columnas    = array(
 			array("tipo"=>"string"),
 			array("tipo"=>"string"),
 			array("tipo"=>"datetime"),

@@ -65,7 +65,7 @@
       <tr>     	
         <th>Nombre</th>
         <th>Email</th>
-        <th>Producto</th>
+        <th>Contingente</th>
         <th>Fecha de solicitud</th>
         <th>Activo</th>
         <th>&nbsp;</th>

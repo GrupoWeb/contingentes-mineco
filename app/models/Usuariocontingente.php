@@ -13,4 +13,13 @@ class Usuariocontingente extends Eloquent {
 			->where('uc.usuarioid', Auth::id())
 			->get();
 	}
+
+	public static function getSolicitudes($aContingentes) {
+		return DB::table('usuariocontingentes')
+			->select(DB::raw('COUNT(*) as cuenta'), 'activo')
+			->whereIn('contingenteid', $aContingentes)
+			->groupBy('activo')
+			->orderBy('activo')
+			->get();
+	}
 }
