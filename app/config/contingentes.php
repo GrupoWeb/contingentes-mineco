@@ -13,6 +13,6 @@ return array(
 	*/
 
 	'roladmin'        => array(1,2),
-	'tratadosExclude' => array('cuentacorriente', 'empresas', 'login', 'reset','certificados'),
+	'tratadosExclude' => array('cuentacorriente', 'empresas', 'login', 'reset','certificados','usuarios','roles'),
 
 );
