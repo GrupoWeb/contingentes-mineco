@@ -75,7 +75,7 @@ class usuariosController extends crudController {
         $archivos[$req->requerimientoid] = $req;
     }
     
-      foreach($asignaciones as $req){
+      foreach($asignacionRequerimientos as $req){
       if(!isset($archivos[$req->requerimientoid]))
         $archivos[$req->requerimientoid] = $req;
     }
