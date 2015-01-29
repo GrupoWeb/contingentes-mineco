@@ -82,6 +82,14 @@
 			));
 		  
 
+            DB::table('authpermisos')->insert(array(
+                'permisoid'      => 15,
+                'nombre'         => 'perfil',
+                'nombrefriendly' => 'Perfil de usuarios',
+                'created_at'     => date_create(), 'updated_at' => date_create()
+			));
+		  
+
 		  DB::statement('SET FOREIGN_KEY_CHECKS=1');
 		}
 	}

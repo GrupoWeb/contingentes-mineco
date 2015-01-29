@@ -150,6 +150,13 @@
 				'nombrefriendly' => 'Países',
 				'created_at'     => date_create(), 'updated_at' => date_create()
 			));
+            
+			DB::table('authmodulos')->insert(array(
+				'moduloid'       => 22,
+				'nombre'         => 'solicitud.inscripcion',
+				'nombrefriendly' => 'Solicitud de inscripción',
+				'created_at'     => date_create(), 'updated_at' => date_create()
+			));
 
 		  DB::statement('SET FOREIGN_KEY_CHECKS=1');
 		}
