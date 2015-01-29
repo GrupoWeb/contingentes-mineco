@@ -64,6 +64,8 @@ Route::group(array('before' => array('auth', 'cancerbero', 'menu')), function() 
 	//=== CERTIFICADOS
 	Route::resource('certificados', 'certificadosController', array('only'=>array('index','show')));
 	Route::get('certificados/anular/{id}', array('as'=>'certificados.anular', 'uses'=>'certificadosController@anular'));
+	Route::get('certificados/liquidar/{id}', array('as'=>'certificados.liquidar', 'uses'=>'certificadosController@liquidar'));
+	Route::post('certificados/liquidar/{id}', array('as'=>'certificados.procesarliquidacion', 'uses'=>'certificadosController@procesarliquidacion'));
 
 	//=== REPORTES
 	Route::resource('cuentacorriente', 'cuentacorrienteController', array('only'=>array('index','store')));

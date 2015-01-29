@@ -15,8 +15,10 @@ class certificadosController extends crudController {
 		Crud::setCampo(array('nombre'=>'Fecha','campo'=>'certificados.fecha','tipo'=>'date'));
 		Crud::setCampo(array('nombre'=>'Nombre','campo'=>'certificados.nombre'));
 		Crud::setCampo(array('nombre'=>'Volúmen','campo'=>'certificados.volumen'));
+		Crud::setCampo(array('nombre'=>'Liquidado','campo'=>'(IF(dua IS NULL, 0, 1))','tipo'=>'bool'));
 		
 	 	Crud::setBotonExtra(array('url'=>'c/{id}','icon'=>'fa fa-file-pdf-o','titulo'=>'Generar','class'=>'primary'));
+	 	Crud::setBotonExtra(array('url'=>'certificados/liquidar/{id}','icon'=>'fa fa-check-square ','titulo'=>'Liquidar','class'=>'success'));
 	 	Crud::setBotonExtra(array('url'=>'certificados/anular/{id}','icon'=>'fa fa-minus-square-o','titulo'=>'Anular','class'=>'danger'));
 
 		Crud::setPermisos(array('edit'=>false,'add'=>false,'delete'=>false));
@@ -79,6 +81,23 @@ class certificadosController extends crudController {
 
 		Session::flash('message', 'Certificado anulado exitosamente');
 		Session::flash('type', 'success');
+
+		return Redirect::to('certificados');
+	}
+
+	public function liquidar($id) {
+		return View::make('certificados.liquidaciones')
+			->with('certificado', $id);
+	}
+
+	public function procesarliquidacion($id) {
+		$certificado       = Certificado::find(Crypt::decrypt($id));
+		$certificado->dua  = Input::get('txDua');
+		$certificado->real = Input::get('txCantidad');
+		$certificado->save();
+
+		Session::flash('message', 'Certificado liquidado exitosamente');
+		Session::flash('type', 'warning');
 
 		return Redirect::to('certificados');
 	}
