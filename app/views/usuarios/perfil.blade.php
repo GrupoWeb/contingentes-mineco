@@ -19,7 +19,7 @@
         </dd>
 	</dl>
 </div>
-@if(count($contingentes)) 
+
 <div class="col-md-12">
   <h4 class="text-success">Solicitudes de inscripción</h4>
   <ul class="list-group">
@@ -46,12 +46,33 @@
 
   </ul>
 </div>  
-@endif
-  @if(count($emisionRequerimientos)) 
+
+  @if(count($emisiones)) 
  <div class="col-md-12">
   <h4 class="text-success">Solicitudes de emisión</h4>
   <ul class="list-group">
-
+       @foreach($emisiones as $emision)
+      <li class="list-group-item">
+        <dl class="dl-horizontal">
+          <dt>Fecha inicio:</dt><dd>{{$emision->fechainicio}}</dd>
+          <dt>Fecha fin:</dt><dd>{{$emision->fechafin}}</dd>
+          <dt>Contingente:</dt><dd>{{$emision->contingente}}</dd>
+          <dt>Solicitado:</dt><dd>{{$emision->solicitado}}</dd>
+          <dt>Emitido:</dt><dd>{{$emision->emitido}}</dd>
+          <dt>Estado:</dt>
+            <dd>
+              @if($emision->estado=="Aprobada")
+                <span class="label label-success" >Aprobada</span>
+              @elseif($emision->estado=="Rechazada")
+                <span class="label label-danger" >Rechazada</span>
+              @else
+                <span class="label label-default" >{{$emision->estado}}</span>
+              @endif
+            </dd>
+        </dl>
+      </li>    
+      @endforeach
+      
       <h5 class="text-warning">Documentos</h5>
        @foreach($emisionRequerimientos as $requerimiento)
       <li class="list-group-item">
