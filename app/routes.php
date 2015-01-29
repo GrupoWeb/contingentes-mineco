@@ -12,6 +12,7 @@
 Route::group(array('before' => array('tratados')), function() {
 	Route::get('c/{id}',array('as'=>'certificados.generar','uses'=>'certificadosController@generarPDF'));
 	Route::get('cuentacorriente/periodos/{id}', 'cuentacorrienteController@getPeriodos');
+	Route::get('changetratado/{id}', 'dashboardController@changetratado');
 
 	//=== SOLICITUD DE INSCRIPCION
 	Route::resource('signup', 'inscripcionController');
