@@ -4,14 +4,13 @@ class Inscripcionpendiente extends Eloquent {
 	protected $table      = 'authusuarios';
 	protected $primaryKey = 'usuarioid';
 
-	
-	
 	public static function getSolicitudesPendientes(){
 		return DB::table('authusuarios AS u')
-			->select('u.nombre','u.email','u.created_at', 'p.nombre AS producto', 'u.usuarioid','c.contingenteid','u.activo')
+			->select('u.nombre','u.email','u.created_at', DB::raw("CONCAT(t.nombrecorto, ' ', p.nombre) AS producto"), 'u.usuarioid','c.contingenteid','u.activo')
 			->leftJoin('usuariocontingentes AS uc','u.usuarioid','=','uc.usuarioid')
 			->leftJoin('contingentes AS c', 'uc.contingenteid', '=', 'c.contingenteid')
 			->leftJoin('productos AS p','c.productoid', '=', 'p.productoid')
+			->leftJoin('tratados AS t','c.tratadoid', '=', 't.tratadoid')
 			->where('uc.activo', 0)
 			->get();
 	}

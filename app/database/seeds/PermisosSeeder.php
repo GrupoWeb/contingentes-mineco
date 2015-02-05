@@ -59,6 +59,35 @@
 				'nombrefriendly' => 'Generar',
 				'created_at'     => date_create(), 'updated_at' => date_create()
 			));
+
+			DB::table('authpermisos')->insert(array(
+				'permisoid'      => 12,
+				'nombre'         => 'anular',
+				'nombrefriendly' => 'Anular',
+				'created_at'     => date_create(), 'updated_at' => date_create()
+			));
+
+			DB::table('authpermisos')->insert(array(
+				'permisoid'      => 13,
+				'nombre'         => 'liquidar',
+				'nombrefriendly' => 'Liquidar',
+				'created_at'     => date_create(), 'updated_at' => date_create()
+			));
+
+			DB::table('authpermisos')->insert(array(
+				'permisoid'      => 14,
+				'nombre'         => 'procesarliquidacion',
+				'nombrefriendly' => 'Procesar liquidación',
+				'created_at'     => date_create(), 'updated_at' => date_create()
+			));
+		  
+
+            DB::table('authpermisos')->insert(array(
+                'permisoid'      => 15,
+                'nombre'         => 'perfil',
+                'nombrefriendly' => 'Perfil de usuarios',
+                'created_at'     => date_create(), 'updated_at' => date_create()
+			));
 		  
 
 		  DB::statement('SET FOREIGN_KEY_CHECKS=1');

@@ -7,14 +7,19 @@ class certificadosController extends crudController {
 		Crud::setTabla('certificados');
 		Crud::setTablaId('certificadoid');
 
-		Crud::setLeftJoin('authusuarios AS u', 'u.usuarioid', '=', 'certificados.usuarioid'); 
+		Crud::setLeftJoin('authusuarios AS u', 'u.usuarioid', '=', 'certificados.usuarioid');
+
+		Crud::setWhere('anulado', 0);
 
 		Crud::setCampo(array('nombre'=>'No.','campo'=>'certificados.certificadoid'));
 		Crud::setCampo(array('nombre'=>'Fecha','campo'=>'certificados.fecha','tipo'=>'date'));
 		Crud::setCampo(array('nombre'=>'Nombre','campo'=>'certificados.nombre'));
 		Crud::setCampo(array('nombre'=>'Volúmen','campo'=>'certificados.volumen'));
+		Crud::setCampo(array('nombre'=>'Liquidado','campo'=>'(IF(dua IS NULL, 0, 1))','tipo'=>'bool'));
 		
 	 	Crud::setBotonExtra(array('url'=>'c/{id}','icon'=>'fa fa-file-pdf-o','titulo'=>'Generar','class'=>'primary'));
+	 	Crud::setBotonExtra(array('url'=>'certificados/liquidar/{id}','icon'=>'fa fa-check-square ','titulo'=>'Liquidar','class'=>'success'));
+	 	Crud::setBotonExtra(array('url'=>'certificados/anular/{id}','icon'=>'fa fa-minus-square-o','titulo'=>'Anular','class'=>'danger'));
 
 		Crud::setPermisos(array('edit'=>false,'add'=>false,'delete'=>false));
 	}
@@ -22,6 +27,10 @@ class certificadosController extends crudController {
 	public function generarPDF($id) {
 		$elId  = Crypt::decrypt($id);
 		$datos = Certificado::getCertificado($elId);
+
+		if($datos->anulado == 1){
+			return "El certificado ha sido anulado";
+		}
 
 		PDF::SetTitle('Certificado');
 		PDF::AddPage();
@@ -44,5 +53,52 @@ class certificadosController extends crudController {
 		PDF::write2DBarcode(url('c/' . $id),'QRCODE,M',10,233,25,25);
 
 		PDF::Output('certificado.pdf');
+	}
+
+	public function anular($id){
+		$certificado          = Certificado::find(Crypt::decrypt($id));
+		$certificado->anulado = 1;
+		$certificado->save();
+
+		$movimientop = Movimiento::where('certificadoid', $certificado->certificadoid)->first();
+
+		if(!$movimientop) {
+			Session::flash('message', 'El certificado no existe en el sistema');
+			Session::flash('type', 'danger');
+
+			return Redirect::to('certificados');
+		}
+
+		$movimiento                = new Movimiento;
+		$movimiento->periodoid     = $movimientop->periodoid;
+		$movimiento->usuarioid     = $certificado->usuarioid;
+		$movimiento->certificadoid = $certificado->certificadoid;
+		$movimiento->cantidad      = $certificado->volumen;
+		$movimiento->comentario    = 'Adjuditado por anulación de certificado '.number_format($certificado->certificadoid);
+		$movimiento->tipo          = 'Certificado';
+		$movimiento->created_by    = Auth::id();
+		$movimiento->save();
+
+		Session::flash('message', 'Certificado anulado exitosamente');
+		Session::flash('type', 'success');
+
+		return Redirect::to('certificados');
+	}
+
+	public function liquidar($id) {
+		return View::make('certificados.liquidaciones')
+			->with('certificado', $id);
+	}
+
+	public function procesarliquidacion($id) {
+		$certificado       = Certificado::find(Crypt::decrypt($id));
+		$certificado->dua  = Input::get('txDua');
+		$certificado->real = Input::get('txCantidad');
+		$certificado->save();
+
+		Session::flash('message', 'Certificado liquidado exitosamente');
+		Session::flash('type', 'warning');
+
+		return Redirect::to('certificados');
 	}
 }

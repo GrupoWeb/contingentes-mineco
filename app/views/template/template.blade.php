@@ -38,6 +38,14 @@
 	<script>
 		$(document).ready(function(){
 			$(".alert").delay(5000).fadeOut('slow');
+
+			$('.selectpicker').selectpicker();
+
+			$('#cmbTratado').change(function(){
+				$.get('/changetratado/' + $(this).find('option:selected').val(), function(data){
+					location.reload(); 
+				});
+			});
 		});
 	</script>
 	</head>
@@ -45,6 +53,20 @@
 		{{Session::get('menu')}} 
 		<div class="main">
 			<div class="container">
+				@if(!in_array(Request::segment(1), Config::get('contingentes.tratadosExclude')))
+					<div class="pull-right">
+						<?php $tratados = Session::get('tratados'); $selected = Session::get('tselected'); ?>
+						<select class="selectpicker" id="cmbTratado">
+							<option value="0" {{ (0 == $selected) ? 'selected' : '' }}>-- TODOS --</option>
+							@foreach($tratados as $tratado)
+								<?php $tid = $tratado->tratadoid; ?>
+								<option value="{{ $tid }}" {{ ($tid == $selected) ? 'selected' : '' }}>{{ $tratado->nombrecorto }}</option>
+							@endforeach
+						</select>
+					</div>
+					<div class="clearfix"></div>
+					<br />
+				@endif
 				@yield('content')
 			</div>
 		</div>

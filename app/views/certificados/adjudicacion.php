@@ -5,6 +5,10 @@
   tr.border-bottom td {
   	border-bottom:1px solid black;
 	}
+	tr td {
+		padding-top: 20px;
+		padding-bottom: 8px;
+	}
 	.nota {
 		font-style: italic;
 	}
@@ -21,31 +25,58 @@
 			No. <?php echo $datos->certificadoid ?>
 		</td>
 	</tr>
-	<tr class="border-bottom">
+	<tr>
 		<td colspan="3" align="center">
 			<h3><?php echo $datos->tratado ?></h3><br>
 		</td>
 	</tr>
+	<tr class="border-bottom">
+		<td colspan="3" align="center">
+			<h4>La Dirección de Administración del Comercio Exterior<br>-DACE-</h4><br>
+		</td>
+	</tr>
 </table>
 <br><br>
+
 <table>
 	<tr>
-		<td align="right">Guatemala, <?php echo $datos->fecha ?><br><br></td>
+		<td colspan="2">
+			<strong>AUTORIZA A:</strong> <?php echo $datos->nombre ?>
+		</td>
 	</tr>
 	<tr>
-		<td>
-			<strong>La Dirección de Administración del Comercio Exterior-DACE-</strong> autoriza a:<br><br><strong><?php echo $datos->nombre ?></strong><br>
-			Domicilio fiscal: <strong><?php echo $datos->direccion ?></strong><br>
-			NIT: <strong><?php echo $datos->nit ?></strong><br>
-			Teléfono: <strong><?php echo $datos->telefono ?></strong><br><br>
-			a importar un volúmen de:<br>
-			<strong><?php echo $datos->volumenletras ?>(<?php echo $datos->volumen ?>) +/- 5% de variación</strong><br><br>
-			bajo la fracción arancelaria: <br>
-			<strong><?php echo $datos->fraccion ?></strong><br><br>
+		<td colspan="2">
+			<strong>DOMICILIO FISCAL:</strong> <?php echo $datos->direccion ?>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<strong>NIT:</strong> <?php echo $datos->nit ?>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<strong>TELÉFONO:</strong> <?php echo $datos->telefono ?>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<strong>VOLÚMEN A IMPORTAR:</strong> <?php echo $datos->volumenletras ?>(<?php echo $datos->volumen ?>) +/- 5% de variación<br><br>
+			<strong>FRACCIÓN ARANCELARIA:</strong> <?php echo $datos->fraccion ?><br><br>
 			<?php echo $datos->tratadodescripcion ?> <br><br>
-			País de procedencia: <strong><?php echo $datos->paisprocedencia ?></strong><br><br>
-			Vencimiento: <strong><?php echo $datos->fechavencimiento ?></strong><br><br>
-			<span class="nota"><small><strong>Nota:</strong> La titularidad de un Certificado no exime del cumplimiento de las regulaciones internas vigentes al momento
+			<strong>PAÍS DE PROCEDENCIA:</strong> <?php echo $datos->paisprocedencia ?><br><br>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2"><strong>FECHA DE EMISIÓN:</strong> <?php echo $datos->fecha ?></td>
+	</tr>
+	<tr>
+		<td colspan="2"><strong>VENCIMIENTO:</strong> <?php echo $datos->fechavencimiento ?></td>
+	</tr>
+	<tr>
+	  <td colspan="2">
+	  	<br><br><br>
+	  	<span class="nota"><small><strong>NOTA:</strong> La titularidad de un Certificado no exime del cumplimiento de las regulaciones internas vigentes al momento
 					de la importación y no puede ser transferido ni negociado de manera alguna.
 				</small>
 			</span>

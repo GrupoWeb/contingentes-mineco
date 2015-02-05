@@ -19,7 +19,7 @@ class Emisionpendiente extends Eloquent {
 			->select('u.nombre','u.email','se.created_at', 'se.usuarioid', 'se.solicitado', 
 				't.nombrecorto AS tratado', 't.nombre AS tratadolargo', 'p.nombre AS periodo', 
 				'd.nombre AS producto','m.nombrecorto AS unidad', 'u.domiciliocomercial',
-				'u.nit', 'u.telefono',
+				'u.nit', 'u.telefono', 't.textocertificado','t.paisprocedencia',
 				DB::raw('(SELECT CONCAT(cp.partida," ",cp.nombre) FROM solicitudemisionpartidas AS sep 
 					LEFT JOIN contingentepartidas as cp ON sep.partidaid = cp.partidaid
 					WHERE sep.solicitudemisionid = se.solicitudemisionid LIMIT 1) AS fraccion'),

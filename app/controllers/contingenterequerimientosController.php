@@ -37,7 +37,7 @@ class contingenterequerimientosController extends BaseController {
 			->with('nombreContingente',$nombreContingente)
 			->with('tratadoid', $tratadoid)
 			->with('tratado', Tratado::getNombre(Crypt::decrypt($tratadoid)))
-			->with('mostrarAsignacion', $ContingenteN->asignacion);
+			->with('mostrarAsignacion', Tipotratado::getAsignacion($ContingenteN->tipotratadoid));
 			
 	}
 

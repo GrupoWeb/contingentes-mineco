@@ -7,7 +7,7 @@ class Usuariorequerimiento extends Eloquent {
 
 	public static function getUsuarioRequerimientos($id){
 		return DB::table('usuariorequerimientos As ur')
-			->select('ur.archivo','r.nombre', 'ur.usuarioid')
+			->select('ur.archivo','r.nombre', 'ur.usuarioid','r.requerimientoid')
 			->leftJoin('requerimientos As r','r.requerimientoid','=','ur.requerimientoid')
 			->where('ur.usuarioid',$id)
 			->get();

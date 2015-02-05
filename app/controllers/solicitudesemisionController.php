@@ -16,8 +16,14 @@ class solicitudesemisionController extends crudController {
 
 		Crud::setWhere('estado', 'Pendiente');
 
+		$tselected = Session::get('tselected');
+		if($tselected <> 0) {
+			Crud::setWhere('c.tratadoid', $tselected);
+			Crud::setTitulo('Solicitudes pendientes - Emisión - '.Tratado::getNombre($tselected));
+		}
+
 		Crud::setCampo(array('nombre'=>'Usuario','campo'=>'u.nombre'));
-		Crud::setCampo(array('nombre'=>'Periodo','campo'=>'p.nombre'));
+		//Crud::setCampo(array('nombre'=>'Periodo','campo'=>'p.nombre'));
 		Crud::setCampo(array('nombre'=>'Tratado','campo'=>'t.nombrecorto'));
 		Crud::setCampo(array('nombre'=>'Producto','campo'=>'d.nombre','class'=>'text-right'));
 		Crud::setCampo(array('nombre'=>'Monto Solicitado','campo'=>'solicitado','tipo'=>'numeric','class'=>'text-right'));
@@ -59,10 +65,10 @@ class solicitudesemisionController extends crudController {
 			$certificado->nit                = $info->nit;
 			$certificado->telefono           = $info->telefono;
 			$certificado->volumen            = $cantidad;
-			$certificado->volumenletras      = 'Un mil dos cientos';
+			$certificado->volumenletras      = Components::numeroALetras($cantidad,'', 2);
 			$certificado->fraccion           = $info->fraccion;
-			$certificado->paisprocedencia    = 'E.E.U.U.';
-			$certificado->tratadodescripcion = 'Segun el diario oficial 2006...';
+			$certificado->paisprocedencia    = $info->paisprocedencia;
+			$certificado->tratadodescripcion = $info->textocertificado;
 			$certificado->fecha              = date_create();
 			$certificado->fechavencimiento   = $info->vencimiento;
 			$certificado->save();
@@ -73,6 +79,7 @@ class solicitudesemisionController extends crudController {
 			$movimiento->certificadoid = $certificado->id;
 			$movimiento->cantidad      = ($cantidad * -1);
 			$movimiento->comentario    = $comentario;
+			$movimiento->tipo          = 'Certificado';
 			$movimiento->created_by    = Auth::id();
 			$result2                   = $movimiento->save();
 

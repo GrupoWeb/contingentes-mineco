@@ -195,6 +195,46 @@
 				'created_at'     	=> date_create(), 'updated_at' => date_create()
 			));
 
+			DB::table('authmenu')->insert(array(
+				'menuid'					=> 23,
+				'padreid'        	=> 9,
+				'modulopermisoid' => 92,
+				'nombre'         	=> 'Histórico de solicitudes',
+				'orden' 					=> 400,
+				'icono'         	=> null,
+				'created_at'     	=> date_create(), 'updated_at' => date_create()
+			));
+          
+			DB::table('authmenu')->insert(array(
+				'menuid'					=> 24,
+				'padreid'        	=> 21,
+				'modulopermisoid' => 95,
+				'nombre'         	=> 'Empresas',
+				'orden' 					=> 3700,
+				'icono'         	=> null,
+				'created_at'     	=> date_create(), 'updated_at' => date_create()
+			));
+
+			DB::table('authmenu')->insert(array(
+				'menuid'					=> 25,
+				'padreid'        	=> 2,
+				'modulopermisoid' => 98,
+				'nombre'         	=> 'Países',
+				'orden' 					=> 50,
+				'icono'         	=> null,
+				'created_at'     	=> date_create(), 'updated_at' => date_create()
+			));
+
+			DB::table('authmenu')->insert(array(
+				'menuid'					=> 26,
+				'padreid'        	=> 9,
+				'modulopermisoid' => 109,
+				'nombre'         	=> 'Inscripción',
+				'orden' 					=> 50,
+				'icono'         	=> null,
+				'created_at'     	=> date_create(), 'updated_at' => date_create()
+			));
+
 		  DB::statement('SET FOREIGN_KEY_CHECKS=1');
 		}
 	}

@@ -2,13 +2,13 @@
 
 class Certificado extends Eloquent {
 
-	protected $primryKey = 'certificadoid';
+	protected $primaryKey = 'certificadoid';
 
 	public static function getCertificado($aId) {
 		return DB::table('certificados AS c')
 			->leftJoin('movimientos AS m','c.certificadoid','=','m.certificadoid')
 			->leftJoin('authusuarios AS u','m.created_by','=','u.usuarioid')
-			->select('c.certificadoid','c.tratado','c.tratadodescripcion', 'c.nombre',
+			->select('c.certificadoid','c.anulado','c.tratado','c.tratadodescripcion', 'c.nombre',
 				'c.direccion','c.nit','c.telefono',
 				'c.volumen','c.volumenletras','c.fraccion','c.paisprocedencia',
 				DB::raw('DATE_FORMAT(c.fecha,"%d-%m-%Y") AS fecha'),

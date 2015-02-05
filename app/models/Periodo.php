@@ -13,7 +13,7 @@ class Periodo extends Eloquent {
 
 	public static function getPeridoAsignacion($aPeriodoId) {
 		return DB::table('periodos AS p')
-			->select('p.periodoid', 'p.nombre AS periodo', 't.nombrecorto AS tratado', 'c.tipotratadoid', 'tt.nombre AS tipo','pr.nombre AS producto')
+			->select('p.periodoid', DB::raw('CONCAT(t.nombrecorto," - ",pr.nombre, " - ",YEAR(p.fechainicio)) AS periodo'), 't.nombrecorto AS tratado', 'c.tipotratadoid', 'tt.nombre AS tipo','pr.nombre AS producto')
 			->leftJoin('contingentes AS c', 'p.contingenteid', '=', 'c.contingenteid')
 			->leftJoin('tratados AS t', 'c.tratadoid', '=', 't.tratadoid')
 			->leftJoin('tipotratados AS tt', 'c.tipotratadoid', '=', 'tt.tipotratadoid')
@@ -27,5 +27,11 @@ class Periodo extends Eloquent {
 			->select('periodoid', DB::raw('YEAR(fechainicio) AS nombre'))
 			->where('contingenteid', $aContingenteId)
 			->get();
+	}
+
+	public static function getCountPeriodos($aContingentes) {
+		return DB::table('periodos')
+			->whereIn('contingenteid', $aContingentes)
+			->count();
 	}
 }

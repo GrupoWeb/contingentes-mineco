@@ -7,17 +7,20 @@ class solicitudesinscripcionController extends crudController {
 		Crud::setTitulo('Solicitudes pendientes - Inscripción');
 		Crud::setTabla('authusuarios');
 		Crud::setTablaId('usuarioid');
+
 		Crud::setWhere('authusuarios.activo',0);
 
 		Crud::setCampo(array('nombre'=>'Nombre','campo'=>'nombre'));
 		Crud::setCampo(array('nombre'=>'Email','campo'=>'email'));
 		Crud::setCampo(array('nombre'=>'Fecha de solicitud','campo'=>'created_at', 'tipo'=>'datetime'));
 		Crud::setCampo(array('nombre'=>'Activo','campo'=>'activo','tipo'=>'bool'));
+
 		Crud::setPermisos(Cancerbero::tienePermisosCrud('solicitudespendientes.inscripcion'));
 	}
+
 	public function index(){
 		$solicitudes = Inscripcionpendiente::getSolicitudesPendientes();
-		$columnas = array(
+		$columnas    = array(
 			array("tipo"=>"string"),
 			array("tipo"=>"string"),
 			array("tipo"=>"datetime"),
@@ -44,6 +47,7 @@ class solicitudesinscripcionController extends crudController {
 	public function store(){
 		$elID = Crypt::decrypt(Input::get('id'));
 		$contingenteid = Crypt::decrypt(Input::get('cid'));
+      
 		if(Input::has('btnAutorizar')) {
 			$usuario         = Inscripcionpendiente::find($elID);
 			if($usuario->activo==0){
@@ -74,9 +78,12 @@ class solicitudesinscripcionController extends crudController {
 			}
 		}
 		else {
+          
 			$affectedRows = Usuariocontingente::where('usuarioid', $elID)->where('contingenteid', $contingenteid)->delete();
-			$requerimientos = Contingenterequerimiento::getRequerimientos($contingenteid);
-			$reqIDs= array();
+		
+          $requerimientos = Contingenterequerimiento::getRequerimientos(Input::get('cid'));
+			
+          $reqIDs= array();
 			foreach($requerimientos as $r){
 				array_push($reqIDs,$r->requerimientoid);
 			}
@@ -92,7 +99,7 @@ class solicitudesinscripcionController extends crudController {
 					if($affectedRows2==0)
 						Usuariorequerimiento::where('usuarioid', $elID)->where("usuariorequerimientos.requerimientoid","=",$rid)->delete();
 			}
-
+              	
 
 				
 			
@@ -101,10 +108,13 @@ class solicitudesinscripcionController extends crudController {
 				$email   = $usuario->email;
 			
 			//revisar si no hay otras solicitudes
+         
 			$pendientes = Usuariocontingente::where('usuarioid', $elID)->count();
-			if($pendientes==0){
+			if($pendientes==0 && $usuario->activo!=1){
 				$result  = $usuario->delete();
 			}
+           
+          
 			if($affectedRows || $result) {
 				Session::flash('type','success');
 				Session::flash('message','La solicitud de inscripción fue rechazada');
@@ -124,4 +134,62 @@ class solicitudesinscripcionController extends crudController {
 		}
 		return Redirect::route('solicitudespendientes.inscripcion.index');
 	}
+  
+  public function create(){
+    
+        $usuarioCon = array();
+     
+        $con = DB::table("usuariocontingentes")->select("contingenteid")->where("usuarioid",Auth::id())->get();
+        foreach($con as $k=>$v)
+          array_push($usuarioCon,$v->contingenteid);
+        
+    return View::make('inscripcion/reinscripcion')
+        ->with('contingentes', Contingente::getContingentes($usuarioCon));
+	
+  }
+  
+  public function update($id){
+    
+	DB::transaction(function() {
+
+        $usuarioId = Auth::id();
+      
+	    foreach (Input::get('contingentes') as $val) {
+	    	DB::table('usuariocontingentes')->insert(array(
+					'usuarioid'     => $usuarioId, 
+					'contingenteid' => Crypt::decrypt($val))
+	    	);
+	    }
+	    
+	    foreach (Input::file() as $key=>$val) { 
+	      if ($key=='txArchivo') continue;
+	    	if ($val) {
+					$arch   = Input::file($key);
+					$nombre = date('YmdHis').$arch->getClientOriginalName();
+					$res    = $arch->move(public_path() . '/archivos/' . $usuarioId, $nombre);
+					DB::table('usuariorequerimientos')->insert(array(
+						'usuarioid'        => $usuarioId,
+						'requerimientoid'  => substr($key,4),
+						'archivo'          => $nombre,
+						'created_at'       => date_create(),
+						'updated_at'       => date_create()
+					));
+				}
+	    }
+	  }); //DB Transaction
+
+    $email = Auth::user()->email;
+    Mail::send('emails/solicitudinscripcion', array(
+      'nombre' => Auth::user()->nombre,
+      'fecha'  => date('d-m-Y H:i')
+      ), function($msg) use ($email){
+            $msg->to($email)->subject('Solicitud de inscripción');
+    });
+
+   return Redirect::to('/')
+      ->with('flashMessage',Config::get('login::signupexitoso'))
+      ->with('flashType','success');
+	
+	
+  }
 }
