@@ -7,7 +7,7 @@ class Asignacionpendiente extends Eloquent {
 	public static function getSolicitudPendiente($id){
 		return DB::table('solicitudasignacion AS se')
 			->select('u.nombre','u.email','se.created_at', 'se.usuarioid', 'se.solicitado', 
-				't.nombrecorto AS tratado', 't.nombre AS tratadolargo', 'p.nombre AS periodo', 
+				't.nombrecorto AS tratado', 't.nombre AS tratadolargo', 
 				'd.nombre AS producto','m.nombrecorto AS unidad', 'u.domiciliocomercial',
 				'u.nit', 'u.telefono',
 				DB::raw('(SELECT DATE_ADD(NOW(), INTERVAL t.mesesvalidez MONTH)) AS vencimiento'))

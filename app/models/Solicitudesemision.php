@@ -2,7 +2,7 @@
 
 class Solicitudesemision extends Eloquent {
 	protected $table     = 'solicitudesemision';
-	protected $primaryKey = 'Solicitudesemisionid';
+	protected $primaryKey = 'solicitudesemisionid';
 
 	public static function getSolicitudes($aContingentes) {
 		return DB::table('solicitudesemision AS sa')
