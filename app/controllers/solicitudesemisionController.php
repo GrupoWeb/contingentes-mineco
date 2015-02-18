@@ -23,7 +23,6 @@ class solicitudesemisionController extends crudController {
 		}
 
 		Crud::setCampo(array('nombre'=>'Usuario','campo'=>'u.nombre'));
-		//Crud::setCampo(array('nombre'=>'Periodo','campo'=>'p.nombre'));
 		Crud::setCampo(array('nombre'=>'Tratado','campo'=>'t.nombrecorto'));
 		Crud::setCampo(array('nombre'=>'Producto','campo'=>'d.nombre','class'=>'text-right'));
 		Crud::setCampo(array('nombre'=>'Monto Solicitado','campo'=>'solicitado','tipo'=>'numeric','class'=>'text-right'));

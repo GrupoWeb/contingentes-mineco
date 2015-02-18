@@ -7,15 +7,27 @@ class certificadosController extends crudController {
 		Crud::setTabla('certificados');
 		Crud::setTablaId('certificadoid');
 
-		Crud::setLeftJoin('authusuarios AS u', 'u.usuarioid', '=', 'certificados.usuarioid');
+		$tselected = Session::get('tselected');
+		if($tselected <> 0) {
+			
 
-		Crud::setWhere('anulado', 0);
+			Crud::setWhereRaw("(SELECT 
+			    c.tratadoid 
+			  FROM movimientos AS m 
+			  LEFT JOIN periodos AS p ON m.periodoid = p.periodoid 
+			  LEFT JOIN contingentes AS c ON p.contingenteid = c.contingenteid
+			  WHERE m.certificadoid = certificados.certificadoid
+			  LIMIT 1) = ".$tselected);
+
+			Crud::setTitulo('Certificados - '.Tratado::getNombre($tselected));
+		}
 
 		Crud::setCampo(array('nombre'=>'No.','campo'=>'certificados.certificadoid'));
 		Crud::setCampo(array('nombre'=>'Fecha','campo'=>'certificados.fecha','tipo'=>'date'));
 		Crud::setCampo(array('nombre'=>'Nombre','campo'=>'certificados.nombre'));
 		Crud::setCampo(array('nombre'=>'Volúmen','campo'=>'certificados.volumen'));
 		Crud::setCampo(array('nombre'=>'Liquidado','campo'=>'(IF(dua IS NULL, 0, 1))','tipo'=>'bool'));
+		Crud::setCampo(array('nombre'=>'Anulado','campo'=>'anulado','tipo'=>'bool'));
 		
 	 	Crud::setBotonExtra(array('url'=>'c/{id}','icon'=>'fa fa-file-pdf-o','titulo'=>'Generar','class'=>'primary'));
 	 	Crud::setBotonExtra(array('url'=>'certificados/liquidar/{id}','icon'=>'fa fa-check-square ','titulo'=>'Liquidar','class'=>'success'));
@@ -55,8 +67,27 @@ class certificadosController extends crudController {
 		PDF::Output('certificado.pdf');
 	}
 
-	public function anular($id){
-		$certificado          = Certificado::find(Crypt::decrypt($id));
+	public function anular($id) {
+		$certificado = Certificado::find(Crypt::decrypt($id));
+		
+		if($certificado->dua <> '') {
+			Session::flash('message', 'No es posible anular un certificado liquidado');
+			Session::flash('type', 'danger');
+
+			return Redirect::to('certificados');
+		}
+
+		if($certificado->anulado == 1) {
+			Session::flash('message', 'El certificado ya se encuentra anulado');
+			Session::flash('type', 'warning');
+		}
+
+		return View::make('certificados.anulaciones')
+				->with('certificado', $id);
+	}
+
+	public function procesaranulacion(){
+		$certificado          = Certificado::find(Crypt::decrypt(Input::get('certificado')));
 		$certificado->anulado = 1;
 		$certificado->save();
 
@@ -74,7 +105,7 @@ class certificadosController extends crudController {
 		$movimiento->usuarioid     = $certificado->usuarioid;
 		$movimiento->certificadoid = $certificado->certificadoid;
 		$movimiento->cantidad      = $certificado->volumen;
-		$movimiento->comentario    = 'Adjuditado por anulación de certificado '.number_format($certificado->certificadoid);
+		$movimiento->comentario    = 'Certificado '.number_format($certificado->certificadoid).' anulado por: '.Input::get('txMotivo');
 		$movimiento->tipo          = 'Certificado';
 		$movimiento->created_by    = Auth::id();
 		$movimiento->save();
@@ -85,15 +116,31 @@ class certificadosController extends crudController {
 		return Redirect::to('certificados');
 	}
 
-	public function liquidar($id) {
+	public function liquidar($id) {	
+		$certificado = Certificado::find(Crypt::decrypt($id));
+
+		if($certificado->anulado == 1) {
+			Session::flash('message', 'No es posible liquidar un certificado anulado');
+			Session::flash('type', 'danger');
+
+			return Redirect::to('certificados');
+		}
+
+		if($certificado->dua <> '') {
+			Session::flash('message', 'No es posible liquidar un certificado ya liquidado');
+			Session::flash('type', 'danger');
+
+			return Redirect::to('certificados');
+		}
+
 		return View::make('certificados.liquidaciones')
 			->with('certificado', $id);
 	}
 
 	public function procesarliquidacion($id) {
-		$certificado       = Certificado::find(Crypt::decrypt($id));
-		$certificado->dua  = Input::get('txDua');
-		$certificado->real = Input::get('txCantidad');
+		$certificado           = Certificado::find(Crypt::decrypt($id));
+		$certificado->dua      = Input::get('txDua');
+		$certificado->real     = Input::get('txCantidad');
 		$certificado->save();
 
 		Session::flash('message', 'Certificado liquidado exitosamente');

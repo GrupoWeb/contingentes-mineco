@@ -23,7 +23,6 @@ class solicitudesasignacionController extends crudController {
 		}
 
 		Crud::setCampo(array('nombre'=>'Usuario','campo'=>'u.nombre'));
-		//Crud::setCampo(array('nombre'=>'Periodo','campo'=>'p.nombre'));
 		Crud::setCampo(array('nombre'=>'Tratado','campo'=>'t.nombrecorto'));
 		Crud::setCampo(array('nombre'=>'Producto','campo'=>'d.nombre','class'=>'text-right'));
 		Crud::setCampo(array('nombre'=>'Monto Solicitado','campo'=>'solicitado','tipo'=>'numeric','class'=>'text-right'));
@@ -51,7 +50,7 @@ class solicitudesasignacionController extends crudController {
 			//TRANSACTION ===
 			$asignacion                = Asignacionpendiente::find($elID);
 			$asignacion->asignado      = $cantidad;
-			$asignacion->observaciones = Input::get('txObservaciones');
+			$asignacion->observaciones = $comentario;
 			$asignacion->estado        = 'Aprobada';
 			$result                    = $asignacion->save();
 
@@ -62,6 +61,7 @@ class solicitudesasignacionController extends crudController {
 			$movimiento->comentario    = $comentario;
 			$movimiento->created_by    = Auth::id();
 			$movimiento->tipo          = 'Asignación';
+			$movimiento->acta          = Input::get('txActa');
 			$result2                   = $movimiento->save();
 			//====
 
@@ -80,6 +80,7 @@ class solicitudesasignacionController extends crudController {
 		       	$msg->to($email)->subject('Solicitud de Asignación DACE - MINECO');
 				});
 			}
+
 			else {
 				Session::flash('type','warning');
 				Session::flash('message','Ocurrió un error al intentar autorizar, intente de nuevo.');

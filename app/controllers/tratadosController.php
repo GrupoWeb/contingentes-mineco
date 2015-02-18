@@ -10,6 +10,12 @@ class tratadosController extends crudController {
 
 		Crud::setLeftJoin('paises AS p', 'tratados.paisid', '=', 'p.paisid');
 
+		$tselected = Session::get('tselected');
+		if($tselected <> 0) {
+			Crud::setWhere('tratadoid', $tselected);
+			Crud::setTitulo('Tratados & contingentes - '.Tratado::getNombre($tselected));
+		}
+
 		Crud::setCampo(array('nombre'=>'Nombre Corto','campo'=>'nombrecorto'));
 	 	Crud::setCampo(array('nombre'=>'Nombre','campo'=>'tratados.nombre'));
 	 	Crud::setCampo(array('nombre'=>'Tipo','campo'=>'tipo', 'tipo'=>'enum', 'enumarray'=>array('Importación'=>'Importación', 'Exportación'=>'Exportación'))); //NO ALMACENA EL VALOR DEL ENUM

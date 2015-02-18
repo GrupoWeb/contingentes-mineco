@@ -17,47 +17,66 @@ class emisionController extends BaseController {
 			$type    = 'danger';
 		}
 
+		//dd($contingente);
+
 		else {
-			DB::transaction(function() use($solicitado, $contingente) {
-				$solicitud             = new Solicitudesemision;
-				$solicitud->usuarioid  = Auth::id();
-				$solicitud->periodoid  = Periodo::getPeriodo($contingente);
-				$solicitud->solicitado = $solicitado;
-				$solicitud->estado     = 'Pendiente';
-				$solicitud->save();
+			$res = DB::transaction(function() use($solicitado, $contingente) {
+				$periodo = Periodo::getPeriodo($contingente);
 
-				$partidas                     = new Solicitudemisionpartida;
-				$partidas->solicitudemisionid = $solicitud->id;
-				$partidas->partidaid          = Input::get('partida');
-				$partidas->save();
+				if(!$periodo) {
+					return false;
+				}
 
-				foreach (Input::file() as $key=>$val) { 
-		      if ($key=='txArchivo') continue;
-		    	if ($val) {
-						$arch   = Input::file($key);
-						$nombre = date('YmdHis').$arch->getClientOriginalName();
-						$res    = $arch->move(public_path() . '/archivos/' . Auth::id(), $nombre);
-						DB::table('solicitudemisionrequerimientos')->insert(array(
-							'solicitudemisionid' => $solicitud->id,
-							'requerimientoid'    => substr($key,4),
-							'archivo'            => $nombre,
-							'created_at'         => date_create(),
-							'updated_at'         => date_create()
-						));
-					}
-		    }
+				else {
+					$solicitud             = new Solicitudesemision;
+					$solicitud->usuarioid  = Auth::id();
+					$solicitud->periodoid  = $periodo; //Periodo::getPeriodo($contingente);
+					$solicitud->solicitado = $solicitado;
+					$solicitud->estado     = 'Pendiente';
+					$solicitud->save();
+
+					$partidas                     = new Solicitudemisionpartida;
+					$partidas->solicitudemisionid = $solicitud->solicitudesemisionid;
+					$partidas->partidaid          = Input::get('partida');
+					$partidas->save();
+
+					foreach (Input::file() as $key=>$val) { 
+			      if ($key=='txArchivo') continue;
+			    	if ($val) {
+							$arch   = Input::file($key);
+							$nombre = date('YmdHis').$arch->getClientOriginalName();
+							$res    = $arch->move(public_path() . '/archivos/' . Auth::id(), $nombre);
+							DB::table('solicitudemisionrequerimientos')->insert(array(
+								'solicitudemisionid' => $solicitud->id,
+								'requerimientoid'    => substr($key,4),
+								'archivo'            => $nombre,
+								'created_at'         => date_create(),
+								'updated_at'         => date_create()
+							));
+						}
+			    }
+
+			    return true;
+			  }
 		  });
 			
-			$message = 'Solicitud ingresada exitosamente';
-			$type    = 'success';
+			if(!$res){
+				$message = 'Error al procesar solicitud';
+				$type    = 'danger';
+			}
 
-			$email = Auth::user()->email;
-	    Mail::send('emails/solicitudemision', array(
-	      'nombre' => Auth::user()->nombre,
-	      'fecha'  => date('d-m-Y H:i')
-	      ), function($msg) use ($email){
-	            $msg->to($email)->subject('Solicitud de emisión');
-	    });
+			else {
+				$message = 'Solicitud ingresada exitosamente';
+				$type    = 'success';
+
+				$email = Auth::user()->email;
+		    Mail::send('emails/solicitudemision', array(
+		      'nombre' => Auth::user()->nombre,
+		      'fecha'  => date('d-m-Y H:i')
+		      ), function($msg) use ($email){
+		            $msg->to($email)->subject('Solicitud de emisión');
+		    });
+		  }
 		}
 
 		Session::flash('message', $message);

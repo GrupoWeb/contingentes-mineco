@@ -19,43 +19,61 @@ class asignacionController extends BaseController {
 		}
 
 		else {
-			DB::transaction(function() use($solicitado, $contingente) {
-				$solicitud             = new Solicitudasignacion;
-				$solicitud->usuarioid  = Auth::id();
-				$solicitud->periodoid  = Periodo::getPeriodo($contingente);
-				$solicitud->estado     = 'Pendiente';
-				$solicitud->solicitado = $solicitado;
-				$solicitud->save();
+			$res = DB::transaction(function() use($solicitado, $contingente) {
 
-				foreach (Input::file() as $key=>$val) { 
-		      if ($key=='txArchivo') continue;
-		    	if ($val) {
-						$arch   = Input::file($key);
-						$nombre = date('YmdHis').$arch->getClientOriginalName();
-						$res    = $arch->move(public_path() . '/archivos/' . Auth::id(), $nombre);
-						DB::table('solicitudasignacionrequerimientos')->insert(array(
-							'solicitudasignacionid' => $solicitud->id,
-							'requerimientoid'       => substr($key,4),
-							'archivo'               => $nombre,
-							'created_at'            => date_create(),
-							'updated_at'            => date_create()
-						));
-					}
-		    }
-		  });
+				$periodo = Periodo::getPeriodo($contingente);
 
-			$message = 'Solicitud ingresada exitosamente';
-			$type    = 'success';
-			$nombre  = Contingente::getNombre($contingente);
-			$email   = Auth::user()->email;
-	    Mail::send('emails/solicitudasignacion', array(
-				'nombre'      => Auth::user()->nombre,
-				'fecha'       => date('d-m-Y H:i'),
-				'contingente' => $nombre->nombre,
-				'monto'       => $solicitado
-	      ), function($msg) use ($email){
-	            $msg->to($email)->subject('Solicitud de asignación');
-	    });
+				if(!$periodo) {
+					return false;
+				}
+
+				else { 
+					$solicitud             = new Solicitudasignacion;
+					$solicitud->usuarioid  = Auth::id();
+					$solicitud->periodoid  = $periodo; //Periodo::getPeriodo($contingente);
+					$solicitud->estado     = 'Pendiente';
+					$solicitud->solicitado = $solicitado;
+					$solicitud->save();
+
+					foreach (Input::file() as $key=>$val) { 
+			      if ($key=='txArchivo') continue;
+			    	if ($val) {
+							$arch   = Input::file($key);
+							$nombre = date('YmdHis').$arch->getClientOriginalName();
+							$res    = $arch->move(public_path() . '/archivos/' . Auth::id(), $nombre);
+							DB::table('solicitudasignacionrequerimientos')->insert(array(
+								'solicitudasignacionid' => $solicitud->id,
+								'requerimientoid'       => substr($key,4),
+								'archivo'               => $nombre,
+								'created_at'            => date_create(),
+								'updated_at'            => date_create()
+							));
+						}
+			    }
+
+			    return true;
+		  	}
+	  	});
+
+			if(!$res){
+				$message = 'Error al procesar solicitud';
+				$type    = 'danger';
+			}
+
+			else {
+				$message = 'Solicitud ingresada exitosamente';
+				$type    = 'success';
+				$nombre  = Contingente::getNombre($contingente);
+				$email   = Auth::user()->email;
+		    Mail::send('emails/solicitudasignacion', array(
+					'nombre'      => Auth::user()->nombre,
+					'fecha'       => date('d-m-Y H:i'),
+					'contingente' => $nombre->nombre,
+					'monto'       => $solicitado
+		      ), function($msg) use ($email){
+		            $msg->to($email)->subject('Solicitud de asignación');
+		    });
+		  }
 		}
 
 		Session::flash('message', $message);

@@ -19,13 +19,14 @@ class solicitudesinscripcionController extends crudController {
 	}
 
 	public function index(){
-		$solicitudes = Inscripcionpendiente::getSolicitudesPendientes();
+		$solicitudes = Inscripcionpendiente::getSolicitudesPendientes(Session::get('tselected'));
 		$columnas    = array(
 			array("tipo"=>"string"),
 			array("tipo"=>"string"),
 			array("tipo"=>"datetime"),
 			array("tipo"=>"bool")
 		);
+
 		return View::make('solicitudespendientes/inscripcionesindex')
 			->with("solicitudes",$solicitudes)
 			->with("columnas",$columnas);
