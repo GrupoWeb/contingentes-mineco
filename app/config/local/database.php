@@ -4,7 +4,7 @@ return array(
 	'default' => 'mysql',
 	'connections' => array(
 		'mysql' => array(
-			'host'      => '127.0.0.1',
+			'host'      => 'localhost',
 			'database'  => 'contingentes',
 			'username'  => 'root',
 			'password'  => 'root',
