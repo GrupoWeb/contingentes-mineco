@@ -7,7 +7,6 @@
 			<dt>Fecha:</dt><dd>{{ $solicitud->created_at }}</dd>
 			<dt>Nombre:</dt><dd>{{ $solicitud->nombre }}</dd>
 	    <dt>Email:</dt><dd>{{ $solicitud->email }}</dd>
-	    <dt>Período:</dt><dd>{{ $solicitud->periodo }}</dd>
 	    <dt>Tratado:</dt><dd>{{ $solicitud->tratado }}</dd>
 	    <dt>Producto:</dt><dd>{{ $solicitud->producto }}</dd>
 	    <dt>Monto Solicitado:</dt><dd>{{ $solicitud->solicitado.' '.$solicitud->unidad }}</dd>
@@ -27,7 +26,12 @@
 	{{Form::open(array('id'=>'frmAuto', 'route'=>'solicitudespendientes.emision.store'))}}
 		<h4 class="text-warning">Cantidad Autorizada</h4>
 		<div class="form-group" id="divCantidad">
-			{{ Form::text('txCanidad', $solicitud->solicitado, array('class'=>'form-control','data-bv-notempty'=>'true','data-bv-notempty-message'=>'La cantidad es requerida')) }}
+			{{ Form::text('txCanidad', $solicitud->solicitado, array(
+				'class'                    => 'form-control',
+				'data-bv-notempty'         => 'true',
+				'data-bv-numeric'          => 'true',
+				'data-bv-notempty-message' => 'La cantidad es requerida',
+				'data-bv-numeric-message'  => 'El valor debe ser numérico')) }}
 		</div>
 		<h4 class="text-warning">Observaciones</h4>
 		<div class="form-group" id="divObservaciones">
