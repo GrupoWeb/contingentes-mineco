@@ -10,8 +10,7 @@
 				'modulopermisoid' => '1',
 				'nombre'         	=> 'Inicio',
 				'orden' 					=> 1000,
-				'icono'         	=> null,
-				'created_at'     	=> date_create(), 'updated_at' => date_create()
+				'icono'         	=> null
 			));
 		
 			DB::table('authmenu')->insert(array(
@@ -20,8 +19,7 @@
 				'modulopermisoid' => null,
 				'nombre'         	=> 'Catálogos',
 				'orden' 					=> 2000,
-				'icono'         	=> null,
-				'created_at'     	=> date_create(), 'updated_at' => date_create()
+				'icono'         	=> null
 			));
 
 			DB::table('authmenu')->insert(array(
@@ -30,8 +28,7 @@
 				'modulopermisoid' => 50,
 				'nombre'         	=> 'Productos',
 				'orden' 					=> 100,
-				'icono'         	=> null,
-				'created_at'     	=> date_create(), 'updated_at' => date_create()
+				'icono'         	=> null
 			));
 
 			DB::table('authmenu')->insert(array(
@@ -40,8 +37,7 @@
 				'modulopermisoid' => 36,
 				'nombre'         	=> 'Tratados & contingentes',
 				'orden' 					=> 300,
-				'icono'         	=> null,
-				'created_at'     	=> date_create(), 'updated_at' => date_create()
+				'icono'         	=> null
 			));
 
 			DB::table('authmenu')->insert(array(
@@ -50,8 +46,7 @@
 				'modulopermisoid' => 29,
 				'nombre'         	=> 'Requerimientos',
 				'orden' 					=> 200,
-				'icono'         	=> null,
-				'created_at'     	=> date_create(), 'updated_at' => date_create()
+				'icono'         	=> null
 			));
 
 			DB::table('authmenu')->insert(array(
@@ -60,8 +55,7 @@
 				'modulopermisoid' => 43,
 				'nombre'         	=> 'Períodos & cuotas',
 				'orden' 					=> 500,
-				'icono'         	=> null,
-				'created_at'     	=> date_create(), 'updated_at' => date_create()
+				'icono'         	=> null
 			));
 
 			DB::table('authmenu')->insert(array(
@@ -70,8 +64,7 @@
 				'modulopermisoid' => null,
 				'nombre'         	=> 'Solicitudes',
 				'orden' 					=> 2000,
-				'icono'         	=> null,
-				'created_at'     	=> date_create(), 'updated_at' => date_create()
+				'icono'         	=> null
 			));
 
 			DB::table('authmenu')->insert(array(
@@ -80,8 +73,7 @@
 				'modulopermisoid' => null,
 				'nombre'         	=> 'Admin',
 				'orden' 					=> 4000,
-				'icono'         	=> null,
-				'created_at'     	=> date_create(), 'updated_at' => date_create()
+				'icono'         	=> null
 			));
 
 
@@ -91,8 +83,7 @@
 				'modulopermisoid' => 2,
 				'nombre'         	=> 'Usuarios',
 				'orden' 					=> 100,
-				'icono'         	=> null,
-				'created_at'     	=> date_create(), 'updated_at' => date_create()
+				'icono'         	=> null
 			));
 
 			DB::table('authmenu')->insert(array(
@@ -101,8 +92,7 @@
 				'modulopermisoid' => 9,
 				'nombre'         	=> 'Roles',
 				'orden' 					=> 200,
-				'icono'         	=> null,
-				'created_at'     	=> date_create(), 'updated_at' => date_create()
+				'icono'         	=> null
 			));
 
 			DB::table('authmenu')->insert(array(
@@ -111,8 +101,7 @@
 				'modulopermisoid' => 70,
 				'nombre'         	=> 'Asignación',
 				'orden' 					=> 100,
-				'icono'         	=> null,
-				'created_at'     	=> date_create(), 'updated_at' => date_create()
+				'icono'         	=> null
 			));
 
 			DB::table('authmenu')->insert(array(
@@ -121,8 +110,7 @@
 				'modulopermisoid' => 62,
 				'nombre'         	=> 'Emisión',
 				'orden' 					=> 200,
-				'icono'         	=> null,
-				'created_at'     	=> date_create(), 'updated_at' => date_create()
+				'icono'         	=> null
 			));
 
 			DB::table('authmenu')->insert(array(
@@ -131,8 +119,7 @@
 				'modulopermisoid' => null,
 				'nombre'         	=> 'Pendientes',
 				'orden' 					=> 300,
-				'icono'         	=> null,
-				'created_at'     	=> date_create(), 'updated_at' => date_create()
+				'icono'         	=> null
 			));
 
 			DB::table('authmenu')->insert(array(
@@ -141,8 +128,7 @@
 				'modulopermisoid' => 65,
 				'nombre'         	=> 'Inscripción',
 				'orden' 					=> 10,
-				'icono'         	=> null,
-				'created_at'     	=> date_create(), 'updated_at' => date_create()
+				'icono'         	=> null
 			));
 
 			DB::table('authmenu')->insert(array(
@@ -151,8 +137,7 @@
 				'modulopermisoid' => 51,
 				'nombre'         	=> 'Asignación',
 				'orden' 					=> 20,
-				'icono'         	=> null,
-				'created_at'     	=> date_create(), 'updated_at' => date_create()
+				'icono'         	=> null
 			));
 
 			DB::table('authmenu')->insert(array(
@@ -161,8 +146,7 @@
 				'modulopermisoid' => 72,
 				'nombre'         	=> 'Emisión',
 				'orden' 					=> 30,
-				'icono'         	=> null,
-				'created_at'     	=> date_create(), 'updated_at' => date_create()
+				'icono'         	=> null
 			));
 
 			DB::table('authmenu')->insert(array(
@@ -171,8 +155,7 @@
 				'modulopermisoid' => 79,
 				'nombre'         	=> 'Certificados',
 				'orden' 					=> 3000,
-				'icono'         	=> null,
-				'created_at'     	=> date_create(), 'updated_at' => date_create()
+				'icono'         	=> null
 			));
 
 			DB::table('authmenu')->insert(array(
@@ -181,8 +164,7 @@
 				'modulopermisoid' => null,
 				'nombre'         	=> 'Reportes',
 				'orden' 					=> 3600,
-				'icono'         	=> null,
-				'created_at'     	=> date_create(), 'updated_at' => date_create()
+				'icono'         	=> null
 			));
 
 			DB::table('authmenu')->insert(array(
@@ -191,8 +173,7 @@
 				'modulopermisoid' => 90,
 				'nombre'         	=> 'Cuenta corriente',
 				'orden' 					=> 3600,
-				'icono'         	=> null,
-				'created_at'     	=> date_create(), 'updated_at' => date_create()
+				'icono'         	=> null
 			));
 
 			DB::table('authmenu')->insert(array(
@@ -201,8 +182,7 @@
 				'modulopermisoid' => 92,
 				'nombre'         	=> 'Histórico de solicitudes',
 				'orden' 					=> 400,
-				'icono'         	=> null,
-				'created_at'     	=> date_create(), 'updated_at' => date_create()
+				'icono'         	=> null
 			));
           
 			DB::table('authmenu')->insert(array(
@@ -211,8 +191,7 @@
 				'modulopermisoid' => 95,
 				'nombre'         	=> 'Empresas',
 				'orden' 					=> 3700,
-				'icono'         	=> null,
-				'created_at'     	=> date_create(), 'updated_at' => date_create()
+				'icono'         	=> null
 			));
 
 			DB::table('authmenu')->insert(array(
@@ -221,8 +200,7 @@
 				'modulopermisoid' => 98,
 				'nombre'         	=> 'Países',
 				'orden' 					=> 50,
-				'icono'         	=> null,
-				'created_at'     	=> date_create(), 'updated_at' => date_create()
+				'icono'         	=> null
 			));
 
 			DB::table('authmenu')->insert(array(
@@ -231,10 +209,10 @@
 				'modulopermisoid' => 109,
 				'nombre'         	=> 'Inscripción',
 				'orden' 					=> 50,
-				'icono'         	=> null,
-				'created_at'     	=> date_create(), 'updated_at' => date_create()
+				'icono'         	=> null
 			));
 
+			DB::table('authmenu')->update(array('created_at'=>date_create(), 'updated_at'=>date_create()));
 		  DB::statement('SET FOREIGN_KEY_CHECKS=1');
 		}
 	}
