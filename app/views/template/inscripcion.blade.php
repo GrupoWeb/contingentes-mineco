@@ -15,9 +15,9 @@
 	{{ HTML::style('packages/csgt/components/css/bootstrap-select.min.css'); }}
 	{{ HTML::style('packages/csgt/components/css/dataTables.bootstrap.css'); }}
 	{{ HTML::style('packages/csgt/components/css/dataTables.tableTools.min.css'); }}
-	{{ HTML::style('packages/csgt/components/css/core.css'); }}
 	{{ HTML::style('packages/csgt/components/css/bootstrapValidator.min.css'); }}
 	{{ HTML::style('packages/csgt/components/css/font-awesome.min.css'); }}
+	{{ HTML::style('css/dace.css'); }}
 
 	{{ HTML::script('packages/csgt/components/js/jquery.min.js'); }}
 	{{ HTML::script('packages/csgt/components/js/moment-with-locales.min.js'); }}
@@ -37,42 +37,17 @@
 	<script>
 		$(document).ready(function(){
 			$(".alert").delay(5000).fadeOut('slow');
-
-			$('.selectpicker').selectpicker();
-
-			$('#cmbTratado').change(function(){
-				$.get('/changetratado/' + $(this).find('option:selected').val(), function(data){
-					location.reload(); 
-				});
-			});
 		});
 	</script>
 	</head>
 	<body>
-		{{Session::get('menu')}} 
+		<div class="header">
+		  <img src="images/logo.jpg" alt="Mineco - DACE">
+		</div>
 		<div class="main">
 			<div class="container">
-				@if(!in_array(Request::segment(1), Config::get('contingentes.tratadosExclude')))
-					<div class="pull-right">
-						<?php $tratados = Session::get('tratados'); $selected = Session::get('tselected'); ?>
-						<select class="selectpicker" id="cmbTratado">
-							<option value="0" {{ (0 == $selected) ? 'selected' : '' }}>-- TODOS --</option>
-							@foreach($tratados as $tratado)
-								<?php $tid = $tratado->tratadoid; ?>
-								<option value="{{ $tid }}" {{ ($tid == $selected) ? 'selected' : '' }}>{{ $tratado->nombrecorto }}</option>
-							@endforeach
-						</select>
-					</div>
-					<div class="clearfix"></div>
-					<br />
-				@endif
 				@yield('content')
 			</div>
-		</div>
-		<div class="footer">
-			<p class="text-muted text-center">
-				<a href="http://cs.com.gt" target="_blank">Compuservice Webdesigns </a> &copy; {{ date('Y') }}
-			</p>
 		</div>
 	</body>
 </html>

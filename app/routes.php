@@ -9,6 +9,10 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
+Route::get('temp', function(){
+  return View::make('inscripcion.index');
+});
+
 Route::get('webservice/certificado/{emisor}/{id}', 'webserviceController@certificado');
 
 Route::group(array('before' => array('tratados')), function() {
