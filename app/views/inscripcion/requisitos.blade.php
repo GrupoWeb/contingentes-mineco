@@ -3,13 +3,9 @@
 		<li class="list-group-item" id="li{{$requisito->requerimientoid}}">
 	    <span class="text-left">{{ $requisito->nombre }}</span><br />
 	    {{ Form::file('file'.$requisito->requerimientoid, array(
-					'class'                => 'documento',
-					'id'                   => 'file'.$requisito->requerimientoid,
-					// 'data-bv-notempty'     => 'true',
-					// 'data-bv-notempty-message'=>'El archivo es requerido',
-					// 'data-bv-file'         => 'true',
-					// 'data-bv-file-extension'=>'pdf',
-					// 'data-bv-file-message' => 'Tipo de archivo no soportado'
+					'class'                => 'documento file',
+					'data-hola' => 'si',
+					'id'                   => 'file'.$requisito->requerimientoid
 	    	)); }}
 	  </li>
 	  <script>

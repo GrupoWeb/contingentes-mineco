@@ -1,6 +1,8 @@
 @extends('emails/template')
+@section('titulo')
+	Solicitud de inscripción
+@stop
 @section('content')
-	<h1>Solicitud de inscripción</h1>
 	Se ha recibido una solicitud de inscripción con los siguientes datos: <br>
 	<strong>Fecha:</strong> {{$fecha}}<br>
 	<strong>Nombre:</strong> {{$nombre}}<br><br>

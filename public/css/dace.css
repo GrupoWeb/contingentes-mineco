@@ -1,6 +1,39 @@
+body {
+	background-color: #E8EAEA;
+	font-family: 'Raleway', sans-serif;
+	font-size: 14px;
+}
 .header {
-	margin-top: 30px;
+	padding-top: 30px;
 	text-align: center;
 	padding-bottom: 30px;
-	border-bottom: solid thin #fff;
+	background-color: #fff;
+}
+
+h1.main {
+	font-family: 'Archivo Narrow', sans-serif;
+	border-top: solid 8px #E8EAEA;
+	border-bottom: solid 8px #E8EAEA;
+	background-color: #0054A4;
+	text-align: center;
+	color: #fff;
+	margin:0;
+	font-size: 26px;
+	text-transform: uppercase;
+	padding-top: 13px;
+	padding-bottom: 13px;
+}
+
+h4.main {
+	font-size: 20px;
+	color: #0054A4;
+	text-transform: uppercase;
+}
+
+.contenido {
+	background-color: #d3d7d8;
+	padding-top: 18px;
+	padding-bottom: 18px;
+	max-width: 800px;
+	margin: auto auto 40px auto;
 }

@@ -3,7 +3,7 @@
 class inscripcionController extends BaseController {
 
 	public function index() {
-		return View::make('inscripcion/template')
+		return View::make('inscripcion/index')
 			->with('route', 'signup.store')
 			->with('contingentes', Contingente::getContingentes());
 	}
@@ -18,8 +18,6 @@ class inscripcionController extends BaseController {
 
 	public function store() {
 		DB::transaction(function() {
-			///SOLO PARA DEMO
-			$certificado = DB::table('authusuarios')->select('firma','certificado')->where('rolid', 1)->first();
 
 	    $usuario = DB::table('authusuarios');
 	   
@@ -40,8 +38,6 @@ class inscripcionController extends BaseController {
 				'encargadoimportaciones'  => Input::get('txEncargadoImportaciones'),
 				'created_at'              => date_create(),
 				'updated_at'              => date_create(),
-				'firma'                   => $certificado->firma,
-				'certificado'             => $certificado->certificado
 	    );
 	    $usuarioId = $usuario->insertGetId($arr);
 

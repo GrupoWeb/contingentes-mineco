@@ -3,23 +3,30 @@
 	<head>
 		<meta charset="utf-8">
 	</head>
-	<body>
-		<div style="float: left; text-align:left"><img src="http://office.cs.com.gt/sitios/dace/dace.png"></div>
-		<div style="float: right; text-align:right"><img src="http://office.cs.com.gt/sitios/dace/logo.jpg"></div>
-		<div style="clear:both"></div>
-		<hr>
-		@yield('content')
-		<br />
-		<p>Para mayor informaci&oacute;n puede escribir a <a href="mailto:info@mineco.gob.gt">info@mineco.gob.gt</a></p>
-		<hr>
+	<body style="font-family: sans-serif; font-size: 14px; margin: 0; color: #000001;">
+		<div style="background-color: #e8eaea;">
+			<div style="text-align:center; background-color: #fff">
+				<img src="{{Config::get('website.url')}}/images/logo.jpg">
+			</div>
+			<div style="background-color: #0054a4; border-bottom: 8px solid #e8eaea; border-top: 8px solid #e8eaea; color: #fff;
+	    font-family: sans-serif; font-size: 20px; margin: 0; padding-bottom: 13px; padding-top: 13px; text-align: center; text-transform: uppercase;">
+	    	@yield('titulo')
+	    </div>
+	    <div style="background-color: #d3d7d8; margin: 0 auto 8px auto; width: 90%; max-width: 800px; padding: 18px 10px 18px 10px;">
+				@yield('content')
+				<br />
+				<p>Para mayor informaci&oacute;n puede escribir a <a href="mailto:{{Config::get('website.email')}}">{{Config::get('website.email')}}</a></p>
+			</div>
+			&nbsp;
+		</div>
 		<p style="text-align:center; font-size: 12px;"><small>
-			<strong>Direcci&oacute;n de Administraci&oacute;n de Comercio Exterior</strong><br/>
-			Ministerio de Econom&iacute;a <br/>
-			8a Avenida 10-43, zona 1<br/>
-			Ciudad de Guatemala, 01001<br/>
-			Teléfonos: (502) 2412 0200 Ext. 4200<br/>
-			Fax: (502) 2232 7449
-		</small></p>
+					<strong>Direcci&oacute;n de Administraci&oacute;n de Comercio Exterior</strong><br/>
+					Ministerio de Econom&iacute;a <br/>
+					8a Avenida 10-43, zona 1<br/>
+					Ciudad de Guatemala, 01001<br/>
+					Teléfonos: (502) 2412 0200 Ext. 4200<br/>
+					Fax: (502) 2232 7449
+				</small></p>
 	</body>
 </html>
 

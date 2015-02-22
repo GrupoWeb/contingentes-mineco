@@ -9,8 +9,10 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
-Route::get('temp', function(){
-  return View::make('inscripcion.index');
+Route::get('temp',function(){
+	return View::make('emails.solicitudinscripcion')
+		->with('fecha','el dia de hoy')
+		->with('nombre','el nombre');
 });
 
 Route::get('webservice/certificado/{emisor}/{id}', 'webserviceController@certificado');

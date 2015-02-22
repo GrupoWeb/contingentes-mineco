@@ -140,6 +140,24 @@ return array(
 		'titulo'     => 'Contrase&ntilde;a',
 		'campo'      => 'password'
 	),
+
+	/*
+	|--------------------------------------------------------------------------
+	| Activo
+	|--------------------------------------------------------------------------
+	|
+	| Nombre de la columna en la tabla que indica si el usuario esta activo
+	|
+	|
+	*/
+
+	'activo' => array(
+		'habilitado' => true,
+		'titulo'     => 'Activo',
+		'campo'      => 'activo',
+		'default'    => 0,
+		'texto'      => 'Su usuario se encuentra en proceso de aprobación.  Recibirá un correo con más información'
+	),
 	
 	/*
 	|--------------------------------------------------------------------------
