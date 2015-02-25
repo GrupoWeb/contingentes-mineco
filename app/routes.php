@@ -24,7 +24,7 @@ Route::group(array('before' => array('tratados')), function() {
 
 	//=== SOLICITUD DE INSCRIPCION
 	Route::resource('signup', 'inscripcionController');
-	Route::get('signup/checkEmail', 'inscripcionController@validateEmail');
+	Route::post('signup/checkEmail', 'inscripcionController@validateEmail');
 
 	//=== REQUERIMIENTOS
 	Route::get('requerimientos/contingentes/{id}/{tipo}', 'requerimientosController@getContingentes');
