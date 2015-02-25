@@ -631,7 +631,7 @@
 
       DB::table('authmodulopermisos')->insert(array(
           'modulopermisoid'	=> 114,
-          'moduloid'        => 21,
+          'moduloid'        => 23,
           'permisoid' 			=> 4
       ));
 
