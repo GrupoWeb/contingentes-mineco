@@ -13,7 +13,7 @@
 			<h4 class="main">Datos Generales</h4>
 		</div>
 		<!-- nombre -->
-		<div class="col-md-12">
+		{{--<div class="col-md-12">
 	    <div class="form-group">
 	      <label for="txNombre" class="col-sm-2 control-label">Nombre</label>
 	      <div class="col-sm-10">
@@ -24,11 +24,25 @@
 	          )) }}
 	      </div>
 	    </div>
-	  </div>	
+	  </div>--}}
+    <!-- nit -->
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="txNIT" class="col-sm-4 control-label">1. NIT</label>
+        <div class="col-sm-8">
+          {{ Form::text('txNIT', '', array('class'=>'form-control', 
+            'data-bv-notEmpty'         => 'true',
+            'data-bv-notEmpty-message' => 'El NIT es requerido',
+            'data-bv-nit'              => 'true',
+            'autocomplete'             => 'off'
+            )) }}
+        </div>
+      </div>
+    </div>
 		<!-- razon social -->
 	  <div class="col-md-12">
       <div class="form-group">
-        <label for="txNombre" class="col-sm-2 control-label">Razón Social</label>
+        <label for="txNombre" class="col-sm-2 control-label">2. Razón Social</label>
         <div class="col-sm-10">
           {{ Form::text('txRazonSocial', '', array('class'=>'form-control', 
             'data-bv-notEmpty'         => 'true',
@@ -41,7 +55,7 @@
     <!-- representante legal  -->
 		<div class="col-md-12">
       <div class="form-group">
-        <label for="txNombre" class="col-sm-2 control-label">Representante Legal</label>
+        <label for="txNombre" class="col-sm-2 control-label">3. Rep. Legal</label>
         <div class="col-sm-10">
           {{ Form::text('txPropietario', '', array('class'=>'form-control', 
             'data-bv-notEmpty'         =>'true',
@@ -52,10 +66,10 @@
       </div>
     </div>
     <!-- email -->
-    <div class="col-md-6">
+    <div class="col-md-12">
       <div class="form-group">
-        <label for="email" class="col-sm-4 control-label">Email</label>
-        <div class="col-sm-8">
+        <label for="email" class="col-sm-2 control-label">4. Email</label>
+        <div class="col-sm-10">
           {{ Form::text('email', '', array(
             'class'                        => 'form-control',
             'data-bv-notEmpty'             => 'true',
@@ -70,24 +84,10 @@
         </div>
       </div>
     </div>
-    <!-- nit -->
-    <div class="col-md-6">
-      <div class="form-group">
-        <label for="txNIT" class="col-sm-4 control-label">NIT</label>
-        <div class="col-sm-8">
-          {{ Form::text('txNIT', '', array('class'=>'form-control', 
-            'data-bv-notEmpty'         => 'true',
-            'data-bv-notEmpty-message' => 'El NIT es requerido',
-            'data-bv-nit'              => 'true',
-            'autocomplete'             => 'off'
-            )) }}
-        </div>
-      </div>
-    </div>
     <!-- telefono -->
     <div class="col-md-6">
       <div class="form-group">
-        <label for="txTelefono" class="col-sm-4 control-label">Teléfono</label>
+        <label for="txTelefono" class="col-sm-4 control-label">5. Teléfono</label>
         <div class="col-sm-8">
           {{ Form::text('txTelefono', '', array('class'=>'form-control', 
             'data-bv-notEmpty'         => 'true',
@@ -102,7 +102,7 @@
     <!-- fax -->    
     <div class="col-md-6">
       <div class="form-group">
-        <label for="txFax" class="col-sm-4 control-label">FAX</label>
+        <label for="txFax" class="col-sm-4 control-label">6. FAX</label>
         <div class="col-sm-8">
           {{ Form::text('txFax', '', array('class'=>'form-control', 
             'data-bv-integer' => 'true',
@@ -115,7 +115,7 @@
     <!--password --> 
     <div class="col-md-6">
       <div class="form-group">
-        <label for="txPassword" class="col-sm-4 control-label">Contrase&ntilde;a</label>
+        <label for="txPassword" class="col-sm-4 control-label">7. Contrase&ntilde;a</label>
         <div class="col-sm-8">
           {{ Form::password('txPassword', array(
             'class'                        =>'form-control', 
@@ -152,7 +152,7 @@
     <!--domicilio fiscal -->
     <div class="col-md-6">
       <div class="form-group">
-        <label for="txNombre" class="col-sm-4 control-label">Domicilio Fiscal</label>
+        <label for="txNombre" class="col-sm-4 control-label">8. Domicilio Fiscal</label>
         <div class="col-sm-8">
           {{ Form::textarea('txDomicilioFiscal', '', array('class'=>'form-control', 
             'data-bv-notEmpty'         =>'true',
@@ -166,7 +166,7 @@
     <!--domicilio comercial -->
     <div class="col-md-6">
       <div class="form-group">
-        <label for="txNombre" class="col-sm-4 control-label">Domicilio Comercial</label>
+        <label for="txNombre" class="col-sm-4 control-label">9. Domicilio Comercial</label>
         <div class="col-sm-8">
           {{ Form::textarea('txDomicilioComercial', '', array('class'=>'form-control', 
             'data-bv-notEmpty'         =>'true',
@@ -180,7 +180,7 @@
     <!-- lugar -->
     <div class="col-md-6">
       <div class="form-group">
-        <label for="txDireccionNotificaciones" class="col-sm-4 control-label">Lugar para recibir notificaciones</label>
+        <label for="txDireccionNotificaciones" class="col-sm-4 control-label">10. Lugar para recibir notificaciones</label>
         <div class="col-sm-8">
           {{ Form::textarea('txDireccionNotificaciones', '', array('class'=>'form-control', 
             'data-bv-notEmpty'         =>'true',
@@ -194,7 +194,7 @@
     <!--encargado -->
     <div class="col-md-6">
       <div class="form-group">
-        <label for="txNombre" class="col-sm-4 control-label">Encargado</label>
+        <label for="txNombre" class="col-sm-4 control-label">11. Encargado</label>
         <div class="col-sm-8">
           {{ Form::text('txEncargadoImportaciones', '', array('class'=>'form-control', 
             'data-bv-notEmpty'         =>'true',
@@ -205,28 +205,24 @@
         </div>
       </div>
     </div>
-    <!--contingentes -->
+    <!--tratados -->
     <div class="col-md-12">
       <div class="form-group">
-        <label for="contingentes" class="col-sm-2 control-label">Contingente(s)</label>
-        <div class="col-sm-10 div-contingente">
-          <?php $grupoActual = 'primero'; ?>
-          <select name="contingentes[]" class="selectpicker form-control" id="contingentes" 
-          	multiple="true" 
-          	title="Seleccione uno o varios">
-            @foreach($contingentes as $contingente)
-              @if($contingente->tratado <> $grupoActual)
-                @if($grupoActual <> 'primero')
-                  </optgroup>
-                @endif
-                <optgroup label="{{ $contingente->tipo}} | {{$contingente->tratado}}">
-                <?php $grupoActual = $contingente->tratado; ?>  
-              @endif
-              <option value="{{ Crypt::encrypt($contingente->contingenteid) }}">{{ $contingente->producto }}</option>
+        <label for="tratados" class="col-sm-2 control-label">12. Tratado</label>
+        <div class="col-sm-10 div-tratados">
+          <select name="tratados" class="selectpicker form-control" id="tratados">
+            @foreach($tratados as $tratado)
+              <option value="{{ $tratado->tratadoid }}">{{ $tratado->nombrecorto }}</option>
             @endforeach
-            </optgroup>
           </select>
         </div>
+      </div>
+    </div>
+    <!-- contingente -->
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="contingentes" class="col-sm-2 control-label">13.Contingente</label>
+        <div class="col-sm-10 div-contingente" id="div-contingente"></div>
       </div>
     </div>
 		<div class="clearfix"></div>
@@ -240,38 +236,13 @@
 		</div>
     <div class="clearfix"></div>
     <div class="col-md-12 text-center">
-    	<input type="submit" class="btn btn-large btn-primary" value="Solicitud de inscripci&oacute;n">
+    	<input type="submit" class="btn btn-large btn-primary" value="Enviar solicitud de inscripci&oacute;n">
     </div>
     <div class="clearfix"></div>
 	</div>
 	{{Form::close()}}
 	<script>
       $(document).ready(function(){
-        $("#contingentes").change(function() {
-          $('.nuevos').remove();
-          $('#frmRegistro').bootstrapValidator('revalidateField', 'contingentes');
-          $.get('/requerimientos/contingentes/' + $(this).val() + '/inscripcion', function(data){
-              $.each(data, function(key, datos){
-                $.get('/requerimientos/contingentes/vacio?nombre=' + datos.nombre + '&id=' + datos.requerimientoid, function(template){
-                  $('.requerimientos').append(template);
-                  $('#frmRegistro').bootstrapValidator('addField', 'file' + datos.requerimientoid);
-                  $(".file").fileinput(
-                  	{
-                  		browseLabel: "Buscar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
-                  		browseClass: "btn btn-default",
-                  		showPreview: false,
-                  		showRemove: false,
-                  		showUpload: false,
-                  		allowedFileExtensions: ['jpg', 'png', 'pdf'],
-                  		msgInvalidFileExtension: 'Solo se permiten archivos jpg, png o pdf',
-                  		msgValidationError : 'Solo se permiten archivos jpg, png o pdf',
-                  	});
-                });     
-              });       
-          });
-        });
-    
-        $('#contingentes').selectpicker();
         $('#frmRegistro')
           .bootstrapValidator({
             excluded: ':disabled',
@@ -300,7 +271,16 @@
         .on('success.field.bv', function(e, data) {
           data.bv.disableSubmitButtons(false);
         });
-      $('#contingentes').change();
+
+      $('#tratados').change(function(){
+        $.get('contingentes/tratado/' + $(this).val(), function(data){
+          //console.log(data);
+          $('#div-contingente').html(data);
+        });
+      });
+
+      $('#tratados').change();
+
       });
     </script>
 @stop

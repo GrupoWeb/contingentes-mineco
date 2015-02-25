@@ -5,7 +5,8 @@ class inscripcionController extends BaseController {
 	public function index() {
 		return View::make('inscripcion/index')
 			->with('route', 'signup.store')
-			->with('contingentes', Contingente::getContingentes());
+			->with('tratados', Tratado::getTratados());
+			//->with('contingentes', Contingente::getContingentes());
 	}
 
 	public function validateEmail() {
@@ -16,6 +17,11 @@ class inscripcionController extends BaseController {
     return json_encode(array('valid'=>$val));
 	}
 
+	public function getContingentes($tratadoid) {
+		return View::make('inscripcion.contingentes')
+			->with('contingentes', Contingente::getContTratado($tratadoid));
+	}
+	
 	public function store() {
 		DB::transaction(function() {
 
@@ -23,7 +29,7 @@ class inscripcionController extends BaseController {
 	   
 	    $arr = array(
 				'email'                   => Input::get('email'),
-				'nombre'                  => Input::get('txNombre'),
+				//'nombre'                  => Input::get('txNombre'),
 				'password'                => Hash::make(Input::get('txPassword')),
 				'rolid'                   => 3,
 				'activo'                  => 0,

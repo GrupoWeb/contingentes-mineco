@@ -29,6 +29,7 @@ Route::group(array('before' => array('tratados')), function() {
 	//=== REQUERIMIENTOS
 	Route::get('requerimientos/contingentes/{id}/{tipo}', 'requerimientosController@getContingentes');
 	Route::get('requerimientos/contingentes/vacio', 'requerimientosController@getVacio');
+	Route::get('contingentes/tratado/{tratado}', 'inscripcionController@getContingentes');
 
 	//=== CONTINGENTES
 	Route::get('contingente/partidas/{id}', 'partidasController@getPartidas');
