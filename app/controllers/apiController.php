@@ -107,4 +107,32 @@ class apiController extends BaseController {
 		return Response::json($response);
 	}
 
+	public function cuentacorriente(){
+		$response = array('codigoerror'=>0, 'error'=>'', 'data' => array());
+		if (!Input::has('nit') || (!Input::has('contingenteid')))  {
+			$response['codigoerror'] = 1;
+			$response['error']       = 'Los parámetros nit y contingenteid son requeridos';
+			return Response::json($response);
+		}
+
+		$empresa  = Empresa::getActivaNit(Input::get('nit'));
+		if (!$empresa) {
+			$response['codigoerror'] = 2;
+			$response['error']       = 'Número de NIT no encontrado';
+			return Response::json($response);
+		}
+		$saldo = Movimiento::getSaldo($empresa->usuarioid, Input::get('contingenteid'));
+		
+		$response['data'] = $saldo;
+		return Response::json($response);
+	}
+
+	public function solicitudasignacion(){
+
+	}
+
+	public function solicitudemision(){
+
+	}
+
 }
