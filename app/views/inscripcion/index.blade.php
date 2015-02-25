@@ -35,7 +35,7 @@
             'data-bv-notEmpty'         => 'true',
             'data-bv-notEmpty-message' => 'La razón social es requerida',
             'autocomplete'             => 'off',
-            'placeholder'              => 'Nombre, denominación o R.S. de la empresa'
+            'placeholder'              => 'Nombre, denominación o razón social de la empresa'
             )) }}
         </div>
       </div>
@@ -49,6 +49,7 @@
             'data-bv-notEmpty'         =>'true',
             'data-bv-notEmpty-message' => 'El representante legal es requerido',
             'autocomplete'             => 'off',
+            'placeholder'              => 'Nombre del propietario o representante legal'
             )) }}
         </div>
       </div>
@@ -188,7 +189,7 @@
             'data-bv-notEmpty'         =>'true',
             'data-bv-notEmpty-message' => 'El nombre del encargado es requerido',
             'autocomplete'             => 'off',
-            'placeholder'              => 'Importaciones/exportaciones'
+            'placeholder'              => 'Importacion/exportacion'
             )) }}
         </div>
       </div>
