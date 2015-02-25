@@ -16,8 +16,9 @@ Route::get('temp',function(){
 });
 
 //API
-Route::get('api/certificado/{emisor}/{id}', 'apiController@certificado');
+
 Route::group(array('before' => array('auth_basic')), function() {
+	Route::get('api/certificado/{id}', 'apiController@certificado');
 	Route::get('api/empresaestavigentexnit','apiController@empresavigente');
 	Route::get('api/listadocontingentesnittratado','apiController@listadocontingentes');
 	Route::get('api/partidasarancelariasxcontingente','apiController@partidascontingente');
@@ -86,6 +87,9 @@ Route::group(array('before' => array('tratados')), function() {
 		Route::resource('cuentacorriente', 'cuentacorrienteController', array('only'=>array('index','store')));
 		Route::resource('empresas', 'empresasController', array('only'=>array('index','store')));
 	  
+	  //=== ADMIN
+	  Route::resource('usuarioswebservice', 'usuarioswebserviceController');
+
 	    //=== DOCUMENTOS
 	    Route::get('usuarios/perfil/{id}', array('as'=>'usuarios.perfil','uses'=>'usuariosController@perfil'));
 	});
