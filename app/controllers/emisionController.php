@@ -46,8 +46,9 @@ class emisionController extends BaseController {
 							$arch   = Input::file($key);
 							$nombre = date('YmdHis').$arch->getClientOriginalName();
 							$res    = $arch->move(public_path() . '/archivos/' . Auth::id(), $nombre);
+							
 							DB::table('solicitudemisionrequerimientos')->insert(array(
-								'solicitudemisionid' => $solicitud->id,
+								'solicitudemisionid' => $solicitud->solicitudesemisionid,
 								'requerimientoid'    => substr($key,4),
 								'archivo'            => $nombre,
 								'created_at'         => date_create(),

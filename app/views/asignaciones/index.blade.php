@@ -39,10 +39,10 @@
           {{ Form::hidden('disponible', '') }}
       </div>
       <div class="col-sm-4"></div>
-      <span id="helpBlock" class="help-block">&nbsp;&nbsp;&nbsp;&nbsp;Máximo disponible: <span name="disponible-span"></span><span id="unidades"></span></span>
+      <span id="helpBlock" class="help-block">&nbsp;&nbsp;&nbsp;&nbsp;Disponible: <span name="disponible-span"></span><span id="unidades"></span></span>
     </div>
     <div class="clearfix"></div>
-    <h4 class="text-warning">Requisitos Adicionales</h4>
+    <h4 class="text-warning h-requisitos">Requisitos Adicionales</h4>
     <hr>
     <div class="form-group hide" id="fileSeed">
       <label class="col-sm-7 control-label"></label>
@@ -56,6 +56,7 @@
   <script>
     $(document).ready(function(){
       $('#frmSolicitud').bootstrapValidator({
+        live: 'submitted',
         fields: {
           cantidad: {
             validators: {
@@ -72,6 +73,7 @@
       $("#cmbContingentes").change(function() {
         $('.nuevos').remove();
         $.get('/requerimientos/contingentes/' + $(this).val() + '/asignacion', function(data){
+          $i=0;
           $.each(data, function(key, datos){
             var $template = $('#fileSeed');
             $('#fileSeed .control-label').html(datos.nombre);
@@ -79,15 +81,18 @@
             var $option   = $clone.find('[name="txArchivo[]"]');
             $option.attr('name', 'file'+datos.requerimientoid);
             $('#frmSolicitud').bootstrapValidator('addField', $option);
+            $i++
           });
+          if ($i==0) $('.h-requisitos').hide();
+          else $('.h-requisitos').show();
         });
 
-        $.get('/contingente/saldo/' + $(this).val() + '?tratado=' + $("#cmbContingentes option:selected").attr('data-tratado'), function(data){
+        $.get('/contingente/saldoasignacion/' + $(this).val() + '?tratado=' + $("#cmbContingentes option:selected").attr('data-tratado'), function(data){
           $('[name="disponible"]').val(data.disponible);
           $('[name="disponible-span"]').text(data.disponible);
           $('#unidades').text(data.unidad);
 
-          $('#frmSolicitud').bootstrapValidator('revalidateField', 'cantidad');
+          //$('#frmSolicitud').bootstrapValidator('revalidateField', 'cantidad');
         });
       });
 
@@ -96,7 +101,7 @@
       $("#cmbContingentes").change();
 
       $('[name="cantidad"]').change(function(){
-        $('#frmSolicitud').bootstrapValidator('revalidateField', 'cantidad');
+        //$('#frmSolicitud').bootstrapValidator('revalidateField', 'cantidad');
       });
 
     });
