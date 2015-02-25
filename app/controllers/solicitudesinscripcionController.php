@@ -35,18 +35,80 @@ class solicitudesinscripcionController extends crudController {
 		$solicitudid   = Crypt::decrypt(Input::get('id'));
 		$contingenteid = Crypt::decrypt(Input::get('cid'));
       
-		if(Input::has('btnAutorizar')) {
-			$usuario = Inscripcionpendiente::find($elID);
-			if($usuario->activo==0){
-				$usuario->activo = 1;
-				$result  = $usuario->save();
-			}
-			
-			$solicitud = Usuariocontingente::where("usuarioid",$elID)->where("contingenteid",$contingenteid)->first();
-			$solicitud->activo = 1;
-			$result = $solicitud->save();
-			if($result) {
-				$email = $usuario->email;
+    // aprobado
+		if(Input::has('btnAutorizar')) { 
+			$result = DB::transaction(function() use ($solicitudid, $contingenteid) {
+				$result = true;
+
+				//copiar a tabla authusuarios
+				$solicitud  = Solicitudinscripcion::find($solicitudid);
+				$rolempresa = Config::get('contingentes.rolempresa');
+				$usuarioid  = DB::table('authusuarios')->insertGetId(
+					array(
+						'email'                   => $solicitud->email,
+						'password'                => $solicitud->password,
+						'nit'                     => $solicitud->nit,
+						'nombre'                  => $solicitud->nombre,
+						'propietario'             => $solicitud->propietario,
+						'domiciliofiscal'         => $solicitud->domiciliofiscal,
+						'domiciliocomercial'      => $solicitud->domiciliocomercial,
+						'direccionnotificaciones' => $solicitud->direccionnotificaciones,
+						'telefono'                => $solicitud->telefono,
+						'fax'                     => $solicitud->fax,
+						'encargadoimportaciones'  => $solicitud->encargadoimportaciones,
+						'created_at'              => date_create(),
+						'updated_at'              => date_create(),
+						'rolid'                   => $rolempresa[0],
+						'activo'                  => 1
+					)
+				);
+
+				if($usuarioid == 0) return 0;
+
+				//copiar a usuariocontingentes
+				$ucontingente                = new Usuariocontingente;
+				$ucontingente->usuarioid     = $usuarioid;
+				$ucontingente->contingenteid = $contingenteid;
+				$ucontingente->save();
+
+
+				if(!$ucontingente) return 0;
+
+				//copiar a usuario requerimientos
+				$requerimientos = Solicitudinscripcionrequemiento::where('solicitudinscripcionid', $solicitudid)->get();
+				foreach($requerimientos as $requerimiento) {
+					$ureq                  = new Usuariorequerimiento;
+					$ureq->usuarioid       = $usuarioid;
+					$ureq->requerimientoid = $requerimiento->requerimientoid;
+					$ureq->archivo         = $requerimiento->archivo;
+					$ureq->save();
+
+					//copiar archivos de requerimientos a carpeta usuarios
+					$source      = public_path().'/archivos/solicitudes/'.$solicitudid;
+					$destination = public_path().'/archivos/'.$usuarioid;
+					
+					if(!is_dir($destination))
+						mkdir($destination);
+					
+					rename($source.'/'.$requerimiento->archivo, $destination.'/'.$requerimiento->archivo);
+
+					if(!is_dir($source))
+						rmdir($source);
+				}
+
+				if(!$requerimientos) return 0;
+
+				//actualizar registro en tabla solicitudes
+				$solicitud->estado        = 'Aprobada';
+				$solicitud->observaciones = Input::get('txObservaciones', '');
+				$solicitud->save();
+
+				return $usuarioid;
+			}); //Transaction
+
+			if($result <> 0) {
+				$usuario = DB::table('authusuarios')->where('usuarioid', $result)->first();
+				$email   = $usuario->email;
 
 				Session::flash('type','success');
 				Session::flash('message','La solicitud de inscripción fue procesada correctamente');
@@ -65,61 +127,33 @@ class solicitudesinscripcionController extends crudController {
 			}
 		}
 
+		// rechazado
 		else {
-          
-			$affectedRows = Usuariocontingente::where('usuarioid', $elID)->where('contingenteid', $contingenteid)->delete();
-		
-          $requerimientos = Contingenterequerimiento::getRequerimientos(Input::get('cid'));
-			
-          $reqIDs= array();
-			foreach($requerimientos as $r){
-				array_push($reqIDs,$r->requerimientoid);
-			}
-			// $reqIDs=implode($reqIDs,",");
-			
-			
-			foreach($reqIDs as $rid){
-				$affectedRows2 = Usuariorequerimiento::leftJoin("contingenterequerimientos AS cr","usuariorequerimientos.requerimientoid","=","cr.requerimientoid")
-					->leftJoin("usuariocontingentes AS uc","cr.contingenteid","=","uc.contingenteid")
-					->where("usuariorequerimientos.requerimientoid","=",$rid)
-					->where("usuariorequerimientos.usuarioid","=",$elID)
-					->where("uc.contingenteid","!=",$contingenteid)->count();
-					if($affectedRows2==0)
-						Usuariorequerimiento::where('usuarioid', $elID)->where("usuariorequerimientos.requerimientoid","=",$rid)->delete();
-			}
-              	
+			$solicitud                = Solicitudinscripcion::find($solicitudid);
+			$solicitud->estado        = 'Rechazada';
+			$solicitud->observaciones = Input::get('txObservaciones', '');
+			$solicitud->save();
 
-				
-			
-				$usuario = Inscripcionpendiente::find($elID);
-				$nombre  = $usuario->nombre;
-				$email   = $usuario->email;
-			
-			//revisar si no hay otras solicitudes
-         
-			$pendientes = Usuariocontingente::where('usuarioid', $elID)->count();
-			if($pendientes==0 && $usuario->activo!=1){
-				$result  = $usuario->delete();
-			}
-           
-          
-			if($affectedRows || $result) {
+			if($solicitud) {
 				Session::flash('type','success');
 				Session::flash('message','La solicitud de inscripción fue rechazada');
 
+				$email = $solicitud->email;
 				Mail::send('emails/solicitudinscripcionresultado', array(
-					'nombre'        => $usuario->nombre,
-					'fecha'         => $usuario->created_at,
+					'nombre'        => $solicitud->nombre,
+					'fecha'         => $solicitud->created_at,
 					'estado'        => 'Rechazada',
 					'observaciones' => Input::get('txObservaciones')), function($msg) use ($email){
 		       	$msg->to($email)->subject('Solicitud de Inscripción DACE - MINECO');
 				});
 			}
+
 			else {
 				Session::flash('type','warning');
 				Session::flash('message','Ocurrió un error al intentar rechazar, intente de nuevo.');
 			}
 		}
+
 		return Redirect::route('solicitudespendientes.inscripcion.index');
 	}
   
