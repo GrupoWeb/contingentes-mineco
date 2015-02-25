@@ -15,7 +15,17 @@ Route::get('temp',function(){
 		->with('nombre','el nombre');
 });
 
-Route::get('webservice/certificado/{emisor}/{id}', 'webserviceController@certificado');
+//API
+Route::get('api/certificado/{emisor}/{id}', 'apiController@certificado');
+Route::group(array('before' => array('auth_basic')), function() {
+	Route::post('api/empresaestavigentexnit','apiController@empresavigente');
+	Route::post('api/listadocontingentesnittratado','apiController@listadocontingentes');
+	Route::post('api/partidasarancelariasxcontingente','apiController@partidascontingente');
+	Route::post('api/cuentacorriente','apiController@cuentacorriente');
+	Route::post('api/solicitudasignacion','apiController@solicitudasignacion');
+	Route::post('api/solicitudemision','apiController@solicitudemision');
+});
+
 
 Route::group(array('before' => array('tratados')), function() {
 	Route::get('c/{id}',array('as'=>'certificados.generar','uses'=>'certificadosController@generarPDF'));

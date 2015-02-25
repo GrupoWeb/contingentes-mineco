@@ -16,4 +16,12 @@ class Empresa extends Eloquent {
             ->whereBetween('u.created_at', array($fechaini, $fechafin))
 			->get();
 	}
+
+	public static function getActivaNit($aNit) {
+		return DB::table('authusuarios')
+			->whereIn('rolid', Config::get('contingentes.rolempresa') )
+			->where( DB::raw('REPLACE(nit,"-","")'), str_replace('-', '',$aNit))
+			->select('activo','usuarioid')
+			->first();
+	}
 }
