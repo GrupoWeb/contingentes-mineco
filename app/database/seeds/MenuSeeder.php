@@ -179,8 +179,8 @@
 			DB::table('authmenu')->insert(array(
 				'menuid'					=> 23,
 				'padreid'        	=> 9,
-				'modulopermisoid' => 92,
-				'nombre'         	=> 'Histórico de solicitudes',
+				'modulopermisoid' => null,
+				'nombre'         	=> 'Histórico',
 				'orden' 					=> 400,
 				'icono'         	=> null
 			));
@@ -209,6 +209,33 @@
 				'modulopermisoid' => 109,
 				'nombre'         	=> 'Inscripción',
 				'orden' 					=> 50,
+				'icono'         	=> null
+			));
+
+			DB::table('authmenu')->insert(array(
+				'menuid'					=> 27,
+				'padreid'        	=> 23,
+				'modulopermisoid' => 92,
+				'nombre'         	=> 'Inscripción',
+				'orden' 					=> 10,
+				'icono'         	=> null
+			));
+
+			DB::table('authmenu')->insert(array(
+				'menuid'					=> 28,
+				'padreid'        	=> 23,
+				'modulopermisoid' => 92,
+				'nombre'         	=> 'Asignación',
+				'orden' 					=> 20,
+				'icono'         	=> null
+			));
+
+			DB::table('authmenu')->insert(array(
+				'menuid'					=> 29,
+				'padreid'        	=> 23,
+				'modulopermisoid' => 92,
+				'nombre'         	=> 'Emisión',
+				'orden' 					=> 30,
 				'icono'         	=> null
 			));
 
