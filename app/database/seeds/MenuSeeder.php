@@ -76,7 +76,6 @@
 				'icono'         	=> null
 			));
 
-
 			DB::table('authmenu')->insert(array(
 				'menuid'					=> 12,
 				'padreid'        	=> 11,
@@ -236,6 +235,15 @@
 				'modulopermisoid' => 92,
 				'nombre'         	=> 'Emisión',
 				'orden' 					=> 30,
+				'icono'         	=> null
+			));
+
+			DB::table('authmenu')->insert(array(
+				'menuid'					=> 30,
+				'padreid'        	=> 11,
+				'modulopermisoid' => 111,
+				'nombre'         	=> 'Usuarios webservice',
+				'orden' 					=> 300,
 				'icono'         	=> null
 			));
 

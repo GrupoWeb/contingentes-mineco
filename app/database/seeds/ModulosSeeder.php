@@ -136,6 +136,12 @@ class ModulosSeeder extends Seeder {
 			'nombrefriendly' => 'Solicitud de inscripción'
 		));
 
+		DB::table('authmodulos')->insert(array(
+			'moduloid'       => 23,
+			'nombre'         => 'usuarioswebservice',
+			'nombrefriendly' => 'Usuarios webservice'
+		));
+
 		DB::table('authmodulos')->update(array('created_at'=>date_create(), 'updated_at'=>date_create()));
 	  DB::statement('SET FOREIGN_KEY_CHECKS=1');
 	}
