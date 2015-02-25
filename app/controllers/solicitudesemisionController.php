@@ -44,7 +44,7 @@ class solicitudesemisionController extends crudController {
 		$elID = Crypt::decrypt(Input::get('id'));
 
 		if(Input::has('btnAutorizar')) {
-			$cantidad   = Input::get('txCanidad');
+			$cantidad   = Input::get('txCantidad');
 			$comentario = Input::get('txObservaciones');
 			
 			//TRANSACTION ===
