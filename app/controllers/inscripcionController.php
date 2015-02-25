@@ -6,14 +6,24 @@ class inscripcionController extends BaseController {
 		return View::make('inscripcion/index')
 			->with('route', 'signup.store')
 			->with('tratados', Tratado::getTratados());
-			//->with('contingentes', Contingente::getContingentes());
 	}
 
 	public function validateEmail() {
     $aEmail = Input::get(Config::get('login::usuario.campo'));
 		$result = DB::table(Config::get('login::tabla'))->where('email', $aEmail)->first();
-    if ($result) $val='false';
-    else $val='true';
+    
+    if ($result) 
+    	$val='false';
+
+    else {
+    	$result = DB::table('solicitudinscripciones')->where('email', $aEmail)->where('estado', 'Pendiente')->first();
+    	if ($result) 
+    		$val='false';
+    	
+    	else 
+    		$val='true';
+    }
+
     return json_encode(array('valid'=>$val));
 	}
 
@@ -24,49 +34,38 @@ class inscripcionController extends BaseController {
 	
 	public function store() {
 		DB::transaction(function() {
+			$inscripcion                          = new Solicitudinscripcion;
+			$inscripcion->estado                  = 'Pendiente';
+			$inscripcion->email                   = Input::get('email');
+			$inscripcion->password                = Hash::make(Input::get('txPassword'));
+			$inscripcion->nit                     = Input::get('txNIT');
+			$inscripcion->nombre                  = Input::get('txRazonSocial');
+			$inscripcion->propietario             = Input::get('txPropietario');
+			$inscripcion->domiciliofiscal         = Input::get('txDomicilioFiscal');
+			$inscripcion->domiciliocomercial      = Input::get('txDomicilioComercial');
+			$inscripcion->direccionnotificaciones = Input::get('txDireccionNotificaciones');
+			$inscripcion->telefono                = Input::get('txTelefono');
+			$inscripcion->fax                     = Input::get('txFax');
+			$inscripcion->encargadoimportaciones  = Input::get('txEncargadoImportaciones');
+			$inscripcion->save();
 
-	    $usuario = DB::table('authusuarios');
-	   
-	    $arr = array(
-				'email'                   => Input::get('email'),
-				//'nombre'                  => Input::get('txNombre'),
-				'password'                => Hash::make(Input::get('txPassword')),
-				'rolid'                   => 3,
-				'activo'                  => 0,
-				'nit'                     => Input::get('txNIT'),
-				'domiciliofiscal'         => Input::get('txDomicilioFiscal'),
-				'razonsocial'             => Input::get('txRazonSocial'),
-				'domiciliocomercial'      => Input::get('txDomicilioComercial'),
-				'propietario'             => Input::get('txPropietario'),
-				'direccionnotificaciones' => Input::get('txDireccionNotificaciones'),
-				'telefono'                => Input::get('txTelefono'),
-				'fax'                     => Input::get('txFax'),
-				'encargadoimportaciones'  => Input::get('txEncargadoImportaciones'),
-				'created_at'              => date_create(),
-				'updated_at'              => date_create(),
-	    );
-	    $usuarioId = $usuario->insertGetId($arr);
+			$contingente = new Solicitudinscripcioncontingente;
+			$contingente->solicitudinscripcionid = $inscripcion->solicitudinscripcionid;
+			$contingente->contingenteid = Crypt::decrypt(Input::get('contingentes'));
+			$contingente->save();
 
-	    foreach (Input::get('contingentes') as $val) {
-	    	DB::table('usuariocontingentes')->insert(array(
-					'usuarioid'     => $usuarioId, 
-					'contingenteid' => Crypt::decrypt($val))
-	    	);
-	    }
-	    
-	    foreach (Input::file() as $key=>$val) { 
-	      if ($key=='txArchivo') continue;
+			foreach (Input::file() as $key=>$val) { 
+	      if ($key == 'txArchivo') continue;
 	    	if ($val) {
 					$arch   = Input::file($key);
 					$nombre = date('YmdHis').$arch->getClientOriginalName();
-					$res    = $arch->move(public_path() . '/archivos/' . $usuarioId, $nombre);
-					DB::table('usuariorequerimientos')->insert(array(
-						'usuarioid'        => $usuarioId,
-						'requerimientoid'  => substr($key,4),
-						'archivo'          => $nombre,
-						'created_at'       => date_create(),
-						'updated_at'       => date_create()
-					));
+					$res    = $arch->move(public_path() . '/archivos/solicitudes/'.$inscripcion->solicitudinscripcionid, $nombre);
+					
+					$requerimiento                         = new Solicitudinscripcionrequemiento;
+					$requerimiento->solicitudinscripcionid = $inscripcion->solicitudinscripcionid;
+					$requerimiento->requerimientoid        = substr($key,4);
+					$requerimiento->archivo                = $nombre;
+					$requerimiento->save();
 				}
 	    }
 	  }); //DB Transaction

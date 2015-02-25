@@ -12,19 +12,6 @@
 		<div class="col-md-12">
 			<h4 class="main">Datos Generales</h4>
 		</div>
-		<!-- nombre -->
-		{{--<div class="col-md-12">
-	    <div class="form-group">
-	      <label for="txNombre" class="col-sm-2 control-label">Nombre</label>
-	      <div class="col-sm-10">
-	        {{ Form::text('txNombre', '', array('class'=>'form-control', 
-	          'data-bv-notEmpty'         =>'true',
-	          'data-bv-notEmpty-message' => 'El nombre es requerido',
-	          'autocomplete'             => 'off'
-	          )) }}
-	      </div>
-	    </div>
-	  </div>--}}
     <!-- nit -->
     <div class="col-md-6">
       <div class="form-group">
@@ -47,7 +34,8 @@
           {{ Form::text('txRazonSocial', '', array('class'=>'form-control', 
             'data-bv-notEmpty'         => 'true',
             'data-bv-notEmpty-message' => 'La razón social es requerida',
-            'autocomplete'             => 'off'
+            'autocomplete'             => 'off',
+            'placeholder'              => 'Nombre, denominación o R.S. de la empresa'
             )) }}
         </div>
       </div>

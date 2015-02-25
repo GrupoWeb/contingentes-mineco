@@ -12,7 +12,7 @@ class Usuariorequerimiento extends Eloquent {
 			->where('ur.usuarioid',$id)
 			->get();
 	}	
-	public static function getUsuarioContingenteRequerimientos($id,$contingenteid){
+	/*public static function getUsuarioContingenteRequerimientos($id,$contingenteid){
 		return DB::table('usuariorequerimientos As ur')
 			->select('ur.archivo','r.nombre', 'ur.usuarioid','uc.contingenteid')
 			->leftJoin('requerimientos As r','r.requerimientoid','=','ur.requerimientoid')
@@ -30,5 +30,5 @@ class Usuariorequerimiento extends Eloquent {
 			->leftJoin('productos As p','p.productoid','=','up.productoid')
 			->where('u.usuarioid',$id)
 			->get();
-	}
+	}*/
 }

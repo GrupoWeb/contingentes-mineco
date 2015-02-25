@@ -41,3 +41,17 @@ h4.main {
 .blue-title {
 	color: #0054a4;
 }
+
+.minus-border {
+	margin-bottom: 10px;
+}
+
+.btn-success-mineco {
+	background-color: #00a450;
+	color: #fff;
+}
+
+.btn-danger-mineco {
+	background-color: #a40002;
+	color: #fff;
+}

@@ -30,30 +30,20 @@ class dashboardController extends BaseController {
 				//=== inscripciones
 				$inscripciones = Usuariocontingente::getSolicitudes($contingentes);
 				$datos[$tratado->tratadoid]['solicitudes']['inscripcion'] = array('Pendiente'=>0, 'Aprobada'=>0, 'Rechazada'=>'--');
-				foreach($inscripciones as $inscripcion){
-					if($inscripcion->activo == 0){
-						$datos[$tratado->tratadoid]['solicitudes']['inscripcion']['Pendiente'] = $inscripcion->cuenta;
-					}
-
-					else{
-						$datos[$tratado->tratadoid]['solicitudes']['inscripcion']['Aprobada']  = $inscripcion->cuenta;
-						$datos[$tratado->tratadoid]['inscritos'] = $inscripcion->cuenta;
-					}
-				}
+				foreach($inscripciones as $inscripcion)
+					$datos[$tratado->tratadoid]['solicitudes']['inscripcion']['Pendiente'] = $inscripcion->cuenta;
 
 				//=== asignaciones
 				$asignaciones = Solicitudasignacion::getSolicitudes($contingentes);
 				$datos[$tratado->tratadoid]['solicitudes']['asignacion'] = array('Pendiente'=>0, 'Aprobada'=>0, 'Rechazada'=>0);
-				foreach($asignaciones as $asignacion){
+				foreach($asignaciones as $asignacion)
 					$datos[$tratado->tratadoid]['solicitudes']['asignacion'][$asignacion->estado] = $asignacion->cuenta;
-				}
 
 				//=== emisiones
 				$emisiones = Solicitudesemision::getSolicitudes($contingentes);
 				$datos[$tratado->tratadoid]['solicitudes']['emision'] = array('Pendiente'=>0, 'Aprobada'=>0, 'Rechazada'=>0);
-				foreach($emisiones as $emision){
+				foreach($emisiones as $emision)
 					$datos[$tratado->tratadoid]['solicitudes']['emision'][$emision->estado] = $emision->cuenta;
-				}
 			}
 
 			return View::make('dashboard.admin')

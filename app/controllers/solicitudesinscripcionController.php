@@ -5,52 +5,38 @@ class solicitudesinscripcionController extends crudController {
 		Crud::setExport(false);
 		Crud::setSearch(false);
 		Crud::setTitulo('Solicitudes pendientes - Inscripción');
-		Crud::setTabla('authusuarios');
-		Crud::setTablaId('usuarioid');
+		Crud::setTabla('solicitudinscripciones');
+		Crud::setTablaId('solicitudinscripcionid');
 
-		Crud::setWhere('authusuarios.activo',0);
+		Crud::setWhere('estado', 'Pendiente');
 
-		Crud::setCampo(array('nombre'=>'Nombre','campo'=>'nombre'));
+		Crud::setCampo(array('nombre'=>'Nombre','campo'=>'solicitudinscripciones.nombre'));
+		Crud::setCampo(array('nombre'=>'Tratado','campo'=>'(SELECT t.nombrecorto FROM solicitudinscripcioncontingentes AS sic LEFT JOIN contingentes AS c ON sic.contingenteid = c.contingenteid LEFT JOIN tratados AS t ON c.tratadoid = t.tratadoid WHERE sic.solicitudinscripcionid = solicitudinscripciones.solicitudinscripcionid)'));
+		Crud::setCampo(array('nombre'=>'Tratado','campo'=>'(SELECT p.nombre FROM solicitudinscripcioncontingentes AS sic LEFT JOIN contingentes AS c ON sic.contingenteid = c.contingenteid LEFT JOIN productos AS p ON c.productoid = p.productoid WHERE sic.solicitudinscripcionid = solicitudinscripciones.solicitudinscripcionid)'));
 		Crud::setCampo(array('nombre'=>'Email','campo'=>'email'));
-		Crud::setCampo(array('nombre'=>'Fecha de solicitud','campo'=>'created_at', 'tipo'=>'datetime'));
-		Crud::setCampo(array('nombre'=>'Activo','campo'=>'activo','tipo'=>'bool'));
+		Crud::setCampo(array('nombre'=>'Fecha de solicitud','campo'=>'solicitudinscripciones.created_at', 'tipo'=>'datetime'));
 
 		Crud::setPermisos(Cancerbero::tienePermisosCrud('solicitudespendientes.inscripcion'));
 	}
 
-	public function index(){
-		$solicitudes = Inscripcionpendiente::getSolicitudesPendientes(Session::get('tselected'));
-		$columnas    = array(
-			array("tipo"=>"string"),
-			array("tipo"=>"string"),
-			array("tipo"=>"datetime"),
-			array("tipo"=>"bool")
-		);
-
-		return View::make('solicitudespendientes/inscripcionesindex')
-			->with("solicitudes",$solicitudes)
-			->with("columnas",$columnas);
-	
-	}
 	public function edit($id){
-		$arr            = explode("+",Crypt::decrypt($id));
-		$userID         = $arr[0];
-		$contingenteid  = $arr[1];
-		$solicitud      = Inscripcionpendiente::getSolicitudPendiente($userID,$contingenteid);
-		$requerimientos = Usuariorequerimiento::getUsuarioContingenteRequerimientos($userID,$contingenteid);
+		$solicitudid    = Crypt::decrypt($id);
+		$solicitud      = Solicitudinscripcion::getSolicitudPendiente($solicitudid);
+		$contingente    = Solicitudinscripcioncontingente::where('solicitudinscripcionid', $solicitudid)->first();
+		$requerimientos = Solicitudinscripcionrequemiento::getRequerimientosSolicitud($solicitudid);
 
 		return View::make('solicitudespendientes/inscripciones')
-			->with('solicitud',$solicitud)
-			->with('cid',Crypt::encrypt($contingenteid))
-			->with('requerimientos',$requerimientos);
+			->with('solicitud', $solicitud)
+			->with('cid', Crypt::encrypt($contingente->contingenteid))
+			->with('requerimientos', $requerimientos);
 	}
 
 	public function store(){
-		$elID = Crypt::decrypt(Input::get('id'));
+		$solicitudid   = Crypt::decrypt(Input::get('id'));
 		$contingenteid = Crypt::decrypt(Input::get('cid'));
       
 		if(Input::has('btnAutorizar')) {
-			$usuario         = Inscripcionpendiente::find($elID);
+			$usuario = Inscripcionpendiente::find($elID);
 			if($usuario->activo==0){
 				$usuario->activo = 1;
 				$result  = $usuario->save();
@@ -78,6 +64,7 @@ class solicitudesinscripcionController extends crudController {
 				Session::flash('message','Ocurrió un error al intentar autorizar, intente de nuevo.');
 			}
 		}
+
 		else {
           
 			$affectedRows = Usuariocontingente::where('usuarioid', $elID)->where('contingenteid', $contingenteid)->delete();
