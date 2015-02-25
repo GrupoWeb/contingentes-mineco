@@ -18,6 +18,15 @@ class Contingente extends Eloquent {
         return $query->get();
 	}
 
+	public static function getContTratado($aTratadoId) {
+		return DB::table('contingentes AS c')
+			->select('contingenteid', 'p.nombre AS producto')
+			->leftJoin('productos AS p', 'c.productoid', '=', 'p.productoid')
+			->where('c.tratadoid', $aTratadoId)
+			->orderBy('p.nombre')
+			->get();
+	}
+
 	public static function getUnidadMedida($aContingenteId) {
 		return DB::table('contingentes AS c')
 			->leftJoin('productos AS p', 'c.productoid', '=', 'p.productoid')

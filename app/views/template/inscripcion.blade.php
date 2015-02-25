@@ -45,7 +45,8 @@
 	</head>
 	<body>
 		<div class="header">
-		  <img src="images/logo.jpg" alt="Mineco - DACE">
+			<img src="images/logo.jpg" alt="Mineco - DACE">
+			<h1 class="blue-title">Contingentes Arancelarios</h1>
 		</div>
 		<h1 class="main">Solicitud de inscripción</h1>
 		<div class="main">
