@@ -18,12 +18,12 @@ Route::get('temp',function(){
 //API
 Route::get('api/certificado/{emisor}/{id}', 'apiController@certificado');
 Route::group(array('before' => array('auth_basic')), function() {
-	Route::post('api/empresaestavigentexnit','apiController@empresavigente');
-	Route::post('api/listadocontingentesnittratado','apiController@listadocontingentes');
-	Route::post('api/partidasarancelariasxcontingente','apiController@partidascontingente');
-	Route::post('api/cuentacorriente','apiController@cuentacorriente');
-	Route::post('api/solicitudasignacion','apiController@solicitudasignacion');
-	Route::post('api/solicitudemision','apiController@solicitudemision');
+	Route::get('api/empresaestavigentexnit','apiController@empresavigente');
+	Route::get('api/listadocontingentesnittratado','apiController@listadocontingentes');
+	Route::get('api/partidasarancelariasxcontingente','apiController@partidascontingente');
+	Route::get('api/cuentacorriente','apiController@cuentacorriente');
+	Route::get('api/solicitudasignacion','apiController@solicitudasignacion');
+	Route::get('api/solicitudemision','apiController@solicitudemision');
 });
 
 
@@ -44,6 +44,7 @@ Route::group(array('before' => array('tratados')), function() {
 	//=== CONTINGENTES
 	Route::get('contingente/partidas/{id}', 'partidasController@getPartidas');
 	Route::get('contingente/saldo/{id}', 'contingentesController@getSaldo');
+  Route::get('contingente/saldoasignacion/{id}', 'contingentesController@getSaldoAsignacion');
 
 
 	Route::group(array('before' => array('auth', 'cancerbero', 'menu')), function() {
