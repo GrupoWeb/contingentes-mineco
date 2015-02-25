@@ -13,6 +13,7 @@ return array(
 	*/
 
 	'roladmin'        => array(1,2),
+	'rolempresa'			=> array(3),
 	'tratadosExclude' => array('cuentacorriente', 'empresas', 'login', 'reset','cancerbero','paises','productos','requerimientos','solicitud',''),
 
 );
