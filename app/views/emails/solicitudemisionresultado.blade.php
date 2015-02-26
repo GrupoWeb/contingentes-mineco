@@ -6,7 +6,7 @@
 	<strong>Nombre:</strong> {{$nombre}}<br>
 	ha sido <h3 style="color: {{ $estado == 'Aprobada' ? 'green' : 'red' }}">{{ $estado }}</h3>
 
-	<p><a href="{{ $url }}">Presiona aquí para ver tu certificado</a></p>
+	<p><a href="{{ $url }}">Presiona aquí para descargar el certificado en PDF.</a></p>
 
 	@if ($observaciones<>'')
 	con las siguientes observaciones: <br />
