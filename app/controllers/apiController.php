@@ -2,7 +2,7 @@
 
 class apiController extends BaseController {
 
-	public function certificado($emisor, $id) {
+	public function certificado($id) {
 		$codigoerror = 0;
 		$error       = '';
 		$url         = '';
@@ -12,28 +12,22 @@ class apiController extends BaseController {
 		$emision     = '';
 		$vencimiento = '';
 
-		if($emisor <> '76c9bbd147140e0a59db65e770d7b4aa') {
-			$codigoerror = 1;
-			$error       = 'El emisor no es valido';
+		$certificado = Certificado::find($id);
+		
+		if(!$certificado){
+			$codigoerror = 2;
+			$error       = 'Certificado no encontrado';
 		}
 
 		else {
-			$certificado = Certificado::find($id);
-			
-			if(!$certificado){
-				$codigoerror = 2;
-				$error       = 'Certificado no encontrado';
-			}
-
-			else {
-				$url         = 'http://contingentes.cs.com.gt:8000/c/'.Crypt::encrypt($id);
-				$tm          = $certificado->volumen;
-				$fracion     = $certificado->fraccion;
-				$estado      = $certificado->anulado == 0 ? 'activo' : 'anulado';
-				$emision     = $certificado->fecha;
-				$vencimiento = $certificado->fechavencimiento;
-			}
+			$url         = 'http://contingentes.cs.com.gt:8000/c/'.Crypt::encrypt($id);
+			$tm          = $certificado->volumen;
+			$fracion     = $certificado->fraccion;
+			$estado      = $certificado->anulado == 0 ? 'activo' : 'anulado';
+			$emision     = $certificado->fecha;
+			$vencimiento = $certificado->fechavencimiento;
 		}
+		
 
 		$response = array(
 			'codigoerror' => $codigoerror,

@@ -27,6 +27,24 @@ class inscripcionController extends BaseController {
     return json_encode(array('valid'=>$val));
 	}
 
+	public function validateNIT() {
+    $aNIT = Input::get('txNIT');
+		$result = DB::table('authusuarios')->where('nit', $aNIT)->first();
+
+    if ($result) 
+    	$val='false';
+
+    else {
+    	$result = DB::table('solicitudinscripciones')->where('nit', $aNIT)->where('estado', 'Pendiente')->first();
+    	if ($result) 
+    		$val='false';
+    	else 
+    		$val='true';
+    }
+
+    return json_encode(array('valid'=>$val));
+	}
+
 	public function getContingentes($tratadoid) {
 		return View::make('inscripcion.contingentes')
 			->with('contingentes', Contingente::getContTratado($tratadoid));
@@ -72,7 +90,7 @@ class inscripcionController extends BaseController {
 
     $email = Input::get('email');
     Mail::send('emails/solicitudinscripcion', array(
-      'nombre' => Input::get('txNombre'),
+      'nombre' => Input::get('txRazonSocial'),
       'fecha'  => date('d-m-Y H:i')
       ), function($msg) use ($email){
             $msg->to($email)->subject('Solicitud de inscripción');

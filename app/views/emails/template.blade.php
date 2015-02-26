@@ -15,7 +15,7 @@
 	    <div style="background-color: #d3d7d8; margin: 0 auto 8px auto; width: 90%; max-width: 800px; padding: 18px 10px 18px 10px;">
 				@yield('content')
 				<br />
-				<p>Para mayor informaci&oacute;n puede escribir a <a href="mailto:{{Config::get('website.email')}}">{{Config::get('website.email')}}</a></p>
+				<p>Para mayor informaci&oacute;n puede escribir a <a href="mailto:{{Config::get('website.email')}}">{{Config::get('website.email')}}</a> o dirigiendose a la página web <a href="{{Config::get('website.url'}}">{{Config::get('website.url')}}</a></p>
 			</div>
 			&nbsp;
 		</div>

@@ -39,6 +39,7 @@ class certificadosController extends crudController {
 	public function generarPDF($id) {
 		$elId  = Crypt::decrypt($id);
 		$datos = Certificado::getCertificado($elId);
+		//dd(DB::getQueryLog());
 
 		if($datos->anulado == 1){
 			return "El certificado ha sido anulado";
