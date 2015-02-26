@@ -54,7 +54,7 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => 'postmaster@mailgun.cs.com.gt', 'name' => 'CS'),
+	'from' => array('address' => 'postmaster@mailgun.cs.com.gt', 'name' => 'DACE - Ministerio de Economía'),
 
 	/*
 	|--------------------------------------------------------------------------

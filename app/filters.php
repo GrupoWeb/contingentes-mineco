@@ -11,9 +11,13 @@
 |
 */
 
-App::before(function($request)
-{
-	//
+App::before(function($request) {
+	if ($request->is('api/*')) {
+    Config::set('auth.model', 'Authusuariowebservice');
+	}
+	else {
+		Config::set('auth.model', 'Authusuario');
+	}
 });
 
 

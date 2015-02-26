@@ -26,7 +26,7 @@
 	{{Form::open(array('id'=>'frmAuto', 'route'=>'solicitudespendientes.emision.store'))}}
 		<h4 class="text-warning">Cantidad Autorizada</h4>
 		<div class="form-group" id="divCantidad">
-			{{ Form::text('txCanidad', $solicitud->solicitado, array(
+			{{ Form::text('txCantidad', $solicitud->solicitado, array(
 				'class'                    => 'form-control',
 				'data-bv-notempty'         => 'true',
 				'data-bv-numeric'          => 'true',

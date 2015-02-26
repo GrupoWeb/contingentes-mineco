@@ -48,57 +48,62 @@ class solicitudesemisionController extends crudController {
 			$comentario = Input::get('txObservaciones');
 			
 			//TRANSACTION ===
-			$emision                = Emisionpendiente::find($elID);
-			$emision->emitido       = $cantidad;
-			$emision->observaciones = Input::get('txObservaciones');
-			$emision->estado        = 'Aprobada';
-			$result                 = $emision->save();
+			$result = DB::transaction(function() use ($elID, $cantidad, $comentario) {
+				$emision                = Emisionpendiente::find($elID);
+				$emision->emitido       = $cantidad;
+				$emision->observaciones = $comentario;
+				$emision->estado        = 'Aprobada';
+				$res =	$emision->save();
+				if (!$res) return false;
 
-			$info = Emisionpendiente::getSolicitudPendiente($elID);
+				$info = Emisionpendiente::getSolicitudPendiente($elID);
 
-			$certificado                     = new Certificado;
-			$certificado->tratado            = $info->tratadolargo;
-			$certificado->usuarioid          = $emision->usuarioid;
-			$certificado->nombre             = $info->nombre;
-			$certificado->direccion          = $info->domiciliocomercial;
-			$certificado->nit                = $info->nit;
-			$certificado->telefono           = $info->telefono;
-			$certificado->volumen            = $cantidad;
-			$certificado->volumenletras      = Components::numeroALetras($cantidad,'', 2);
-			$certificado->fraccion           = $info->fraccion;
-			$certificado->paisprocedencia    = $info->paisprocedencia;
-			$certificado->tratadodescripcion = $info->textocertificado;
-			$certificado->fecha              = date_create();
-			$certificado->fechavencimiento   = $info->vencimiento;
-			$certificado->save();
+				$certificado                     = new Certificado;
+				$certificado->tratado            = $info->tratadolargo;
+				$certificado->usuarioid          = $emision->usuarioid;
+				$certificado->nombre             = $info->nombre;
+				$certificado->direccion          = $info->domiciliocomercial;
+				$certificado->nit                = $info->nit;
+				$certificado->telefono           = $info->telefono;
+				$certificado->volumen            = $cantidad;
+				$certificado->volumenletras      = Components::numeroALetras($cantidad,null, 2);
+				$certificado->fraccion           = $info->fraccion;
+				$certificado->paisprocedencia    = $info->paisprocedencia;
+				$certificado->tratadodescripcion = $info->textocertificado;
+				$certificado->fecha              = date_create();
+				$certificado->fechavencimiento   = $info->vencimiento;
+				$res = $certificado->save();
+				if (!$res) return false;
 
-			$movimiento                = new Movimiento;
-			$movimiento->periodoid     = $emision->periodoid;
-			$movimiento->usuarioid     = $emision->usuarioid;
-			$movimiento->certificadoid = $certificado->id;
-			$movimiento->cantidad      = ($cantidad * -1);
-			$movimiento->comentario    = $comentario;
-			$movimiento->tipo          = 'Certificado';
-			$movimiento->created_by    = Auth::id();
-			$result2                   = $movimiento->save();
-
+				$movimiento                = new Movimiento;
+				$movimiento->periodoid     = $emision->periodoid;
+				$movimiento->usuarioid     = $emision->usuarioid;
+				$movimiento->certificadoid = $certificado->certificadoid;
+				$movimiento->cantidad      = ($cantidad * -1);
+				$movimiento->comentario    = $comentario;
+				$movimiento->tipo          = 'Certificado';
+				$movimiento->created_by    = Auth::id();
+				$res = $movimiento->save();
+				if (!$res) return false;
+				return array('emision'=>$emision, 'certificado'=>$certificado);
+			});
 
 			//====
 
-			if($result && $result2) {
-				$usuario = Authusuario::find($emision->usuarioid);
+			if($result) {
+				$usuario = Authusuario::find($result['emision']->usuarioid);
 				$email   = $usuario->email;
 
 				Session::flash('type','success');
-				Session::flash('message','La solicitud de inscripción fue procesada correctamente');
+				Session::flash('message','La solicitud de emisión fue procesada correctamente');
 
 				Mail::send('emails/solicitudemisionresultado', array(
 					'nombre'        => $usuario->nombre,
-					'fecha'         => $emision->created_at,
-					'url'           => url('c/'.Crypt::encrypt($certificado->id)),
+					'fecha'         => $result['emision']->created_at,
+					'url'           => url('c/'.Crypt::encrypt($result['certificado']->certificadoid)),
 					'estado'        => 'Aprobada',
 					'observaciones' => Input::get('txObservaciones')), function($msg) use ($email){
-		       	$msg->to($email)->subject('Solicitud de Emisión DACE - MINECO');
+		       	$msg->to($email)->subject('Certificado DACE - MINECO');
 				});
 			}
 			else {
