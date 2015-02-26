@@ -89,8 +89,11 @@ class solicitudesinscripcionController extends crudController {
 					
 					if(!is_dir($destination))
 						mkdir($destination);
-					
-					rename($source.'/'.$requerimiento->archivo, $destination.'/'.$requerimiento->archivo);
+
+
+
+					if (file_exists($source.'/'.$requerimiento->archivo))
+						rename($source.'/'.$requerimiento->archivo, $destination.'/'.$requerimiento->archivo);
 
 					if(!is_dir($source))
 						rmdir($source);
