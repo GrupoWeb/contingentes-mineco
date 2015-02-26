@@ -21,7 +21,11 @@
             'data-bv-notEmpty'         => 'true',
             'data-bv-notEmpty-message' => 'El NIT es requerido',
             'data-bv-nit'              => 'true',
-            'autocomplete'             => 'off'
+            'autocomplete'             => 'off',
+            'data-bv-remote'           => 'true',
+            'data-bv-remote-url'       => '/signup/checkNIT',
+            'data-bv-remote-message'   => 'NIT ya existe en la base de datos',
+            'data-bv-remote-type'      => 'POST'
             )) }}
         </div>
       </div>
