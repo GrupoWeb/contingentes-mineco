@@ -1,15 +1,17 @@
 @extends('template/template')
 
 @section('content')
-	<div class="pull-right">
-		<?php $tratados = Session::get('tratados'); $selected = Session::get('tselected'); ?>
-		<select class="selectpicker" id="cmbTratado">
-			<option value="0" {{ (0 == $selected) ? 'selected' : '' }}>-- TODOS --</option>
-			@foreach($tratados as $tratado)
-				<?php $tid = $tratado->tratadoid; ?>
-				<option value="{{ $tid }}" {{ ($tid == $selected) ? 'selected' : '' }}>{{ $tratado->nombrecorto }}</option>
-			@endforeach
-		</select>
+	<div class="col-sm-12">
+		<div class="pull-right">
+			<?php $tratados = Session::get('tratados'); $selected = Session::get('tselected'); ?>
+			<select class="selectpicker" id="cmbTratado">
+				<option value="0" {{ (0 == $selected) ? 'selected' : '' }}>-- TODOS --</option>
+				@foreach($tratados as $tratado)
+					<?php $tid = $tratado->tratadoid; ?>
+					<option value="{{ $tid }}" {{ ($tid == $selected) ? 'selected' : '' }}>{{ $tratado->nombrecorto }}</option>
+				@endforeach
+			</select>
+		</div>
 	</div>
 	<div class="clearfix"></div>
 	<br />
@@ -23,7 +25,7 @@
 	@if($tid == 0)
 		@foreach($datos as $tratadoid=>$tratado)
 			<div class="col-sm-2">
-				<button type="button" class="btn btn-{{ $tratado['saldo'] > 0 ? 'success' : 'defaut' }} btn-lg btn-block tratadobtn" data-tratado="{{ $tratadoid }}">
+				<button type="button" class="btn btn-{{ $tratado['saldo'] > 0 ? 'primary' : 'defaut' }} btn-lg btn-block tratadobtn" data-tratado="{{ $tratadoid }}">
 					<i class="fa fa-file-text-o fa-2x"></i><br/>
 					<h3>{{ number_format($tratado['saldo'], 2) }}</h3>
 					{{ $tratado['nombrecorto'] }}
@@ -34,24 +36,24 @@
 		@foreach($datos as $tratadoid=>$tratado)
 			@if($tratadoid == $tid)
 				<div class="col-md-12">
-					<div class="panel panel-default">
+					<div class="panel panel-primary">
 					  <div class="panel-heading">
-					    <h3 class="panel-title text-center">{{ $tratado['nombrecorto'] }}</h3>
+					    <h3 class="panel-title text-center">{{ $tratado['nombrecorto'] }} <small>{{$tratado['tipo']}}</small></h3>
 					  </div>
 					  <div class="panel-body">
 					    <div class="col-md-4 text-center"><h4>{{ number_format($tratado['saldo'], 2) }}<br />Saldo</h4></div>
 					    <div class="col-md-4 text-center"><h4>{{ $tratado['inscritos'] }}<br />Inscritos</h4></div>
 					    <div class="col-md-4 text-center"><a href="tratados"><h4>{{ $tratado['contingentes'] }}<br />Contingentes</h4></a></div>
 					    <div class="clearfix"></div>
-					    <p>{{ $tratado['nombre'].' ('.$tratado['tipo'].')' }}</p>
-					    <table class="table table-condensed table-striped">
+					    
+					    <table class="table table-condensed table-striped table-bordered">
 					    	<thead>
 					    		<tr>
 					    			<th>Solicitud</th>
-					    			<th class="text-right">Pendientes</th>
-					    			<th class="text-right">Aprobadas</th>
-					    			<th class="text-right">Rechazadas</th>
-					    			<th class="text-right">Total</th>
+					    			<th class="text-center">Pendientes</th>
+					    			<th class="text-center">Aprobadas</th>
+					    			<th class="text-center">Rechazadas</th>
+					    			<th class="text-center">Total</th>
 					    		</tr>
 					    	</thead>
 					    	<tbody>
@@ -76,13 +78,13 @@
 					    				<td>{{ ucfirst($nombre) }}</td>
 					    				@foreach($datos as $key=>$value)
 					    					@if($key == 'Pendiente' && $value <> 0)
-					    						<td class="text-right"><a href="{{ $url }}">{{ $value ? $value : 0 }} (revisar)</a></td>
+					    						<td class="text-center"><a href="{{ $url }}">{{ $value ? $value : 0 }}</a></td>
 					    					@else
-					    						<td class="text-right">{{ $value ? $value : 0 }}</td>
+					    						<td class="text-center">{{ $value ? $value : 0 }}</td>
 					    					@endif
 												<?php $total += $value; ?>
 					    				@endforeach
-					    				<td class="text-right"><strong>{{ $total }}</strong></td>
+					    				<td class="text-center"><strong>{{ $total }}</strong></td>
 					    			</tr>
 					    		@endforeach
 					    	</tbody>
