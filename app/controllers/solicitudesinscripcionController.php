@@ -1,4 +1,5 @@
 <?php
+
 class solicitudesinscripcionController extends crudController {
 
 	public function __construct() {
