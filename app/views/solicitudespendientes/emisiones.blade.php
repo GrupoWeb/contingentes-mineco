@@ -30,6 +30,10 @@
 				'class'                    => 'form-control',
 				'data-bv-notempty'         => 'true',
 				'data-bv-numeric'          => 'true',
+				'data-bv-greaterthan'           =>'true',
+				'data-bv-greaterthan-value'     => 0,
+				'data-bv-greaterthan-inclusive' => 'false',
+				'data-bv-greaterthan-message'   => 'El valor debe ser mayor que cero.',
 				'data-bv-notempty-message' => 'La cantidad es requerida',
 				'data-bv-numeric-message'  => 'El valor debe ser numérico')) }}
 		</div>
