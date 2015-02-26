@@ -58,14 +58,12 @@ Route::group(array('before' => array('tratados')), function() {
 		Route::resource('solicitud/emision', 'emisionController', array('only'=>array('index','store')));
 		Route::resource('solicitud/inscripcion', 'solicitudesinscripcionController', array('only'=>array('create','update')));
 		Route::resource('solicitudespendientes/inscripcion', 'solicitudesinscripcionController',array('names' => array('index' => 'solicitudespendientes.inscripcion.index')));
-		//Route::get('solicitudespendientes/inscripcion/',array('as'=>'solicitudespendientes.inscripcion.index','uses'=>'solicitudesinscripcionController@index'));
 		Route::resource('solicitudespendientes/asignacion', 'solicitudesasignacionController');
 		Route::resource('solicitudespendientes/emision', 'solicitudesemisionController');
 
-		//Route::resource('historicosolicitudes', 'historicosolicitudesController');
-		Route::resource('historicosolicitudes/inscripcion', 'historicosolicitudesController');
-		Route::resource('historicosolicitudes/asignacion', 'historicosolicitudesController');
-		Route::resource('historicosolicitudes/emision', 'historicosolicitudesController');
+		Route::resource('historicosolicitudes/inscripcion', 'historicoinscripcionesController');
+		Route::resource('historicosolicitudes/asignacion', 'historicoasignacionesController');
+		Route::resource('historicosolicitudes/emision', 'historicoemisionesController');
 		
 		//=== CONTINGENTES
 		Route::get('contingente/requerimientos/{id}', array('as'=>'contingente.requerimientos.index','uses'=>'contingenterequerimientosController@index'));
@@ -80,7 +78,6 @@ Route::group(array('before' => array('tratados')), function() {
 		Route::resource('periodosasignaciones', 'periodosasignacionesController', array('only'=>array('index','store')));
 		Route::resource('partidasarancelarias','contingentepartidaController');
 		Route::resource('paises','paisesController');
-		//Route::resource('catalogos/movimientos', 'movimientosController');
 
 		//=== CERTIFICADOS
 		Route::resource('certificados', 'certificadosController', array('only'=>array('index','show')));
