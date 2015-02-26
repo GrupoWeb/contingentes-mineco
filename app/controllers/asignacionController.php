@@ -9,7 +9,7 @@ class asignacionController extends BaseController {
 
 	public function store() {
 		$contingente = Crypt::decrypt(Input::get('contingentes'));
-		$query       = DB::select(DB::raw('SELECT getSaldo('.$contingente.','.Auth::id().') AS disponible'));
+		$query       = DB::select(DB::raw('SELECT getSaldoAsignacion('.$contingente.','.Auth::id().') AS disponible'));
 		$disponible  = $query[0]->disponible;
 		$solicitado  = Input::get('cantidad');
 

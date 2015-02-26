@@ -26,12 +26,16 @@
 	{{Form::open(array('id'=>'frmAuto', 'route'=>'solicitudespendientes.asignacion.store'))}}
 		<h4 class="text-warning">Cantidad Autorizada</h4>
 		<div class="form-group" id="divCantidad">
-			{{ Form::text('txCanidad', $solicitud->solicitado, array(
-				'class'                    => 'form-control',
-				'data-bv-notempty'         => 'true',
-				'data-bv-numeric'          => 'true',
-				'data-bv-notempty-message' => 'La cantidad es requerida',
-				'data-bv-numeric-message'  => 'El valor debe ser numérico')) }}
+			{{ Form::text('txCantidad', $solicitud->solicitado, array(
+				'class'                         => 'form-control',
+				'data-bv-notempty'              => 'true',
+				'data-bv-numeric'               => 'true',
+				'data-bv-greaterthan'           =>'true',
+				'data-bv-greaterthan-value'     => 0,
+				'data-bv-greaterthan-inclusive' => 'false',
+				'data-bv-greaterthan-message'   => 'El valor debe ser mayor que cero.',
+				'data-bv-notempty-message'      => 'La cantidad es requerida',
+				'data-bv-numeric-message'       => 'El valor debe ser numérico')) }}
 		</div>
 		<h4 class="text-warning">No. Acta</h4>
 		<div class="form-group" id="divActa">

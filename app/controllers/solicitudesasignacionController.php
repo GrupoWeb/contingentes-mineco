@@ -44,7 +44,14 @@ class solicitudesasignacionController extends crudController {
 		$elID = Crypt::decrypt(Input::get('id'));
 		
 		if(Input::has('btnAutorizar')) {
-			$cantidad   = Input::get('txCanidad');
+			$cantidad   = Input::get('txCantidad');
+
+			if ($cantidad<=0) {
+				Session::flash('type','warning');
+				Session::flash('message','La cantidad debe ser mayor a cero.');
+				return Redirect::route('solicitudespendientes.asignacion.index');
+			}
+
 			$comentario = Input::get('txObservaciones');
 			
 			//TRANSACTION ===
@@ -57,7 +64,7 @@ class solicitudesasignacionController extends crudController {
 			$movimiento                = new Movimiento;
 			$movimiento->periodoid     = $asignacion->periodoid;
 			$movimiento->usuarioid     = $asignacion->usuarioid;
-			$movimiento->cantidad      = ($cantidad * -1);
+			$movimiento->cantidad      = $cantidad;
 			$movimiento->comentario    = $comentario;
 			$movimiento->created_by    = Auth::id();
 			$movimiento->tipo          = 'Asignación';

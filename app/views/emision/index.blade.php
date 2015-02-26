@@ -35,11 +35,15 @@
       <label for="cantidad" class="col-sm-4 control-label">Cantidad</label>
       <div class="col-sm-8">
         {{ Form::text('cantidad', '', array('class'=>'form-control',
-          'data-bv-notEmpty'           => 'true',
-          'data-bv-notEmpty-message'   => 'La cantidad es incorrecta',
-          'data-bv-numeric'            => 'true',
-          'data-bv-numeric-message'    => 'Solo se aceptan dígitos',
-          'autocomplete'               => 'off'
+          'data-bv-notEmpty'              => 'true',
+          'data-bv-notEmpty-message'      => 'La cantidad es incorrecta',
+          'data-bv-greaterthan'           => 'true',
+          'data-bv-greaterthan-value'     => 0,
+          'data-bv-greaterthan-inclusive' => 'false',
+          'data-bv-greaterthan-message'   => 'El valor debe ser mayor que cero.',
+          'data-bv-numeric'               => 'true',
+          'data-bv-numeric-message'       => 'Solo se aceptan dígitos',
+          'autocomplete'                  => 'off'
           )) }}
           
           {{ Form::hidden('disponible', '') }}
@@ -62,6 +66,7 @@
   <script>
     $(document).ready(function(){
       $('#frmSolicitud').bootstrapValidator({
+        'live': 'submitted',
         fields: {
           cantidad: {
             validators: {
@@ -100,7 +105,7 @@
           $('[name="disponible-span"]').text(data.disponible);
           $('#unidades').text(data.unidad);
 
-          $('#frmSolicitud').bootstrapValidator('revalidateField', 'cantidad');
+          //$('#frmSolicitud').bootstrapValidator('revalidateField', 'cantidad');
         });
       });
 
