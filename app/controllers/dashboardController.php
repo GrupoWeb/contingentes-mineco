@@ -22,7 +22,7 @@ class dashboardController extends BaseController {
 				$datos[$tratado->tratadoid]['nombrecorto']  = $tratado->nombrecorto;
 				$datos[$tratado->tratadoid]['tipo']         = $tratado->tipo;
 				$datos[$tratado->tratadoid]['contingentes'] = count($contingentes);
-				$datos[$tratado->tratadoid]['inscritos']    = $empresas;
+				$datos[$tratado->tratadoid]['inscritos']    = count($empresas);
 				$datos[$tratado->tratadoid]['saldo']        = $saldo;
 
 				if(count($contingentes) == 0)
