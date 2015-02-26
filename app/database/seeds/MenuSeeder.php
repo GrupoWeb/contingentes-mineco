@@ -223,7 +223,7 @@
 			DB::table('authmenu')->insert(array(
 				'menuid'					=> 28,
 				'padreid'        	=> 23,
-				'modulopermisoid' => 92,
+				'modulopermisoid' => 118,
 				'nombre'         	=> 'Asignación',
 				'orden' 					=> 20,
 				'icono'         	=> null
@@ -232,7 +232,7 @@
 			DB::table('authmenu')->insert(array(
 				'menuid'					=> 29,
 				'padreid'        	=> 23,
-				'modulopermisoid' => 92,
+				'modulopermisoid' => 120,
 				'nombre'         	=> 'Emisión',
 				'orden' 					=> 30,
 				'icono'         	=> null

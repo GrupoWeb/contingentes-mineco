@@ -114,8 +114,8 @@ class ModulosSeeder extends Seeder {
 
 		DB::table('authmodulos')->insert(array(
 			'moduloid'       => 19,
-			'nombre'         => 'historicosolicitudes',
-			'nombrefriendly' => 'Histórico de solicitudes'
+			'nombre'         => 'historicosolicitudes.inscripcion',
+			'nombrefriendly' => 'Histórico de Inscripciones'
 		));			
         
     DB::table('authmodulos')->insert(array(
@@ -140,6 +140,18 @@ class ModulosSeeder extends Seeder {
 			'moduloid'       => 23,
 			'nombre'         => 'usuarioswebservice',
 			'nombrefriendly' => 'Usuarios webservice'
+		));
+
+		DB::table('authmodulos')->insert(array(
+			'moduloid'       => 24,
+			'nombre'         => 'historicosolicitudes.asignacion',
+			'nombrefriendly' => 'Histórico de asignación'
+		));
+
+		DB::table('authmodulos')->insert(array(
+			'moduloid'       => 25,
+			'nombre'         => 'historicosolicitudes.emision',
+			'nombrefriendly' => 'Histórico de emisión'
 		));
 
 		DB::table('authmodulos')->update(array('created_at'=>date_create(), 'updated_at'=>date_create()));
