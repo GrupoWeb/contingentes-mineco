@@ -1,4 +1,5 @@
 <?php
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -9,6 +10,7 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
+
 Route::get('temp',function(){
 	return View::make('emails.solicitudinscripcion')
 		->with('fecha','el dia de hoy')
@@ -58,7 +60,11 @@ Route::group(array('before' => array('tratados')), function() {
 		//Route::get('solicitudespendientes/inscripcion/',array('as'=>'solicitudespendientes.inscripcion.index','uses'=>'solicitudesinscripcionController@index'));
 		Route::resource('solicitudespendientes/asignacion', 'solicitudesasignacionController');
 		Route::resource('solicitudespendientes/emision', 'solicitudesemisionController');
-		Route::resource('historicosolicitudes', 'historicosolicitudesController');
+
+		//Route::resource('historicosolicitudes', 'historicosolicitudesController');
+		Route::resource('historicosolicitudes/inscripcion', 'historicosolicitudesController');
+		Route::resource('historicosolicitudes/asignacion', 'historicosolicitudesController');
+		Route::resource('historicosolicitudes/emision', 'historicosolicitudesController');
 		
 		//=== CONTINGENTES
 		Route::get('contingente/requerimientos/{id}', array('as'=>'contingente.requerimientos.index','uses'=>'contingenterequerimientosController@index'));
