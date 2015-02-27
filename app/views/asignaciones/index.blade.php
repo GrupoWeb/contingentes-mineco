@@ -1,60 +1,103 @@
 @extends('template/template')
 
 @section('content')
+  {{ HTML::style('packages/csgt/components/css/bootstrap-fileinput.min.css') }}
+  {{ HTML::script('packages/csgt/components/js/bootstrap-fileinput.min.js') }}
+  
   {{Form::open(array('class'=>'form-horizontal','role'=>'form','files'=>true, 'id'=>'frmSolicitud')) }}
-    <h3 class="text-primary">Solicitud de asignaci&oacute;n</h3>
-    <h4 class="text-warning">Contingente y Cantidades</h4>
-    <hr>
-    <div class="form-group col-sm-6">
-      <label for="cmbProductos" class="col-sm-4 control-label">Contingente</label>
-      <div class="col-sm-8">
-        <?php $grupoActual = 'primero'; ?>
-        <select name="contingentes" class="selectpicker form-control" id="cmbContingentes" title="Seleccione uno">
-          @foreach($contingentes as $contingente)
-            @if($contingente->tratado <> $grupoActual)
-              @if($grupoActual <> 'primero')
-                </optgroup>
-              @endif
-              <optgroup label="{{ $contingente->tratado }}">
-              <?php $grupoActual = $contingente->tratado; ?>  
-            @endif
-            <option value="{{ Crypt::encrypt($contingente->contingenteid) }}" data-tratado="{{Crypt::encrypt($contingente->tratadoid) }}">{{ $contingente->producto }}</option>
-          @endforeach
-          </optgroup>
-        </select>
-      </div>
-    </div>
-    <div class="clearfix"></div>
-    <div class="form-group col-sm-6">
-      <label for="cantidad" class="col-sm-4 control-label">Cantidad</label>
-      <div class="col-sm-8">
-        {{ Form::text('cantidad', '', array('class'=>'form-control',
-          'data-bv-notEmpty'           => 'true',
-          'data-bv-notEmpty-message'   => 'La cantidad es incorrecta',
-          'data-bv-numeric'            => 'true',
-          'data-bv-numeric-message'    => 'Solo se aceptan dígitos',
-          'autocomplete'               => 'off'
-          )) }}
-          
-          {{ Form::hidden('disponible', '') }}
-      </div>
-      <div class="col-sm-4"></div>
-      <span id="helpBlock" class="help-block">&nbsp;&nbsp;&nbsp;&nbsp;Disponible: <span name="disponible-span"></span><span id="unidades"></span></span>
-    </div>
-    <div class="clearfix"></div>
-    <h4 class="text-warning h-requisitos">Requisitos Adicionales</h4>
-    <hr>
-    <div class="form-group hide" id="fileSeed">
-      <label class="col-sm-7 control-label"></label>
-      <div class="col-sm-5">{{ Form::file('txArchivo[]', array('data-bv-notempty'=>'true')) }}</div>
-    </div>
+    <h1 class="titulo">Solicitud de asignaci&oacute;n</h1>
+    <div class="contenido contenido-full">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="cmbContingentes" class="col-sm-2 control-label">Contingente</label>
+          <div class="col-sm-6 div-contingente">
+            <?php $grupoActual = 'primero'; ?>
+            <select name="cmbContingentes" class="selectpicker form-control" id="cmbContingentes" title="Seleccione uno">
+              @foreach($contingentes as $contingente)
+                @if($contingente->tratado <> $grupoActual)
+                  @if($grupoActual <> 'primero')
+                    </optgroup>
+                  @endif
+                  <optgroup label="{{ $contingente->tratado }}">
+                  <?php $grupoActual = $contingente->tratado; ?>  
+                @endif
+                <option value="{{ Crypt::encrypt($contingente->contingenteid) }}" data-tratado="{{Crypt::encrypt($contingente->tratadoid) }}">{{ $contingente->producto }}</option>
+              @endforeach
+              </optgroup>
+            </select>
+          </div>
+        </div> <!-- contingente -->
+        <div class="form-group">
+          <label for="txtCantidad" class="col-sm-2 control-label">Cantidad</label>
+          <div class="col-sm-6 div-contingente">
+            {{ Form::text('cantidad', '', array('class'=>'form-control',
+              'data-bv-notEmpty'           => 'true',
+              'data-bv-notEmpty-message'   => 'La cantidad es incorrecta',
+              'data-bv-numeric'            => 'true',
+              'data-bv-numeric-message'    => 'Solo se aceptan dígitos',
+              'autocomplete'               => 'off'
+            )) }}
 
-    <div class="col-sm-12 pull-right">
-      <input type="submit" class="btn btn-large btn-success pull-right" value="Enviar">
+            {{ Form::hidden('disponible', '') }}
+          </div>
+        </div> <!-- cantidad -->
+        <div class="form-group">
+          <label for="disponible" class="col-sm-2 control-label"><span id="disponible">Disponible</span></label>
+          <div class="col-sm-6 div-contingente">
+            <p class="help-block" name="disponible"></p>
+          </div>
+        </div> <!-- disponible -->
+        <h4 class="titulo">Requerimientos</h4>
+        A continuación se enumeran los requerimientos para todos los contingentes seleccionados.
+        <hr>
+        <div class="requerimientos"></div>
+        <div class="row">
+          <div class="col-xs-4 pull-left">
+            <div id="mensajes"></div>
+          </div>
+          <div class="col-md-12 text-center">
+            <input type="submit" class="btn btn-large btn-primary" value="Enviar solicitud de asignaci&oacute;n">
+          </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
     </div>
   {{Form::close()}}
+
   <script>
     $(document).ready(function(){
+      $('.selectpicker').selectpicker();
+
+      $("#cmbContingentes").change(function() {
+          $('.nuevos').remove();
+          $.get('/requerimientos/contingentes/' + $(this).val() + '/asignacion', function(data){
+              $.each(data, function(key, datos){
+                $.get('/requerimientos/contingentes/vacio?nombre=' + datos.nombre + '&id=' + datos.requerimientoid, function(template){
+                  $('.requerimientos').append(template);
+                  $('#frmSolicitud').bootstrapValidator('addField', 'file' + datos.requerimientoid);
+                  $(".file").fileinput({
+                    browseLabel: "Buscar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
+                    browseClass: "btn btn-default",
+                    showPreview: false,
+                    showRemove:  false,
+                    showUpload:  false,
+                    allowedFileExtensions: ['jpg', 'png', 'pdf'],
+                    msgInvalidFileExtension: 'Solo se permiten archivos jpg, png o pdf',
+                    msgValidationError : 'Solo se permiten archivos jpg, png o pdf',
+                  });
+                });     
+              });       
+          });
+
+          $.get('/contingente/saldoasignacion/' + $(this).val() + '?tratado=' + $("#cmbContingentes option:selected").attr('data-tratado'), function(data){
+          $('[name="disponible"]').val(data.disponible);
+          $('[name="disponible"]').text(data.disponible);
+          $('#disponible').text('Disponible (' + data.unidad + ')');
+        });
+      });
+
+      $("#cmbContingentes").change();
+
       $('#frmSolicitud').bootstrapValidator({
         live: 'submitted',
         fields: {
@@ -68,42 +111,6 @@
           }
         }
       });
-
-
-      $("#cmbContingentes").change(function() {
-        $('.nuevos').remove();
-        $.get('/requerimientos/contingentes/' + $(this).val() + '/asignacion', function(data){
-          $i=0;
-          $.each(data, function(key, datos){
-            var $template = $('#fileSeed');
-            $('#fileSeed .control-label').html(datos.nombre);
-            var $clone    = $template.clone().removeClass('hide').removeAttr('id').addClass('nuevos').insertAfter($template);
-            var $option   = $clone.find('[name="txArchivo[]"]');
-            $option.attr('name', 'file'+datos.requerimientoid);
-            $('#frmSolicitud').bootstrapValidator('addField', $option);
-            $i++
-          });
-          if ($i==0) $('.h-requisitos').hide();
-          else $('.h-requisitos').show();
-        });
-
-        $.get('/contingente/saldoasignacion/' + $(this).val() + '?tratado=' + $("#cmbContingentes option:selected").attr('data-tratado'), function(data){
-          $('[name="disponible"]').val(data.disponible);
-          $('[name="disponible-span"]').text(data.disponible);
-          $('#unidades').text(data.unidad);
-
-          //$('#frmSolicitud').bootstrapValidator('revalidateField', 'cantidad');
-        });
-      });
-
-      $('.selectpicker').selectpicker();
-
-      $("#cmbContingentes").change();
-
-      $('[name="cantidad"]').change(function(){
-        //$('#frmSolicitud').bootstrapValidator('revalidateField', 'cantidad');
-      });
-
     });
   </script>
 @stop
