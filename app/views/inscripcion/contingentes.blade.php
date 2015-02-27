@@ -17,15 +17,15 @@
               $('.requerimientos').append(template);
               $('#frmRegistro').bootstrapValidator('addField', 'file' + datos.requerimientoid);
               $(".file").fileinput({
-              		browseLabel: "Buscar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
-              		browseClass: "btn btn-default",
-              		showPreview: false,
-              		showRemove:  false,
-              		showUpload:  false,
-              		allowedFileExtensions: ['jpg', 'png', 'pdf'],
-              		msgInvalidFileExtension: 'Solo se permiten archivos jpg, png o pdf',
-              		msgValidationError : 'Solo se permiten archivos jpg, png o pdf',
-              	});
+            		browseLabel: "Buscar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
+            		browseClass: "btn btn-default",
+            		showPreview: false,
+            		showRemove:  false,
+            		showUpload:  false,
+            		allowedFileExtensions: ['jpg', 'png', 'pdf'],
+            		msgInvalidFileExtension: 'Solo se permiten archivos jpg, png o pdf',
+            		msgValidationError : 'Solo se permiten archivos jpg, png o pdf',
+              });
             });     
           });       
       });

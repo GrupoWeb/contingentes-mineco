@@ -36,23 +36,23 @@
           </div>
         </div>
       
-          <div class="clearfix"></div>
-          <h4 class="titulo">Requerimientos</h4>
-          A continuación se enumeran los requerimientos para todos los contingentes seleccionados.
-          <hr>
-          <div class="requerimientos">
-            
+        <div class="clearfix"></div>
+        <h4 class="titulo">Requerimientos</h4>
+        A continuación se enumeran los requerimientos para todos los contingentes seleccionados.
+        <hr>
+        <div class="requerimientos">
+          
+        </div>
+ 
+      
+        <div class="row">
+          <div class="col-xs-4 pull-left">
+            <div id="mensajes"></div>
           </div>
-   
-        
-          <div class="row">
-            <div class="col-xs-4 pull-left">
-              <div id="mensajes"></div>
-            </div>
-            <div class="col-md-12 text-center">
-              <input type="submit" class="btn btn-large btn-primary" value="Enviar solicitud de inscripci&oacute;n">
-            </div>
+          <div class="col-md-12 text-center">
+            <input type="submit" class="btn btn-large btn-primary" value="Enviar solicitud de inscripci&oacute;n">
           </div>
+        </div>
       </div>
       <div class="clearfix"></div>
     </div>    
@@ -75,6 +75,7 @@
         });
     
         $('#contingentes').selectpicker();
+
         $('#frmRegistro')
           .bootstrapValidator({
             excluded: ':disabled',
