@@ -183,15 +183,6 @@
 				'orden' 					=> 400,
 				'icono'         	=> null
 			));
-          
-			DB::table('authmenu')->insert(array(
-				'menuid'					=> 24,
-				'padreid'        	=> 21,
-				'modulopermisoid' => 95,
-				'nombre'         	=> 'Empresas',
-				'orden' 					=> 3700,
-				'icono'         	=> null
-			));
 
 			DB::table('authmenu')->insert(array(
 				'menuid'					=> 25,
