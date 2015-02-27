@@ -12,7 +12,7 @@
           <label for="cmbContingente" class="col-sm-2 control-label">Contingente</label>
           <div class="col-sm-6 div-contingente">
             <?php $grupoActual = 'primero'; ?>
-            <select name="contingentes" class="selectpicker form-control" id="cmbContingentes" title="Seleccione uno">
+            <select name="cmbContingentes" class="selectpicker form-control" id="cmbContingentes" title="Seleccione uno">
               @foreach($contingentes as $contingente)
                 @if($contingente->tratado <> $grupoActual)
                   @if($grupoActual <> 'primero')
@@ -32,7 +32,7 @@
           <div class="col-sm-6 div-contingente" id="divPartidas"></div>
         </div> <!-- partida arancelaria -->
         <div class="form-group">
-          <label for="cmbContingentes" class="col-sm-2 control-label">Cantidad</label>
+          <label for="txCantidad" class="col-sm-2 control-label">Cantidad</label>
           <div class="col-sm-6 div-contingente">
             {{ Form::text('cantidad', '', array('class'=>'form-control',
               'data-bv-notEmpty'              => 'true',
