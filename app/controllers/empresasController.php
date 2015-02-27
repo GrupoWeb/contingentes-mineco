@@ -3,6 +3,12 @@
 class empresasController extends BaseController {
 	
 	public function index() {
+		
+	}
+
+
+
+	/*public function index() {
 		return View::make('reportes/filtros')
 			->with('titulo', 'Empresas Inscritas')
 			->with('contingentes', Contingente::getContingentes())
@@ -28,9 +34,9 @@ class empresasController extends BaseController {
 			->with('datos', $datos);
 	}
   
-    private function getFechaMySql($aFecha) {
-      $arr = explode('/', $aFecha);
-      return $arr[2].'-'.$arr[1].'-'.$arr[0];
+  private function getFechaMySql($aFecha) {
+    $arr = explode('/', $aFecha);
+    return $arr[2].'-'.$arr[1].'-'.$arr[0];
 
-    }
+  }*/
 }

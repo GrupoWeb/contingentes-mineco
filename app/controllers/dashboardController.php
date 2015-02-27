@@ -10,6 +10,7 @@ class dashboardController extends BaseController {
 			$datos = array();
 			foreach($tratados as $tratado) {
 				$contingentes = Contingente::getContingentesTratado($tratado->tratadoid);
+				$empresas     = Tratado::getUsuariosTratado($tratado->tratadoid);
 
 				$saldo = 0;
 				foreach($contingentes as $contingente) {
@@ -21,7 +22,7 @@ class dashboardController extends BaseController {
 				$datos[$tratado->tratadoid]['nombrecorto']  = $tratado->nombrecorto;
 				$datos[$tratado->tratadoid]['tipo']         = $tratado->tipo;
 				$datos[$tratado->tratadoid]['contingentes'] = count($contingentes);
-				$datos[$tratado->tratadoid]['inscritos']    = 0;
+				$datos[$tratado->tratadoid]['inscritos']    = count($empresas);
 				$datos[$tratado->tratadoid]['saldo']        = $saldo;
 
 				if(count($contingentes) == 0)

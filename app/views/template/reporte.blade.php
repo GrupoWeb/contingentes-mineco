@@ -10,11 +10,11 @@
 	
 	<title>DACE - MINECO</title>
 
-	{{ HTML::style('css/bootstrap.min.css'); }}
-	{{ HTML::style('css/bootstrap-theme.min.css'); }}
-	{{ HTML::style('css/core.css'); }}
-	{{ HTML::script('js/jquery.min.js'); }}
-	{{ HTML::script('js/bootstrap.min.js'); }}
+	{{ HTML::style('packages/csgt/components/css/bootstrap.min.css'); }}
+	{{ HTML::style('packages/csgt/components/css/bootstrap-theme.min.css'); }}
+	{{ HTML::style('packages/csgt/components/css/core.css'); }}
+	{{ HTML::script('packages/csgt/components/js/jquery.min.js'); }}
+	{{ HTML::script('packages/csgt/components/js/bootstrap.min.js'); }}
 
 	</head>
 	<body>
