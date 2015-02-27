@@ -43,7 +43,7 @@
 					  <div class="panel-body">
 					    <div class="col-md-4 text-center"><h4>{{ number_format($tratado['saldo'], 2) }}<br />Saldo</h4></div>
 					    <div class="col-md-4 text-center"><a href="empresas"><h4>{{ $tratado['inscritos'] }}<br />Inscritos</h4></a></div>
-					    <div class="col-md-4 text-center"><a href="tratados"><h4>{{ $tratado['contingentes'] }}<br />Contingentes</h4></a></div>
+					    <div class="col-md-4 text-center"><a href="contingentes?tratado={{ Crypt::encrypt($tratadoid) }}"><h4>{{ $tratado['contingentes'] }}<br />Contingentes</h4></a></div>
 					    <div class="clearfix"></div>
 					    
 					    <table class="table table-condensed table-striped table-bordered">
