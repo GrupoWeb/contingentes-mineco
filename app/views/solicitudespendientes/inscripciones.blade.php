@@ -1,8 +1,5 @@
 @extends('template/template')
 @section('content')
-	{{ HTML::style('http://fonts.googleapis.com/css?family=Archivo+Narrow|Raleway:400,700') }}
-	{{ HTML::style('css/dace.css') }}
-
 	<h1 class="titulo">Detalle solicitud - Inscripción</h1>
 	<div class="contenido contenido-full">
 		<div class="col-sm-12">
