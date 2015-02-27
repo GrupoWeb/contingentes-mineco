@@ -1,30 +1,35 @@
 @extends('template/template')
 
 @section('content')
-	<h3 class="text-primary">Anulación de certificado</h3>
-	{{Form::open(array('class'=>'form-horizontal', 'id'=>'frmAnulacion')) }}
-		<div class="col-md-12">
-      <div class="form-group">
-        <label for="txMotivo" class="col-sm-2 control-label">Motivo:</label>
-        <div class="col-sm-8">
-          {{ Form::textarea('txMotivo', '', array('class'=>'form-control', 
-            'data-bv-notEmpty'         => 'true',
-            'data-bv-notEmpty-message' => 'El motivo de anulación es requerido',
-            'autocomplete'             => 'off'
-            )) }}
-        </div>
-      </div>
-    </div>
+  <h1 class="titulo">Anulación de certificado</h1>
+  <div class="contenido contenido-full">
     <div class="col-md-12">
-    	<div class="form-group">
-    		<div class="col-sm-8 col-sm-offset-2">
-    			<input type="submit" class="btn btn-large btn-danger" value="Anular">
-    		</div>
-    	</div>
-		</div>
-		{{ Form::hidden('certificado', $certificado) }}
-  {{Form::close()}}
-
+      {{ Form::open(array('class'=>'form-horizontal', 'id'=>'frmAnulacion')) }}
+          <div class="form-group">
+            <label for="txMotivo" class="col-sm-2 control-label"><span id="disponible">Motivo</span></label>
+            <div class="col-sm-8 div-contingente">
+              {{ Form::textarea('txMotivo', '', array('class'=>'form-control', 
+                'data-bv-notEmpty'         => 'true',
+                'data-bv-notEmpty-message' => 'El motivo de anulación es requerido',
+                'autocomplete'             => 'off'
+              )) }}
+            </div>
+          </div> 
+          <hr>
+          <div class="row">
+            <div class="col-xs-4 pull-left">
+              <div id="mensajes"></div>
+            </div>
+            <div class="col-md-12 text-center">
+              <input type="submit" class="btn btn-large btn-primary" value="Anular certificado">
+            </div>
+          </div>
+        {{ Form::hidden('certificado', $certificado) }}
+      {{Form::close()}}
+    </div>
+    <div class="clearfix"></div>
+  </div>
+  
   <script>
   	$(document).ready(function(){
 	  	$('#frmAnulacion')
