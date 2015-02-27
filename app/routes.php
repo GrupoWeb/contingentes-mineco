@@ -89,7 +89,7 @@ Route::group(array('before' => array('tratados')), function() {
 
 		//=== REPORTES
 		Route::resource('cuentacorriente', 'cuentacorrienteController', array('only'=>array('index','store')));
-		Route::resource('empresas', 'empresasController', array('only'=>array('index')));
+		Route::resource('empresas', 'empresasController', array('only'=>array('index', 'store')));
 	  
 	  //=== ADMIN
 	  Route::resource('usuarioswebservice', 'usuarioswebserviceController');
