@@ -9,6 +9,7 @@
 	
 	<title>DACE - MINECO</title>
 
+  {{ HTML::style('http://fonts.googleapis.com/css?family=Archivo+Narrow|Raleway:400,700') }}
 	{{ HTML::style('packages/csgt/components/css/bootstrap.min.css'); }}
 	{{ HTML::style('packages/csgt/components/css/bootstrap-theme.min.css'); }}
 	{{ HTML::style('packages/csgt/components/css/bootstrap-datetimepicker.min.css'); }}
@@ -18,6 +19,7 @@
 	{{ HTML::style('packages/csgt/components/css/core.css'); }}
 	{{ HTML::style('packages/csgt/components/css/bootstrapValidator.min.css'); }}
 	{{ HTML::style('packages/csgt/components/css/font-awesome.min.css'); }}
+	{{ HTML::style('css/dace.css') }}
 
 	{{ HTML::script('packages/csgt/components/js/jquery.min.js'); }}
 	{{ HTML::script('packages/csgt/components/js/moment-with-locales.min.js'); }}

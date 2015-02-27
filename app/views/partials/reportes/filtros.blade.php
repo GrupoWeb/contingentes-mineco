@@ -4,7 +4,7 @@
     @if(in_array('fechaini', $filters))
       <div class="col-sm-12">
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="fechaini">Fecha Ini</label>
+          <label class="col-sm-2 control-label" for="fechaini">Fecha Inicial:</label>
           <div class="col-sm-10">
             <?php 
               $iniciomes = date('01/m/Y');
@@ -21,7 +21,7 @@
     @if(in_array('fechafin', $filters))
       <div class="col-sm-12">
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="fechafin">Fecha Fin</label>
+          <label class="col-sm-2 control-label" for="fechafin">Fecha Final:</label>
           <div class="col-sm-10">
             <?php 
               $hoy = date('d/m/Y');
@@ -39,7 +39,7 @@
       <div class="col-sm-12">
         <div class="form-group">
           <label class="col-sm-2 control-label" for="cmbContingente">Contingente:</label>
-          <div class="col-sm-10">
+          <div class="col-sm-8">
             @include('partials/contingente', array('nombre'=>'cmbContingente','id'=>'cmbContingente','tipo'=>'single'))
           </div>
         </div>
@@ -68,29 +68,34 @@
         </div>
       </div>
     @endif
-    <div class="form-group">
-      <label class="col-sm-2 control-label" for="formato">Formato</label>
-      <div class="col-sm-10">
-        <div class="radio">
-          <label>
-            <input type="radio" name="formato" id="formatoHTML" value="html" checked>
-            HTML
-          </label>
-        </div>
-        <div class="radio">
-          <label>
-            <input type="radio" name="formato" id="formatoExcel" value="excel">
-            Excel
-          </label>
+    <div class="col-sm-12">
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="formato">Formato:</label>
+        <div class="col-sm-10">
+          <div class="radio">
+            <label>
+              <input type="radio" name="formato" id="formatoHTML" value="html" checked>
+              HTML
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="formato" id="formatoExcel" value="excel">
+              Excel
+            </label>
+          </div>
         </div>
       </div>
     </div>
-    <div class="form-group">
-      <div class="col-sm-2">&nbsp;</div>
-      <div class="col-sm-10"> 
-        <button class="btn btn-success" type="submit">Generar</button>
+    <div class="col-sm-12">
+      <div class="form-group">
+        <div class="col-sm-2">&nbsp;</div>
+        <div class="col-sm-10"> 
+          <button class="btn btn-success" type="submit">Generar</button>
+        </div>
       </div>
     </div>
+    <div class="clearfix"></div>
   </div>
 {{Form::close()}}
 

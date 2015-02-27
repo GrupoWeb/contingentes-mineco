@@ -10,7 +10,7 @@
 	{{Form::open($params) }}
 	<div class="contenido">
 		<div class="col-md-12">
-			<h4 class="main">Datos Generales</h4>
+			<h4 class="titulo">Datos Generales</h4>
 		</div>
     <!-- nit -->
     <div class="col-md-6">
@@ -220,7 +220,7 @@
     </div>
 		<div class="clearfix"></div>
 		<div class="col-md-12">
-			<h4 class="main">Requerimientos</h4>
+			<h4 class="titulo">Requerimientos</h4>
 		  A continuación se enumeran los requerimientos para todos los contingentes seleccionados.
 		  <hr>
 		  <div class="requerimientos">

@@ -10,7 +10,11 @@ body {
 	background-color: #fff;
 }
 
-h1.main {
+.main {
+	margin-top:0;
+}
+
+h1.titulo {
 	font-family: 'Archivo Narrow', sans-serif;
 	border-top: solid 8px #E8EAEA;
 	border-bottom: solid 8px #E8EAEA;
@@ -24,7 +28,7 @@ h1.main {
 	padding-bottom: 13px;
 }
 
-h4.main {
+h4.titulo {
 	font-size: 20px;
 	color: #0054A4;
 	text-transform: uppercase;
@@ -36,6 +40,10 @@ h4.main {
 	padding-bottom: 18px;
 	max-width: 800px;
 	margin: auto auto 40px auto;
+}
+
+.contenido-full {
+	max-width: 100%;
 }
 
 .blue-title {
@@ -54,4 +62,8 @@ h4.main {
 .btn-danger-mineco {
 	background-color: #a40002;
 	color: #fff;
+}
+
+.navbar-default {
+	background: #fff;
 }
