@@ -28,7 +28,6 @@ class tratadosController extends crudController {
 	 						 'query'=>'SELECT  nombre, paisid FROM paises ORDER BY nombre', 
 	 						 'combokey'=>'paisid',
 	 						 'show'=>false));
-	 	Crud::setCampo(array('nombre'=>'Texto certificado','campo'=>'textocertificado', 'tipo'=>'textarea', 'show'=>false));
 	 	Crud::setCampo(array('nombre'=>'Activo','campo'=>'activo', 'tipo'=>'bool'));
 
 	 	Crud::setBotonExtra(array('url'=>'contingentes?tratado=','icon'=>'glyphicon glyphicon-certificate','titulo'=>'Asignar Contingentes'));
