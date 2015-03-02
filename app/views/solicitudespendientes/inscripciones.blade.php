@@ -19,6 +19,9 @@
 			<div class="clearfix"></div>
 			<br />
 			<h4 class="titulo">Documentos</h4>
+			@if(count($requerimientos) == 0)
+				Para esta solicitud no se tienen documentos adjuntos.
+			@endif
 			<ul class="list-group">
 				@foreach ($requerimientos as $requerimiento)
 			    <li class="list-group-item">
