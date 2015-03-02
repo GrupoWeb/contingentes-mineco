@@ -267,13 +267,36 @@
 
       $('#tratados').change(function(){
         $.get('contingentes/tratado/' + $(this).val(), function(data){
-          //console.log(data);
           $('#div-contingente').html(data);
+          $('#contingentes').change();
         });
       });
 
       $('#tratados').change();
 
+      });
+
+      $(document).on('change', '#contingentes', function(){
+        $('.nuevos').remove();
+        $('#frmRegistro').bootstrapValidator('revalidateField', 'contingentes');
+        $.get('/requerimientos/contingentes/' + $(this).val() + '/inscripcion', function(data){
+            $.each(data, function(key, datos){
+              $.get('/requerimientos/contingentes/vacio?nombre=' + datos.nombre + '&id=' + datos.requerimientoid, function(template){
+                $('.requerimientos').append(template);
+                $('#frmRegistro').bootstrapValidator('addField', 'file' + datos.requerimientoid);
+                $(".file").fileinput({
+                  browseLabel: "Buscar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
+                  browseClass: "btn btn-default",
+                  showPreview: false,
+                  showRemove:  false,
+                  showUpload:  false,
+                  allowedFileExtensions: ['jpg', 'png', 'pdf'],
+                  msgInvalidFileExtension: 'Solo se permiten archivos jpg, png o pdf',
+                  msgValidationError : 'Solo se permiten archivos jpg, png o pdf',
+                });
+              });     
+            });       
+        });
       });
     </script>
 @stop

@@ -8,7 +8,7 @@
   $(document).ready(function(){
   	$('#contingentes').selectpicker();
 
-  	$("#contingentes").change(function() {
+  	/*$("#contingentes").change(function() {
       $('.nuevos').remove();
       $('#frmRegistro').bootstrapValidator('revalidateField', 'contingentes');
       $.get('/requerimientos/contingentes/' + $(this).val() + '/inscripcion', function(data){
@@ -31,7 +31,7 @@
       });
     });
 
-		$('#contingentes').change();
+		$('#contingentes').change();*/
 
   });
 </script>
