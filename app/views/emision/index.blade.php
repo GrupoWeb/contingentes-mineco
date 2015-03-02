@@ -55,6 +55,12 @@
             <p class="help-block" name="disponible"></p>
           </div>
         </div> <!-- disponible -->
+        <div class="form-group">
+          <label for="pais" class="col-sm-2 control-label">País procedencia</label>
+          <div class="col-sm-6 div-contingente">
+            <div id="pais"></div>
+          </div>
+        </div> <!-- pais -->
         <h4 class="titulo">Requerimientos</h4>
         A continuación se enumeran los requerimientos para todos los contingentes seleccionados.
         <hr>
@@ -78,22 +84,22 @@
       $("#cmbContingentes").change(function() {
           $('.nuevos').remove();
           $.get('/requerimientos/contingentes/' + $(this).val() + '/emision', function(data){
-              $.each(data, function(key, datos){
-                $.get('/requerimientos/contingentes/vacio?nombre=' + datos.nombre + '&id=' + datos.requerimientoid, function(template){
-                  $('.requerimientos').append(template);
-                  $('#frmSolicitud').bootstrapValidator('addField', 'file' + datos.requerimientoid);
-                  $(".file").fileinput({
-                    browseLabel: "Buscar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
-                    browseClass: "btn btn-default",
-                    showPreview: false,
-                    showRemove:  false,
-                    showUpload:  false,
-                    allowedFileExtensions: ['jpg', 'png', 'pdf'],
-                    msgInvalidFileExtension: 'Solo se permiten archivos jpg, png o pdf',
-                    msgValidationError : 'Solo se permiten archivos jpg, png o pdf',
-                  });
-                });     
-              });       
+            $.each(data, function(key, datos){
+              $.get('/requerimientos/contingentes/vacio?nombre=' + datos.nombre + '&id=' + datos.requerimientoid, function(template){
+                $('.requerimientos').append(template);
+                $('#frmSolicitud').bootstrapValidator('addField', 'file' + datos.requerimientoid);
+                $(".file").fileinput({
+                  browseLabel: "Buscar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
+                  browseClass: "btn btn-default",
+                  showPreview: false,
+                  showRemove:  false,
+                  showUpload:  false,
+                  allowedFileExtensions: ['jpg', 'png', 'pdf'],
+                  msgInvalidFileExtension: 'Solo se permiten archivos jpg, png o pdf',
+                  msgValidationError : 'Solo se permiten archivos jpg, png o pdf',
+                });
+              });     
+            });       
           });
 
           $.get('/contingente/partidas/' + $(this).val(), function(data){
@@ -103,10 +109,14 @@
           });
 
           $.get('/contingente/saldo/' + $(this).val() + '?tratado=' + $("#cmbContingentes option:selected").attr('data-tratado'), function(data){
-          $('[name="disponible"]').val(data.disponible);
-          $('[name="disponible"]').text(data.disponible);
-          $('#disponible').text('Máximo Disponible (' + data.unidad + ')');
-        });
+            $('[name="disponible"]').val(data.disponible);
+            $('[name="disponible"]').text(data.disponible);
+            $('#disponible').text('Máximo Disponible (' + data.unidad + ')');
+          });
+
+          $.get('/contingente/paises/' + $(this).val(), function(data){
+            $('#pais').html(data);
+          });
       });
 
       $("#cmbContingentes").change();

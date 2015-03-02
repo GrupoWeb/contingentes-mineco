@@ -68,7 +68,7 @@ class solicitudesemisionController extends crudController {
 				$certificado->volumen            = $cantidad;
 				$certificado->volumenletras      = Components::numeroALetras($cantidad,null, 2);
 				$certificado->fraccion           = $info->fraccion;
-				$certificado->paisprocedencia    = $info->paisprocedencia;
+				$certificado->paisid             = $info->paisid;
 				$certificado->tratadodescripcion = $info->textocertificado;
 				$certificado->fecha              = date_create();
 				$certificado->fechavencimiento   = $info->vencimiento;
@@ -93,6 +93,7 @@ class solicitudesemisionController extends crudController {
 			if($result) {
 				$usuario = Authusuario::find($result['emision']->usuarioid);
 				$email   = $usuario->email;
+				$emision = Emisionpendiente::find($elID);
 
 				Session::flash('type','success');
 				Session::flash('message','La solicitud de emisión fue procesada correctamente');
@@ -102,6 +103,8 @@ class solicitudesemisionController extends crudController {
 					'fecha'         => $result['emision']->created_at,
 					'url'           => url('c/'.Crypt::encrypt($result['certificado']->certificadoid)),
 					'estado'        => 'Aprobada',
+					'solicitado'    => $emision->solicitado,
+					'emitido'       => $cantidad,
 					'observaciones' => Input::get('txObservaciones')), function($msg) use ($email){
 		       	$msg->to($email)->subject('Certificado DACE - MINECO');
 				});
@@ -127,6 +130,8 @@ class solicitudesemisionController extends crudController {
 					'nombre'        => $usuario->nombre,
 					'fecha'         => $emision->created_at,
 					'estado'        => 'Rechazada',
+					'solicitado'    => $emision->solicitado,
+					'emitido'       => 0,
 					'observaciones' => Input::get('txObservaciones')), function($msg) use ($email){
 		       	$msg->to($email)->subject('Solicitud de Emisión DACE - MINECO');
 				});

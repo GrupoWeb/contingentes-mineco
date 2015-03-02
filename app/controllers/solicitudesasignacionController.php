@@ -83,6 +83,8 @@ class solicitudesasignacionController extends crudController {
 					'nombre'        => $usuario->nombre,
 					'fecha'         => $asignacion->created_at,
 					'estado'        => 'Aprobada',
+					'solicitado'    => $asignacion->solicitado,
+					'asignado'      => $cantidad,
 					'observaciones' => Input::get('txObservaciones')), function($msg) use ($email){
 		       	$msg->to($email)->subject('Solicitud de Asignación DACE - MINECO');
 				});
@@ -110,6 +112,8 @@ class solicitudesasignacionController extends crudController {
 					'nombre'        => $usuario->nombre,
 					'fecha'         => $asignacion->created_at,
 					'estado'        => 'Rechazada',
+					'solicitado'    => $asignacion->solicitado,
+					'asignado'      => 0,
 					'observaciones' => Input::get('txObservaciones')), function($msg) use ($email){
 		       	$msg->to($email)->subject('Solicitud de Asignación DACE - MINECO');
 				});
