@@ -244,19 +244,6 @@
               invalid: 'glyphicon glyphicon-remove',
               validating: 'glyphicon glyphicon-refresh'
             },
-            fields: {
-              contingentes: {
-                validators: {
-                  callback: {
-                    message: 'Porfavor seleccione al menos un contingente',
-                    callback: function(value, validator, $field) {
-                      var options = validator.getFieldElements('contingentes').val();
-                      return (options !=null && options.length >=1);
-                    }
-                  }
-                }
-              }
-            },
         })
         .on('error.field.bv', function(e, data) {
           data.bv.disableSubmitButtons(false);
@@ -265,20 +252,25 @@
           data.bv.disableSubmitButtons(false);
         });
 
-      $('#tratados').change(function(){
-        $.get('contingentes/tratado/' + $(this).val(), function(data){
-          $('#div-contingente').html(data);
-          $('#contingentes').change();
+        $('#tratados').change(function(){
+          $.get('contingentes/tratado/' + $(this).val(), function(data){
+            $('#div-contingente').html(data);
+            $('#contingentes').change();
+          });
         });
-      });
 
-      $('#tratados').change();
-
+        $('#tratados').change();
       });
 
       $(document).on('change', '#contingentes', function(){
+
+        $('.nuevos').each(function( index ) {
+          $('#frmRegistro').bootstrapValidator('removeField', $(this).attr('id')); 
+          console.log($(this).attr('id'));
+        });
+
         $('.nuevos').remove();
-        $('#frmRegistro').bootstrapValidator('revalidateField', 'contingentes');
+
         $.get('/requerimientos/contingentes/' + $(this).val() + '/inscripcion', function(data){
             $.each(data, function(key, datos){
               $.get('/requerimientos/contingentes/vacio?nombre=' + datos.nombre + '&id=' + datos.requerimientoid, function(template){
