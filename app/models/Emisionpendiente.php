@@ -9,7 +9,7 @@ class Emisionpendiente extends Eloquent {
 			->select('u.nombre','u.email','se.created_at', 'se.usuarioid', 'se.solicitado', 
 				't.nombrecorto AS tratado', 't.nombre AS tratadolargo', 
 				'd.nombre AS producto','m.nombrecorto AS unidad', 'u.domiciliocomercial',
-				'u.nit', 'u.telefono', 't.textocertificado','pa.nombre AS paisprocedencia',
+				'u.nit', 'u.telefono', 'c.textocertificado','se.paisid', 'pp.nombre AS pais',
 				DB::raw('(SELECT CONCAT(cp.partida," ",cp.nombre) FROM solicitudemisionpartidas AS sep 
 					LEFT JOIN contingentepartidas as cp ON sep.partidaid = cp.partidaid
 					WHERE sep.solicitudemisionid = se.solicitudemisionid LIMIT 1) AS fraccion'),
@@ -20,7 +20,7 @@ class Emisionpendiente extends Eloquent {
 			->leftJoin('tratados AS t', 'c.tratadoid', '=', 't.tratadoid')
 			->leftJoin('productos AS d', 'c.productoid', '=', 'd.productoid')
 			->leftJoin('unidadesmedida AS m', 'd.unidadmedidaid', '=', 'm.unidadmedidaid')
-			->leftJoin('paises AS pa', 't.paisid', '=', 'pa.paisid')
+			->leftJoin('paises AS pp', 'se.paisid', '=', 'pp.paisid')
 			->where('se.solicitudemisionid',$id)
 			->first();
 	}

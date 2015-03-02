@@ -55,4 +55,13 @@ class Contingente extends Eloquent {
 			->where('contingenteid', $aContingenteId)
 			->pluck('p.nombre');
 	}
+
+	public static function getPais($aContingenteId) {
+		return DB::table('contingentes AS c')
+			->select('p.paisid', 'p.nombre')
+			->leftJoin('tratados AS t', 'c.tratadoid', '=', 't.tratadoid')
+			->leftJoin('paises AS p', 't.paisid', '=', 'p.paisid')
+			->where('c.contingenteid', $aContingenteId)
+			->first();
+	}
 }

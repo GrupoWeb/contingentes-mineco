@@ -17,8 +17,6 @@ class emisionController extends BaseController {
 			$type    = 'danger';
 		}
 
-		//dd($contingente);
-
 		else {
 			$res = DB::transaction(function() use($solicitado, $contingente) {
 				$periodo = Periodo::getPeriodo($contingente);
@@ -33,6 +31,7 @@ class emisionController extends BaseController {
 					$solicitud->periodoid  = $periodo; //Periodo::getPeriodo($contingente);
 					$solicitud->solicitado = $solicitado;
 					$solicitud->estado     = 'Pendiente';
+					$solicitud->paisid     = Crypt::decrypt(Input::get('cmbPais'));
 					$solicitud->save();
 
 					$partidas                     = new Solicitudemisionpartida;
@@ -84,5 +83,13 @@ class emisionController extends BaseController {
 		Session::flash('type', $type);
 
 		return Redirect::to('/');
+	}
+
+	public function getPaises($aContingenteId) {
+		$contingentepais = Contingente::getPais(Crypt::decrypt($aContingenteId));
+
+		return View::make('emision.paises')
+			->with('contingentepais', $contingentepais)
+			->with('paises', Pais::getPaises());
 	}
 }

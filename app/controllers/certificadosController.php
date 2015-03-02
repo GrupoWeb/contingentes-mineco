@@ -22,16 +22,23 @@ class certificadosController extends crudController {
 			Crud::setTitulo('Certificados - '.Tratado::getNombre($tselected));
 		}
 
+		if(in_array(Auth::user()->rolid, Config::get('contingentes.rolempresa'))) {
+			Crud::setWhere('usuarioid', Auth::id());
+		}
+
 		Crud::setCampo(array('nombre'=>'No.','campo'=>'certificados.certificadoid'));
 		Crud::setCampo(array('nombre'=>'Fecha','campo'=>'certificados.fecha','tipo'=>'date'));
 		Crud::setCampo(array('nombre'=>'Nombre','campo'=>'certificados.nombre'));
-		Crud::setCampo(array('nombre'=>'Volúmen','campo'=>'certificados.volumen'));
+		Crud::setCampo(array('nombre'=>'Volúmen','campo'=>'certificados.volumen', 'class'=>'text-right'));
 		Crud::setCampo(array('nombre'=>'Liquidado','campo'=>'(IF(dua IS NULL, 0, 1))','tipo'=>'bool'));
 		Crud::setCampo(array('nombre'=>'Anulado','campo'=>'anulado','tipo'=>'bool'));
 		
 	 	Crud::setBotonExtra(array('url'=>'c/{id}','icon'=>'fa fa-file-pdf-o','titulo'=>'Generar','class'=>'primary'));
-	 	Crud::setBotonExtra(array('url'=>'certificados/liquidar/{id}','icon'=>'fa fa-check-square ','titulo'=>'Liquidar','class'=>'success'));
-	 	Crud::setBotonExtra(array('url'=>'certificados/anular/{id}','icon'=>'fa fa-minus-square-o','titulo'=>'Anular','class'=>'danger'));
+
+	 	if(!in_array(Auth::user()->rolid, Config::get('contingentes.rolempresa'))) {
+		 	Crud::setBotonExtra(array('url'=>'certificados/liquidar/{id}','icon'=>'fa fa-check-square ','titulo'=>'Liquidar','class'=>'success'));
+		 	Crud::setBotonExtra(array('url'=>'certificados/anular/{id}','icon'=>'fa fa-minus-square-o','titulo'=>'Anular','class'=>'danger'));
+		}
 
 		Crud::setPermisos(array('edit'=>false,'add'=>false,'delete'=>false));
 	}

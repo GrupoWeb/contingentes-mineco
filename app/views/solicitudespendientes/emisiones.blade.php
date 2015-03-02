@@ -15,12 +15,17 @@
 			<div class="col-sm-10">{{$solicitud->tratado}}</div>
 			<div class="col-sm-2"><strong>Contingente:</strong></div>
 			<div class="col-sm-10">{{$solicitud->producto}}</div>
+			<div class="col-sm-2"><strong>Pais:</strong></div>
+			<div class="col-sm-10">{{$solicitud->pais}}</div>
 			<div class="col-sm-2"><strong>Monto Solicitado:</strong></div>
 			<div class="col-sm-10">{{ number_format($solicitud->solicitado, 3).' '.$solicitud->unidad }}</div>
 			<div class="clearfix"></div>
 			<br />
 
 			<h4 class="titulo">Documentos</h4>
+			@if(count($requerimientos) == 0)
+				Para esta solicitud no se tienen documentos adjuntos.
+			@endif
 			<ul class="list-group">
 				@foreach ($requerimientos as $requerimiento)
 			    <li class="list-group-item">
