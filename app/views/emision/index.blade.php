@@ -102,7 +102,7 @@
             $('#frmSolicitud').bootstrapValidator('addField', 'partidas[]');
           });
 
-          $.get('/contingente/saldoasignacion/' + $(this).val() + '?tratado=' + $("#cmbContingentes option:selected").attr('data-tratado'), function(data){
+          $.get('/contingente/saldo/' + $(this).val() + '?tratado=' + $("#cmbContingentes option:selected").attr('data-tratado'), function(data){
           $('[name="disponible"]').val(data.disponible);
           $('[name="disponible"]').text(data.disponible);
           $('#disponible').text('Máximo Disponible (' + data.unidad + ')');

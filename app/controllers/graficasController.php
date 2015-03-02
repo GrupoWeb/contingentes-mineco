@@ -3,12 +3,15 @@
 class graficasController extends BaseController {
 
 	public function saldo($id) {
-		//$tratadoid     = Session::get('tselected');
 		$contingenteid = Crypt::decrypt($id);
 		$empresas      = Usuariocontingente::getUsuariosContingente($contingenteid);
-		//$empresas  = Tratado::getUsuariosTratado($tselected);
 
-		dd($empresas);
+		$data = array();
+		foreach($empresas as $empresa) {
+			$data[$empresa->usuarioid]['nombre'] = $empresa->nombre;
+		}
+
+		dd($data);
 		return View::make('reportes.saldotratados');
 	}
 }
