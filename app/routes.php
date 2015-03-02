@@ -18,7 +18,6 @@ Route::get('temp',function(){
 });
 
 //API
-
 Route::group(array('before' => array('auth_basic')), function() {
 	Route::get('api/certificado/{id}', 'apiController@certificado');
 	Route::get('api/empresaestavigentexnit','apiController@empresavigente');
@@ -49,7 +48,7 @@ Route::group(array('before' => array('tratados')), function() {
 	Route::get('contingente/partidas/{id}', 'partidasController@getPartidas');
 	Route::get('contingente/saldo/{id}', 'contingentesController@getSaldo');
   Route::get('contingente/saldoasignacion/{id}', 'contingentesController@getSaldoAsignacion');
-
+  Route::get('contingente/paises/{id}', 'emisionController@getPaises');
 
 	Route::group(array('before' => array('auth', 'cancerbero', 'menu')), function() {
 		Route::get('/', array('as'=>'index.index', 'uses'=>'dashboardController@index'));
