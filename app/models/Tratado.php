@@ -15,7 +15,7 @@ class Tratado extends Eloquent {
 			->pluck('nombrecorto');
 	}
 
-	public static function getUsuariosTratado($aTratadoId) {
+	public static function getUsuariosTratado($aTratadoId, $aContingenteId=0) {
 		$query = DB::table('usuariocontingentes AS uc')
 			->select('u.nombre AS empresa', 'u.email', 'u.nit', 't.nombrecorto AS tratado', 
 				'p.nombre AS producto', 'u.domiciliocomercial', 'u.telefono',
@@ -27,6 +27,9 @@ class Tratado extends Eloquent {
 
 		if($aTratadoId <> 0)
 			$query->where('t.tratadoid', $aTratadoId);
+
+		if($aContingenteId <> 0)
+			$query->where('c.contingenteid', $aContingenteId);
 
 		$query->orderBy('t.nombrecorto');
 		$query->orderBy('p.nombre');
