@@ -1,6 +1,8 @@
 @extends('emails/template')
+@section('titulo')
+	Solicitud de emisión
+@stop
 @section('content')
-	<h1>Solicitud de emisión</h1>
 	Se ha recibido una solicitud de emisión con los siguientes datos: <br>
 	<strong>Fecha:</strong> {{$fecha}}<br>
 	<strong>Nombre:</strong> {{$nombre}}<br><br>

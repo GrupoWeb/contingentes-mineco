@@ -1,6 +1,8 @@
 @extends('emails/template')
+@section('titulo')
+	Solicitud de asignación
+@stop
 @section('content')
-	<h1>Solicitud de asignación</h1>
 	La solicitud de asignación con los siguientes datos: <br>
 	<strong>Fecha:</strong> {{$fecha}}<br>
 	<strong>Nombre:</strong> {{$nombre}}<br>
