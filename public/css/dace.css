@@ -67,3 +67,9 @@ h4.titulo {
 .navbar-default {
 	background: #fff;
 }
+
+.table-white,
+.table-white tr,
+.table-white td {
+    background-color: white !important;
+}

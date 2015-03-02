@@ -90,7 +90,7 @@ Route::group(array('before' => array('tratados')), function() {
 		//=== REPORTES
 		Route::resource('cuentacorriente', 'cuentacorrienteController', array('only'=>array('index','store')));
 		Route::resource('empresas', 'empresasController', array('only'=>array('index', 'store')));
-		Route::get('tratado/graficas/saldo', array('as'=>'tratado.graficas.saldo', 'uses'=>'graficasController@saldo'));
+		Route::get('tratado/graficas/saldo/{id}', array('as'=>'tratado.graficas.saldo', 'uses'=>'graficasController@saldo'));
 	  
 	  //=== ADMIN
 	  Route::resource('usuarioswebservice', 'usuarioswebserviceController');

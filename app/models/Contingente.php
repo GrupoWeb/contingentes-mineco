@@ -48,4 +48,11 @@ class Contingente extends Eloquent {
 			->where('tratadoid', $aTratadoId)
 			->lists('contingenteid');
 	}
+
+	public static function getProducto($aContingenteId) {
+		return DB::table('contingentes AS c')
+			->leftJoin('productos AS p', 'c.productoid', '=', 'p.productoid')
+			->where('contingenteid', $aContingenteId)
+			->pluck('p.nombre');
+	}
 }

@@ -12,27 +12,31 @@ class dashboardController extends BaseController {
 				$contingentes = Contingente::getContingentesTratado($tratado->tratadoid);
 				$empresas     = Tratado::getUsuariosTratado($tratado->tratadoid);
 
-				$saldo = 0;
+				$tingentes = array();
 				foreach($contingentes as $contingente) {
 					$query       = DB::select(DB::raw('SELECT getSaldo('.$contingente.', 0) AS saldo'));
-					$saldo += $query[0]->saldo;
+					$tingentes[] = array(
+						'contingenteid' => $contingente,
+						'nombre'        => Contingente::getProducto($contingente),
+						'saldo'         => $query[0]->saldo
+					);
 				}
+
 
 				$datos[$tratado->tratadoid]['nombre']       = $tratado->nombre;
 				$datos[$tratado->tratadoid]['nombrecorto']  = $tratado->nombrecorto;
 				$datos[$tratado->tratadoid]['tipo']         = $tratado->tipo;
-				$datos[$tratado->tratadoid]['contingentes'] = count($contingentes);
+				$datos[$tratado->tratadoid]['contingentes'] = $tingentes;
 				$datos[$tratado->tratadoid]['inscritos']    = count($empresas);
-				$datos[$tratado->tratadoid]['saldo']        = $saldo;
 
 				if(count($contingentes) == 0)
 					$contingentes = array(0);	
 				
 				//=== inscripciones
-				$inscripciones = Usuariocontingente::getSolicitudes($contingentes);
-				$datos[$tratado->tratadoid]['solicitudes']['inscripcion'] = array('Pendiente'=>0, 'Aprobada'=>0, 'Rechazada'=>'--');
+				$inscripciones = Solicitudinscripcion::getSolicitudes($contingentes);
+				$datos[$tratado->tratadoid]['solicitudes']['inscripcion'] = array('Pendiente'=>0, 'Aprobada'=>0, 'Rechazada'=>0);
 				foreach($inscripciones as $inscripcion)
-					$datos[$tratado->tratadoid]['solicitudes']['inscripcion']['Pendiente'] = $inscripcion->cuenta;
+					$datos[$tratado->tratadoid]['solicitudes']['inscripcion'][$inscripcion->estado] = $inscripcion->cuenta;
 
 				//=== asignaciones
 				$asignaciones = Solicitudasignacion::getSolicitudes($contingentes);

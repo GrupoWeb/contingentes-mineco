@@ -18,4 +18,14 @@ class Solicitudinscripcion extends Eloquent {
 			->first();
 	}
 
+	public static function getSolicitudes($aContingentes) {
+		return DB::table('solicitudinscripciones AS si')
+			->select(DB::raw('COUNT(*) as cuenta'), 'estado')
+			->leftJoin('solicitudinscripcioncontingentes AS sic', 'si.solicitudinscripcionid', '=', 'sic.solicitudinscripcionid')
+			->whereIn('contingenteid', $aContingentes)
+			->groupBy('estado')
+			->orderBy('estado')
+			->get();
+	}
+
 }
