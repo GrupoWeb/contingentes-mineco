@@ -11,4 +11,10 @@ class Producto extends Eloquent {
 			->where('activo', 1)
 			->get();
 	}
+
+	public static function getNombre($aProductoId) {
+		return DB::table('productos')
+			->where('productoid', $aProductoId)
+			->pluck('nombre');
+	}
 }

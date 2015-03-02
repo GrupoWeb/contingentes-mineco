@@ -15,10 +15,12 @@ class dashboardController extends BaseController {
 				$tingentes = array();
 				foreach($contingentes as $contingente) {
 					$query       = DB::select(DB::raw('SELECT getSaldo('.$contingente.', 0) AS saldo'));
+					$inscritos   = Usuariocontingente::getUsuariosContingente($contingente);
 					$tingentes[] = array(
 						'contingenteid' => $contingente,
 						'nombre'        => Contingente::getProducto($contingente),
-						'saldo'         => $query[0]->saldo
+						'saldo'         => $query[0]->saldo,
+						'inscritos'     => count($inscritos)
 					);
 				}
 

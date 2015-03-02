@@ -4,7 +4,12 @@ class empresasController extends BaseController {
 	
 	public function index() {
 		$tselected = Session::get('tselected');
-		$empresas  = Tratado::getUsuariosTratado($tselected);
+
+		$id = 0;
+		if(Input::has('contingente'))
+			$id = Crypt::decrypt(Input::get('contingente'));
+
+		$empresas  = Tratado::getUsuariosTratado($tselected, $id);
 
 		$data = array();
 		foreach($empresas as $empresa) {

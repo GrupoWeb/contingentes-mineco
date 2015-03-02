@@ -87,16 +87,28 @@
 				    	<thead>
 				    		<tr>
 				    			<th class="text-center">Contingente</th>
+				    			<th class="text-center">Empresas inscritas</th>
 				    			<th class="text-center">Saldo</th>
 				    		</tr>
 				    	</thead>
 				    	<tbody>
+				    		<?php $totalempresas = 0; ?>
 				      	@foreach($tratado['contingentes'] as $contingente)
 				      		<tr>
 										<td>{{ $contingente['nombre'] }}</td>
 										<td class="text-right">
+											@if($contingente['inscritos'] <> 0)
+												<a href="/empresas?contingente={{Crypt::encrypt($contingente['contingenteid']) }}">
+													{{ number_format($contingente['inscritos']) }}
+												</a>
+												<?php $totalempresas += $contingente['inscritos']; ?>
+											@else
+												{{ '0' }}
+											@endif
+										</td>
+										<td class="text-right">
 											@if($contingente['saldo'] <> 0)
-												<a href="/tratado/graficas/saldo/{{ Crypt::encrypt($contingente['contingenteid']) }}">
+												<a href="/tratado/graficas/saldo/{{ Crypt::encrypt($contingente['contingenteid']) }}" target="_blank">
 													{{ number_format($contingente['saldo'], 3) }}
 												</a>
 											@else
@@ -105,13 +117,18 @@
 										</td>
 									</tr>
 				      	@endforeach
+				      	<tr>
+				      		<td class="text-right"><strong>TOTAL</strong></td>
+				      		<td class="text-right">
+				      			<a href="/empresas">
+				      				<strong>{{ number_format($totalempresas) }}</strong>
+				      			</a>
+				      		</td>
+				      		<td>&nbsp;</td>
+				      	</tr>
 				      </tbody>
 				    </table>
-
-				    <h4 class="titulo">Inscritos</h4>
-
 		      </div>
-
 		      <div class="clearfix"></div>
 		    </div>
 		  @endif

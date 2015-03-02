@@ -27,4 +27,19 @@ class Movimiento extends Eloquent {
 			->first();
 	}
 
+	public static function getConsumidoPTPD($aContingenteId, $aUsuarioId) {
+		return DB::table('movimientos AS m')
+			->selectRaw('IFNULL(ABS(SUM(cantidad)), 0) AS cantidad')
+			->leftJoin('periodos AS p', 'm.periodoid', '=', 'p.periodoid')
+			->leftJoin('contingentes AS c', 'p.contingenteid', '=', 'c.contingenteid')
+			->where('tipo', 'Certificado')
+			->where('c.contingenteid', $aContingenteId)
+			->where('usuarioid', $aUsuarioId)
+			->first();
+	}
+
 }
+
+
+
+
