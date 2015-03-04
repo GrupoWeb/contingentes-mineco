@@ -3,8 +3,6 @@
 	Solicitud de inscripción
 @stop
 @section('content')
-	Se ha recibido una solicitud de inscripción con los siguientes datos: <br>
-	<strong>Fecha:</strong> {{$fecha}}<br>
-	<strong>Nombre:</strong> {{$nombre}}<br><br>
-	La misma será revisada y recibirá un correo de confirmación cuando esta sea aprobada.
+	Estimad(a) Usuari(a): {{ $nombre }} <br /><br />
+	Se ha registrado una solicitud de inscripción en el Sistema de Contingentes Arancelarios, la cual será revisada para dicha autorización. En breve recibirás un correo dando respuesta a tu solicitud. <br />
 @stop
