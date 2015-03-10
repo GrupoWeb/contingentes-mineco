@@ -5,10 +5,10 @@ return array(
 	'connections' => array(
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => '192.168.11.2',
+			'host'      => 'localhost',
 			'database'  => 'contingentes',
-			'username'  => 'root',
-			'password'  => 'cservice',
+			'username'  => 'contingentes',
+			'password'  => 'DACEGuate2015',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
