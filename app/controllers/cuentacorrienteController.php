@@ -10,20 +10,17 @@ class cuentacorrienteController extends BaseController {
 	}
 
 	public function store() {
-		$contingenteid = Crypt::decrypt(Input::get('cmbContingente'));
-		$periodoid     = Crypt::decrypt(Input::get('cmbPeriodo'));
+		$periodoId     = Crypt::decrypt(Input::get('cmbPeriodo'));
 		$fechaini      = $this->getFechaMySql(Input::get('fechaini')).' 00:00';
 		$fechafin      = $this->getFechaMySql(Input::get('fechafin')).' 23:59';
 
-		$contingente = Contingente::find($contingenteid);
-		$producto    = Producto::find($contingente->productoid);
-		$tratado     = Tratado::find($contingente->tratadoid);
+		$periodo  = Periodo::getPeriodoInfo($periodoId);
 
 		return View::make('reportes/cuentacorriente')
 			->with('titulo', 'Cuenta Corriente')
-			->with('tratado', $tratado->nombrecorto)
-			->with('producto', $producto->nombre)
-			->with('movimientos', Movimiento::getCuentaCorriente($periodoid, $fechaini, $fechafin));
+			->with('tratado', $periodo->tratado)
+			->with('producto', $periodo->producto)
+			->with('movimientos', Movimiento::getCuentaCorriente($periodoId, $fechaini, $fechafin));
 	}
 
 	public function getPeriodos($aContingenteId) {

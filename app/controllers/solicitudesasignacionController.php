@@ -25,7 +25,7 @@ class solicitudesasignacionController extends crudController {
 		Crud::setCampo(array('nombre'=>'Usuario','campo'=>'u.nombre'));
 		Crud::setCampo(array('nombre'=>'Tratado','campo'=>'t.nombrecorto'));
 		Crud::setCampo(array('nombre'=>'Producto','campo'=>'d.nombre','class'=>'text-right'));
-		Crud::setCampo(array('nombre'=>'Monto Solicitado','campo'=>'solicitado','tipo'=>'numeric','class'=>'text-right'));
+		Crud::setCampo(array('nombre'=>'Monto Solicitado','campo'=>'solicitado','tipo'=>'numeric','class'=>'text-right','decimales'=>3));
 		Crud::setCampo(array('nombre'=>'Fecha de solicitud','campo'=>'solicitudasignacion.created_at', 'tipo'=>'datetime','class'=>'text-right'));
 		
 		Crud::setPermisos(Cancerbero::tienePermisosCrud('solicitudespendientes.emision'));

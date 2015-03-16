@@ -34,4 +34,15 @@ class Periodo extends Eloquent {
 			->whereIn('contingenteid', $aContingentes)
 			->count();
 	}
+
+	public static function getPeriodoInfo($aPeriodoId) {
+		return DB::table('periodos AS p')
+			->leftJoin('contingentes AS c','p.contingenteid','=','c.contingenteid')
+			->leftJoin('productos AS pr','pr.productoid','=','c.productoid')
+			->leftJoin('tratados AS t','t.tratadoid','=','c.tratadoid')
+			->select('pr.nombre AS producto','t.nombrecorto AS tratado')
+			->where('p.periodoid', $aPeriodoId)
+			->first();
+	}
+
 }

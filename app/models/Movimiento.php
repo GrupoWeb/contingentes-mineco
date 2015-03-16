@@ -8,7 +8,7 @@ class Movimiento extends Eloquent {
 			->select(DB::raw('DATE_FORMAT(m.created_at, "%d-%m-%Y") AS fecha'), 'u.nombre AS acreditadoa', 
 				'u2.nombre AS acreditadopor', 'comentario', 
 				DB::raw('IF(m.tipo="Cuota",cantidad,NULL) AS credito'),
-				DB::raw('IF(m.tipo<>"Cuota",-cantidad,NULL) AS debito')
+				DB::raw('IF(m.tipo<>"Cuota", IF(m.tipo="Asignacion",cantidad,-cantidad),NULL) AS debito')
 				)
 			->leftJoin('authusuarios AS u', 'm.usuarioid',  '=', 'u.usuarioid')
 			->leftJoin('authusuarios AS u2', 'm.created_by', '=', 'u2.usuarioid')
