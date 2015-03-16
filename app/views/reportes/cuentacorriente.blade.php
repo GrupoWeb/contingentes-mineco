@@ -39,8 +39,8 @@
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
-					<td>{{number_format($creditot,2)}}</td>
-					<td>{{number_format($debitot,2)}}</td>
+					<td class="text-right">{{number_format($creditot,2)}}</td>
+					<td class="text-right">{{number_format($debitot,2)}}</td>
 				</tr>
 			</tfoot>	
 		</tbody>

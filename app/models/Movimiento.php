@@ -13,6 +13,7 @@ class Movimiento extends Eloquent {
 			->leftJoin('authusuarios AS u', 'm.usuarioid',  '=', 'u.usuarioid')
 			->leftJoin('authusuarios AS u2', 'm.created_by', '=', 'u2.usuarioid')
 			->orderBy('m.created_at')
+			->orderBy('m.movimientoid')
 			->where('m.periodoid', $aPeriodoId)
 			->whereBetween('m.created_at', array($aFechaInicio, $aFechaFin))
 			->get();
