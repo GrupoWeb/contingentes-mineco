@@ -34,7 +34,7 @@
       </div>
     </div>
 
-    @if($periodo->tipotratadoid == 2)
+    {{--@if($periodo->tipotratadoid == 2)
 			<div class="form-group col-sm-6">
 	      <label for="txCantidad" class="col-sm-4 control-label">Importador/Exportador:</label>
 	      <div class="col-sm-8">
@@ -45,7 +45,7 @@
           </select>
 	      </div>
 	    </div>
-    @endif
+    @endif--}}
     
     <div class="clearfix"></div>
 		<div class="form-group col-sm-12">
