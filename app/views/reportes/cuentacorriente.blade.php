@@ -16,19 +16,33 @@
 			</tr>
 		</thead>
 		<tbody>
-			<?php $saldo = 0; ?>
+			<?php $saldo=0; $debitot=0; $creditot=0; ?>
 			@foreach($movimientos as $movimiento)
-				<?php $saldo += $movimiento->cantidad; ?>
+				<?php 
+					$saldo += (float)$movimiento->credito-(float)$movimiento->debito; 
+					$debitot += (float)$movimiento->debito;
+					$creditot += (float)$movimiento->credito;
+				?>
 				<tr>
 					<td>{{ $movimiento->fecha }}</td>
 					<td>{{ $movimiento->acreditadoa }}</td>
 					<td>{{ $movimiento->acreditadopor }}</td>
 					<td>{{ $movimiento->comentario }}</td>
-					<td class="text-right">{{ $movimiento->cantidad > 0 ? number_format($movimiento->cantidad, 2) : '&nbsp;' }}</td>
-					<td class="text-right">{{ $movimiento->cantidad < 0 ? number_format($movimiento->cantidad * -1, 2) : '&nbsp;' }}</td>
+					<td class="text-right">{{ $movimiento->credito ? number_format($movimiento->credito, 2) : '&nbsp;' }}</td>
+					<td class="text-right">{{ $movimiento->debito  ? number_format($movimiento->debito, 2) : '&nbsp;' }}</td>
 					<td class="text-right">{{ number_format($saldo, 2) }}</td>
 				</tr>
-			@endforeach		
+			@endforeach	
+			<tfoot>
+				<tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>{{number_format($creditot,2)}}</td>
+					<td>{{number_format($debitot,2)}}</td>
+				</tr>
+			</tfoot>	
 		</tbody>
 	</table>
 @stop

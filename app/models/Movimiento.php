@@ -5,7 +5,11 @@ class Movimiento extends Eloquent {
 
 	public static function getCuentaCorriente($aPeriodoId, $aFechaInicio, $aFechaFin) {
 		return DB::table('movimientos AS m')
-			->select(DB::raw('DATE_FORMAT(m.created_at, "%d-%m-%Y") AS fecha'), 'u.nombre AS acreditadoa', 'u2.nombre AS acreditadopor', 'comentario', 'cantidad')
+			->select(DB::raw('DATE_FORMAT(m.created_at, "%d-%m-%Y") AS fecha'), 'u.nombre AS acreditadoa', 
+				'u2.nombre AS acreditadopor', 'comentario', 
+				DB::raw('IF(m.tipo="Cuota",cantidad,NULL) AS credito'),
+				DB::raw('IF(m.tipo<>"Cuota",-cantidad,NULL) AS debito')
+				)
 			->leftJoin('authusuarios AS u', 'm.usuarioid',  '=', 'u.usuarioid')
 			->leftJoin('authusuarios AS u2', 'm.created_by', '=', 'u2.usuarioid')
 			->orderBy('m.created_at')
