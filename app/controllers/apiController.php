@@ -27,8 +27,6 @@ class apiController extends BaseController {
 			$emision     = $certificado->fecha;
 			$vencimiento = $certificado->fechavencimiento;
 		}
-		
-		//http://contingentes.cs.com.gt:8000/
 
 		$response = array(
 			'codigoerror' => $codigoerror,
