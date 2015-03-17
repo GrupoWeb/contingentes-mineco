@@ -13,7 +13,7 @@ class ModulosSeeder extends Seeder {
 		DB::table('authmodulos')->insert(array(
 			'moduloid'       => 2,
 			'nombre'         => 'usuarios',
-			'nombrefriendly' => 'Usuarios'
+			'nombrefriendly' => 'Usuarios DACE'
 		));
 	
 		DB::table('authmodulos')->insert(array(
@@ -164,6 +164,12 @@ class ModulosSeeder extends Seeder {
 			'moduloid'       => 27,
 			'nombre'         => 'unidadesmedida',
 			'nombrefriendly' => 'Unidades de medida'
+		));
+
+		DB::table('authmodulos')->insert(array(
+			'moduloid'       => 28,
+			'nombre'         => 'usuarioempresas',
+			'nombrefriendly' => 'Usuarios empresas'
 		));
 
 		DB::table('authmodulos')->update(array('created_at'=>date_create(), 'updated_at'=>date_create()));

@@ -80,7 +80,7 @@
 				'menuid'					=> 12,
 				'padreid'        	=> 11,
 				'modulopermisoid' => 2,
-				'nombre'         	=> 'Usuarios',
+				'nombre'         	=> 'Usuarios DACE',
 				'orden' 					=> 100,
 				'icono'         	=> null
 			));
@@ -243,6 +243,15 @@
 				'padreid'        	=> 2,
 				'modulopermisoid' => 123,
 				'nombre'         	=> 'Unidades de medida',
+				'orden' 					=> 150,
+				'icono'         	=> null
+			));
+
+			DB::table('authmenu')->insert(array(
+				'menuid'					=> 32,
+				'padreid'        	=> 11,
+				'modulopermisoid' => 131,
+				'nombre'         	=> 'Usuarios empresas',
 				'orden' 					=> 150,
 				'icono'         	=> null
 			));

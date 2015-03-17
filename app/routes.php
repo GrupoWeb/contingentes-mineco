@@ -75,10 +75,11 @@ Route::group(array('before' => array('tratados')), function() {
 		Route::resource('requerimientos','requerimientosController');
 		Route::resource('contingentes','contingentesController');
 		Route::resource('periodos','periodosController');
-		Route::resource('periodosasignaciones', 'periodosasignacionesController', array('only'=>array('index','store')));
+		Route::resource('periodosasignaciones','periodosasignacionesController', array('only'=>array('index','store')));
 		Route::resource('partidasarancelarias','contingentepartidaController');
 		Route::resource('paises','paisesController');
 		Route::resource('unidadesmedida','unidadesmedidaController');
+		Route::resource('usuarioempresas','empresausuariosController');
 
 		//=== CERTIFICADOS
 		Route::resource('certificados', 'certificadosController', array('only'=>array('index','show')));
@@ -96,6 +97,6 @@ Route::group(array('before' => array('tratados')), function() {
 	  Route::resource('usuarioswebservice', 'usuarioswebserviceController');
 
 	    //=== DOCUMENTOS
-	    Route::get('usuarios/perfil/{id}', array('as'=>'usuarios.perfil','uses'=>'usuariosController@perfil'));
+	    Route::get('usuarios/perfil/{id}', array('as'=>'usuarios.perfil','uses'=>'empresausuariosController@perfil'));
 	});
 });
