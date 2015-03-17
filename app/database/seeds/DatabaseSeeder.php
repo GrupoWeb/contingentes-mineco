@@ -8,5 +8,6 @@ class DatabaseSeeder extends Seeder {
 		$this->call('ModulopermisosSeeder');
 		$this->call('MenuSeeder');
 		$this->call('TipotratadosSeeder');
+		$this->call('PlantillaCertificadosSeeder');
 	}
 }
