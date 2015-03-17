@@ -238,6 +238,15 @@
 				'icono'         	=> null
 			));
 
+			DB::table('authmenu')->insert(array(
+				'menuid'					=> 31,
+				'padreid'        	=> 2,
+				'modulopermisoid' => 123,
+				'nombre'         	=> 'Unidades de medida',
+				'orden' 					=> 150,
+				'icono'         	=> null
+			));
+
 			DB::table('authmenu')->update(array('created_at'=>date_create(), 'updated_at'=>date_create()));
 		  DB::statement('SET FOREIGN_KEY_CHECKS=1');
 		}

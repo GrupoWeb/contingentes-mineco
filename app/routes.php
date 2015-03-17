@@ -78,6 +78,7 @@ Route::group(array('before' => array('tratados')), function() {
 		Route::resource('periodosasignaciones', 'periodosasignacionesController', array('only'=>array('index','store')));
 		Route::resource('partidasarancelarias','contingentepartidaController');
 		Route::resource('paises','paisesController');
+		Route::resource('unidadesmedida','unidadesmedidaController');
 
 		//=== CERTIFICADOS
 		Route::resource('certificados', 'certificadosController', array('only'=>array('index','show')));

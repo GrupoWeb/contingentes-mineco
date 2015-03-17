@@ -160,6 +160,12 @@ class ModulosSeeder extends Seeder {
 			'nombrefriendly' => 'Gráficas tratados'
 		));
 
+		DB::table('authmodulos')->insert(array(
+			'moduloid'       => 27,
+			'nombre'         => 'unidadesmedida',
+			'nombrefriendly' => 'Unidades de medida'
+		));
+
 		DB::table('authmodulos')->update(array('created_at'=>date_create(), 'updated_at'=>date_create()));
 	  DB::statement('SET FOREIGN_KEY_CHECKS=1');
 	}
