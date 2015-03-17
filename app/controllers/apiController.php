@@ -20,7 +20,7 @@ class apiController extends BaseController {
 		}
 
 		else {
-			$url         = 'http://contingentes.cs.com.gt:8000/c/'.Crypt::encrypt($id);
+			$url         = url().'/c/'.Crypt::encrypt($id);
 			$tm          = $certificado->volumen;
 			$fracion     = $certificado->fraccion;
 			$estado      = $certificado->anulado == 0 ? 'activo' : 'anulado';
@@ -28,6 +28,7 @@ class apiController extends BaseController {
 			$vencimiento = $certificado->fechavencimiento;
 		}
 		
+		//http://contingentes.cs.com.gt:8000/
 
 		$response = array(
 			'codigoerror' => $codigoerror,
