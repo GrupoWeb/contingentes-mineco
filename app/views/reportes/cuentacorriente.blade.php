@@ -39,8 +39,9 @@
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
-					<td class="text-right">{{number_format($creditot,2)}}</td>
-					<td class="text-right">{{number_format($debitot,2)}}</td>
+					<td class="text-right text-primary">{{number_format($creditot,2)}}</td>
+					<td class="text-right text-primary">{{number_format($debitot,2)}}</td>
+					<td class="text-right text-primary">{{ number_format($saldo, 2) }}</td>
 				</tr>
 			</tfoot>	
 		</tbody>
