@@ -20,7 +20,7 @@ class Usuariocontingente extends Eloquent {
 		return $query->get();
 	}
 	
-  public static function contingentesUsuario($aID) {
+  public static function contingentesUsuario($aUsuarioId) {
 	  return DB::table('usuariocontingentes AS uc')
 			->select('uc.contingenteid', 't.nombrecorto AS tratado', 'p.nombre AS producto', 'c.tratadoid','uc.activo')
 			->leftJoin('contingentes AS c', 'uc.contingenteid', '=', 'c.contingenteid')
@@ -41,13 +41,13 @@ class Usuariocontingente extends Eloquent {
 		return $res->get();
 	}
 
-	public static function getTratadosUsuario($aID) {
+	public static function getTratadosUsuario($aUsuarioId) {
 		return DB::table('usuariocontingentes AS uc')
 			->select('t.tratadoid','t.nombrecorto AS nombre')
 			->leftJoin('contingentes AS c', 'uc.contingenteid','=','c.contingenteid')
 			->leftJoin('tratados AS t','c.tratadoid','=','t.tratadoid')
 			->groupBy('c.tratadoid')
-			->where('uc.usuarioid', $aID)
+			->where('uc.usuarioid', $aUsuarioId)
 			->get();
 	}
 
