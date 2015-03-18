@@ -90,6 +90,8 @@ class solicitudesemisionController extends crudController {
 
 			//====
 
+			$admins = Usuario::listAdminEmails();
+
 			if($result) {
 				$usuario = Authusuario::find($result['emision']->usuarioid);
 				$email   = $usuario->email;
@@ -105,8 +107,9 @@ class solicitudesemisionController extends crudController {
 					'estado'        => 'Aprobada',
 					'solicitado'    => $emision->solicitado,
 					'emitido'       => $cantidad,
-					'observaciones' => Input::get('txObservaciones')), function($msg) use ($email){
+					'observaciones' => Input::get('txObservaciones')), function($msg) use ($email, $admins){
 		       	$msg->to($email)->subject('Certificado DACE - MINECO');
+		       	$msg->bcc($admins);
 				});
 			}
 			else {
@@ -114,6 +117,7 @@ class solicitudesemisionController extends crudController {
 				Session::flash('message','Ocurrió un error al intentar autorizar, intente de nuevo.');
 			}
 		}
+
 		else {
 			$emision                = Emisionpendiente::find($elID);
 			$emision->observaciones = Input::get('txObservaciones');
@@ -132,8 +136,9 @@ class solicitudesemisionController extends crudController {
 					'estado'        => 'Rechazada',
 					'solicitado'    => $emision->solicitado,
 					'emitido'       => 0,
-					'observaciones' => Input::get('txObservaciones')), function($msg) use ($email){
+					'observaciones' => Input::get('txObservaciones')), function($msg) use ($email, $admins){
 		       	$msg->to($email)->subject('Solicitud de Emisión DACE - MINECO');
+		       	$msg->bcc($admins);
 				});
 			}
 			else {

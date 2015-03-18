@@ -65,13 +65,16 @@ class asignacionController extends BaseController {
 				$type    = 'success';
 				$nombre  = Contingente::getNombre($contingente);
 				$email   = Auth::user()->email;
+				$admins  = Usuario::listAdminEmails();
+
 		    Mail::send('emails/solicitudasignacion', array(
 					'nombre'      => Auth::user()->nombre,
 					'fecha'       => date('d-m-Y H:i'),
 					'contingente' => $nombre->nombre,
 					'monto'       => $solicitado
-		      ), function($msg) use ($email){
+		      ), function($msg) use ($email, $admins){
 		            $msg->to($email)->subject('Solicitud de asignación');
+		            $msg->bcc($admins);
 		    });
 		  }
 		}
