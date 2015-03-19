@@ -55,39 +55,47 @@ class solicitudesasignacionController extends crudController {
 			$comentario = Input::get('txObservaciones');
 			
 			//TRANSACTION ===
-			$asignacion                = Asignacionpendiente::find($elID);
-			$asignacion->asignado      = $cantidad;
-			$asignacion->observaciones = $comentario;
-			$asignacion->estado        = 'Aprobada';
-			$result                    = $asignacion->save();
+			$res = DB::transaction(function() use($elID, $cantidad, $comentario, $asignacion) {
+				$asignacion                = Asignacionpendiente::find($elID);
+				$asignacion->asignado      = $cantidad;
+				$asignacion->observaciones = $comentario;
+				$asignacion->estado        = 'Aprobada';
+				$result                    = $asignacion->save();
 
-			$movimiento                = new Movimiento;
-			$movimiento->periodoid     = $asignacion->periodoid;
-			$movimiento->usuarioid     = $asignacion->usuarioid;
-			$movimiento->cantidad      = $cantidad;
-			$movimiento->comentario    = $comentario;
-			$movimiento->created_by    = Auth::id();
-			$movimiento->tipo          = 'Asignación';
-			$movimiento->acta          = Input::get('txActa');
-			$result2                   = $movimiento->save();
+				$movimiento                = new Movimiento;
+				$movimiento->periodoid     = $asignacion->periodoid;
+				$movimiento->usuarioid     = $asignacion->usuarioid;
+				$movimiento->cantidad      = $cantidad;
+				$movimiento->comentario    = $comentario;
+				$movimiento->created_by    = Auth::id();
+				$movimiento->tipo          = 'Asignación';
+				$movimiento->acta          = Input::get('txActa');
+				$result2                   = $movimiento->save();
+
+				return true;
+			});
 			//====
+			$admins = Usuario::listAdminEmails();
 
-			if($result && $result2) {
+			if($res) {
 				$usuario = Authusuario::find($asignacion->usuarioid);
 				$email   = $usuario->email;
 
 				Session::flash('type','success');
 				Session::flash('message','La solicitud de asignación fue procesada correctamente');
 
-				Mail::send('emails/solicitudasignacionresultado', array(
-					'nombre'        => $usuario->nombre,
-					'fecha'         => $asignacion->created_at,
-					'estado'        => 'Aprobada',
-					'solicitado'    => $asignacion->solicitado,
-					'asignado'      => $cantidad,
-					'observaciones' => Input::get('txObservaciones')), function($msg) use ($email){
-		       	$msg->to($email)->subject('Solicitud de Asignación DACE - MINECO');
-				});
+				try {
+					Mail::send('emails/solicitudasignacionresultado', array(
+						'nombre'        => $usuario->nombre,
+						'fecha'         => $asignacion->created_at,
+						'estado'        => 'Aprobada',
+						'solicitado'    => $asignacion->solicitado,
+						'asignado'      => $cantidad,
+						'observaciones' => Input::get('txObservaciones')), function($msg) use ($email, $admins){
+			       	$msg->to($email)->subject('Solicitud de Asignación DACE - MINECO');
+			       	$msg->bcc($admins);
+					});
+				} catch (Exception $e) {}
 			}
 
 			else {
@@ -108,15 +116,19 @@ class solicitudesasignacionController extends crudController {
 
 				$usuario = Authusuario::find($asignacion->usuarioid);
 				$email   = $usuario->email;
-				Mail::send('emails/solicitudasignacionresultado', array(
-					'nombre'        => $usuario->nombre,
-					'fecha'         => $asignacion->created_at,
-					'estado'        => 'Rechazada',
-					'solicitado'    => $asignacion->solicitado,
-					'asignado'      => 0,
-					'observaciones' => Input::get('txObservaciones')), function($msg) use ($email){
-		       	$msg->to($email)->subject('Solicitud de Asignación DACE - MINECO');
-				});
+
+				try {
+					Mail::send('emails/solicitudasignacionresultado', array(
+						'nombre'        => $usuario->nombre,
+						'fecha'         => $asignacion->created_at,
+						'estado'        => 'Rechazada',
+						'solicitado'    => $asignacion->solicitado,
+						'asignado'      => 0,
+						'observaciones' => Input::get('txObservaciones')), function($msg) use ($email, $admins){
+			       	$msg->to($email)->subject('Solicitud de Asignación DACE - MINECO');
+			       	$msg->bcc($admins);
+					});
+				} catch (Exception $e) {}
 			}
 			else {
 				Session::flash('type','warning');

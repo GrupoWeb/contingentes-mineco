@@ -91,13 +91,15 @@ class inscripcionController extends BaseController {
 		$email  = Input::get('email');
 		$admins = Usuario::listAdminEmails();
 
-    Mail::send('emails/solicitudinscripcion', array(
-      'nombre' => Input::get('txRazonSocial'),
-      'fecha'  => date('d-m-Y H:i')
-      ), function($msg) use ($email, $admins){
-            $msg->to($email)->subject('Solicitud de inscripción');
-            $msg->bcc($admins);
-    });
+		try {
+			Mail::send('emails/solicitudinscripcion', array(
+	      'nombre' => Input::get('txRazonSocial'),
+	      'fecha'  => date('d-m-Y H:i')
+	      ), function($msg) use ($email, $admins){
+	            $msg->to($email)->subject('Solicitud de inscripción');
+	            $msg->bcc($admins);
+	    });
+		} catch (Exception $e) {}
 
     return Redirect::to('/login')
       ->with('flashMessage',Config::get('login::signupexitoso'))
