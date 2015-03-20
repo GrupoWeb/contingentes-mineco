@@ -32,12 +32,12 @@ class apiController extends BaseController {
 			'codigoerror' => $codigoerror,
 			'error'       => $error,
 			'data'        => array(
-				               'emision'             => $emision,
-											 'vencimiento'         => $vencimiento,
-											 'fraccionarancelaria' => $fraccion,
-											 'tm'                  => $tm,
-											 'pdf'                 => $url, 
-											 'estado'              => $estado));
+				'emision'             => $emision,
+				'vencimiento'         => $vencimiento,
+				'fraccionarancelaria' => $fraccion,
+				'tm'                  => $tm,
+				'pdf'                 => $url, 
+				'estado'              => $estado));
 
 		return Response::json($response);
 	}
