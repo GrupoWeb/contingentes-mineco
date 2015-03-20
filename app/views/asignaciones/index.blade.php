@@ -69,31 +69,37 @@
       $('.selectpicker').selectpicker();
 
       $("#cmbContingentes").change(function() {
+          $('[name="disponible"]').html('<p class="form-control-static"><i class="fa fa-lg fa-spinner fa-pulse"></i></p>');
+          $('.requerimientos').html($('name="disponible"]').html());
           $('.nuevos').remove();
           $.get('/requerimientos/contingentes/' + $(this).val() + '/asignacion', function(data){
-              $.each(data, function(key, datos){
-                $.get('/requerimientos/contingentes/vacio?nombre=' + datos.nombre + '&id=' + datos.requerimientoid, function(template){
-                  $('.requerimientos').append(template);
-                  $('#frmSolicitud').bootstrapValidator('addField', 'file' + datos.requerimientoid);
-                  $(".file").fileinput({
-                    browseLabel: "Buscar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
-                    browseClass: "btn btn-default",
-                    showPreview: false,
-                    showRemove:  false,
-                    showUpload:  false,
-                    allowedFileExtensions: ['jpg', 'png', 'pdf'],
-                    msgInvalidFileExtension: 'Solo se permiten archivos jpg, png o pdf',
-                    msgValidationError : 'Solo se permiten archivos jpg, png o pdf',
-                  });
-                });     
-              });       
+            $('.requerimientos').html('');
+            $.each(data, function(key, datos){
+              $.get('/requerimientos/contingentes/vacio?nombre=' + datos.nombre + '&id=' + datos.requerimientoid, function(template){
+                $('.requerimientos').append(template);
+                $('#frmSolicitud').bootstrapValidator('addField', 'file' + datos.requerimientoid);
+                $(".file").fileinput({
+                  browseLabel: "Buscar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
+                  browseClass: "btn btn-default",
+                  showPreview: false,
+                  showRemove:  false,
+                  showUpload:  false,
+                  allowedFileExtensions: ['jpg', 'png', 'pdf'],
+                  msgInvalidFileExtension: 'Solo se permiten archivos jpg, png o pdf',
+                  msgValidationError : 'Solo se permiten archivos jpg, png o pdf',
+                });
+              });     
+            });       
           });
-
+          
           $.get('/contingente/saldoasignacion/' + $(this).val() + '?tratado=' + $("#cmbContingentes option:selected").attr('data-tratado'), function(data){
-          $('[name="disponible"]').val(data.disponible);
-          $('[name="disponible"]').text(data.disponible);
-          $('#disponible').text('Disponible (' + data.unidad + ')');
-        });
+            $('[name="disponible"]').val(data.disponible);
+            $('[name="disponible"]').text(data.disponible);
+            $('#disponible').text('Disponible (' + data.unidad + ')');
+          }).fail(function(xhr, textStatus, errorThrown)  {
+            alert( "Error: Imposible calcular el disponible para este contingente.");
+            window.location = '/';
+          });
       });
 
       $("#cmbContingentes").change();

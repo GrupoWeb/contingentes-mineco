@@ -20,7 +20,7 @@
           <label for="contingentes" class="col-sm-2 control-label">Contingente(s)</label>
           <div class="col-sm-6 div-contingente">
             <?php $grupoActual = 'primero'; ?>
-            <select name="contingentes[]" class="selectpicker form-control" id="contingentes" multiple="true" title="Seleccione uno o varios">
+            <select name="contingentes" class="selectpicker form-control" id="contingentes" title="Seleccione uno">
               @foreach($contingentes as $contingente)
                 @if($contingente->tratado <> $grupoActual)
                   @if($grupoActual <> 'primero')
@@ -83,20 +83,7 @@
               valid: 'glyphicon glyphicon-ok',
               invalid: 'glyphicon glyphicon-remove',
               validating: 'glyphicon glyphicon-refresh'
-            },
-            fields: {
-              contingentes: {
-                validators: {
-                  callback: {
-                    message: 'Porfavor seleccione al menos un contingente',
-                    callback: function(value, validator, $field) {
-                      var options = validator.getFieldElements('contingentes').val();
-                      return (options !=null && options.length >=1);
-                    }
-                  }
-                }
-              }
-            },
+            }
         })
         .on('error.field.bv', function(e, data) {
           data.bv.disableSubmitButtons(false);

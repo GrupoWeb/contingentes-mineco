@@ -15,7 +15,7 @@ class Tratado extends Eloquent {
 			->pluck('nombrecorto');
 	}
 
-	public static function getUsuariosTratado($aTratadoId, $aContingenteId=0) {
+	public static function getEmpresasTratado($aTratadoId, $aContingenteId=0) {
 		$query = DB::table('empresacontingentes AS ec')
 			->select('e.razonsocial AS empresa', 'e.nit', 't.nombrecorto AS tratado', 
 				'p.nombre AS producto', 'e.domiciliocomercial', 'e.telefono',

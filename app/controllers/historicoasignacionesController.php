@@ -16,8 +16,6 @@ class historicoasignacionesController extends crudController {
 		Crud::setLeftJoin('tratados AS t', 'c.tratadoid', '=', 't.tratadoid');
 		Crud::setLeftJoin('productos AS p', 'c.productoid', '=', 'p.productoid');
 
-		Crud::setWhere('estado', '<>', 'Pendiente');
-
 		$tselected = Session::get('tselected');
 		if($tselected <> 0) {
 			Crud::setWhere('t.tratadoid', $tselected);

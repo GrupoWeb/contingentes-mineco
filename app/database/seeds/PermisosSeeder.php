@@ -69,13 +69,6 @@
 				'nombre'         => 'procesarliquidacion',
 				'nombrefriendly' => 'Procesar liquidación'
 			));
-		  
-
-	    DB::table('authpermisos')->insert(array(
-	        'permisoid'      => 15,
-	        'nombre'         => 'perfil',
-	        'nombrefriendly' => 'Perfil de usuarios'
-			));
 
 			DB::table('authpermisos')->insert(array(
 	        'permisoid'      => 16,

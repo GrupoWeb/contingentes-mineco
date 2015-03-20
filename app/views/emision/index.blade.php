@@ -82,8 +82,13 @@
       $('.selectpicker').selectpicker();
 
       $("#cmbContingentes").change(function() {
+          $('#divPartidas').html('<p class="form-control-static"><i class="fa fa-lg fa-spinner fa-pulse"></i></p>');
+          $('[name="disponible"]').html($('#divPartidas').html());
+          $('#pais').html($('#divPartidas').html());
+          $('.requerimientos').html($('#divPartidas').html());
           $('.nuevos').remove();
           $.get('/requerimientos/contingentes/' + $(this).val() + '/emision', function(data){
+            $('.requerimientos').html('');
             $.each(data, function(key, datos){
               $.get('/requerimientos/contingentes/vacio?nombre=' + datos.nombre + '&id=' + datos.requerimientoid, function(template){
                 $('.requerimientos').append(template);
@@ -112,6 +117,9 @@
             $('[name="disponible"]').val(data.disponible);
             $('[name="disponible"]').text(data.disponible);
             $('#disponible').text('Máximo Disponible (' + data.unidad + ')');
+          }).fail(function(xhr, textStatus, errorThrown)  {
+            alert( "Error: Imposible calcular el disponible para este contingente.");
+            window.location = '/';
           });
 
           $.get('/contingente/paises/' + $(this).val(), function(data){

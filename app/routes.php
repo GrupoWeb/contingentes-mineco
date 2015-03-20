@@ -95,8 +95,5 @@ Route::group(array('before' => array('tratados')), function() {
 	  
 	  //=== ADMIN
 	  Route::resource('usuarioswebservice', 'usuarioswebserviceController');
-
-	    //=== DOCUMENTOS
-	    Route::get('usuarios/perfil/{id}', array('as'=>'usuarios.perfil','uses'=>'empresausuariosController@perfil'));
 	});
 });

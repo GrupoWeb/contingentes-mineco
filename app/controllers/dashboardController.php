@@ -14,7 +14,13 @@ class dashboardController extends BaseController {
 
 				$tingentes = array();
 				foreach($contingentes as $contingente) {
-					$query       = DB::select(DB::raw('SELECT getSaldo('.$contingente.', 0) AS saldo'));
+					$asignacion = Contingente::getTipoTratado($contingente);
+					
+					if($asignacion == 0)
+						$query = DB::select(DB::raw('SELECT getSaldo('.$contingente.', 0) AS saldo'));
+					else
+						$query = DB::select(DB::raw('SELECT getSaldoAsignacion('.$contingente.', 0) AS saldo'));
+					
 					$inscritos   = Empresacontingente::getEmpresasContingente($contingente);
 					$tingentes[] = array(
 						'contingenteid' => $contingente,
@@ -23,7 +29,6 @@ class dashboardController extends BaseController {
 						'inscritos'     => count($inscritos)
 					);
 				}
-
 
 				$datos[$tratado->tratadoid]['nombre']       = $tratado->nombre;
 				$datos[$tratado->tratadoid]['nombrecorto']  = $tratado->nombrecorto;

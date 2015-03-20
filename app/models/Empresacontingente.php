@@ -51,7 +51,7 @@ class Empresacontingente extends Eloquent {
 
 	public static function getEmpresasContingente($aContingenteId) {
 		return DB::table('empresacontingentes AS ec')
-			->select('e.empresaid', 'e.nombre')
+			->select('e.empresaid', 'e.razonsocial AS nombre')
 			->leftJoin('empresas AS e', 'ec.empresaid', '=', 'e.empresaid')
 			->where('ec.contingenteid', $aContingenteId)
 			->get();

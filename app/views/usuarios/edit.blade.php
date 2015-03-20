@@ -1,61 +1,17 @@
 @extends('template/template')
 
 @section('content')
+  {{ HTML::script('packages/csgt/components/js/bootstrapValidatorExtra.js') }}
+
 	{{Form::open(array('url'=>'usuarioempresas/'.Crypt::encrypt($usuario->usuarioid),'id'=>'frmUsuario','class'=>'form-horizontal')) }}
 		{{ Form::hidden('_method', 'PUT') }}
 		<div class="col-md-12">
 			<h4 class="titulo">Editar usuario</h4>
 		</div>
-    <!-- nit -->
-    <div class="col-md-6">
-      <div class="form-group">
-        <label for="txNIT" class="col-sm-4 control-label">1. NIT</label>
-        <div class="col-sm-8">
-          {{ Form::text('txNIT', $usuario->nit, array('class'=>'form-control', 
-            'data-bv-notEmpty'         => 'true',
-            'data-bv-notEmpty-message' => 'El NIT es requerido',
-            'data-bv-nit'              => 'true',
-            'autocomplete'             => 'off',
-            'data-bv-remote'           => 'true',
-            'data-bv-remote-url'       => '/signup/checkNIT?u='.Crypt::encrypt($usuario->usuarioid),
-            'data-bv-remote-message'   => 'NIT ya existe en la base de datos',
-            'data-bv-remote-type'      => 'POST'
-            )) }}
-        </div>
-      </div>
-    </div>
-		<!-- razon social -->
-	  <div class="col-md-12">
-      <div class="form-group">
-        <label for="txNombre" class="col-sm-2 control-label">2. Razón Social</label>
-        <div class="col-sm-10">
-          {{ Form::text('txRazonSocial', $usuario->razonsocial, array('class'=>'form-control', 
-            'data-bv-notEmpty'         => 'true',
-            'data-bv-notEmpty-message' => 'La razón social es requerida',
-            'autocomplete'             => 'off',
-            'placeholder'              => 'Nombre, denominación o razón social de la empresa'
-            )) }}
-        </div>
-      </div>
-    </div>
-    <!-- representante legal  -->
-		<div class="col-md-12">
-      <div class="form-group">
-        <label for="txNombre" class="col-sm-2 control-label">3. Rep. Legal</label>
-        <div class="col-sm-10">
-          {{ Form::text('txPropietario', $usuario->propietario, array('class'=>'form-control', 
-            'data-bv-notEmpty'         =>'true',
-            'data-bv-notEmpty-message' => 'El representante legal es requerido',
-            'autocomplete'             => 'off',
-            'placeholder'              => 'Nombre del propietario o representante legal'
-            )) }}
-        </div>
-      </div>
-    </div>
     <!-- email -->
     <div class="col-md-12">
       <div class="form-group">
-        <label for="email" class="col-sm-2 control-label">4. Email</label>
+        <label for="email" class="col-sm-2 control-label">Email</label>
         <div class="col-sm-10">
           {{ Form::text('email', $usuario->email, array(
             'class'                        => 'form-control',
@@ -71,38 +27,10 @@
         </div>
       </div>
     </div>
-    <!-- telefono -->
-    <div class="col-md-6">
-      <div class="form-group">
-        <label for="txTelefono" class="col-sm-4 control-label">5. Teléfono</label>
-        <div class="col-sm-8">
-          {{ Form::text('txTelefono', $usuario->telefono, array('class'=>'form-control', 
-            'data-bv-notEmpty'         => 'true',
-            'data-bv-notEmpty-message' => 'El teléfono es requerido',
-            'data-bv-integer'          => 'true',
-            'data-bv-integer-message'  => 'Debe ser un número',
-            'autocomplete'             => 'off'
-            )) }}
-        </div>
-      </div>
-    </div>   
-    <!-- fax -->    
-    <div class="col-md-6">
-      <div class="form-group">
-        <label for="txFax" class="col-sm-4 control-label">6. FAX</label>
-        <div class="col-sm-8">
-          {{ Form::text('txFax', $usuario->fax, array('class'=>'form-control', 
-            'data-bv-integer' => 'true',
-            'data-bv-integer-message' => 'Debe ser un número',
-            'autocomplete'             => 'off'
-            )) }}
-        </div>
-      </div>
-    </div>    
     <!--password --> 
     <div class="col-md-6">
       <div class="form-group">
-        <label for="txPassword" class="col-sm-4 control-label">7. Contrase&ntilde;a</label>
+        <label for="txPassword" class="col-sm-4 control-label">Contrase&ntilde;a</label>
         <div class="col-sm-8">
           {{ Form::password('txPassword', array(
             'class'                        =>'form-control', 
@@ -132,12 +60,103 @@
         </div>
       </div>
     </div>
+    <div class="clearfix"></div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <div class="col-sm-4">&nbsp;</div>
+        <div class="col-sm-8">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" value="1" name="activo" {{ $usuario->activo <> 0 ? 'checked' : ''}}> Activo
+            </label>
+          </div>
+        </div>
+      </div>
+    </div><!-- activo -->
+    <div class="col-md-12">
+      <h4 class="titulo">Editar empresa</h4>
+    </div>
+    <!-- nit -->
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="txNIT" class="col-sm-4 control-label">NIT</label>
+        <div class="col-sm-8">
+          {{ Form::text('txNIT', $empresa->nit, array('class'=>'form-control', 
+            'data-bv-notEmpty'         => 'true',
+            'data-bv-notEmpty-message' => 'El NIT es requerido',
+            'data-bv-nit'              => 'true',
+            'autocomplete'             => 'off',
+            'data-bv-remote'           => 'true',
+            'data-bv-remote-url'       => '/signup/checkNIT?u='.Crypt::encrypt($empresa->empresaid),
+            'data-bv-remote-message'   => 'NIT ya existe en la base de datos',
+            'data-bv-remote-type'      => 'POST'
+            )) }}
+        </div>
+      </div>
+    </div>
+		<!-- razon social -->
+	  <div class="col-md-12">
+      <div class="form-group">
+        <label for="txNombre" class="col-sm-2 control-label">Razón Social</label>
+        <div class="col-sm-10">
+          {{ Form::text('txRazonSocial', $empresa->razonsocial, array('class'=>'form-control', 
+            'data-bv-notEmpty'         => 'true',
+            'data-bv-notEmpty-message' => 'La razón social es requerida',
+            'autocomplete'             => 'off',
+            'placeholder'              => 'Nombre, denominación o razón social de la empresa'
+            )) }}
+        </div>
+      </div>
+    </div>
+    <!-- representante legal  -->
+		<div class="col-md-12">
+      <div class="form-group">
+        <label for="txNombre" class="col-sm-2 control-label">Rep. Legal</label>
+        <div class="col-sm-10">
+          {{ Form::text('txPropietario', $empresa->propietario, array('class'=>'form-control', 
+            'data-bv-notEmpty'         =>'true',
+            'data-bv-notEmpty-message' => 'El representante legal es requerido',
+            'autocomplete'             => 'off',
+            'placeholder'              => 'Nombre del propietario o representante legal'
+            )) }}
+        </div>
+      </div>
+    </div>
+    
+    <!-- telefono -->
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="txTelefono" class="col-sm-4 control-label">Teléfono</label>
+        <div class="col-sm-8">
+          {{ Form::text('txTelefono', $empresa->telefono, array('class'=>'form-control', 
+            'data-bv-notEmpty'         => 'true',
+            'data-bv-notEmpty-message' => 'El teléfono es requerido',
+            'data-bv-integer'          => 'true',
+            'data-bv-integer-message'  => 'Debe ser un número',
+            'autocomplete'             => 'off'
+            )) }}
+        </div>
+      </div>
+    </div>   
+    <!-- fax -->    
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="txFax" class="col-sm-4 control-label">FAX</label>
+        <div class="col-sm-8">
+          {{ Form::text('txFax', $empresa->fax, array('class'=>'form-control', 
+            'data-bv-integer' => 'true',
+            'data-bv-integer-message' => 'Debe ser un número',
+            'autocomplete'             => 'off'
+            )) }}
+        </div>
+      </div>
+    </div>    
     <!--domicilio fiscal -->
     <div class="col-md-6">
       <div class="form-group">
-        <label for="txNombre" class="col-sm-4 control-label">8. Domicilio Fiscal</label>
+        <label for="txNombre" class="col-sm-4 control-label">Domicilio Fiscal</label>
         <div class="col-sm-8">
-          {{ Form::textarea('txDomicilioFiscal', $usuario->domiciliofiscal, array('class'=>'form-control', 
+          {{ Form::textarea('txDomicilioFiscal', $empresa->domiciliofiscal, array('class'=>'form-control', 
             'data-bv-notEmpty'         =>'true',
             'data-bv-notEmpty-message' => 'El domicilio fiscal es requerido',
             'autocomplete'             => 'off',
@@ -149,9 +168,9 @@
     <!--domicilio comercial -->
     <div class="col-md-6">
       <div class="form-group">
-        <label for="txNombre" class="col-sm-4 control-label">9. Domicilio Comercial</label>
+        <label for="txNombre" class="col-sm-4 control-label">Domicilio Comercial</label>
         <div class="col-sm-8">
-          {{ Form::textarea('txDomicilioComercial', $usuario->domiciliocomercial, array('class'=>'form-control', 
+          {{ Form::textarea('txDomicilioComercial', $empresa->domiciliocomercial, array('class'=>'form-control', 
             'data-bv-notEmpty'         =>'true',
             'data-bv-notEmpty-message' => 'El domicilio comercial es requerido',
             'autocomplete'             => 'off',
@@ -163,9 +182,9 @@
     <!-- lugar -->
     <div class="col-md-6">
       <div class="form-group">
-        <label for="txDireccionNotificaciones" class="col-sm-4 control-label">10. Lugar para recibir notificaciones</label>
+        <label for="txDireccionNotificaciones" class="col-sm-4 control-label">Lugar para recibir notificaciones</label>
         <div class="col-sm-8">
-          {{ Form::textarea('txDireccionNotificaciones', $usuario->direccionnotificaciones, array('class'=>'form-control', 
+          {{ Form::textarea('txDireccionNotificaciones', $empresa->direccionnotificaciones, array('class'=>'form-control', 
             'data-bv-notEmpty'         =>'true',
             'data-bv-notEmpty-message' => 'El lugar para recibir notificaciones es requerido',
             'autocomplete'             => 'off',
@@ -177,9 +196,9 @@
     <!--encargado -->
     <div class="col-md-6">
       <div class="form-group">
-        <label for="txNombre" class="col-sm-4 control-label">11. Encargado</label>
+        <label for="txNombre" class="col-sm-4 control-label">Encargado</label>
         <div class="col-sm-8">
-          {{ Form::text('txEncargadoImportaciones', $usuario->encargadoimportaciones, array('class'=>'form-control', 
+          {{ Form::text('txEncargadoImportaciones', $empresa->encargadoimportaciones, array('class'=>'form-control', 
             'data-bv-notEmpty'         =>'true',
             'data-bv-notEmpty-message' => 'El nombre del encargado es requerido',
             'autocomplete'             => 'off',
@@ -189,19 +208,6 @@
       </div>
     </div>
     <!--tratados -->
-    <div class="clearfix"></div>
-    <div class="col-md-6">
-      <div class="form-group">
-        <div class="col-sm-4">&nbsp;</div>
-        <div class="col-sm-8">
-          <div class="checkbox">
-				    <label>
-				      <input type="checkbox" value="1" name="activo" {{ $usuario->activo <> 0 ? 'checked' : ''}}> Activo
-				    </label>
-			    </div>
-        </div>
-      </div>
-    </div><!-- activo -->
     <div class="clearfix"></div>
 		<div class="col-md-6">
       <div class="form-group">

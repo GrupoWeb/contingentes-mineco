@@ -45,7 +45,8 @@ class solicitudesinscripcionController extends crudController {
 				$solicitud  = Solicitudinscripcion::find($solicitudid);
 				$rolempresa = Config::get('contingentes.rolempresa');
 
-				$empresaid = DB::table('empresas')->insertGetId(					
+				$empresaid = DB::table('empresas')->insertGetId(
+					array(					
 						'nit'                     => $solicitud->nit,
 						'razonsocial'             => $solicitud->nombre,
 						'propietario'             => $solicitud->propietario,
@@ -56,19 +57,21 @@ class solicitudesinscripcionController extends crudController {
 						'fax'                     => $solicitud->fax,
 						'encargadoimportaciones'  => $solicitud->encargadoimportaciones,
 						'created_at'              => date_create(),
-						'updated_at'              => date_create(),	
+						'updated_at'              => date_create()
+					)
 				);
 				if($empresaid == 0) return 0;
 
 				$usuarioid  = DB::table('authusuarios')->insertGetId(
 					array(
-						'empresaid'								=> $empresaid,
-						'email'                   => $solicitud->email,
-						'password'                => $solicitud->password,
-						'created_at'              => date_create(),
-						'updated_at'              => date_create(),
-						'rolid'                   => $rolempresa[0],
-						'activo'                  => 1
+						'empresaid'  => $empresaid,
+						'nombre'     => $solicitud->nombre,
+						'email'      => $solicitud->email,
+						'password'   => $solicitud->password,
+						'created_at' => date_create(),
+						'updated_at' => date_create(),
+						'rolid'      => $rolempresa[0],
+						'activo'     => 1
 					)
 				);
 

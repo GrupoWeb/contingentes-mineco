@@ -55,7 +55,7 @@ class solicitudesasignacionController extends crudController {
 			$comentario = Input::get('txObservaciones');
 			
 			//TRANSACTION ===
-			$res = DB::transaction(function() use($elID, $cantidad, $comentario, $asignacion) {
+			$asignacion = DB::transaction(function() use($elID, $cantidad, $comentario) {
 				$asignacion                = Asignacionpendiente::find($elID);
 				$asignacion->asignado      = $cantidad;
 				$asignacion->observaciones = $comentario;
@@ -72,12 +72,12 @@ class solicitudesasignacionController extends crudController {
 				$movimiento->acta          = Input::get('txActa');
 				$result2                   = $movimiento->save();
 
-				return true;
+				return $asignacion;
 			});
 			//====
 			$admins = Usuario::listAdminEmails();
 
-			if($res) {
+			if($asignacion) {
 				$usuario = Authusuario::find($asignacion->usuarioid);
 				$email   = $usuario->email;
 

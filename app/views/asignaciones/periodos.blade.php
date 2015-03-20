@@ -33,31 +33,15 @@
       	{{ Form::text('txCantidad', '', array('class'=>'form-control', 'data-bv-notEmpty'=>'true', 'data-bv-numeric'=>'true', 'data-bv-notempty-message'=>'La cantidad es requerida', 'data-bv-numeric-message'=>'La cantidad debe ser un número')) }}
       </div>
     </div>
-
-    {{--@if($periodo->tipotratadoid == 2)
-			<div class="form-group col-sm-6">
-	      <label for="txCantidad" class="col-sm-4 control-label">Importador/Exportador:</label>
-	      <div class="col-sm-8">
-	      	<select name="cmbUsuario" class="selectpicker form-control" title="Seleccione un usuario" data-bv-notEmpty="true" data-bv-notempty-message="El usuario es requerido">
-            @foreach($usuarios as $usuario)
-              <option value="{{ $usuario->usuarioid }}">{{ $usuario->nombre }}</option>
-            @endforeach
-          </select>
-	      </div>
-	    </div>
-    @endif--}}
-    
     <div class="clearfix"></div>
-		<div class="form-group col-sm-12">
+		<div class="form-group">
       <label for="txComentario" class="col-sm-2 control-label">Comentario:</label>
       <div class="col-sm-10">
       	{{ Form::textarea('txComentario', '', array('class'=>'form-control', 'rows'=>3)) }}
       </div>
     </div>
-    <div class="clearfix"></div>
     <div class="form-group col-sm-6">
-      <div class="col-sm-4">&nbsp;</div>
-      <div class="col-sm-8">
+      <div class="col-sm-8 col-sm-offset-4">
       	{{ Form::submit('Asignar', array('class'=>'btn btn-success')) }}
       </div>
     </div>

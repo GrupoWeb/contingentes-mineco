@@ -9,19 +9,18 @@ class inscripcionController extends BaseController {
 	}
 
 	public function validateEmail() {
-    $aEmail = Input::get(Config::get('login::usuario.campo'));
+    $aEmail = Input::get('email');
 
     $userid = 0;
     if(Input::has('u'))
     	$userid = Crypt::decrypt(Input::get('u'));
 
-		$result = DB::table(Config::get('login::tabla'))->where('email', $aEmail);
+		$result = DB::table('authusuarios')->where('email', $aEmail);
 
 		if($userid <> 0)
 			$result->where('usuarioid', '<>', $userid);
 
 		$result = $result->first();
-		
     
     if ($result) 
     	$val='false';
@@ -42,14 +41,14 @@ class inscripcionController extends BaseController {
 	public function validateNIT() {
     $aNIT = Input::get('txNIT');
 
-    $userid = 0;
+    $empresaid = 0;
     if(Input::has('u'))
-    	$userid = Crypt::decrypt(Input::get('u'));
+    	$empresaid = Crypt::decrypt(Input::get('u'));
 
     $result = DB::table('empresas')->where('nit', $aNIT);
 
-		if($userid <> 0)
-			$result->where('usuarioid', '<>', $userid);
+		if($empresaid <> 0)
+			$result->where('empresaid', '<>', $empresaid);
 
 		$result = $result->first();
 
