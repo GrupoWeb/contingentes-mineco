@@ -8,7 +8,7 @@ class MigrationSepararUsuariosDeEmpresas extends Migration {
 	public function up() {
 		Schema::create('empresas', function($table){
 			$table->increments('empresaid');
-			$table->string('nit', 20);
+			$table->string('nit', 20)->nullable();
 			$table->string('razonsocial');
 			$table->string('propietario');
 			$table->string('domiciliofiscal');
@@ -30,7 +30,6 @@ class MigrationSepararUsuariosDeEmpresas extends Migration {
 				encargadoimportaciones FROM authusuarios WHERE rolid=3');
 
 		Schema::table('authusuarios', function($table) {
-			/*
 			$table->dropColumn('nit');
 			$table->dropColumn('razonsocial');
 			$table->dropColumn('propietario');
@@ -40,7 +39,6 @@ class MigrationSepararUsuariosDeEmpresas extends Migration {
 			$table->dropColumn('telefono');
 			$table->dropColumn('fax');
 			$table->dropColumn('encargadoimportaciones');
-			*/
 			$table->integer('empresaid')->nullable()->unsigned()->after('rolid');
 			$table->foreign('empresaid')->references('empresaid')->on('empresas')->onUpdate('cascade');
 		});
@@ -145,6 +143,15 @@ class MigrationSepararUsuariosDeEmpresas extends Migration {
 		Schema::table('authusuarios', function($table) {
 			$table->dropForeign('authusuarios_empresaid_foreign');
 			$table->dropColumn('empresaid');
+			$table->string('nit', 20)->nullable();
+			$table->string('razonsocial');
+			$table->string('propietario');
+			$table->string('domiciliofiscal');
+			$table->string('domiciliocomercial');
+			$table->string('direccionnotificaciones');
+			$table->string('telefono');
+			$table->string('fax');
+			$table->string('encargadoimportaciones');
 		});
 		
 		Schema::drop('empresas');

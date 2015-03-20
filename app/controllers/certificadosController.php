@@ -32,6 +32,8 @@ class certificadosController extends crudController {
 		Crud::setCampo(array('nombre'=>'Volúmen','campo'=>'certificados.volumen', 'class'=>'text-right'));
 		Crud::setCampo(array('nombre'=>'Liquidado','campo'=>'(IF(dua IS NULL, 0, 1))','tipo'=>'bool'));
 		Crud::setCampo(array('nombre'=>'Anulado','campo'=>'anulado','tipo'=>'bool'));
+
+		Crud::setOrderBy(array('columna'=>0,'direccion'=>'desc'));
 		
 	 	Crud::setBotonExtra(array('url'=>'c/{id}','icon'=>'fa fa-file-pdf-o','titulo'=>'Generar','class'=>'primary'));
 
@@ -54,9 +56,8 @@ class certificadosController extends crudController {
 
 		if($datos->anulado == 1)
 			return "El certificado ha sido anulado";
-		
-
-		if(!$datos->certificado || $datos->certificado == '')
+	
+		if(!$datos->certificado || $datos->certificado == '' || !$datos->firma || $datos->firma == '')
 			return "Imposible generar el certificado debido a faltas de firma.";
 
 		PDF::SetTitle('Certificado');

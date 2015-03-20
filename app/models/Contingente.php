@@ -64,4 +64,11 @@ class Contingente extends Eloquent {
 			->where('c.contingenteid', $aContingenteId)
 			->first();
 	}
+
+	public static function getTipoTratado($aContingneteId) {
+		return DB::table('contingentes AS c')
+			->leftJoin('tipotratados AS t', 'c.tipotratadoid', '=', 't.tipotratadoid')
+			->where('contingenteid', $aContingneteId)
+			->pluck('asignacion');
+	}
 }

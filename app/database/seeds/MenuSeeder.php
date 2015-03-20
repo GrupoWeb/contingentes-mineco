@@ -251,7 +251,7 @@
 				'menuid'					=> 32,
 				'padreid'        	=> 11,
 				'modulopermisoid' => 131,
-				'nombre'         	=> 'Usuarios empresas',
+				'nombre'         	=> 'Empresas',
 				'orden' 					=> 150,
 				'icono'         	=> null
 			));

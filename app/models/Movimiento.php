@@ -3,7 +3,7 @@
 class Movimiento extends Eloquent {
 	protected $primryKey = 'movimientoid';
 
-	public static function getCuentaCorriente($aPeriodoId, $aFechaInicio, $aFechaFin) {
+	public static function getCuentaCorriente($aPeriodoId) {
 		return DB::table('movimientos AS m')
 			->select(DB::raw('DATE_FORMAT(m.created_at, "%d-%m-%Y") AS fecha'), 'u.nombre AS acreditadoa', 
 				'u2.nombre AS acreditadopor', 'comentario', 
@@ -15,7 +15,6 @@ class Movimiento extends Eloquent {
 			->orderBy('m.created_at')
 			->orderBy('m.movimientoid')
 			->where('m.periodoid', $aPeriodoId)
-			->whereBetween('m.created_at', array($aFechaInicio, $aFechaFin))
 			->get();
 	}
 

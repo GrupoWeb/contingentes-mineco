@@ -587,12 +587,6 @@
       ));
             
       DB::table('authmodulopermisos')->insert(array(
-          'modulopermisoid'	=> 107,
-          'moduloid'        => 28,
-          'permisoid' 			=> 15
-      ));
-            
-      DB::table('authmodulopermisos')->insert(array(
           'modulopermisoid'	=> 108,
           'moduloid'        => 22,
           'permisoid' 			=> 5
@@ -748,21 +742,13 @@
 				'permisoid' 			=> 5
 			));
 
-			/*DB::table('authmodulopermisos')->insert(array(
-				'modulopermisoid'	=> 136,
-				'moduloid'        => 28,
-				'permisoid' 			=> 6
-			));*/
-
 			DB::table('authmodulopermisos')->insert(array(
 				'modulopermisoid'	=> 137,
 				'moduloid'        => 28,
 				'permisoid' 			=> 7
 			));
 
-
 		  DB::table('authmodulopermisos')->update(array('created_at'=>date_create(), 'updated_at'=>date_create()));
 		  DB::statement('SET FOREIGN_KEY_CHECKS=1');
 		}
 	}
-//Termina ModuloPermisosSeeder.php

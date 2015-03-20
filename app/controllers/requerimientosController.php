@@ -13,7 +13,13 @@ class requerimientosController extends crudController {
 	}
 
 	public function getContingentes($id, $tipo) {
-		return Response::json(Contingenterequerimiento::getRequerimientos($id, $tipo, EmpresaRequerimiento::getEmpresaRequerimientosIds()));
+
+		$requerimientos = array();
+
+		if(Auth::check())
+			$requerimientos = EmpresaRequerimiento::getEmpresaRequerimientosIds();
+
+		return Response::json(Contingenterequerimiento::getRequerimientos($id, $tipo, $requerimientos));
 	}
 
 	public function getVacio() {
