@@ -106,7 +106,7 @@
 
     @if (in_array('contingentes', $filters))
       $('#cmbContingente').change(function(){
-        $('#pid').html('<p class="form-control-static"><i class="fa fa-2x fa-spinner fa-pulse"></i></p>');
+        $('#pid').html('<p class="form-control-static"><i class="fa fa-lg fa-spinner fa-pulse"></i></p>');
         $.get('cuentacorriente/periodos/' + $(this).find('option:selected').val(), function(data){
           $('#pid').html(data);
         });
