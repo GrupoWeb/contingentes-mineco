@@ -1,6 +1,6 @@
 @extends('template/template')
-@section('content')
 
+@section('content')
 <h3 class="text-primary">Perfil de usuario</h3>
 <div class="col-sm-12">
 	<dl class="dl-horizontal">

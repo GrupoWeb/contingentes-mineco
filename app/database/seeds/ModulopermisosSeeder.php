@@ -748,11 +748,11 @@
 				'permisoid' 			=> 5
 			));
 
-			DB::table('authmodulopermisos')->insert(array(
+			/*DB::table('authmodulopermisos')->insert(array(
 				'modulopermisoid'	=> 136,
 				'moduloid'        => 28,
 				'permisoid' 			=> 6
-			));
+			));*/
 
 			DB::table('authmodulopermisos')->insert(array(
 				'modulopermisoid'	=> 137,
