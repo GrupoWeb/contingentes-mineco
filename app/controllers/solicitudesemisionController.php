@@ -100,17 +100,19 @@ class solicitudesemisionController extends crudController {
 				Session::flash('type','success');
 				Session::flash('message','La solicitud de emisión fue procesada correctamente');
 
-				Mail::send('emails/solicitudemisionresultado', array(
-					'nombre'        => $usuario->nombre,
-					'fecha'         => $result['emision']->created_at,
-					'url'           => url('c/'.Crypt::encrypt($result['certificado']->certificadoid)),
-					'estado'        => 'Aprobada',
-					'solicitado'    => $emision->solicitado,
-					'emitido'       => $cantidad,
-					'observaciones' => Input::get('txObservaciones')), function($msg) use ($email, $admins){
-		       	$msg->to($email)->subject('Certificado DACE - MINECO');
-		       	$msg->bcc($admins);
-				});
+				try {
+					Mail::send('emails/solicitudemisionresultado', array(
+						'nombre'        => $usuario->nombre,
+						'fecha'         => $result['emision']->created_at,
+						'url'           => url('c/'.Crypt::encrypt($result['certificado']->certificadoid)),
+						'estado'        => 'Aprobada',
+						'solicitado'    => $emision->solicitado,
+						'emitido'       => $cantidad,
+						'observaciones' => Input::get('txObservaciones')), function($msg) use ($email, $admins){
+			       	$msg->to($email)->subject('Certificado DACE - MINECO');
+			       	$msg->bcc($admins);
+					});
+				} catch (Exception $e) {}
 			}
 			else {
 				Session::flash('type','warning');
@@ -130,16 +132,19 @@ class solicitudesemisionController extends crudController {
 
 				$usuario = Authusuario::find($emision->usuarioid);
 				$email   = $usuario->email;
-				Mail::send('emails/solicitudemisionresultado', array(
-					'nombre'        => $usuario->nombre,
-					'fecha'         => $emision->created_at,
-					'estado'        => 'Rechazada',
-					'solicitado'    => $emision->solicitado,
-					'emitido'       => 0,
-					'observaciones' => Input::get('txObservaciones')), function($msg) use ($email, $admins){
-		       	$msg->to($email)->subject('Solicitud de Emisión DACE - MINECO');
-		       	$msg->bcc($admins);
-				});
+
+				try {
+					Mail::send('emails/solicitudemisionresultado', array(
+						'nombre'        => $usuario->nombre,
+						'fecha'         => $emision->created_at,
+						'estado'        => 'Rechazada',
+						'solicitado'    => $emision->solicitado,
+						'emitido'       => 0,
+						'observaciones' => Input::get('txObservaciones')), function($msg) use ($email, $admins){
+			       	$msg->to($email)->subject('Solicitud de Emisión DACE - MINECO');
+			       	$msg->bcc($admins);
+					});
+				} catch (Exception $e) {}
 			}
 			else {
 				Session::flash('type','warning');
