@@ -57,7 +57,7 @@ class apiController extends BaseController {
 			return Response::json($response);
 		}
 
-		$tratados = Usuariocontingente::getTratadosUsuario($empresa->usuarioid);
+		$tratados = Empresacontingente::getTratadosEmpresa($empresa->empresaid);
 
 		$response['data']	= array(
 			'vigente'  => $empresa->activo,
@@ -82,7 +82,7 @@ class apiController extends BaseController {
 			return Response::json($response);
 		}
 
-		$contingentes = Usuariocontingente::contingentesUsuarioTratado($empresa->usuarioid , Input::get('tratadoid'));
+		$contingentes = Empresacontingente::contingentesEmpresaTratado($empresa->empresaid , Input::get('tratadoid'));
 		$response['data'] = $contingentes;
 		return Response::json($response);
 	}

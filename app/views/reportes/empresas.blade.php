@@ -12,7 +12,6 @@
 		<table class="table table-bordered table-condensed">
 	  	<thead>
 	  		<th>Nombre</th>
-	  		<th>Email</th>
 	  		<th>NIT</th>
 	  		<th>Domicilio comercial</th>
 	  		<th>Teléfono</th>
@@ -23,7 +22,6 @@
 					@foreach($empresas['empresas'] as $empresa)				
 				  	<tbody>
 				  		<td>{{ $empresa['empresa'] }}</td>
-				  		<td>{{ $empresa['email'] }}</td>
 				  		<td>{{ $empresa['nit'] }}</td>
 				  		<td>{{ $empresa['domiciliocomercial'] }}</td>
 				  		<td class="text-right">{{ $empresa['telefono'] }}</td>
@@ -31,7 +29,7 @@
 				  	</tbody>
 					@endforeach
 						<tr>
-							<td colspan="5" class="text-right"><strong>TOTAL</strong></td>
+							<td colspan="4" class="text-right"><strong>TOTAL</strong></td>
 							<td class="text-right"><strong>{{ number_format(count($empresas['empresas'])) }}</strong></td>
 						</tr>
 			@endforeach

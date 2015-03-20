@@ -29,7 +29,7 @@ class inscripcionController extends BaseController {
 
 	public function validateNIT() {
     $aNIT = Input::get('txNIT');
-		$result = DB::table('authusuarios')->where('nit', $aNIT)->first();
+		$result = DB::table('empresas')->where('nit', $aNIT)->first();
 
     if ($result) 
     	$val='false';

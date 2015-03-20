@@ -3,7 +3,7 @@ class emisionController extends BaseController {
 	
 	function index() {
 		return View::make('emision.index')
-			->with('contingentes', Usuariocontingente::getContingentes());
+			->with('contingentes', Empresacontingente::getContingentes());
 	}
 
 	function store() {

@@ -10,12 +10,12 @@ class dashboardController extends BaseController {
 			$datos = array();
 			foreach($tratados as $tratado) {
 				$contingentes = Contingente::getContingentesTratado($tratado->tratadoid);
-				$empresas     = Tratado::getUsuariosTratado($tratado->tratadoid);
+				$empresas     = Tratado::getEmpresasTratado($tratado->tratadoid);
 
 				$tingentes = array();
 				foreach($contingentes as $contingente) {
 					$query       = DB::select(DB::raw('SELECT getSaldo('.$contingente.', 0) AS saldo'));
-					$inscritos   = Usuariocontingente::getUsuariosContingente($contingente);
+					$inscritos   = Empresacontingente::getEmpresasContingente($contingente);
 					$tingentes[] = array(
 						'contingenteid' => $contingente,
 						'nombre'        => Contingente::getProducto($contingente),

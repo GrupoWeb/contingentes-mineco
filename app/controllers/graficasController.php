@@ -6,17 +6,17 @@ class graficasController extends BaseController {
 		$contingenteid = Crypt::decrypt($id);
 		$contingente   = Contingente::find($contingenteid);
 		$asignacion    = Tipotratado::getAsignacion($contingente->tipotratadoid);
-		$empresas      = Usuariocontingente::getUsuariosContingente($contingenteid);
+		$empresas      = Empresacontingente::getEmpresasContingente($contingenteid);
 
 		if($asignacion == 1) { //cuenta corriente
 			$data  = array();
 			foreach($empresas as $empresa) {
-				$consumido = Movimiento::getMovimientos($contingenteid, $empresa->usuarioid, 'Certificado');
-				$asignado  = Movimiento::getMovimientos($contingenteid, $empresa->usuarioid, 'Asignacion');
+				$consumido = Movimiento::getMovimientos($contingenteid, $empresa->empresaid, 'Certificado');
+				$asignado  = Movimiento::getMovimientos($contingenteid, $empresa->empresaid, 'Asignacion');
 
-				$data[$empresa->usuarioid]['nombre']    = $empresa->nombre;
-				$data[$empresa->usuarioid]['asignado']  = $asignado->cantidad; 
-				$data[$empresa->usuarioid]['consumido'] = $consumido->cantidad;
+				$data[$empresa->empresaid]['nombre']    = $empresa->nombre;
+				$data[$empresa->empresaid]['asignado']  = $asignado->cantidad; 
+				$data[$empresa->empresaid]['consumido'] = $consumido->cantidad;
 			}
 
 			$view  = 'cc';
@@ -27,9 +27,9 @@ class graficasController extends BaseController {
 			$saldo = DB::select(DB::raw('SELECT getSaldo('.$contingenteid.', NULL) AS disponible'));
 			$data  = array();
 			foreach($empresas as $empresa) {
-				$consumido = Movimiento::getMovimientos($contingenteid, $empresa->usuarioid, 'Certificado');
-				$data[$empresa->usuarioid]['nombre']    = $empresa->nombre;
-				$data[$empresa->usuarioid]['consumido'] = $consumido->cantidad;
+				$consumido = Movimiento::getMovimientos($contingenteid, $empresa->empresaid, 'Certificado');
+				$data[$empresa->empresaid]['nombre']    = $empresa->nombre;
+				$data[$empresa->empresaid]['consumido'] = $consumido->cantidad;
 			}
 
 			$view  = 'ptpd';

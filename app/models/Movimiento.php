@@ -32,14 +32,14 @@ class Movimiento extends Eloquent {
 			->first();
 	}
 
-	public static function getMovimientos($aContingenteId, $aUsuarioId, $aTipo) {
+	public static function getMovimientos($aContingenteId, $aEmpresaId, $aTipo) { 
 		return DB::table('movimientos AS m')
 			->selectRaw('IFNULL(ABS(SUM(cantidad)), 0) AS cantidad')
 			->leftJoin('periodos AS p', 'm.periodoid', '=', 'p.periodoid')
 			->leftJoin('contingentes AS c', 'p.contingenteid', '=', 'c.contingenteid')
 			->where('tipo', $aTipo)
 			->where('c.contingenteid', $aContingenteId)
-			->where('usuarioid', $aUsuarioId)
+			->whereIn('usuarioid', Usuario::listUsuariosEmpresa($aEmpresaId))
 			->first();
 	}
 }

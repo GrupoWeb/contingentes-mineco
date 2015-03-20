@@ -44,12 +44,10 @@ class solicitudesinscripcionController extends crudController {
 				//copiar a tabla authusuarios
 				$solicitud  = Solicitudinscripcion::find($solicitudid);
 				$rolempresa = Config::get('contingentes.rolempresa');
-				$usuarioid  = DB::table('authusuarios')->insertGetId(
-					array(
-						'email'                   => $solicitud->email,
-						'password'                => $solicitud->password,
+
+				$empresaid = DB::table('empresas')->insertGetId(					
 						'nit'                     => $solicitud->nit,
-						'nombre'                  => $solicitud->nombre,
+						'razonsocial'             => $solicitud->nombre,
 						'propietario'             => $solicitud->propietario,
 						'domiciliofiscal'         => $solicitud->domiciliofiscal,
 						'domiciliocomercial'      => $solicitud->domiciliocomercial,
@@ -58,28 +56,39 @@ class solicitudesinscripcionController extends crudController {
 						'fax'                     => $solicitud->fax,
 						'encargadoimportaciones'  => $solicitud->encargadoimportaciones,
 						'created_at'              => date_create(),
+						'updated_at'              => date_create(),	
+				);
+				if($empresaid == 0) return 0;
+
+				$usuarioid  = DB::table('authusuarios')->insertGetId(
+					array(
+						'empresaid'								=> $empresaid,
+						'email'                   => $solicitud->email,
+						'password'                => $solicitud->password,
+						'created_at'              => date_create(),
 						'updated_at'              => date_create(),
 						'rolid'                   => $rolempresa[0],
 						'activo'                  => 1
 					)
 				);
 
+
 				if($usuarioid == 0) return 0;
 
-				//copiar a usuariocontingentes
-				$ucontingente                = new Usuariocontingente;
-				$ucontingente->usuarioid     = $usuarioid;
-				$ucontingente->contingenteid = $contingenteid;
-				$ucontingente->save();
+				//copiar a empresacontingentes
+				$econtingente                = new Empresacontingente;
+				$econtingente->empresaid     = $empresaid;
+				$econtingente->contingenteid = $contingenteid;
+				$econtingente->save();
 
 
-				if(!$ucontingente) return 0;
+				if(!$econtingente) return 0;
 
-				//copiar a usuario requerimientos
+				//copiar a empresarequerimientos
 				$requerimientos = Solicitudinscripcionrequemiento::where('solicitudinscripcionid', $solicitudid)->get();
 				foreach($requerimientos as $requerimiento) {
-					$ureq                  = new Usuariorequerimiento;
-					$ureq->usuarioid       = $usuarioid;
+					$ureq                  = new Empresarequerimiento;
+					$ureq->empresaid       = $empresaid;
 					$ureq->requerimientoid = $requerimiento->requerimientoid;
 					$ureq->archivo         = $requerimiento->archivo;
 					$ureq->save();
@@ -171,11 +180,11 @@ class solicitudesinscripcionController extends crudController {
   
   public function create(){
     
-        $usuarioCon = array();
-     
-        $con = DB::table("usuariocontingentes")->select("contingenteid")->where("usuarioid",Auth::id())->get();
-        foreach($con as $k=>$v)
-          array_push($usuarioCon,$v->contingenteid);
+    $usuarioCon = array();
+ 
+    $con = DB::table("empresacontingentes")->select("contingenteid")->where("empresaid",Auth::user()->empresaid) ->get();
+    foreach($con as $k=>$v)
+      array_push($usuarioCon,$v->contingenteid);
         
     return View::make('inscripcion/reinscripcion')
         ->with('contingentes', Contingente::getContingentes($usuarioCon));
@@ -186,47 +195,47 @@ class solicitudesinscripcionController extends crudController {
     
 	DB::transaction(function() {
 
-        $usuarioId = Auth::id();
+    $empresaId = Auth::user()->empresaid;
       
-	    foreach (Input::get('contingentes') as $val) {
-	    	DB::table('usuariocontingentes')->insert(array(
-					'usuarioid'     => $usuarioId, 
-					'contingenteid' => Crypt::decrypt($val))
-	    	);
-	    }
-	    
-	    foreach (Input::file() as $key=>$val) { 
-	      if ($key=='txArchivo') continue;
-	    	if ($val) {
-					$arch   = Input::file($key);
-					$nombre = date('YmdHis').$arch->getClientOriginalName();
-					$res    = $arch->move(public_path() . '/archivos/' . $usuarioId, $nombre);
-					DB::table('usuariorequerimientos')->insert(array(
-						'usuarioid'        => $usuarioId,
-						'requerimientoid'  => substr($key,4),
-						'archivo'          => $nombre,
-						'created_at'       => date_create(),
-						'updated_at'       => date_create()
-					));
-				}
-	    }
-	  }); //DB Transaction
-
-    $email  = Auth::user()->email;
-    $admins = Usuario::listAdminEmails();
+    foreach (Input::get('contingentes') as $val) {
+    	DB::table('empresacontingentes')->insert(array(
+				'empresaid'     => $empresaId, 
+				'contingenteid' => Crypt::decrypt($val))
+    	);
+    }
     
-    try {
-    	Mail::send('emails/solicitudinscripcion', array(
-	      'nombre' => Auth::user()->nombre,
-	      'fecha'  => date('d-m-Y H:i')
-	      ), function($msg) use ($email, $admins){
-	            $msg->to($email)->subject('Solicitud de inscripción');
-	            $msg->bcc($admins);
-	    });
-    } catch (Exception $e) {}
+    foreach (Input::file() as $key=>$val) { 
+      if ($key=='txArchivo') continue;
+    	if ($val) {
+				$arch   = Input::file($key);
+				$nombre = date('YmdHis').$arch->getClientOriginalName();
+				$res    = $arch->move(public_path() . '/archivos/' . $empresaId, $nombre);
+				DB::table('empresarequerimientos')->insert(array(
+					'empresaid'        => $empresaId,
+					'requerimientoid'  => substr($key,4),
+					'archivo'          => $nombre,
+					'created_at'       => date_create(),
+					'updated_at'       => date_create()
+				));
+			}
+    }
+  }); //DB Transaction
 
-   return Redirect::to('/')
-      ->with('flashMessage',Config::get('login::signupexitoso'))
-      ->with('flashType','success');
+  $email  = Auth::user()->email;
+  $admins = Usuario::listAdminEmails();
+    
+  try {
+  	Mail::send('emails/solicitudinscripcion', array(
+      'nombre' => Auth::user()->nombre,
+      'fecha'  => date('d-m-Y H:i')
+      ), function($msg) use ($email, $admins){
+            $msg->to($email)->subject('Solicitud de inscripción');
+            $msg->bcc($admins);
+    });
+  } catch (Exception $e) {}
+
+  return Redirect::to('/')
+    ->with('flashMessage',Config::get('login::signupexitoso'))
+    ->with('flashType','success');
   }
 }

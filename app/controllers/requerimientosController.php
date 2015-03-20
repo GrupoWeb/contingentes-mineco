@@ -13,16 +13,7 @@ class requerimientosController extends crudController {
 	}
 
 	public function getContingentes($id, $tipo) {
-      
-        $usuarioRq = array();
-        if(Auth::id())
-        {
-          $req = DB::table("usuariorequerimientos")->select("requerimientoid")->where("usuarioid",Auth::id())->get();
-          foreach($req as $k=>$v)
-            array_push($usuarioRq,$v->requerimientoid);
-        }
-      
-		return Response::json(Contingenterequerimiento::getRequerimientos($id, $tipo,$usuarioRq));
+		return Response::json(Contingenterequerimiento::getRequerimientos($id, $tipo, EmpresaRequerimiento::getEmpresaRequerimientosIds()));
 	}
 
 	public function getVacio() {

@@ -16,12 +16,12 @@ class Tratado extends Eloquent {
 	}
 
 	public static function getUsuariosTratado($aTratadoId, $aContingenteId=0) {
-		$query = DB::table('usuariocontingentes AS uc')
-			->select('u.nombre AS empresa', 'u.email', 'u.nit', 't.nombrecorto AS tratado', 
-				'p.nombre AS producto', 'u.domiciliocomercial', 'u.telefono',
-				DB::raw('DATE_FORMAT(uc.created_at, "%d-%m-%Y %H:%i") AS fechainscripcion'))
-			->leftJoin('authusuarios AS u', 'uc.usuarioid', '=', 'u.usuarioid')
-			->leftJoin('contingentes AS c', 'uc.contingenteid', '=', 'c.contingenteid')
+		$query = DB::table('empresacontingentes AS ec')
+			->select('e.razonsocial AS empresa', 'e.nit', 't.nombrecorto AS tratado', 
+				'p.nombre AS producto', 'e.domiciliocomercial', 'e.telefono',
+				DB::raw('DATE_FORMAT(ec.created_at, "%d-%m-%Y %H:%i") AS fechainscripcion'))
+			->leftJoin('empresas AS e', 'e.empresaid','=','ec.empresaid')
+			->leftJoin('contingentes AS c', 'ec.contingenteid', '=', 'c.contingenteid')
 			->leftJoin('tratados AS t', 'c.tratadoid', '=', 't.tratadoid')
 			->leftJoin('productos AS p', 'c.productoid', '=', 'p.productoid');
 
@@ -33,7 +33,7 @@ class Tratado extends Eloquent {
 
 		$query->orderBy('t.nombrecorto');
 		$query->orderBy('p.nombre');
-		$query->orderBy('u.nombre');
+		$query->orderBy('e.razonsocial');
 
 		return $query->get();
 	}
