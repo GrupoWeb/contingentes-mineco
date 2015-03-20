@@ -52,9 +52,12 @@ class certificadosController extends crudController {
 		
 		$datos = Certificado::getCertificado($id);
 
-		if($datos->anulado == 1){
+		if($datos->anulado == 1)
 			return "El certificado ha sido anulado";
-		}
+		
+
+		if(!$datos->firma || $datos->firma == '')
+			return "Imposible generar el certificado debido a faltas de firma.";
 
 		PDF::SetTitle('Certificado');
 		PDF::AddPage();
