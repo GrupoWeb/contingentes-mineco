@@ -44,9 +44,13 @@ class certificadosController extends crudController {
 	}
 
 	public function generarPDF($id) {
-		$elId  = Crypt::decrypt($id);
-		$datos = Certificado::getCertificado($elId);
-		//dd(DB::getQueryLog());
+		try {
+			$id  = Crypt::decrypt($id);
+		} catch (Exception $e) {
+			return "El certificado no es valido";
+		}
+		
+		$datos = Certificado::getCertificado($id);
 
 		if($datos->anulado == 1){
 			return "El certificado ha sido anulado";
@@ -58,7 +62,7 @@ class certificadosController extends crudController {
 		$certificate = $datos->certificado;
 		PDF::SetSignature($certificate, $certificate, 'cservice');
 
-		$html = View::make('certificados.adjudicacion')
+		$html = View::make($datos->vista)
 			->with('datos', $datos);
 		//return $html;
 
@@ -71,6 +75,24 @@ class certificadosController extends crudController {
 		PDF::writeHTMLCell(0,0, 80, 250, 
 			$datos->nombrecompleto . '<br>' . $datos->puesto, 0, 1, 0, true,'C', true);
 		PDF::write2DBarcode(url('c/' . $id),'QRCODE,M',10,233,25,25);
+
+		//=== WATERMARK ===
+		PDF::setPage( 1 );
+		$myPageWidth  = PDF::getPageWidth();
+		$myPageHeight = PDF::getPageHeight();
+		
+		$myX = ( $myPageWidth / 2 ) - 75;
+		$myY = ( $myPageHeight / 2 ) + 50;
+		
+		PDF::SetAlpha(0.09);
+		
+		PDF::StartTransform();
+		PDF::Rotate(45, $myX, $myY);
+		PDF::SetFont("courier", "", 45);
+		PDF::Text($myX, $myY,"CERTIFICADO NO VALIDO"); 
+		PDF::StopTransform();
+		PDF::SetAlpha(1);
+		//========
 
 		PDF::Output('certificado.pdf');
 	}

@@ -1,6 +1,10 @@
 <?php
 return array(
 
+	'redirectintended' => false,
+
+	'redirectto' => '/',
+
 	/*
 	|--------------------------------------------------------------------------
 	| Tabla

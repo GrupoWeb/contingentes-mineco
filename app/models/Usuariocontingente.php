@@ -22,7 +22,7 @@ class Usuariocontingente extends Eloquent {
 	
   public static function contingentesUsuario($aUsuarioId) {
 	  return DB::table('usuariocontingentes AS uc')
-			->select('uc.contingenteid', 't.nombrecorto AS tratado', 'p.nombre AS producto', 'c.tratadoid','uc.activo')
+			->select('uc.contingenteid', 't.nombrecorto AS tratado', 'p.nombre AS producto', 'c.tratadoid')
 			->leftJoin('contingentes AS c', 'uc.contingenteid', '=', 'c.contingenteid')
 			->leftJoin('tratados AS t', 'c.tratadoid', '=', 't.tratadoid')
 			->leftJoin('productos AS p', 'c.productoid', '=', 'p.productoid')

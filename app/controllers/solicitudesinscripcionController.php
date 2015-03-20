@@ -110,6 +110,8 @@ class solicitudesinscripcionController extends crudController {
 				return $usuarioid;
 			}); //Transaction
 
+			$admins  = Usuario::listAdminEmails();
+
 			if($result <> 0) {
 				$usuario = DB::table('authusuarios')->where('usuarioid', $result)->first();
 				$email   = $usuario->email;
@@ -117,13 +119,16 @@ class solicitudesinscripcionController extends crudController {
 				Session::flash('type','success');
 				Session::flash('message','La solicitud de inscripción fue procesada correctamente');
 
-				Mail::send('emails/solicitudinscripcionresultado', array(
-					'nombre'        => $usuario->nombre,
-					'fecha'         => $usuario->created_at,
-					'estado'        => 'Aprobada',
-					'observaciones' => Input::get('txObservaciones')), function($msg) use ($email){
-		       	$msg->to($email)->subject('Solicitud de Inscripción DACE - MINECO');
-				});
+				try {
+					Mail::send('emails/solicitudinscripcionresultado', array(
+						'nombre'        => $usuario->nombre,
+						'fecha'         => $usuario->created_at,
+						'estado'        => 'Aprobada',
+						'observaciones' => Input::get('txObservaciones')), function($msg) use ($email, $admins){
+			       	$msg->to($email)->subject('Solicitud de Inscripción DACE - MINECO');
+			       	$msg->bcc($admins);
+					});
+				} catch (Exception $e) {}
 			}
 			else {
 				Session::flash('type','warning');
@@ -143,13 +148,16 @@ class solicitudesinscripcionController extends crudController {
 				Session::flash('message','La solicitud de inscripción fue rechazada');
 
 				$email = $solicitud->email;
-				Mail::send('emails/solicitudinscripcionresultado', array(
-					'nombre'        => $solicitud->nombre,
-					'fecha'         => $solicitud->created_at,
-					'estado'        => 'Rechazada',
-					'observaciones' => Input::get('txObservaciones')), function($msg) use ($email){
-		       	$msg->to($email)->subject('Solicitud de Inscripción DACE - MINECO');
-				});
+				try {
+					Mail::send('emails/solicitudinscripcionresultado', array(
+						'nombre'        => $solicitud->nombre,
+						'fecha'         => $solicitud->created_at,
+						'estado'        => 'Rechazada',
+						'observaciones' => Input::get('txObservaciones')), function($msg) use ($email, $admins){
+			       	$msg->to($email)->subject('Solicitud de Inscripción DACE - MINECO');
+			       	$msg->bcc($admins);
+					});
+				} catch (Exception $e) {}
 			}
 
 			else {
@@ -204,18 +212,21 @@ class solicitudesinscripcionController extends crudController {
 	    }
 	  }); //DB Transaction
 
-    $email = Auth::user()->email;
-    Mail::send('emails/solicitudinscripcion', array(
-      'nombre' => Auth::user()->nombre,
-      'fecha'  => date('d-m-Y H:i')
-      ), function($msg) use ($email){
-            $msg->to($email)->subject('Solicitud de inscripción');
-    });
+    $email  = Auth::user()->email;
+    $admins = Usuario::listAdminEmails();
+    
+    try {
+    	Mail::send('emails/solicitudinscripcion', array(
+	      'nombre' => Auth::user()->nombre,
+	      'fecha'  => date('d-m-Y H:i')
+	      ), function($msg) use ($email, $admins){
+	            $msg->to($email)->subject('Solicitud de inscripción');
+	            $msg->bcc($admins);
+	    });
+    } catch (Exception $e) {}
 
    return Redirect::to('/')
       ->with('flashMessage',Config::get('login::signupexitoso'))
       ->with('flashType','success');
-	
-	
   }
 }

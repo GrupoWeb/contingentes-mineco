@@ -8,15 +8,6 @@
       <dt>Email:</dt><dd>{{$usuario->email}}</dd>
       <dt>Rol:</dt><dd>{{$usuario->rol}}</dd>
       <dt>Fecha de ingreso:</dt><dd>{{$usuario->creado}}</dd>
-      <dt>Activo:</dt>
-        <dd>
-          @if($usuario->activo)
-            <span class="label label-success" >Si</span>
-          @else
-            <span class="label label-default" >No</span>
-          
-          @endif
-        </dd>
 	</dl>
 </div>
 
@@ -34,16 +25,8 @@
          @foreach($contingentes as $contingente)
         <li class="list-group-item">
           <div >{{$contingente->tratado." - ".$contingente->producto}}</div> 
-          @if($contingente->activo)
-            <span class="label label-success" >Activo</span>
-          @else
-            <span class="label label-default" >Inactivo</span>
-          @endif
-
         </li>    
         @endforeach
-
-
     </ul>
   </div>  
 
