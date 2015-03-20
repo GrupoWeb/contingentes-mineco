@@ -43,6 +43,14 @@ class solicitudesemisionController extends crudController {
 	public function store() {
 		$elID = Crypt::decrypt(Input::get('id'));
 
+		if(!Auth::user()->certificado || Auth::user()->certificado == '') {
+			Session::flash('type','danger');
+			Session::flash('message','Imposible procesar solicitud ya que no se ha encontrado firma para tu usuario.');
+
+			return Redirect::route('solicitudespendientes.emision.index');
+		}
+
+
 		if(Input::has('btnAutorizar')) {
 			$cantidad   = Input::get('txCantidad');
 			$comentario = Input::get('txObservaciones');

@@ -1,6 +1,6 @@
 <?php
 
-class empresausuariosController extends crudController {
+class usuariosdeempresaController extends crudController {
 
 	public function __construct() {
     Crud::setTitulo('Usuarios de empresas');
@@ -18,6 +18,41 @@ class empresausuariosController extends crudController {
     Crud::setBotonExtra(array('url'=>'usuarios/perfil/{id}','class'=>'success','icon'=>'fa fa-user','titulo'=>'Perfil'));
 
     Crud::setPermisos(Cancerbero::tienePermisosCrud('usuarioempresas'));
+  }
+
+  public function edit($id) {
+    $id      = Crypt::decrypt($id);
+    $usuario = Usuario::find($id);
+
+    return View::make('usuarios.edit')
+      ->with('usuario', $usuario);
+  }
+
+  public function update($id) {
+    $id      = Crypt::decrypt($id);
+
+    $usuario                          = Usuario::find($id);
+    $usuario->nit                     = Input::get('txNIT');
+    $usuario->nombre                  = Input::get('txRazonSocial');
+    $usuario->propietario             = Input::get('txPropietario');
+    $usuario->email                   = Input::get('email');
+    $usuario->telefono                = Input::get('txTelefono');
+    $usuario->fax                     = Input::get('txFax');
+    $usuario->domiciliofiscal         = Input::get('txDomicilioFiscal');
+    $usuario->domiciliocomercial      = Input::get('txDomicilioComercial');
+    $usuario->direccionnotificaciones = Input::get('txDireccionNotificaciones');
+    $usuario->encargadoimportaciones  = Input::get('txEncargadoImportaciones');
+    $usuario->activo                  = Input::get('activo', 0);
+
+    if(Input::get('txPassword') <> '')
+      $usuario->password = Hash::make(Input::get('txPassword'));
+
+    $usuario->save();
+
+    Session::flash('message', 'Usuario editado exitosamente');
+    Session::flash('type', 'success');
+
+    return Redirect::to('usuarioempresas');
   }
   
   
