@@ -46,7 +46,7 @@ class inscripcionController extends BaseController {
     if(Input::has('u'))
     	$userid = Crypt::decrypt(Input::get('u'));
 
-    $result = DB::table('authusuarios')->where('nit', $aNIT);
+    $result = DB::table('empresas')->where('nit', $aNIT);
 
 		if($userid <> 0)
 			$result->where('usuarioid', '<>', $userid);
