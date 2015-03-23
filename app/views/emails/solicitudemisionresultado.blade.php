@@ -13,7 +13,7 @@
 	<br />
 	ha sido <h3 style="color: {{ $estado == 'Aprobada' ? 'green' : 'red' }}">{{ $estado }}</h3>
 
-	@if($emitido > 0)
+	@if(1 == 2)
 		<p><a href="{{ $url }}">Presiona aquí para descargar el certificado en PDF.</a></p>
 	@endif
 

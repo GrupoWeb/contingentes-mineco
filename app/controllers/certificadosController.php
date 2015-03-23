@@ -34,10 +34,9 @@ class certificadosController extends crudController {
 		Crud::setCampo(array('nombre'=>'Anulado','campo'=>'anulado','tipo'=>'bool'));
 
 		Crud::setOrderBy(array('columna'=>0,'direccion'=>'desc'));
-		
-	 	Crud::setBotonExtra(array('url'=>'c/{id}','icon'=>'fa fa-file-pdf-o','titulo'=>'Generar','class'=>'primary'));
 
 	 	if(!in_array(Auth::user()->rolid, Config::get('contingentes.rolempresa'))) {
+	 		Crud::setBotonExtra(array('url'=>'c/{id}','icon'=>'fa fa-file-pdf-o','titulo'=>'Generar','class'=>'primary'));
 		 	Crud::setBotonExtra(array('url'=>'certificados/liquidar/{id}','icon'=>'fa fa-check-square ','titulo'=>'Liquidar','class'=>'success'));
 		 	Crud::setBotonExtra(array('url'=>'certificados/anular/{id}','icon'=>'fa fa-minus-square-o','titulo'=>'Anular','class'=>'danger'));
 		}
