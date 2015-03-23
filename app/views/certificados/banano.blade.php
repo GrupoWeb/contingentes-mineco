@@ -30,11 +30,8 @@
 </style>
 <table width="550" cellpadding="5" cellspacing="10" style="font-size: 8px; line-height: 7px">
 	<tr>
-		<td colspan="3" align="left">
-			<img src="/images/logo-mineco.jpg">
-		</td>
-		<td colspan="3" align="right">
-			<img src="/images/logo-dace.jpg">
+		<td colspan="6" align="left">
+			<br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
 		</td>
 	</tr>
 	<tr>
@@ -46,7 +43,7 @@
 	<tr>
 		<td colspan="3" rowspan="2" class="border">
 			<strong>1. AUTORIDAD EMISORA DEL CERTIFICADO:</strong><br/>
-			<p class="underline center">La Dirección de Administración del Comercio Exterior Ministerio de Economía</p>
+			<p class="underline center">Dirección de Administración del Comercio Exterior Ministerio de Economía</p>
 		</td>
 		<td rowspan="2">&nbsp;</td>
 		<td colspan="2" class="border">
@@ -56,7 +53,7 @@
 	</tr>
 	<tr>
 		<td colspan="2" class="border">
-			<strong>3. AÑO CALENDARIO PARA USO DEL CERTIFICADO:</strong><br/>
+			<strong>3. AÑO CALENDARIO PARA USO DE ESTE CERTIFICADO:</strong><br/>
 			<p class="underline center">{{ date('Y') }}</p>
 		</td>
 	</tr>
@@ -74,13 +71,14 @@
 	</tr>
 	<tr>
 		<td colspan="4" rowspan="2" class="border">
-			<strong>6. PESO NETO (en ):</strong><br/>
+			<strong>6. PESO NETO (en toneladas métricas):</strong><br/>
 			<p class="underline">--{{ $datos->volumen }}--</p>			
 			<p style="padding-top:10px"><strong>En letras: </strong><span class="underline">{{ $datos->volumenletras }}</span></p>
 		</td>
 		<td colspan="2" class="border">
+			<?php $fraccion = explode(' ', $datos->fraccion); ?>
 			<strong>7. CODIGO ARANCELARIO<br/><br /> (Nomenclatura Combinada Europea):</strong><br/>
-			<p class="center"><strong>{{ $datos->fraccion }}</strong></p>
+			<p class="center"><strong>{{ $fraccion[0] }}</strong></p>
 		</td>
 	</tr>
 	<tr>
