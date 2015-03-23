@@ -6,6 +6,20 @@
 	<?php $acreditadoLast = '__Primero__'; ?>
 	@foreach($movimientos as $movimiento)
 		@if($movimiento->acreditadoa<>$acreditadoLast)
+			@if($acreditadoLast<>'__Primero__')
+				</tbody>
+					<tfoot>
+						<tr>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td class="text-right text-primary">{{number_format($creditot,2)}}</td>
+							<td class="text-right text-primary">{{number_format($debitot,2)}}</td>
+							<td class="text-right text-primary">{{ number_format($saldo, 2) }}</td>
+						</tr>
+					</tfoot>	
+				</table>
+			@endif
 			<?php $saldo=0; $debitot=0; $creditot=0; ?>
 			<h3>{{ $movimiento->acreditadoa }}</h3>
 			<table class="table table-striped table-bordered table-condensed">
@@ -36,20 +50,6 @@
 			<td class="text-right">{{ number_format($saldo, 2) }}</td>
 		</tr>
 		<?php $acreditadoLast = $movimiento->acreditadoa; ?>
-		@if($movimiento->acreditadoa<>$acreditadoLast)
-				</tbody>
-				<tfoot>
-					<tr>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td class="text-right text-primary">{{number_format($creditot,2)}}</td>
-						<td class="text-right text-primary">{{number_format($debitot,2)}}</td>
-						<td class="text-right text-primary">{{ number_format($saldo, 2) }}</td>
-					</tr>
-				</tfoot>	
-			</table>
-		@endif
 	@endforeach
 		</tbody>
 		<tfoot>
