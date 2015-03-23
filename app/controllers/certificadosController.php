@@ -68,20 +68,16 @@ class certificadosController extends crudController {
 
 		$html = View::make($datos->vista)
 			->with('datos', $datos);
-		//return $html;
 
 		PDF::writeHTML($html, true, false, true, false, '');
 
-		//PDF::Image(public_path() . '/images/firma1.jpg', 105, 220, 70, 35, 'JPG','','N');
-		PDF::Image('@' . $datos->firma, 105,220,70,35,'JPG','','N');
-
+		/*PDF::Image('@' . $datos->firma, 105,220,70,35,'JPG','','N');
 		PDF::line(80,245, 200,245);
-		PDF::writeHTMLCell(0,0, 80, 250, 
-			$datos->nombrecompleto . '<br>' . $datos->puesto, 0, 1, 0, true,'C', true);
-		PDF::write2DBarcode(url('c/' . $id),'QRCODE,M',10,233,25,25);
+		PDF::writeHTMLCell(0,0, 80, 250, $datos->nombrecompleto . '<br>' . $datos->puesto, 0, 1, 0, true,'C', true);
+		PDF::write2DBarcode(url('c/' . $id),'QRCODE,M',10,233,25,25);*/
 
 		//=== WATERMARK ===
-		PDF::setPage( 1 );
+		/*PDF::setPage( 1 );
 		$myPageWidth  = PDF::getPageWidth();
 		$myPageHeight = PDF::getPageHeight();
 		
@@ -95,7 +91,7 @@ class certificadosController extends crudController {
 		PDF::SetFont("courier", "", 45);
 		PDF::Text($myX, $myY,"CERTIFICADO NO VALIDO"); 
 		PDF::StopTransform();
-		PDF::SetAlpha(1);
+		PDF::SetAlpha(1);*/
 		//========
 
 		PDF::Output('certificado.pdf');
