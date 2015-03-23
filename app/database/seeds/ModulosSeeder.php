@@ -109,7 +109,7 @@ class ModulosSeeder extends Seeder {
 		DB::table('authmodulos')->insert(array(
 			'moduloid'       => 18,
 			'nombre'         => 'cuentacorriente',
-			'nombrefriendly' => 'Cuenta corriente'
+			'nombrefriendly' => 'Cuenta corriente - Contingentes'
 		));
 
 		DB::table('authmodulos')->insert(array(
@@ -170,6 +170,12 @@ class ModulosSeeder extends Seeder {
 			'moduloid'       => 28,
 			'nombre'         => 'usuarioempresas',
 			'nombrefriendly' => 'Usuarios empresas'
+		));
+
+		DB::table('authmodulos')->insert(array(
+			'moduloid'       => 29,
+			'nombre'         => 'cuentacorrienteempresas',
+			'nombrefriendly' => 'Cuenta corriente - Empresas'
 		));
 
 		DB::table('authmodulos')->update(array('created_at'=>date_create(), 'updated_at'=>date_create()));

@@ -170,8 +170,8 @@
 				'menuid'					=> 22,
 				'padreid'        	=> 21,
 				'modulopermisoid' => 90,
-				'nombre'         	=> 'Cuenta corriente',
-				'orden' 					=> 3600,
+				'nombre'         	=> 'Cuenta corriente - Contingentes',
+				'orden' 					=> 100,
 				'icono'         	=> null
 			));
 
@@ -253,6 +253,15 @@
 				'modulopermisoid' => 131,
 				'nombre'         	=> 'Empresas',
 				'orden' 					=> 150,
+				'icono'         	=> null
+			));
+
+			DB::table('authmenu')->insert(array(
+				'menuid'					=> 33,
+				'padreid'        	=> 21,
+				'modulopermisoid' => 138,
+				'nombre'         	=> 'Cuenta corriente - Empresas',
+				'orden' 					=> 200,
 				'icono'         	=> null
 			));
 
