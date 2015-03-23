@@ -8,13 +8,30 @@ class Movimiento extends Eloquent {
 			->select(DB::raw('DATE_FORMAT(m.created_at, "%d-%m-%Y") AS fecha'), 'u.nombre AS acreditadoa', 
 				'u2.nombre AS acreditadopor', 'comentario', 
 				DB::raw('IF(m.tipo="Cuota",cantidad,NULL) AS credito'),
-				DB::raw('IF(m.tipo<>"Cuota", IF(m.tipo="Asignacion",cantidad,-cantidad),NULL) AS debito')
+				DB::raw('IF(m.tipo<>"Cuota", IF(m.tipo="Asignación",cantidad,-cantidad),NULL) AS debito')
 				)
 			->leftJoin('authusuarios AS u', 'm.usuarioid',  '=', 'u.usuarioid')
 			->leftJoin('authusuarios AS u2', 'm.created_by', '=', 'u2.usuarioid')
 			->orderBy('m.created_at')
 			->orderBy('m.movimientoid')
 			->where('m.periodoid', $aPeriodoId)
+			->whereIn('m.tipo', array('Asignación','Cuota'))
+			->get();
+	}
+
+	public static function getCuentaCorrienteEmpresa($aPeriodoId, $aEmpresaId) {
+		return DB::table('movimientos AS m')
+			->select(DB::raw('DATE_FORMAT(m.created_at, "%d-%m-%Y") AS fecha'), 'u.nombre AS acreditadoa', 
+				'u2.nombre AS acreditadopor', 'comentario', 
+				DB::raw('IF(m.tipo="Asignación",cantidad,NULL) AS credito'),
+				DB::raw('IF(m.tipo="Certificado",cantidad,NULL) AS debito')
+				)
+			->leftJoin('authusuarios AS u', 'm.usuarioid',  '=', 'u.usuarioid')
+			->leftJoin('authusuarios AS u2', 'm.created_by', '=', 'u2.usuarioid')
+			->orderBy('m.created_at')
+			->orderBy('m.movimientoid')
+			->where('m.periodoid', $aPeriodoId)
+			->whereIn('m.tipo', array('Asignación','Certificado'))
 			->get();
 	}
 

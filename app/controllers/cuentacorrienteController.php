@@ -4,7 +4,7 @@ class cuentacorrienteController extends BaseController {
 	
 	public function index() {
 		return View::make('reportes/filtros')
-			->with('titulo', 'Cuenta Corriente')
+			->with('titulo', 'Cuenta Corriente - Contingentes')
 			->with('contingentes', Contingente::getContingentes())
 			->with('filters', array('contingentes', 'periodos'));
 	}
@@ -14,7 +14,7 @@ class cuentacorrienteController extends BaseController {
 		$periodo   = Periodo::getPeriodoInfo($periodoId);
 
 		return View::make('reportes/cuentacorriente')
-			->with('titulo', 'Cuenta Corriente')
+			->with('titulo', 'Cuenta Corriente - Contingentes')
 			->with('tratado', $periodo->tratado)
 			->with('producto', $periodo->producto)
 			->with('movimientos', Movimiento::getCuentaCorriente($periodoId));

@@ -32,6 +32,7 @@ Route::group(array('before' => array('auth_basic')), function() {
 Route::group(array('before' => array('tratados')), function() {
 	Route::get('c/{id}',array('as'=>'certificados.generar','uses'=>'certificadosController@generarPDF'));
 	Route::get('cuentacorriente/periodos/{id}', 'cuentacorrienteController@getPeriodos');
+	Route::get('cuentacorriente/empresas/{id}', 'cuentacorrienteempresasController@getEmpresas');
 	Route::get('changetratado/{id}', 'dashboardController@changetratado');
 
 	//=== SOLICITUD DE INSCRIPCION
@@ -90,6 +91,7 @@ Route::group(array('before' => array('tratados')), function() {
 
 		//=== REPORTES
 		Route::resource('cuentacorriente', 'cuentacorrienteController', array('only'=>array('index','store')));
+		Route::resource('cuentacorrienteempresas', 'cuentacorrienteempresasController', array('only'=>array('index','store')));
 		Route::resource('empresas', 'empresasController', array('only'=>array('index', 'store')));
 		Route::get('tratado/graficas/saldo/{id}', array('as'=>'tratado.graficas.saldo', 'uses'=>'graficasController@saldo'));
 	  

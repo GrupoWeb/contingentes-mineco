@@ -52,6 +52,14 @@
           </div>
         </div>
       @endif
+      @if(in_array('empresas', $filters))
+      <div class="col-sm-12">
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="cmbEmpresa">Empresa:</label>
+          <div class="col-sm-8" id="eid"></div>
+        </div>
+      </div>
+      @endif
     @endif
     @if(in_array('productos', $filters))
       <div class="col-sm-12">
@@ -107,9 +115,16 @@
     @if (in_array('contingentes', $filters))
       $('#cmbContingente').change(function(){
         $('#pid').html('<p class="form-control-static"><i class="fa fa-lg fa-spinner fa-pulse"></i></p>');
+        $('#eid').html('<p class="form-control-static"><i class="fa fa-lg fa-spinner fa-pulse"></i></p>');
         $.get('cuentacorriente/periodos/' + $(this).find('option:selected').val(), function(data){
           $('#pid').html(data);
         });
+        @if (in_array('empresas', $filters))
+          $.get('cuentacorriente/empresas/' + $(this).find('option:selected').val(), function(data){
+            $('#eid').html(data);
+          });
+        @endif
+
       });
 
       $('#cmbContingente').change();
