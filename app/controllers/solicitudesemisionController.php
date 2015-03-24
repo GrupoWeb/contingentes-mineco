@@ -65,7 +65,7 @@ class solicitudesemisionController extends crudController {
 				if (!$res) return false;
 
 				$info = Emisionpendiente::getSolicitudPendiente($elID);
-
+				
 				$certificado                     = new Certificado;
 				$certificado->tratado            = $info->tratadolargo;
 				$certificado->usuarioid          = $emision->usuarioid;
