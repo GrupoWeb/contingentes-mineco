@@ -7,10 +7,29 @@ class emisionController extends BaseController {
 	}
 
 	function store() {
-		$contingente = Crypt::decrypt(Input::get('cmbContingentes'));
+		$contingenteid  = Input::get('cmbContingentes');
+		$contingente    = Crypt::decrypt($contingenteid);
+		$requerimientos = Contingenterequerimiento::getRequerimientos($contingenteid, 'emision');
+		$solicitado     = Input::get('cantidad', 0);
+
+		if(count(Input::file()) <= 0 && count($requerimientos) > 0) {
+			Session::flash('message', 'No se ha cumplido con los requerimientos de archivos necesarios');
+			Session::flash('type', 'danger');
+
+			return Redirect::to('/');
+		}
+
+		if($solicitado <= 0) {
+			Session::flash('message', 'El monto solicitado no es correcto');
+			Session::flash('type', 'danger');
+
+			return Redirect::to('/');
+		}
+
+		
 		$query       = DB::select(DB::raw('SELECT getSaldo('.$contingente.','.Auth::id().') AS disponible'));
 		$disponible  = $query[0]->disponible;
-		$solicitado  = Input::get('cantidad');
+		
 
 		if($solicitado > $disponible){
 			$message = 'No es posible procesar la solicitud ya que el monto disponible no es suficiente';

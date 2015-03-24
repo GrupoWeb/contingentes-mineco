@@ -19,7 +19,8 @@ class Contingenterequerimiento extends Eloquent {
 			
 			if($aTipo)
 				$query->where('tipo', $aTipo);
-            if(count($aReq))
+      
+      if(count($aReq))
 				$query->whereNotIn('r.requerimientoid',$aReq);
 			
 			$query->orderBy('contingenterequerimientoid');

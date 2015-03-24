@@ -195,50 +195,59 @@ class solicitudesinscripcionController extends crudController {
   }
   
   public function update($id){
-    
-	DB::transaction(function() {
+  	$contingnete    = Crypt::decrypt(Input::get('contingentes'));
+		$requerimientos = Contingenterequerimiento::getRequerimientos($contingenteid, 'inscripcion');
 
-    $empresaId = Auth::user()->empresaid;
-      
-    foreach (Input::get('contingentes') as $val) {
-    	DB::table('empresacontingentes')->insert(array(
-				'empresaid'     => $empresaId, 
-				'contingenteid' => Crypt::decrypt($val))
-    	);
-    }
-    
-    foreach (Input::file() as $key=>$val) { 
-      if ($key=='txArchivo') continue;
-    	if ($val) {
-				$arch   = Input::file($key);
-				$nombre = date('YmdHis').$arch->getClientOriginalName();
-				$res    = $arch->move(public_path() . '/archivos/' . $empresaId, $nombre);
-				DB::table('empresarequerimientos')->insert(array(
-					'empresaid'        => $empresaId,
-					'requerimientoid'  => substr($key,4),
-					'archivo'          => $nombre,
-					'created_at'       => date_create(),
-					'updated_at'       => date_create()
-				));
-			}
-    }
-  }); //DB Transaction
+		if(count(Input::file()) <= 0 && count($requerimientos) > 0) {
+			Session::flash('message', 'No se ha cumplido con los requerimientos de archivos necesarios');
+			Session::flash('type', 'danger');
 
-  $email  = Auth::user()->email;
-  $admins = Usuario::listAdminEmails();
+			return Redirect::to('/');
+		}
     
-  try {
-  	Mail::send('emails/solicitudinscripcion', array(
-      'nombre' => Auth::user()->nombre,
-      'fecha'  => date('d-m-Y H:i')
-      ), function($msg) use ($email, $admins){
-            $msg->to($email)->subject('Solicitud de inscripción');
-            $msg->bcc($admins);
-    });
-  } catch (Exception $e) {}
+		DB::transaction(function() {
 
-  return Redirect::to('/')
-    ->with('flashMessage',Config::get('login::signupexitoso'))
-    ->with('flashType','success');
+	    $empresaId = Auth::user()->empresaid;
+	      
+	    foreach (Input::get('contingentes') as $val) {
+	    	DB::table('empresacontingentes')->insert(array(
+					'empresaid'     => $empresaId, 
+					'contingenteid' => Crypt::decrypt($val))
+	    	);
+	    }
+	    
+	    foreach (Input::file() as $key=>$val) { 
+	      if ($key=='txArchivo') continue;
+	    	if ($val) {
+					$arch   = Input::file($key);
+					$nombre = date('YmdHis').$arch->getClientOriginalName();
+					$res    = $arch->move(public_path() . '/archivos/' . $empresaId, $nombre);
+					DB::table('empresarequerimientos')->insert(array(
+						'empresaid'        => $empresaId,
+						'requerimientoid'  => substr($key,4),
+						'archivo'          => $nombre,
+						'created_at'       => date_create(),
+						'updated_at'       => date_create()
+					));
+				}
+	    }
+	  }); //DB Transaction
+
+	  $email  = Auth::user()->email;
+	  $admins = Usuario::listAdminEmails();
+	    
+	  try {
+	  	Mail::send('emails/solicitudinscripcion', array(
+	      'nombre' => Auth::user()->nombre,
+	      'fecha'  => date('d-m-Y H:i')
+	      ), function($msg) use ($email, $admins){
+	            $msg->to($email)->subject('Solicitud de inscripción');
+	            $msg->bcc($admins);
+	    });
+	  } catch (Exception $e) {}
+
+  	return Redirect::to('/')
+    	->with('flashMessage',Config::get('login::signupexitoso'))
+    	->with('flashType','success');
   }
 }

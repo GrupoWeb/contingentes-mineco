@@ -72,6 +72,16 @@ class inscripcionController extends BaseController {
 	}
 	
 	public function store() {
+		$contingnete    = Crypt::decrypt(Input::get('contingentes'));
+		$requerimientos = Contingenterequerimiento::getRequerimientos($contingenteid, 'inscripcion');
+
+		if(count(Input::file()) <= 0 && count($requerimientos) > 0) {
+			Session::flash('message', 'No se ha cumplido con los requerimientos de archivos necesarios');
+			Session::flash('type', 'danger');
+
+			return Redirect::to('/');
+		}
+
 		DB::transaction(function() {
 			$inscripcion                          = new Solicitudinscripcion;
 			$inscripcion->estado                  = 'Pendiente';
