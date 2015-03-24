@@ -6,7 +6,7 @@ class Movimiento extends Eloquent {
 	public static function getCuentaCorriente($aPeriodoId) {
 		return DB::table('movimientos AS m')
 			->select(DB::raw('DATE_FORMAT(m.created_at, "%d-%m-%Y") AS fecha'), 'u.nombre AS acreditadoa', 
-				'u2.nombre AS acreditadopor', 'comentario', 
+				'u2.nombre AS acreditadopor', 'comentario','certificadoid', 
 				DB::raw('IF(m.tipo="Cuota",cantidad,NULL) AS credito'),
 				DB::raw('IF(m.tipo<>"Cuota", IF(m.tipo="Asignación",cantidad,-cantidad),NULL) AS debito')
 				)
@@ -22,7 +22,7 @@ class Movimiento extends Eloquent {
 	public static function getCuentaCorrienteEmpresa($aPeriodoId, $aEmpresaId) {
 		return DB::table('movimientos AS m')
 			->select(DB::raw('DATE_FORMAT(m.created_at, "%d-%m-%Y") AS fecha'), 'u.nombre AS acreditadoa', 
-				'u2.nombre AS acreditadopor', 'comentario', 
+				'u2.nombre AS acreditadopor', 'comentario','certificadoid', 
 				DB::raw('IF(m.tipo="Asignación",cantidad,NULL) AS credito'),
 				DB::raw('IF(m.tipo="Certificado",cantidad,NULL) AS debito')
 				)

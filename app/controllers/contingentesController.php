@@ -12,12 +12,18 @@ class contingentesController extends crudController {
 
 		Crud::setLeftJoin('productos AS p', 'contingentes.productoid', '=', 'p.productoid');
 		Crud::setLeftJoin('tipotratados AS t', 'contingentes.tipotratadoid', '=', 't.tipotratadoid');
+		Crud::setLeftJoin('unidadesmedida AS u', 'contingentes.unidadmedidaid', '=', 'u.unidadmedidaid');
+		Crud::setLeftJoin('plantillascertificados AS pc', 'contingentes.plantillaid', '=', 'pc.plantillaid');
 		Crud::setWhere('tratadoid', $id);
 	
 		Crud::setCampo(array('nombre'=>'Producto','campo'=>'p.nombre', 'editable'=>false));
 		Crud::setCampo(array('nombre'=>'Tipo','campo'=>'t.nombre', 'editable'=>false));
+		Crud::setCampo(array('nombre'=>'Unidad de medida','campo'=>'u.nombrecorto', 'editable'=>false));
+		Crud::setCampo(array('nombre'=>'Plantilla','campo'=>'pc.nombre', 'editable'=>false));
 		Crud::setCampo(array('nombre'=>'Producto', 'campo'=>'p.productoid', 'tipo'=>'combobox', 'query'=>'SELECT nombre, productoid FROM productos ORDER BY nombre', 'combokey'=>'productoid', 'editable'=>true, 'show'=>false));
+		Crud::setCampo(array('nombre'=>'Unidad de medida', 'campo'=>'unidadmedidaid', 'tipo'=>'combobox', 'query'=>'SELECT CONCAT(nombre," (",nombrecorto,")") AS nombre, unidadmedidaid FROM unidadesmedida ORDER BY nombre', 'combokey'=>'unidadmedidaid', 'editable'=>true, 'show'=>false));
 	 	Crud::setCampo(array('nombre'=>'Tipo tratado', 'campo'=>'tipotratadoid', 'tipo'=>'combobox', 'query'=>'SELECT nombre, tipotratadoid FROM tipotratados', 'combokey'=>'tipotratadoid', 'editable'=>true, 'show'=>false));
+	 	Crud::setCampo(array('nombre'=>'Plantilla certificado', 'campo'=>'plantillaid', 'tipo'=>'combobox', 'query'=>'SELECT nombre, plantillaid FROM plantillascertificados', 'combokey'=>'plantillaid', 'editable'=>true, 'show'=>false));
 	 	Crud::setCampo(array('nombre'=>'Requiere Asignación', 'campo'=>'t.asignacion', 'tipo'=>'bool','editable'=>false));	
 	 	Crud::setCampo(array('nombre'=>'Texto certificado','campo'=>'textocertificado', 'tipo'=>'textarea', 'show'=>false, 'reglas'=>array('notEmpty'),'reglasmensaje'=>'El texto es requerido'));
 
