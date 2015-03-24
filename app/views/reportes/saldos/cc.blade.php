@@ -12,7 +12,7 @@
 		$(function () {
 	    $('#container').highcharts({
 	        chart: {
-	            type: 'column'
+	            type: 'bar'
 	        },
 	        title: {
 	            text: ''
