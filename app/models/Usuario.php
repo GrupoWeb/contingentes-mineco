@@ -17,4 +17,11 @@ class Usuario extends Eloquent {
 			->lists('usuarioid');
 	}
 
+	public static function listEmpresaEmails($aEmpresaId, $aUsuarioId) {
+		return DB::table('authusuarios')
+			->where('empresaid', $aEmpresaId)
+			->where('usuarioid', '<>', $aUsuarioId)
+			->lists('email');
+	}
+
 }

@@ -101,9 +101,10 @@ class solicitudesemisionController extends crudController {
 			$admins = Usuario::listAdminEmails();
 
 			if($result) {
-				$usuario = Authusuario::find($result['emision']->usuarioid);
-				$email   = $usuario->email;
-				$emision = Emisionpendiente::find($elID);
+				$usuario  = Authusuario::find($result['emision']->usuarioid);
+				$email    = $usuario->email;
+				$emision  = Emisionpendiente::find($elID);
+				$empresas = Usuario::listEmpresaEmails($usuario->empresaid, $usuario->usuarioid);
 
 				Session::flash('type','success');
 				Session::flash('message','La solicitud de emisión fue procesada correctamente');
@@ -116,8 +117,9 @@ class solicitudesemisionController extends crudController {
 						'estado'        => 'Aprobada',
 						'solicitado'    => $emision->solicitado,
 						'emitido'       => $cantidad,
-						'observaciones' => Input::get('txObservaciones')), function($msg) use ($email, $admins){
+						'observaciones' => Input::get('txObservaciones')), function($msg) use ($email, $admins, $empresas){
 			       	$msg->to($email)->subject('Certificado DACE - MINECO');
+			       	$msg->cc($empresas);
 			       	$msg->bcc($admins);
 					});
 				} catch (Exception $e) {}
@@ -138,8 +140,9 @@ class solicitudesemisionController extends crudController {
 				Session::flash('type','success');
 				Session::flash('message','La solicitud de inscripción fue rechazada');
 
-				$usuario = Authusuario::find($emision->usuarioid);
-				$email   = $usuario->email;
+				$usuario  = Authusuario::find($emision->usuarioid);
+				$email    = $usuario->email;
+				$empresas = Usuario::listEmpresaEmails($usuario->empresaid, $usuario->usuarioid);
 
 				try {
 					Mail::send('emails/solicitudemisionresultado', array(
@@ -148,8 +151,9 @@ class solicitudesemisionController extends crudController {
 						'estado'        => 'Rechazada',
 						'solicitado'    => $emision->solicitado,
 						'emitido'       => 0,
-						'observaciones' => Input::get('txObservaciones')), function($msg) use ($email, $admins){
+						'observaciones' => Input::get('txObservaciones')), function($msg) use ($email, $admins, $empresas){
 			       	$msg->to($email)->subject('Solicitud de Emisión DACE - MINECO');
+			       	$msg->cc($empresas);
 			       	$msg->bcc($admins);
 					});
 				} catch (Exception $e) {}

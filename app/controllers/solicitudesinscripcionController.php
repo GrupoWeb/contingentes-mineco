@@ -125,8 +125,9 @@ class solicitudesinscripcionController extends crudController {
 			$admins  = Usuario::listAdminEmails();
 
 			if($result <> 0) {
-				$usuario = DB::table('authusuarios')->where('usuarioid', $result)->first();
-				$email   = $usuario->email;
+				$usuario  = DB::table('authusuarios')->where('usuarioid', $result)->first();
+				$email    = $usuario->email;
+				$empresas = Usuario::listEmpresaEmails($usuario->empresaid, $usuario->usuarioid);
 
 				Session::flash('type','success');
 				Session::flash('message','La solicitud de inscripción fue procesada correctamente');
@@ -136,8 +137,9 @@ class solicitudesinscripcionController extends crudController {
 						'nombre'        => $usuario->nombre,
 						'fecha'         => $usuario->created_at,
 						'estado'        => 'Aprobada',
-						'observaciones' => Input::get('txObservaciones')), function($msg) use ($email, $admins){
+						'observaciones' => Input::get('txObservaciones')), function($msg) use ($email, $admins, $empresas){
 			       	$msg->to($email)->subject('Solicitud de Inscripción DACE - MINECO');
+			       	$msg->cc($empresas);
 			       	$msg->bcc($admins);
 					});
 				} catch (Exception $e) {}
@@ -233,15 +235,17 @@ class solicitudesinscripcionController extends crudController {
 	    }
 	  }); //DB Transaction
 
-	  $email  = Auth::user()->email;
-	  $admins = Usuario::listAdminEmails();
+		$email    = Auth::user()->email;
+		$admins   = Usuario::listAdminEmails();
+		$empresas = Usuario::listEmpresaEmails(Auth::user()->empresaid, Auth::id());
 	    
 	  try {
 	  	Mail::send('emails/solicitudinscripcion', array(
 	      'nombre' => Auth::user()->nombre,
 	      'fecha'  => date('d-m-Y H:i')
-	      ), function($msg) use ($email, $admins){
+	      ), function($msg) use ($email, $admins, $empresas){
 	            $msg->to($email)->subject('Solicitud de inscripción');
+	            $msg->cc($empresas);
 	            $msg->bcc($admins);
 	    });
 	  } catch (Exception $e) {}

@@ -78,11 +78,12 @@ class asignacionController extends BaseController {
 			}
 
 			else {
-				$message = 'Solicitud ingresada exitosamente';
-				$type    = 'success';
-				$nombre  = Contingente::getNombre($contingente);
-				$email   = Auth::user()->email;
-				$admins  = Usuario::listAdminEmails();
+				$message  = 'Solicitud ingresada exitosamente';
+				$type     = 'success';
+				$nombre   = Contingente::getNombre($contingente);
+				$email    = Auth::user()->email;
+				$admins   = Usuario::listAdminEmails();
+				$empresas = Usuario::listEmpresaEmails(Auth::user()->empresaid, Auth::id());
 
 				try {
 					Mail::send('emails/solicitudasignacion', array(
@@ -90,8 +91,9 @@ class asignacionController extends BaseController {
 						'fecha'       => date('d-m-Y H:i'),
 						'contingente' => $nombre->nombre,
 						'monto'       => $solicitado
-			      ), function($msg) use ($email, $admins){
+			      ), function($msg) use ($email, $admins, $empresas){
 			            $msg->to($email)->subject('Solicitud de asignación');
+			            $msg->cc($empresas);
 			            $msg->bcc($admins);
 			    });
 				} catch (Exception $e) {}

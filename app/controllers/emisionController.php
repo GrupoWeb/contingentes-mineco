@@ -85,17 +85,19 @@ class emisionController extends BaseController {
 			}
 
 			else {
-				$message = 'Solicitud ingresada exitosamente';
-				$type    = 'success';
-				$admins  = Usuario::listAdminEmails();
-				$email   = Auth::user()->email;
+				$message  = 'Solicitud ingresada exitosamente';
+				$type     = 'success';
+				$admins   = Usuario::listAdminEmails();
+				$email    = Auth::user()->email;
+				$empresas = Usuario::listEmpresaEmails(Auth::user()->empresaid, Auth::id());
 
 				try {
 					Mail::send('emails/solicitudemision', array(
 			      'nombre' => Auth::user()->nombre,
 			      'fecha'  => date('d-m-Y H:i')
-			      ), function($msg) use ($email, $admins){
+			      ), function($msg) use ($email, $admins, $empresas){
 			            $msg->to($email)->subject('Solicitud de emisión');
+			            $msg->cc($empresas);
 			            $msg->bcc($admins);
 			    });
 				} catch (Exception $e) {}

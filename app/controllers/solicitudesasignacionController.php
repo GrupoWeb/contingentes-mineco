@@ -78,8 +78,9 @@ class solicitudesasignacionController extends crudController {
 			$admins = Usuario::listAdminEmails();
 
 			if($asignacion) {
-				$usuario = Authusuario::find($asignacion->usuarioid);
-				$email   = $usuario->email;
+				$usuario  = Authusuario::find($asignacion->usuarioid);
+				$email    = $usuario->email;
+				$empresas = Usuario::listEmpresaEmails($usuario->empresaid, $usuario->usuarioid);
 
 				Session::flash('type','success');
 				Session::flash('message','La solicitud de asignación fue procesada correctamente');
@@ -91,8 +92,9 @@ class solicitudesasignacionController extends crudController {
 						'estado'        => 'Aprobada',
 						'solicitado'    => $asignacion->solicitado,
 						'asignado'      => $cantidad,
-						'observaciones' => Input::get('txObservaciones')), function($msg) use ($email, $admins){
+						'observaciones' => Input::get('txObservaciones')), function($msg) use ($email, $admins, $empresas){
 			       	$msg->to($email)->subject('Solicitud de Asignación DACE - MINECO');
+			       	$msg->cc($empresas);
 			       	$msg->bcc($admins);
 					});
 				} catch (Exception $e) {}
@@ -114,8 +116,9 @@ class solicitudesasignacionController extends crudController {
 				Session::flash('type','success');
 				Session::flash('message','La solicitud de inscripción fue rechazada');
 
-				$usuario = Authusuario::find($asignacion->usuarioid);
-				$email   = $usuario->email;
+				$usuario  = Authusuario::find($asignacion->usuarioid);
+				$email    = $usuario->email;
+				$empresas = Usuario::listEmpresaEmails($usuario->empresaid, $usuario->usuarioid);
 
 				try {
 					Mail::send('emails/solicitudasignacionresultado', array(
@@ -124,8 +127,9 @@ class solicitudesasignacionController extends crudController {
 						'estado'        => 'Rechazada',
 						'solicitado'    => $asignacion->solicitado,
 						'asignado'      => 0,
-						'observaciones' => Input::get('txObservaciones')), function($msg) use ($email, $admins){
+						'observaciones' => Input::get('txObservaciones')), function($msg) use ($email, $admins, $empresas){
 			       	$msg->to($email)->subject('Solicitud de Asignación DACE - MINECO');
+			       	$msg->cc($empresas);
 			       	$msg->bcc($admins);
 					});
 				} catch (Exception $e) {}
