@@ -71,7 +71,7 @@
 	</tr>
 	<tr>
 		<td colspan="4" rowspan="2" class="border">
-			<strong>6. PESO NETO (en toneladas métricas):</strong><br/>
+			<strong>6. PESO NETO (en {{ $datos->unidades }}):</strong><br/>
 			<p class="underline">--{{ $datos->volumen }}--</p>			
 			<p style="padding-top:10px"><strong>En letras: </strong><span class="underline">{{ $datos->volumenletras }}</span></p>
 		</td>
