@@ -183,17 +183,9 @@ class solicitudesinscripcionController extends crudController {
 		return Redirect::route('solicitudespendientes.inscripcion.index');
 	}
   
-  public function create(){
-    
-    $usuarioCon = array();
- 
-    $con = DB::table("empresacontingentes")->select("contingenteid")->where("empresaid",Auth::user()->empresaid) ->get();
-    foreach($con as $k=>$v)
-      array_push($usuarioCon,$v->contingenteid);
-        
+  public function create(){    
     return View::make('inscripcion/reinscripcion')
-        ->with('contingentes', Contingente::getContingentes($usuarioCon));
-	
+    	->with('tratados', Tratado::getTratados());
   }
   
   public function update($id){

@@ -1,50 +1,46 @@
 @extends('template/template')
 @section('content')
+  {{ HTML::style('packages/csgt/components/css/bootstrap-fileinput.min.css') }}
+  {{ HTML::script('packages/csgt/components/js/bootstrap-fileinput.min.js') }}
+  
   <script>
     $(document).ready(function(){
       $(".alert").delay(5000).fadeOut('slow');
     });
   </script>
  
-    <?php
-      $params = array('id'=>'frmRegistro','class'=>'form-horizontal', 'files'=>true,'method'=>'POST');
-      $params['route'] = "solicitud.inscripcion.update";
-    ?>
-    {{Form::open($params) }}
+  <?php
+    $params = array('id'=>'frmRegistro','class'=>'form-horizontal', 'files'=>true,'method'=>'POST');
+    $params['route'] = "solicitud.inscripcion.update";
+  ?>
+  {{Form::open($params) }}
     <input type="hidden" name="_method" value="PUT">
     <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
     <h1 class="titulo">Solicitud de inscripci&oacute;n</h1>
     <div class="contenido contenido-full">
       <div class="col-md-12">
         <div class="form-group">
-          <label for="contingentes" class="col-sm-2 control-label">Contingente(s)</label>
-          <div class="col-sm-6 div-contingente">
-            <?php $grupoActual = 'primero'; ?>
-            <select name="contingentes" class="selectpicker form-control" id="contingentes" title="Seleccione uno">
-              @foreach($contingentes as $contingente)
-                @if($contingente->tratado <> $grupoActual)
-                  @if($grupoActual <> 'primero')
-                    </optgroup>
-                  @endif
-                  <optgroup label="{{ $contingente->tipo}} | {{$contingente->tratado}}">
-                  <?php $grupoActual = $contingente->tratado; ?>  
-                @endif
-                <option value="{{ Crypt::encrypt($contingente->contingenteid) }}">{{ $contingente->producto }}</option>
+          <label for="tratados" class="col-sm-2 control-label">Tratado</label>
+          <div class="col-sm-10 div-tratados">
+            <select name="tratados" class="selectpicker form-control" id="tratados">
+              @foreach($tratados as $tratado)
+                <option value="{{ $tratado->tratadoid }}">{{ $tratado->nombrecorto }}</option>
               @endforeach
-              </optgroup>
             </select>
           </div>
         </div>
-      
-        <div class="clearfix"></div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="contingentes" class="col-sm-2 control-label">Contingente</label>
+          <div class="col-sm-10 div-contingente" id="div-contingente"></div>
+        </div>
+      </div>
+      <div class="col-md-12">
         <h4 class="titulo">Requerimientos</h4>
         A continuación se enumeran los requerimientos para todos los contingentes seleccionados.
         <hr>
-        <div class="requerimientos">
-          
-        </div>
- 
-      
+        <div class="requerimientos"></div>
         <div class="row">
           <div class="col-xs-4 pull-left">
             <div id="mensajes"></div>
@@ -56,42 +52,56 @@
       </div>
       <div class="clearfix"></div>
     </div>    
+  {{Form::close()}}
 
-
-    {{Form::close()}}
-    <script>
-      $(document).ready(function(){
-        $("#contingentes").change(function() {
-          $('.nuevos').remove();
-          $('#frmRegistro').bootstrapValidator('revalidateField', 'contingentes');
-          $.get('/requerimientos/contingentes/' + $(this).val() + '/inscripcion', function(data){
-              $.each(data, function(key, datos){
-                $.get('/requerimientos/contingentes/vacio?nombre=' + datos.nombre + '&id=' + datos.requerimientoid, function(template){
-                  $('.requerimientos').append(template);
-                  $('#frmRegistro').bootstrapValidator('addField', 'file' + datos.requerimientoid);
-                });     
-              });       
-          });
+  <script>
+    $(document).ready(function(){
+      $('#tratados').change(function(){
+        $.get('/contingentes/tratado/' + $(this).val(), function(data){
+          $('#div-contingente').html(data);
+          $('#contingentes').change();
         });
-    
-        $('#contingentes').selectpicker();
-
-        $('#frmRegistro')
-          .bootstrapValidator({
-            excluded: ':disabled',
-            feedbackIcons: {
-              valid: 'glyphicon glyphicon-ok',
-              invalid: 'glyphicon glyphicon-remove',
-              validating: 'glyphicon glyphicon-refresh'
-            }
-        })
-        .on('error.field.bv', function(e, data) {
-          data.bv.disableSubmitButtons(false);
-        })
-        .on('success.field.bv', function(e, data) {
-          data.bv.disableSubmitButtons(false);
-        });
-      $('#contingentes').change();
       });
-    </script>
+
+      $('#tratados').change();
+
+      $(document).on('change', '#contingentes', function(){
+        $('.nuevos').each(function( index ) {
+          $('#frmRegistro').bootstrapValidator('removeField', $(this).attr('id')); 
+          console.log($(this).attr('id'));
+        });
+
+        $('.nuevos').remove();
+
+        $.get('/requerimientos/contingentes/' + $(this).val() + '/inscripcion', function(data){
+            $.each(data, function(key, datos){
+              $.get('/requerimientos/contingentes/vacio?nombre=' + datos.nombre + '&id=' + datos.requerimientoid, function(template){
+                $('.requerimientos').append(template);
+                $('#frmRegistro').bootstrapValidator('addField', 'file' + datos.requerimientoid);
+                $(".file").fileinput({
+                  browseLabel: "Buscar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
+                  browseClass: "btn btn-default",
+                  showPreview: false,
+                  showRemove:  false,
+                  showUpload:  false,
+                  allowedFileExtensions: ['jpg', 'png', 'pdf'],
+                  msgInvalidFileExtension: 'Solo se permiten archivos jpg, png o pdf',
+                  msgValidationError : 'Solo se permiten archivos jpg, png o pdf',
+                });
+              });     
+            });       
+        });
+      });
+
+
+
+
+
+
+
+
+
+
+    });
+  </script>
 @stop

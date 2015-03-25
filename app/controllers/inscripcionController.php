@@ -67,8 +67,21 @@ class inscripcionController extends BaseController {
 	}
 
 	public function getContingentes($tratadoid) {
+		if(Auth::check()) {
+			$usuarioCon = array();
+    	$con        = DB::table("empresacontingentes")->select("contingenteid")->where("empresaid",Auth::user()->empresaid) ->get();
+
+	    foreach($con as $k=>$v)
+	      array_push($usuarioCon,$v->contingenteid);
+
+	    $contingentes =  Contingente::getContTratado($tratadoid, $usuarioCon);
+		}
+
+		else
+			$contingentes = Contingente::getContTratado($tratadoid);
+
 		return View::make('inscripcion.contingentes')
-			->with('contingentes', Contingente::getContTratado($tratadoid));
+			->with('contingentes', $contingentes);
 	}
 	
 	public function store() {

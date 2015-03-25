@@ -33,15 +33,18 @@ class Contingente extends Eloquent {
 			->get();
 	}
 
-	public static function getContTratado($aTratadoId) {
-		return DB::table('contingentes AS c')
+	public static function getContTratado($aTratadoId, $aExclude=null) {
+		$query = DB::table('contingentes AS c')
 			->select('c.contingenteid', 'p.nombre AS producto')
 			->leftJoin('productos AS p', 'c.productoid', '=', 'p.productoid')
 			->leftJoin('periodos AS pe', 'c.contingenteid', '=', 'pe.contingenteid')
 			->whereRaw('now() BETWEEN pe.fechainicio AND pe.fechafin')
-			->where('c.tratadoid', $aTratadoId)
-			->orderBy('p.nombre')
-			->get();
+			->where('c.tratadoid', $aTratadoId);
+
+		if($aExclude)
+			$query->whereNotIn('c.contingenteid', $aExclude);
+
+		return $query->orderBy('p.nombre')->get();
 	}
 
 	public static function getUnidadMedida($aContingenteId) {
