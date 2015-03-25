@@ -13,9 +13,11 @@ class Contingente extends Eloquent {
 			->orderBy('t.tipo','DESC')
 			->orderBy('t.nombre')
 			->orderBy('p.nombre');
-        if(count($filter))
-          $query->whereNotIn('c.contingenteid',$filter); 
-        return $query->get();
+        
+      if(count($filter))
+        $query->whereNotIn('c.contingenteid',$filter); 
+      
+      return $query->get();
 	}
 
 	public static function getContingentesCuota() {
@@ -33,8 +35,10 @@ class Contingente extends Eloquent {
 
 	public static function getContTratado($aTratadoId) {
 		return DB::table('contingentes AS c')
-			->select('contingenteid', 'p.nombre AS producto')
+			->select('c.contingenteid', 'p.nombre AS producto')
 			->leftJoin('productos AS p', 'c.productoid', '=', 'p.productoid')
+			->leftJoin('periodos AS pe', 'c.contingenteid', '=', 'pe.contingenteid')
+			->whereRaw('now() BETWEEN pe.fechainicio AND pe.fechafin')
 			->where('c.tratadoid', $aTratadoId)
 			->orderBy('p.nombre')
 			->get();
