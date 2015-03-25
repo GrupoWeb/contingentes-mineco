@@ -44,7 +44,7 @@
         <div class="form-group">
           <label for="disponible" class="col-sm-2 control-label"><span id="disponible">Disponible</span></label>
           <div class="col-sm-6 div-contingente">
-            <p class="help-block" name="disponible"></p>
+            <p class="help-block disponible-block"></p>
           </div>
         </div> <!-- disponible -->
         <h4 class="titulo">Requerimientos</h4>
@@ -69,8 +69,8 @@
       $('.selectpicker').selectpicker();
 
       $("#cmbContingentes").change(function() {
-          $('[name="disponible"]').html('<p class="form-control-static"><i class="fa fa-lg fa-spinner fa-pulse"></i></p>');
-          $('.requerimientos').html($('name="disponible"]').html());
+          $('.disponible-block').html('<p class="form-control-static"><i class="fa fa-lg fa-spinner fa-pulse"></i></p>');
+          $('.requerimientos').html($('.disponible-block').html());
           $('.nuevos').remove();
           $.get('/requerimientos/contingentes/' + $(this).val() + '/asignacion', function(data){
             $('.requerimientos').html('');
@@ -93,8 +93,8 @@
           });
           
           $.get('/contingente/saldoasignacion/' + $(this).val() + '?tratado=' + $("#cmbContingentes option:selected").attr('data-tratado'), function(data){
-            $('[name="disponible"]').val(data.disponible);
-            $('[name="disponible"]').text(data.disponible);
+            $('.disponible-block').val(data.disponible);
+            $('.disponible-block').text(data.disponible);
             $('#disponible').text('Disponible (' + data.unidad + ')');
           }).fail(function(xhr, textStatus, errorThrown)  {
             alert( "Error: Imposible calcular el disponible para este contingente.");

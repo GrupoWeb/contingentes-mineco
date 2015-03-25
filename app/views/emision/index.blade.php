@@ -52,7 +52,7 @@
         <div class="form-group">
           <label for="disponible" class="col-sm-2 control-label"><span id="disponible">Máximo Disponible</span></label>
           <div class="col-sm-6 div-contingente">
-            <p class="help-block" name="disponible"></p>
+            <p class="help-block disponible-block"></p>
           </div>
         </div> <!-- disponible -->
         <div class="form-group">
@@ -83,7 +83,7 @@
 
       $("#cmbContingentes").change(function() {
           $('#divPartidas').html('<p class="form-control-static"><i class="fa fa-lg fa-spinner fa-pulse"></i></p>');
-          $('[name="disponible"]').html($('#divPartidas').html());
+          $('.disponible-block').html($('#divPartidas').html());
           $('#pais').html($('#divPartidas').html());
           $('.requerimientos').html($('#divPartidas').html());
           $('.nuevos').remove();
@@ -114,8 +114,8 @@
           });
 
           $.get('/contingente/saldo/' + $(this).val() + '?tratado=' + $("#cmbContingentes option:selected").attr('data-tratado'), function(data){
-            $('[name="disponible"]').val(data.disponible);
-            $('[name="disponible"]').text(data.disponible);
+            $('.disponible-block').val(data.disponible);
+            $('.disponible-block').text(data.disponible);
             $('#disponible').text('Máximo Disponible (' + data.unidad + ')');
           }).fail(function(xhr, textStatus, errorThrown)  {
             alert( "Error: Imposible calcular el disponible para este contingente.");
