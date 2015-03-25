@@ -83,14 +83,14 @@ class solicitudesemisionController extends crudController {
 				$res = $certificado->save();
 				if (!$res) return false;
 
-				$movimiento                = new Movimiento;
-				$movimiento->periodoid     = $emision->periodoid;
-				$movimiento->usuarioid     = $emision->usuarioid;
-				$movimiento->certificadoid = $certificado->certificadoid;
-				$movimiento->cantidad      = ($cantidad * -1);
-				$movimiento->comentario    = $comentario;
-				$movimiento->tipo          = 'Certificado';
-				$movimiento->created_by    = Auth::id();
+				$movimiento                   = new Movimiento;
+				$movimiento->periodoid        = $emision->periodoid;
+				$movimiento->usuarioid        = $emision->usuarioid;
+				$movimiento->certificadoid    = $certificado->certificadoid;
+				$movimiento->cantidad         = ($cantidad * -1);
+				$movimiento->comentario       = $comentario;
+				$movimiento->tipomovimientoid = DB::table('tiposmovimiento')->where('nombre', 'Certificado')->pluck('tipomovimientoid');
+				$movimiento->created_by       = Auth::id();
 				$res = $movimiento->save();
 				if (!$res) return false;
 				return array('emision'=>$emision, 'certificado'=>$certificado);

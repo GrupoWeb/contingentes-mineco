@@ -129,14 +129,14 @@ class certificadosController extends crudController {
 			return Redirect::to('certificados');
 		}
 
-		$movimiento                = new Movimiento;
-		$movimiento->periodoid     = $movimientop->periodoid;
-		$movimiento->usuarioid     = $certificado->usuarioid;
-		$movimiento->certificadoid = $certificado->certificadoid;
-		$movimiento->cantidad      = $certificado->volumen;
-		$movimiento->comentario    = 'Certificado '.number_format($certificado->certificadoid).' anulado por: '.Input::get('txMotivo');
-		$movimiento->tipo          = 'Certificado';
-		$movimiento->created_by    = Auth::id();
+		$movimiento                   = new Movimiento;
+		$movimiento->periodoid        = $movimientop->periodoid;
+		$movimiento->usuarioid        = $certificado->usuarioid;
+		$movimiento->certificadoid    = $certificado->certificadoid;
+		$movimiento->cantidad         = $certificado->volumen;
+		$movimiento->comentario       = 'Certificado '.number_format($certificado->certificadoid).' anulado por: '.Input::get('txMotivo');
+		$movimiento->tipomovimientoid = DB::table('tiposmovimiento')->where('nombre', 'Certificado')->pluck('tipomovimientoid');
+		$movimiento->created_by       = Auth::id();
 		$movimiento->save();
 
 		Session::flash('message', 'Certificado anulado exitosamente');

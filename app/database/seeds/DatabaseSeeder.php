@@ -9,5 +9,6 @@ class DatabaseSeeder extends Seeder {
 		$this->call('MenuSeeder');
 		$this->call('TipotratadosSeeder');
 		$this->call('PlantillaCertificadosSeeder');
+		$this->call('TiposMovimientoSeeder');
 	}
 }

@@ -27,7 +27,7 @@ class periodosController extends crudController {
 			'editable'=>false,'tipo'=>'numeric','class'=>'text-right'));*/
 		Crud::setCampo(array('nombre'=>'Cuota total', 
 			'campo'=>'(SELECT SUM(m.cantidad) FROM movimientos AS m 
-				WHERE tipo="Cuota" AND m.periodoid=periodos.periodoid)', 
+				WHERE tipomovimientoid='. DB::table('tiposmovimiento')->where('nombre', 'Cuota')->pluck('tipomovimientoid') .' AND m.periodoid=periodos.periodoid)', 
 			'editable'=>false,'tipo'=>'numeric','class'=>'text-right'));
 
 		Crud::setBotonExtra(array('url'=>'periodosasignaciones?periodo={id}','icon'=>'glyphicon glyphicon-check','titulo'=>'Cuotas','class'=>'success'));

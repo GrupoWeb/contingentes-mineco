@@ -62,15 +62,15 @@ class solicitudesasignacionController extends crudController {
 				$asignacion->estado        = 'Aprobada';
 				$result                    = $asignacion->save();
 
-				$movimiento                = new Movimiento;
-				$movimiento->periodoid     = $asignacion->periodoid;
-				$movimiento->usuarioid     = $asignacion->usuarioid;
-				$movimiento->cantidad      = $cantidad;
-				$movimiento->comentario    = $comentario;
-				$movimiento->created_by    = Auth::id();
-				$movimiento->tipo          = 'Asignación';
-				$movimiento->acta          = Input::get('txActa');
-				$result2                   = $movimiento->save();
+				$movimiento                   = new Movimiento;
+				$movimiento->periodoid        = $asignacion->periodoid;
+				$movimiento->usuarioid        = $asignacion->usuarioid;
+				$movimiento->cantidad         = $cantidad;
+				$movimiento->comentario       = $comentario;
+				$movimiento->created_by       = Auth::id();
+				$movimiento->tipomovimientoid = DB::table('tiposmovimiento')->where('nombre', 'Asignación')->pluck('tipomovimientoid');
+				$movimiento->acta             = Input::get('txActa');
+				$result2                      = $movimiento->save();
 
 				return $asignacion;
 			});

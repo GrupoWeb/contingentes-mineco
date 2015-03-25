@@ -19,11 +19,12 @@ class periodosasignacionesController extends BaseController {
 	public function store() {
 		$periodoid = Crypt::decrypt(Input::get('periodo'));
 
-		$movimiento             = new Movimiento;
-		$movimiento->periodoid  = $periodoid;
-		$movimiento->cantidad   = Input::get('txCantidad');
-		$movimiento->comentario = Input::get('txComentario');
-		$movimiento->created_by = Auth::id();
+		$movimiento                   = new Movimiento;
+		$movimiento->tipomovimientoid = DB::table('tiposmovimiento')->where('nombre', 'Cuota')->pluck('tipomovimientoid');
+		$movimiento->periodoid        = $periodoid;
+		$movimiento->cantidad         = Input::get('txCantidad');
+		$movimiento->comentario       = Input::get('txComentario');
+		$movimiento->created_by       = Auth::id();
 
 		if(Input::has('cmbUsuario'))
 			$movimiento->usuarioid = Input::get('cmbUsuario');
