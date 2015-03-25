@@ -17,7 +17,7 @@ class requerimientosController extends crudController {
 		$requerimientos = array();
 
 		if(Auth::check())
-			$requerimientos = EmpresaRequerimiento::getEmpresaRequerimientosIds();
+			$requerimientos = Empresarequerimiento::getEmpresaRequerimientosIds();
 
 		return Response::json(Contingenterequerimiento::getRequerimientos($id, $tipo, $requerimientos));
 	}
