@@ -93,7 +93,7 @@
           });
           
           $.get('/contingente/saldoasignacion/' + $(this).val() + '?tratado=' + $("#cmbContingentes option:selected").attr('data-tratado'), function(data){
-            $('.disponible-block').val(data.disponible);
+            $('[name="disponible"]').val(data.disponible);
             $('.disponible-block').text(data.disponible);
             $('#disponible').text('Disponible (' + data.unidad + ')');
           }).fail(function(xhr, textStatus, errorThrown)  {
