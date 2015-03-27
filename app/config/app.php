@@ -129,6 +129,7 @@ return array(
 		'Maxxscho\LaravelTcpdf\LaravelTcpdfServiceProvider',
 		'Way\Generators\GeneratorsServiceProvider',
 		'Xethron\MigrationsGenerator\MigrationsGeneratorServiceProvider',
+		'Csgt\Hermes\HermesServiceProvider',
 	),
 
 	/*
