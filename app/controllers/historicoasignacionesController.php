@@ -30,8 +30,8 @@ class historicoasignacionesController extends crudController {
 		Crud::setCampo(array('nombre'=>'Email','campo'=>'u.email'));
 		Crud::setCampo(array('nombre'=>'Tratado','campo'=>'t.nombrecorto'));
 		Crud::setCampo(array('nombre'=>'Producto','campo'=>'p.nombre'));
-		Crud::setCampo(array('nombre'=>'Solicitado','campo'=>'solicitado','class'=>'text-right','tipo'=>'numeric'));
-		Crud::setCampo(array('nombre'=>'Asignado','campo'=>'asignado','class'=>'text-right','tipo'=>'numeric'));
+		Crud::setCampo(array('nombre'=>'Solicitado','campo'=>'solicitado','class'=>'text-right','tipo'=>'numeric','decimales'=>5));
+		Crud::setCampo(array('nombre'=>'Asignado','campo'=>'asignado','class'=>'text-right','tipo'=>'numeric','decimales'=>5));
 		Crud::setCampo(array('nombre'=>'Fecha de solicitud','campo'=>'solicitudasignacion.created_at', 'tipo'=>'datetime','class'=>'text-right'));
 		Crud::setCampo(array('nombre'=>'Observaciones','campo'=>'observaciones'));
 		Crud::setCampo(array('nombre'=>'Estado','campo'=>'estado','class'=>'text-right'));
