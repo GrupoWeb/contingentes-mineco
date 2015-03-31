@@ -57,13 +57,15 @@
 				@if(!in_array(Request::segment(1), Config::get('contingentes.tratadosExclude')))
 					<div class="pull-right">
 						<?php $tratados = Session::get('tratados'); $selected = Session::get('tselected'); ?>
-						<select class="selectpicker" id="cmbTratado">
-							<option value="0" {{ (0 == $selected) ? 'selected' : '' }}>-- TODOS --</option>
-							@foreach($tratados as $tratado)
-								<?php $tid = $tratado->tratadoid; ?>
-								<option value="{{ $tid }}" {{ ($tid == $selected) ? 'selected' : '' }}>{{ $tratado->nombrecorto }}</option>
-							@endforeach
-						</select>
+						@if($tratados)
+							<select class="selectpicker" id="cmbTratado">
+								<option value="0" {{ (0 == $selected) ? 'selected' : '' }}>-- TODOS --</option>
+								@foreach($tratados as $tratado)
+									<?php $tid = $tratado->tratadoid; ?>
+									<option value="{{ $tid }}" {{ ($tid == $selected) ? 'selected' : '' }}>{{ $tratado->nombrecorto }}</option>
+								@endforeach
+							</select>
+						@endif
 					</div>
 					<div class="clearfix"></div>
 					<br />
