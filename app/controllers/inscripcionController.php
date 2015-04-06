@@ -86,7 +86,7 @@ class inscripcionController extends BaseController {
 	
 	public function store() {
 		$contingnete    = Crypt::decrypt(Input::get('contingentes'));
-		$requerimientos = Contingenterequerimiento::getRequerimientos($contingenteid, 'inscripcion');
+		$requerimientos = Contingenterequerimiento::getRequerimientos($contingnete, 'inscripcion');
 
 		if(count(Input::file()) <= 0 && count($requerimientos) > 0) {
 			Session::flash('message', 'No se ha cumplido con los requerimientos de archivos necesarios');
@@ -111,9 +111,9 @@ class inscripcionController extends BaseController {
 			$inscripcion->encargadoimportaciones  = Input::get('txEncargadoImportaciones');
 			$inscripcion->save();
 
-			$contingente = new Solicitudinscripcioncontingente;
+			$contingente                         = new Solicitudinscripcioncontingente;
 			$contingente->solicitudinscripcionid = $inscripcion->solicitudinscripcionid;
-			$contingente->contingenteid = Crypt::decrypt(Input::get('contingentes'));
+			$contingente->contingenteid          = Crypt::decrypt(Input::get('contingentes'));
 			$contingente->save();
 
 			foreach (Input::file() as $key=>$val) { 
