@@ -23,7 +23,7 @@ App::error(function(Exception $exception, $code) {
   }
   Log::error($exception);
 
-  //if(App::environment() <> 'local')
+  if(App::environment() <> 'local')
     Hermes::notificarError($code, $exception->getMessage(), Request::url());
 });
 
