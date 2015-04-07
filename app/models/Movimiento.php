@@ -22,7 +22,7 @@ class Movimiento extends Eloquent {
 			->orderBy('m.created_at')
 			->orderBy('m.movimientoid')
 			->where('m.periodoid', $aPeriodoId)
-			->whereIn('m.tipomovimientoid', array(3, 1))
+			->whereIn('m.tipomovimientoid', array(3, 1, 4))
 			->get();
 	}
 
