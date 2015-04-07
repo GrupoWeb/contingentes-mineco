@@ -85,8 +85,15 @@ class inscripcionController extends BaseController {
 	}
 	
 	public function store() {
-		$contingnete    = Crypt::decrypt(Input::get('contingentes'));
-		$requerimientos = Contingenterequerimiento::getRequerimientos($contingnete, 'inscripcion');
+		if(!Input::has('cmbContingente')) {
+			Session::flash('message', 'Se dio un error al seleccionar un contingente. Intentalo nuevamente');
+			Session::flash('type', 'danger');
+
+			return Redirect::to('/');
+		}
+
+		$contingenteid  = Crypt::decrypt(Input::get('cmbContingente'));
+		$requerimientos = Contingenterequerimiento::getRequerimientos($contingenteid, 'inscripcion');
 
 		if(count(Input::file()) <= 0 && count($requerimientos) > 0) {
 			Session::flash('message', 'No se ha cumplido con los requerimientos de archivos necesarios');
@@ -95,7 +102,7 @@ class inscripcionController extends BaseController {
 			return Redirect::to('/');
 		}
 
-		DB::transaction(function() {
+		DB::transaction(function() use($contingenteid) {
 			$inscripcion                          = new Solicitudinscripcion;
 			$inscripcion->estado                  = 'Pendiente';
 			$inscripcion->email                   = Input::get('email');
@@ -113,7 +120,7 @@ class inscripcionController extends BaseController {
 
 			$contingente                         = new Solicitudinscripcioncontingente;
 			$contingente->solicitudinscripcionid = $inscripcion->solicitudinscripcionid;
-			$contingente->contingenteid          = Crypt::decrypt(Input::get('contingentes'));
+			$contingente->contingenteid          = $contingenteid;
 			$contingente->save();
 
 			foreach (Input::file() as $key=>$val) { 
@@ -134,7 +141,6 @@ class inscripcionController extends BaseController {
 
 		$email    = Input::get('email');
 		$admins   = Usuario::listAdminEmails();
-		$empresas = Usuario::listEmpresaEmails(Auth::user()->empresaid, Auth::id());
 
 		try {
 			Mail::send('emails/solicitudinscripcion', array(
@@ -142,7 +148,6 @@ class inscripcionController extends BaseController {
 	      'fecha'  => date('d-m-Y H:i')
 	      ), function($msg) use ($email, $admins, $empresas){
 	            $msg->to($email)->subject('Solicitud de inscripción');
-	            $msg->cc($empresas);
 	            $msg->bcc($admins);
 	    });
 		} catch (Exception $e) {}

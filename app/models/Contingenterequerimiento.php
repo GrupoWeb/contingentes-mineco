@@ -4,17 +4,10 @@ class Contingenterequerimiento extends Eloquent {
 	protected $primryKey = 'contingenterequerimientoid';
 
 	public static function getRequerimientos($aContingenteId, $aTipo=null,$aReq=null){
-		if($aContingenteId=='null') return;
-
-		$vals =  explode(',',$aContingenteId);
-		foreach ($vals as $key=>$val) {
-			$vals[$key] = Crypt::decrypt($val);
-		}
-		//dd($vals);
 		$query = DB::table('contingenterequerimientos AS cr')
 			->select('r.nombre','r.requerimientoid')
 			->leftJoin('requerimientos AS r', 'cr.requerimientoid', '=', 'r.requerimientoid')
-			->whereIn('contingenteid',$vals)
+			->where('contingenteid', $aContingenteId)
 			->groupBy('r.requerimientoid');
 			
 			if($aTipo)

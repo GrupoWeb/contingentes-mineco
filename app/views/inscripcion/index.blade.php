@@ -214,7 +214,7 @@
     <!-- contingente -->
     <div class="col-md-12">
       <div class="form-group">
-        <label for="contingentes" class="col-sm-2 control-label">13.Contingente</label>
+        <label for="cmbContingente" class="col-sm-2 control-label">13.Contingente</label>
         <div class="col-sm-10 div-contingente" id="div-contingente"></div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-<select name="contingentes" class="selectpicker form-control" id="contingentes">
+<select name="cmbContingente" class="selectpicker form-control" id="cmbContingente">
 		@foreach($contingentes as $contingente)
 			<option value="{{ Crypt::encrypt($contingente->contingenteid) }}">{{ $contingente->producto }}</option>
 		@endforeach
@@ -6,6 +6,6 @@
 
 <script>
   $(document).ready(function(){
-  	$('#contingentes').selectpicker();
+  	$('#cmbContingente').selectpicker();
   });
 </script>
