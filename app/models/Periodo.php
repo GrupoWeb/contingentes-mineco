@@ -2,7 +2,7 @@
 
 class Periodo extends Eloquent {
 
-	protected $primryKey = 'periodoid';
+	protected $primaryKey = 'periodoid';
 
 	public static function getPeriodo($aContingenteId) {
 		return DB::table('periodos')
@@ -13,7 +13,7 @@ class Periodo extends Eloquent {
 
 	public static function getPeridoAsignacion($aPeriodoId) {
 		return DB::table('periodos AS p')
-			->select('p.periodoid', DB::raw('CONCAT(t.nombrecorto," - ",pr.nombre, " - ",YEAR(p.fechainicio)) AS periodo'), 't.nombrecorto AS tratado', 'c.tipotratadoid', 'tt.nombre AS tipo','pr.nombre AS producto')
+			->select('p.periodoid', DB::raw('CONCAT(t.nombrecorto," - ",pr.nombre, " - ",YEAR(p.fechainicio)) AS periodo'), 't.nombrecorto AS tratado', 'c.tipotratadoid', 'tt.nombre AS tipo','pr.nombre AS producto', 'c.contingenteid')
 			->leftJoin('contingentes AS c', 'p.contingenteid', '=', 'c.contingenteid')
 			->leftJoin('tratados AS t', 'c.tratadoid', '=', 't.tratadoid')
 			->leftJoin('tipotratados AS tt', 'c.tipotratadoid', '=', 'tt.tipotratadoid')
