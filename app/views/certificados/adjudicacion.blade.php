@@ -30,9 +30,9 @@
 
 <table width="550">
 	<tr>
-		<td><img src="/images/logo-mineco.jpg"></td>
+		<td>&nbsp;</td>
 		<td colspan="2" class="center">Certificado No.: {{ $datos->certificadoid }}</td>
-		<td><img src="/images/logo-dace.jpg"></td>
+		<td>&nbsp;</td>
 	</tr>
 	<tr>
 		<td colspan="4" class="center"><br /><h3>{{ $datos->tratado }}</h3></td>
