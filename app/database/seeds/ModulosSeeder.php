@@ -178,6 +178,12 @@ class ModulosSeeder extends Seeder {
 			'nombrefriendly' => 'Cuenta corriente - Empresas'
 		));
 
+		DB::table('authmodulos')->insert(array(
+			'moduloid'       => 30,
+			'nombre'         => 'periodospenalizaciones',
+			'nombrefriendly' => 'Periodo penalizaciones'
+		));
+
 		DB::table('authmodulos')->update(array('created_at'=>date_create(), 'updated_at'=>date_create()));
 	  DB::statement('SET FOREIGN_KEY_CHECKS=1');
 	}
