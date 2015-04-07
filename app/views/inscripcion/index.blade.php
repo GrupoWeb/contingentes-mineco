@@ -255,14 +255,14 @@
         $('#tratados').change(function(){
           $.get('contingentes/tratado/' + $(this).val(), function(data){
             $('#div-contingente').html(data);
-            $('#contingentes').change();
+            $('#cmbContingente').change();
           });
         });
 
         $('#tratados').change();
       });
 
-      $(document).on('change', '#contingentes', function(){
+      $(document).on('change', '#cmbContingente', function(){
 
         $('.nuevos').each(function( index ) {
           $('#frmRegistro').bootstrapValidator('removeField', $(this).attr('id')); 
