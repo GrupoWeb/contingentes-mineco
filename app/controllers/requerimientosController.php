@@ -13,7 +13,7 @@ class requerimientosController extends crudController {
 	}
 
 	public function getContingentes($id, $tipo) {
-
+		$id             = Crypt::decrypt($id);
 		$requerimientos = array();
 
 		if(Auth::check())
