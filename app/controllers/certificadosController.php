@@ -61,6 +61,7 @@ class certificadosController extends crudController {
 
 		PDF::SetTitle('Certificado');
 		PDF::AddPage();
+		PDF::setLeftMargin(20);
 
 		$certificate = $datos->certificado;
 		PDF::SetSignature($certificate, $certificate, 'cservice');
