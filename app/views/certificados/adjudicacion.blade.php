@@ -1,3 +1,7 @@
+<?php
+	$ancho = 500;
+?>
+
 <style>
 	body {
 		font-size: 14px;
@@ -27,11 +31,10 @@
 		border: 1px solid black;
 	}
 </style>
-
-<table width="550">
+<table width="{{ $ancho }}" align="center">
 	<tr>
 		<td>&nbsp;</td>
-		<td colspan="2" class="center">Certificado No.: {{ $datos->certificadoid }}</td>
+		<td colspan="2" class="center">Certificado No.: {{ $datos->certificadoid }}<br /><br /><br /><br /><br /><br /></td>
 		<td>&nbsp;</td>
 	</tr>
 	<tr>
@@ -45,7 +48,7 @@
 	</tr>
 </table>
 
-<table width="550" style="border-collapse: collapse" cellpadding="5" style="font-size: 10px;">
+<table width="{{ $ancho }}" style="border-collapse: collapse" cellpadding="5" style="font-size: 10px;">
 	<tr>
 		<td class="border"><strong>AUTORIZA A:</strong></td>
 		<td colspan="3" class="border">{{ $datos->nombre }}</td>
@@ -63,16 +66,19 @@
 		<td colspan="2" class="center border">{{ $datos->telefono }}</td>
 	</tr>
 	<tr>
-		<td class="center border"><strong>VOL&Uacute;MEN AUTORIZADO (EN N&Uacute;MEROS):</strong></td>
-		<td class="center border"><strong>VOL&Uacute;MEN AUTORIZADO (EN LETRAS):</strong></td>
-		<td class="center border"><strong>UNIDAD DE MEDIDA:</strong></td>
-		<td class="center border"><strong>VARIACI&Oacute;N:</strong></td>
+		<td class="center border" colspan="2"><strong>VOL&Uacute;MEN AUTORIZADO</strong></td>
+		<td class="center border" rowspan="2"><strong>UNIDAD DE MEDIDA:</strong></td>
+		<td class="center border" rowspan="2"><strong>VARIACI&Oacute;N:</strong></td>
+	</tr>
+	<tr>
+		<td class="center border"><strong>EN N&Uacute;MEROS:</strong></td>
+		<td class="center border"><strong>EN LETRAS:</strong></td>
 	</tr>
 	<tr>
 		<td class="center border">{{ $datos->volumen }}</td>
 		<td class="center border">{{ $datos->volumenletras }}</td>
 		<td class="center border">{{ $datos->unidades }}</td>
-		<td class="center border">+/- 5%</td>
+		<td class="center border">+/- {{ $datos->variacion }}%</td>
 	</tr>
 	<tr>
 		<td class="center border"><strong>FRACCION ARANCELARIA:</strong></td>
@@ -81,7 +87,13 @@
 	<tr>
 		<?php $fraccion = explode(' ', $datos->fraccion); ?>
 		<td class="center border">{{ $fraccion[0] }}</td>
-		<td colspan="3" class="center border">{{ end($fraccion) }}</td>
+		<td colspan="3" class="center border">
+			<?php $descipcion = ''; ?>
+			@for($i=1;$i<count($fraccion);$i++)
+				<?php $descipcion .= $fraccion[$i]. ' '; ?>
+			@endfor
+			{{ $descipcion }}
+		</td>
 	</tr>
 	<tr>
 		<td colspan="2" class="center border"><strong>PA&Iacute;S DE PROCEDENCIA:</strong></td>
@@ -94,16 +106,16 @@
 		<td class="center border">{{ $datos->fechavencimiento }}</td>
 	</tr>
 	<tr>
-		<td colspan="4" class="center border"><strong>FIRMA DE LA AUTORIDAD EMISORA DE CONTINGENTES ARANCELARIOS</strong></td>
+		<td colspan="4" class="center border"><strong>FIRMA Y SELLO DE LA AUTORIDAD EMISORA DE CONTINGENTES ARANCELARIOS</strong></td>
 	</tr>
 	<tr>
 		<td colspan="4" class="border">
-			<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+			<br/><br/><br/><br/><br/>
 		</td>
 	</tr>
 </table>
 <br/>
-<table width="550">
+<table width="{{ $ancho }}">
 	<tr>
 		<td colspan="4">
 			<span class="nota justify"><small><strong>NOTA:</strong> La titularidad de un Certificado no exime del cumplimiento de las regulaciones internas vigentes al momento
