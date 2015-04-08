@@ -77,6 +77,7 @@ class solicitudesemisionController extends crudController {
 				$certificado->volumenletras      = Components::numeroALetras($cantidad,null, 2);
 				$certificado->fraccion           = $info->fraccion;
 				$certificado->paisid             = $info->paisid;
+				$certificado->variacion          = $info->variacion;
 				$certificado->tratadodescripcion = $info->textocertificado;
 				$certificado->fecha              = date_create();
 				$certificado->fechavencimiento   = $info->vencimiento;
