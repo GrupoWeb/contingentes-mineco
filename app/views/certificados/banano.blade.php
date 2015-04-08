@@ -36,7 +36,7 @@
 	</tr>
 	<tr>
 		<td colspan="6" align="center">
-			<strong><h1>CERTIFICADO DE EXPORTACI&Oacute;N DE BANANO A LA UNI&Oacute;N EUROPEA<sup>*</sup></h1></strong>
+			<strong><h2>CERTIFICADO DE EXPORTACI&Oacute;N DE BANANO A LA UNI&Oacute;N EUROPEA<sup>*</sup></h2></strong>
 			<h3>(Cl&aacute;usula de Estabilización)</h3>
 		</td>
 	</tr>
