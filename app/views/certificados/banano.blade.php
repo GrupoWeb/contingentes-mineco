@@ -28,7 +28,7 @@
 	}
 
 </style>
-<table width="550" cellpadding="5" cellspacing="10" style="font-size: 8px; line-height: 7px">
+<table width="500" cellpadding="5" cellspacing="10" style="font-size: 8px; line-height: 7px">
 	<tr>
 		<td colspan="6" align="left">
 			<br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
