@@ -43,7 +43,7 @@
 	<tr>
 		<td colspan="3" rowspan="2" class="border">
 			<strong>1. AUTORIDAD EMISORA DEL CERTIFICADO:</strong><br/>
-			<p class="underline center">Dirección de Administración del Comercio Exterior Ministerio de Economía</p>
+			<p class="underline center">Dirección de Administración del Comercio Exterior<br /><br />Ministerio de Economía</p>
 		</td>
 		<td rowspan="2">&nbsp;</td>
 		<td colspan="2" class="border">
@@ -71,7 +71,7 @@
 	</tr>
 	<tr>
 		<td colspan="4" rowspan="2" class="border">
-			<strong>6. PESO NETO (en {{ $datos->unidades }}):</strong><br/>
+			<strong>6. PESO NETO (en {{ strtolower($datos->unidades) }}):</strong><br/>
 			<p class="underline">--{{ $datos->volumen }}--</p>			
 			<p style="padding-top:10px"><strong>En letras: </strong><span class="underline">{{ $datos->volumenletras }}</span></p>
 		</td>
