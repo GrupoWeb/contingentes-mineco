@@ -15,7 +15,7 @@ App::missing(function($exception) {
 });
 
 App::error(function(Exception $exception, $code) {
-  Hermes::notificarError(array('codigo'=>$code, 'excepcion'=>$exception));
+  Hermes::notificarError(array('codigooo'=>$code, 'excepcionaaa'=>$exception));
 });
 
 App::down(function() {
