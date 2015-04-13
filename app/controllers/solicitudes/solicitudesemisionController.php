@@ -84,6 +84,10 @@ class solicitudesemisionController extends crudController {
 				$res = $certificado->save();
 				if (!$res) return false;
 
+				$c = Certificado::find($certificado->certificadoid);
+				$c->numerocertificado = 'CA-A'.str_pad($certificado->certificadoid, 6, '0', STR_PAD_LEFT);
+				$c->save();
+
 				$movimiento                   = new Movimiento;
 				$movimiento->periodoid        = $emision->periodoid;
 				$movimiento->usuarioid        = $emision->usuarioid;

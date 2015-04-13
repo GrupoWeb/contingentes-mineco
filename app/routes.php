@@ -12,9 +12,13 @@
 */
 
 Route::get('temp',function(){
-	return View::make('emails.solicitudinscripcion')
-		->with('fecha','el dia de hoy')
-		->with('nombre','el nombre');
+	$certificados = DB::table('certificados')->lists('certificadoid');
+
+	foreach($certificados as $certificado) {
+		$c = Certificado::find($certificado);
+		$c->numerocertificado = 'CA-A'.str_pad($certificado, 6, '0', STR_PAD_LEFT);
+		$c->save();
+	}
 });
 
 //API

@@ -26,7 +26,7 @@ class certificadosController extends crudController {
 			Crud::setWhere('usuarioid', Auth::id());
 		}
 
-		Crud::setCampo(array('nombre'=>'No.','campo'=>'certificados.certificadoid'));
+		Crud::setCampo(array('nombre'=>'No.','campo'=>'certificados.numerocertificado'));
 		Crud::setCampo(array('nombre'=>'Fecha','campo'=>'certificados.fecha','tipo'=>'date'));
 		Crud::setCampo(array('nombre'=>'Nombre','campo'=>'certificados.nombre'));
 		Crud::setCampo(array('nombre'=>'Volúmen','campo'=>'certificados.volumen', 'class'=>'text-right'));
