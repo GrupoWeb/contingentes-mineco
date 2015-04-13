@@ -11,16 +11,6 @@
 |
 */
 
-Route::get('temp',function(){
-	$certificados = DB::table('certificados')->lists('certificadoid');
-
-	foreach($certificados as $certificado) {
-		$c = Certificado::find($certificado);
-		$c->numerocertificado = 'CA-A'.str_pad($certificado, 6, '0', STR_PAD_LEFT);
-		$c->save();
-	}
-});
-
 //API
 Route::group(array('before' => array('auth_basic')), function() {
 	Route::get('api/certificado/{id}', 'apiController@certificado');
