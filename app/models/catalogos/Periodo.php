@@ -44,5 +44,4 @@ class Periodo extends Eloquent {
 			->where('p.periodoid', $aPeriodoId)
 			->first();
 	}
-
 }
