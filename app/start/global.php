@@ -15,28 +15,7 @@ App::missing(function($exception) {
 });
 
 App::error(function(Exception $exception, $code) {
-  if ($exception instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
-    Log::error('NotFoundHttpException Route: ' . Request::url() );
-  }
-  else if ($exception instanceof \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException) {
-    Log::error('MethodNotAllowedHttpException Route: ' . Request::url() );
-  }
-  Log::error($exception);
-
-  if(App::environment() <> 'local') {
-    Hermes::notificarError(array(
-      'codigo'    => $code,
-      'mensaje'   => $exception->getMessage(),
-      'url'       => Request::url(),
-      'ip'        => $_SERVER['REMOTE_ADDR'],
-      'useragent' => $_SERVER['HTTP_USER_AGENT'],
-      'userid'    => Auth::check() ? Auth::id() : 'Usuario no autenticado',
-      'rolid'     => Auth::check() ? Auth::user()->rolid : 'Usuario no autenticado',
-      'request'   => Request::method(),
-      'archivo'   => $exception->getFile(),
-      'linea'     => $exception->getLine()
-    ));
-  }
+  Hermes::notificarError(array('codigo'=>$code, 'excepcion'=>$exception));
 });
 
 App::down(function() {
