@@ -22,6 +22,75 @@
 	@endif
 	<?php $tid = Session::get('tselected'); ?>
 	@if($tid == 0)
+		<div class="row">
+			<div class="col-lg-4 col-md-6">
+	      <div class="panel panel-primary">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-xs-3">
+                <i class="fa fa-pencil-square-o fa-5x"></i>
+              </div>
+              <div class="col-xs-9 text-right">
+                <div class="huge">{{ $pendientesinscripcion }}</div>
+                <div>Solicitudes Inscripción</div>
+              </div>
+            </div>
+          </div>
+          <a href="/solicitudespendientes/inscripcion">
+            <div class="panel-footer">
+              <span class="pull-left">Ver pendientes</span>
+              <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+              <div class="clearfix"></div>
+            </div>
+          </a>
+	      </div>
+		  </div>
+		  <div class="col-lg-4 col-md-6">
+	      <div class="panel panel-green">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-xs-3">
+                <i class="fa fa-sign-in fa-5x"></i>
+              </div>
+              <div class="col-xs-9 text-right">
+                <div class="huge">{{ $pendientesasignacion }}</div>
+                <div>Solicitudes Asignación</div>
+              </div>
+            </div>
+          </div>
+          <a href="/solicitudespendientes/asignacion">
+            <div class="panel-footer">
+              <span class="pull-left">Ver pendientes</span>
+              <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+              <div class="clearfix"></div>
+            </div>
+          </a>
+	      </div>
+		  </div>
+		  <div class="col-lg-4 col-md-6">
+	      <div class="panel panel-red">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-xs-3">
+                <i class="fa fa-file-text-o fa-5x"></i>
+              </div>
+              <div class="col-xs-9 text-right">
+                <div class="huge">{{ $pendientesemision }}</div>
+                <div>Solicitudes Emisión</div>
+              </div>
+            </div>
+          </div>
+          <a href="/solicitudespendientes/emision">
+            <div class="panel-footer">
+              <span class="pull-left">Ver pendientes</span>
+              <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+              <div class="clearfix"></div>
+            </div>
+          </a>
+	      </div>
+		  </div>
+	  </div>
+
 		@foreach($datos as $tratadoid=>$tratado)
 			<div class="col-sm-2">
 				<button type="button" class="btn btn-default btn-lg btn-block tratadobtn" data-tratado="{{ $tratadoid }}">
