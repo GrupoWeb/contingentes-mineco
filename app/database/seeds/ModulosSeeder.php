@@ -184,6 +184,12 @@ class ModulosSeeder extends Seeder {
 			'nombrefriendly' => 'Periodo penalizaciones'
 		));
 
+		DB::table('authmodulos')->insert(array(
+			'moduloid'       => 31,
+			'nombre'         => 'usuariosextra',
+			'nombrefriendly' => 'Usuarios extra'
+		));
+
 		DB::table('authmodulos')->update(array('created_at'=>date_create(), 'updated_at'=>date_create()));
 	  DB::statement('SET FOREIGN_KEY_CHECKS=1');
 	}

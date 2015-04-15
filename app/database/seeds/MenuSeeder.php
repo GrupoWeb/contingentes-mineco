@@ -265,6 +265,15 @@
 				'icono'         	=> null
 			));
 
+			DB::table('authmenu')->insert(array(
+				'menuid'					=> 34,
+				'padreid'        	=> 11,
+				'modulopermisoid' => 142,
+				'nombre'         	=> 'Usuarios extra',
+				'orden' 					=> 400,
+				'icono'         	=> null
+			));
+
 			DB::table('authmenu')->update(array('created_at'=>date_create(), 'updated_at'=>date_create()));
 		  DB::statement('SET FOREIGN_KEY_CHECKS=1');
 		}
