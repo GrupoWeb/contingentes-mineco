@@ -50,10 +50,16 @@ class Empresacontingente extends Eloquent {
 	}
 
 	public static function getEmpresasContingente($aContingenteId) {
-		return DB::table('empresacontingentes AS ec')
-			->select('e.empresaid', 'e.razonsocial AS nombre')
-			->leftJoin('empresas AS e', 'ec.empresaid', '=', 'e.empresaid')
+		return DB::table('authusuarios AS u')
+			->select('e.empresaid', 'razonsocial AS nombre')
+			->leftJoin('empresas AS e', 'u.empresaid', '=', 'e.empresaid')
+			->leftJoin('empresacontingentes AS ec', 'e.empresaid', '=', 'ec.empresaid')
+			->leftJoin('movimientos AS m', 'm.usuarioid', '=', 'u.usuarioid')
+			->whereIn('u.rolid', Config::get('contingentes.rolempresa'))
+			->where('m.tipomovimientoid', DB::table('tiposmovimiento')->where('nombre', 'Asignación')->pluck('tipomovimientoid'))
 			->where('ec.contingenteid', $aContingenteId)
+			->groupBy('e.empresaid')
+			->orderBy('razonsocial')
 			->get();
 	}
 }
