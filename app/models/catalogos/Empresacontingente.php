@@ -62,4 +62,10 @@ class Empresacontingente extends Eloquent {
 			->orderBy('razonsocial')
 			->get();
 	}
+
+	public static function getContingentesEmpresa($aEmpresaId) {
+		return DB::table('empresacontingentes')
+			->where('empresaid', $aEmpresaId)
+			->count();
+	}
 }

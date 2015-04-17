@@ -67,4 +67,13 @@ class Movimiento extends Eloquent {
 			->whereIn('usuarioid', Usuario::listUsuariosEmpresa($aEmpresaId))
 			->first();
 	}
+
+	public static function getToneladasUsuario($aUsuarioId) {
+		$tipoemision = DB::table('tiposmovimiento')->where('nombre', 'Certificado')->pluck('tipomovimientoid');
+
+		return DB::table('movimientos')
+			->where('usuarioid', $aUsuarioId)
+			->where('tipomovimientoid', $tipoemision)
+			->sum('cantidad');
+	}
 }

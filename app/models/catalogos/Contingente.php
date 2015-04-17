@@ -91,4 +91,12 @@ class Contingente extends Eloquent {
 			->where('contingenteid', $aContingneteId)
 			->pluck('asignacion');
 	}
+
+	public static function getProductos() {
+		return DB::table('contingentes AS c')
+			->select('tratadoid', 'p.nombre')
+			->leftJoin('productos AS p', 'c.productoid', '=', 'p.productoid')
+			->orderBy('p.nombre')
+			->get();
+	}
 }

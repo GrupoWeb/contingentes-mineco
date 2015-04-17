@@ -13,4 +13,10 @@ class Solicitudesemision extends Eloquent {
 			->orderBy('estado')
 			->get();
 	}
+
+	public static function getEmisionesUsuario($aUsuarioId) {
+		return DB::table('solicitudesemision')
+			->where('usuarioid', $aUsuarioId)
+			->count();
+	}
 }

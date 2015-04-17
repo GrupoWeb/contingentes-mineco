@@ -79,9 +79,16 @@ class dashboardController extends BaseController {
 				->with('pendientesasignacion', $pendientesasignacion)
 				->with('pendientesemision', $pendientesemision);
 		}
-		
-		return View::make('dashboard.index')
-			->with('admin', $admin);
+
+		else {
+			return View::make('dashboard.index')
+				->with('admin', $admin)
+				->with('contingentes', Empresacontingente::getContingentesEmpresa(Auth::user()->empresaid))
+				->with('emisiones', Solicitudesemision::getEmisionesUsuario(Auth::id()))
+				->with('toneladas', Movimiento::getToneladasUsuario(Auth::id()))
+				->with('tratados', Tratado::getTratadosDashboard())
+				->with('productos', Contingente::getProductos());
+		}
 	}
 
 	public function changetratado($id) {
