@@ -86,13 +86,21 @@ class dashboardController extends BaseController {
 				->with('contingentes', Empresacontingente::getContingentesEmpresa(Auth::user()->empresaid))
 				->with('emisiones', Solicitudesemision::getEmisionesUsuario(Auth::id()))
 				->with('toneladas', Movimiento::getToneladasUsuario(Auth::id()))
-				->with('tratados', Tratado::getTratadosDashboard())
-				->with('productos', Contingente::getProductos());
+				->with('tratados', Tratado::getTratadosDashboard());
+				//->with('productos', Contingente::getProductos());
 		}
 	}
 
 	public function changetratado($id) {
 		Session::put('tselected', $id);
 		return 'true';
+	}
+
+	public function detalletratado($id) {
+		$id = Crypt::decrypt($id);
+
+		return View::make('dashboard.productos')
+			->with('info', Tratado::getTratadoDashboard($id))
+			->with('productos', Contingente::getProductos($id));
 	}
 }

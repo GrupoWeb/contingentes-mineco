@@ -41,9 +41,15 @@ class Tratado extends Eloquent {
 
 	public static function getTratadosDashboard() {
 		return DB::table('tratados AS t')
-			->select('tratadoid', 'nombrecorto', 'nombre', 'tipo',
-				DB::raw("(SELECT count(*) FROM contingentes AS c where c.tratadoid = t.tratadoid) AS contingentes"))
+			->select('tratadoid', 'nombrecorto')
 			->orderBy('nombrecorto')
 			->get();
+	}
+
+	public static function getTratadoDashboard($aTratadoId) {
+		return DB::table('tratados AS t')
+			->select('nombre', 'tipo')
+			->where('tratadoid', $aTratadoId)
+			->first();
 	}
 }

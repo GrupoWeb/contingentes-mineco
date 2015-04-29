@@ -28,6 +28,7 @@ Route::group(array('before' => array('tratados')), function() {
 	Route::get('cuentacorriente/periodos/{id}', 'cuentacorrienteController@getPeriodos');
 	Route::get('cuentacorriente/empresas/{id}', 'cuentacorrienteempresasController@getEmpresas');
 	Route::get('changetratado/{id}', 'dashboardController@changetratado');
+	Route::get('tratado/detalle/{id}', 'dashboardController@detalletratado');
 
 	//=== SOLICITUD DE INSCRIPCION
 	Route::resource('signup', 'inscripcionController');
