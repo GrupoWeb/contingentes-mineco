@@ -5,7 +5,7 @@ class Tratado extends Eloquent {
 
 	public static function getTratados() {
 		return DB::table('tratados')
-			->select('tratadoid', 'nombre', 'nombrecorto', 'tipo')
+			->select('tratadoid', 'nombre', 'nombrecorto', 'tipo', 'clase', 'icono')
 			->whereRaw('tratadoid IN (SELECT DISTINCT tratadoid FROM contingentes)')
 			->get();
 	}

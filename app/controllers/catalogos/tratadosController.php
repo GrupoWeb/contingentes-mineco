@@ -30,10 +30,29 @@ class tratadosController extends crudController {
 	 						 'combokey'=>'paisid',
 	 						 'show'=>false));
 	 	Crud::setCampo(array('nombre'=>'Activo','campo'=>'activo', 'tipo'=>'bool'));
+	 	Crud::setCampo(array('nombre'=>'Color','campo'=>'clase','tipo'=>'enum','enumarray'=>array('sucess','warning','danger','primary','info','default'),'show'=>false));
+	 	Crud::setCampo(array('nombre'=>'Icono','campo'=>'icono','tipo'=>'enum','enumarray'=>array('sucess','warning','danger','primary','info','default'),'show'=>false));
 
 	 	Crud::setBotonExtra(array('url'=>'contingentes?tratado=','icon'=>'glyphicon glyphicon-certificate','titulo'=>'Asignar Contingentes'));
 	 
 	 	Crud::setPermisos(Cancerbero::tienePermisosCrud('tratados'));
 	}
-	
+
+	public function create() {
+		return $this->edit(Crypt::encrypt(0));
+	}
+
+	public function edit($id) {
+		$id = Crypt::decrypt($id);
+
+		if($id <> 0)
+			$data = Tratado::find($id);
+
+		else
+			$data = null;
+
+		return View::make('tratados.edit')
+			->with('data', $data)
+			->with('paises', Pais::getPaises());
+	}
 }

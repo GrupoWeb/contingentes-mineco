@@ -36,6 +36,8 @@ class dashboardController extends BaseController {
 				$datos[$tratado->tratadoid]['nombre']       = $tratado->nombre;
 				$datos[$tratado->tratadoid]['nombrecorto']  = $tratado->nombrecorto;
 				$datos[$tratado->tratadoid]['tipo']         = $tratado->tipo;
+				$datos[$tratado->tratadoid]['clase']        = $tratado->clase;
+				$datos[$tratado->tratadoid]['icono']        = $tratado->icono;
 				$datos[$tratado->tratadoid]['contingentes'] = $tingentes;
 				$datos[$tratado->tratadoid]['inscritos']    = count($empresas);
 

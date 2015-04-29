@@ -93,8 +93,8 @@
 
 		@foreach($datos as $tratadoid=>$tratado)
 			<div class="col-sm-2">
-				<button type="button" class="btn btn-default btn-lg btn-block tratadobtn" data-tratado="{{ $tratadoid }}">
-					<i class="fa fa-file-text-o fa-2x"></i><br/>
+				<button type="button" class="btn btn-{{ $tratado['clase'] }} btn-lg btn-block tratadobtn" data-tratado="{{ $tratadoid }}">
+					<i class="fa {{ $tratado['icono'] }} fa-2x"></i><br/>
 					{{ $tratado['nombrecorto'] }}<br />
 					<small>{{ $tratado['tipo'] }}</small>
 				</button><br />
