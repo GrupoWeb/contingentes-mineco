@@ -19,7 +19,7 @@
 
 			DB::table('plantillascertificados')->insert(array(
 				'plantillaid' => 3,
-				'nombre'      => 'Certificado VUPE',
+				'nombre'      => 'Licencia VUPE',
 				'vista'       => 'certificados.vupe'
 			));
 

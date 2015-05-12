@@ -58,12 +58,14 @@
 		<td colspan="3" class="border">{{ $datos->direccion }}</td>
 	</tr>
 	<tr>
-		<td colspan="2" class="center border"><strong>NIT:</strong></td>
-		<td colspan="2" class="center border"><strong>TELEFONO:</strong></td>
+		<td colspan="1" class="center border"><strong>NIT:</strong></td>
+		<td colspan="2" class="center border"><strong>CODIGO VUPE:</strong></td>
+		<td colspan="1" class="center border"><strong>TELEFONO:</strong></td>
 	</tr>
 	<tr>
-		<td colspan="2" class="center border">{{ $datos->nit }}</td>
-		<td colspan="2" class="center border">{{ $datos->telefono }}</td>
+		<td colspan="1" class="center border">{{ $datos->nit }}</td>
+		<td colspan="2" class="center border">{{ $datos->codigovupe }}</td>
+		<td colspan="1" class="center border">{{ $datos->telefono }}</td>
 	</tr>
 	<tr>
 		<td class="center border" colspan="3"><strong>VOL&Uacute;MEN AUTORIZADO</strong></td>

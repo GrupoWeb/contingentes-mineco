@@ -15,7 +15,7 @@ class Certificado extends Eloquent {
 			->leftJoin('unidadesmedida AS um','co.unidadmedidaid','=','um.unidadmedidaid')
 			->select('c.certificadoid', 'c.numerocertificado','c.anulado','c.tratado','c.tratadodescripcion', 'c.nombre',
 				'c.direccion','c.nit','c.telefono', 'pc.vista', 'c.variacion',
-				'c.volumen','c.volumenletras','c.fraccion','p.nombre as paisprocedencia','um.nombre AS unidades',
+				'c.volumen','c.volumenletras','c.fraccion','p.nombre as paisprocedencia','um.nombre AS unidades', 'c.codigovupe',
 				DB::raw('DATE_FORMAT(c.fecha,"%d-%m-%Y") AS fecha'),
 				DB::raw('DATE_FORMAT(c.fechavencimiento,"%d-%m-%Y") AS fechavencimiento'), 
 				DB::raw('DATE_FORMAT(c.fecha,"%Y-%m-%d") AS fechamy'),

@@ -56,6 +56,7 @@ class solicitudesinscripcionController extends crudController {
 						'telefono'                => $solicitud->telefono,
 						'fax'                     => $solicitud->fax,
 						'encargadoimportaciones'  => $solicitud->encargadoimportaciones,
+						'codigovupe'							=> $solicitud->codigovupe,
 						'created_at'              => date_create(),
 						'updated_at'              => date_create()
 					)

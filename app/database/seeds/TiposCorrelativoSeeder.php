@@ -16,7 +16,7 @@
 
 			DB::table('tiposcorrelativo')->insert(array(
 				'tipocorrelativoid' => 3,
-				'nombre'            => 'CC-X'
+				'nombre'            => 'CH-AXXXXXX'
 			));
 
 

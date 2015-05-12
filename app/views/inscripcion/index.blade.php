@@ -198,10 +198,23 @@
         </div>
       </div>
     </div>
+    <!-- codigo VUPE -->
+    <div class="clearfix"></div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="txVUPE" class="col-sm-2 control-label">12. Código VUPE</label>
+        <div class="col-sm-10">
+          {{ Form::text('txVUPE', '', array('class'=>'form-control', 
+            'autocomplete' => 'off',
+            'placeholder'  => 'Solamente requerido para exportación de metales'
+            )) }}
+        </div>
+      </div>
+    </div>   
     <!--tratados -->
     <div class="col-md-12">
       <div class="form-group">
-        <label for="tratados" class="col-sm-2 control-label">12. Tratado</label>
+        <label for="tratados" class="col-sm-2 control-label">13. Tratado</label>
         <div class="col-sm-10 div-tratados">
           <select name="tratados" class="selectpicker form-control" id="tratados">
             @foreach($tratados as $tratado)
@@ -214,7 +227,7 @@
     <!-- contingente -->
     <div class="col-md-12">
       <div class="form-group">
-        <label for="cmbContingente" class="col-sm-2 control-label">13.Contingente</label>
+        <label for="cmbContingente" class="col-sm-2 control-label">14.Contingente</label>
         <div class="col-sm-10 div-contingente" id="div-contingente"></div>
       </div>
     </div>

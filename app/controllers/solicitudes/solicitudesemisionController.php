@@ -72,6 +72,7 @@ class solicitudesemisionController extends crudController {
 				$certificado->nombre             = $info->nombre;
 				$certificado->direccion          = $info->domiciliocomercial;
 				$certificado->nit                = $info->nit;
+				$certificado->codigovupe         = $info->codigovupe;
 				$certificado->telefono           = $info->telefono;
 				$certificado->volumen            = $cantidad;
 				$certificado->volumenletras      = Components::numeroALetras($cantidad,null, 2);
@@ -93,8 +94,8 @@ class solicitudesemisionController extends crudController {
 					$c->numerocertificado = $certificado->certificadoid;
 				else if($tipoc==2) //CA-AXXXXXX
 					$c->numerocertificado = 'CA-A'.str_pad($certificado->certificadoid, 6, '0', STR_PAD_LEFT);
-				else //CC-X
-					$c->numerocertificado = 'CC-' . $certificado->certificadoid;
+				else //CH-AXXXXXX
+					$c->numerocertificado = 'CH-A'.str_pad($certificado->certificadoid, 6, '0', STR_PAD_LEFT);
 				
 				$c->save();
 

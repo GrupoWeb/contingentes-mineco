@@ -154,7 +154,7 @@ class apiController extends BaseController {
 			$ret['fecha_vencimiento']   = $cert->fechavencimientomy;
 			$ret['toneladasmetricas']   = $cert->volumen;
 			$ret['fraccionarancelaria'] = $fraccion[0] . "\r\n";
-			$ret['codigo_vupe']         = '123';
+			$ret['codigo_vupe']         = $cert->codigovupe;
 		}
 		else {
 			//$ret['error'] = 'Registro no encontrado';

@@ -116,6 +116,7 @@ class inscripcionController extends BaseController {
 			$inscripcion->telefono                = Input::get('txTelefono');
 			$inscripcion->fax                     = Input::get('txFax');
 			$inscripcion->encargadoimportaciones  = Input::get('txEncargadoImportaciones');
+			$inscripcion->codigovupe              = Input::get('txVUPE');
 			$inscripcion->save();
 
 			$contingente                         = new Solicitudinscripcioncontingente;
