@@ -28,7 +28,7 @@ class dashboardController extends BaseController {
 					$tingentes[] = array(
 						'contingenteid' => $contingente,
 						'nombre'        => Contingente::getProducto($contingente),
-						'saldo'         => $query[0]->saldo,
+						'saldo'         => ($query?$query[0]->saldo:0),
 						'inscritos'     => count($inscritos)
 					);
 				}

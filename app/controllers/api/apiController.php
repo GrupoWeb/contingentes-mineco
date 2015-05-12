@@ -128,4 +128,37 @@ class apiController extends BaseController {
 
 	}
 
+	public function vupeLegacy(){
+		$ret = ['licencia'=>'-','fecha_emision'=>null, 'fecha_vencimiento'=>null, 'toneladasmetricas'=>null,
+			'fraccionarancelaria'=>null, 'codigo_vupe'=>null];
+
+		$json = json_decode(Input::get('dace'));
+
+		if (!property_exists($json, 'keycode')) {
+			//$ret['error'] = 'Datos invalidos';
+			return json_encode($ret);
+		}
+
+		$cert = Certificado::getCertificado((int)$json->correlativo);
+		if ($cert) {
+			$nit = str_replace('-', '', trim($cert->nit));
+			$nitclient = str_replace('-', '', trim($json->nit));
+			if($nit<>$nitclient) {
+				//$ret['error'] = 'Cliente no coincide';
+				return json_encode($ret);
+			}
+
+			$fraccion = explode(' ', $cert->fraccion);
+			$ret['licencia']            = $cert->numerocertificado;
+			$ret['fecha_emision']       = $cert->fechamy;
+			$ret['fecha_vencimiento']   = $cert->fechavencimientomy;
+			$ret['toneladasmetricas']   = $cert->volumen;
+			$ret['fraccionarancelaria'] = $fraccion[0] . "\r\n";
+			$ret['codigo_vupe']         = '123';
+		}
+		else {
+			//$ret['error'] = 'Registro no encontrado';
+		}	
+		return json_encode($ret); 
+	}
 }

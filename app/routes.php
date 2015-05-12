@@ -11,6 +11,9 @@
 |
 */
 
+//Legacy
+Route::get('api/vupe/','apiController@vupeLegacy');
+
 //API
 Route::group(array('before' => array('auth_basic')), function() {
 	Route::get('api/certificado/{id}', 'apiController@certificado');

@@ -18,6 +18,8 @@ class Certificado extends Eloquent {
 				'c.volumen','c.volumenletras','c.fraccion','p.nombre as paisprocedencia','um.nombre AS unidades',
 				DB::raw('DATE_FORMAT(c.fecha,"%d-%m-%Y") AS fecha'),
 				DB::raw('DATE_FORMAT(c.fechavencimiento,"%d-%m-%Y") AS fechavencimiento'), 
+				DB::raw('DATE_FORMAT(c.fecha,"%Y-%m-%d") AS fechamy'),
+				DB::raw('DATE_FORMAT(c.fechavencimiento,"%Y-%m-%d") AS fechavencimientomy'),
 				'u.nombrecompleto','u.puesto','u.firma','u.certificado')
 			->where('c.certificadoid', $aId)
 			->first();
