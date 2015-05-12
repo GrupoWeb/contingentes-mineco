@@ -10,5 +10,6 @@ class DatabaseSeeder extends Seeder {
 		$this->call('TipotratadosSeeder');
 		$this->call('PlantillaCertificadosSeeder');
 		$this->call('TiposMovimientoSeeder');
+		$this->call('TiposCorrelativoSeeder');
 	}
 }

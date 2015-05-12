@@ -17,6 +17,12 @@
 				'vista'       => 'certificados.banano'
 			));
 
+			DB::table('plantillascertificados')->insert(array(
+				'plantillaid' => 3,
+				'nombre'      => 'Certificado VUPE',
+				'vista'       => 'certificados.vupe'
+			));
+
 			DB::table('plantillascertificados')->update(array('created_at'=>date_create(), 'updated_at'=>date_create()));
 		  DB::statement('SET FOREIGN_KEY_CHECKS=1');
 		}

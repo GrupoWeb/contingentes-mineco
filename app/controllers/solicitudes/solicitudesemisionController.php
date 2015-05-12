@@ -87,12 +87,14 @@ class solicitudesemisionController extends crudController {
 				$p           = Periodo::where('periodoid', $emision->periodoid)->pluck('contingenteid');
 				$c           = Certificado::find($certificado->certificadoid);
 				$contingente = Contingente::find($p);	
+				$tipoc       = $contingente->tipocorrelativoid;
 
-				if($p <> 1)
+				if($tipoc==1) //Correlativo
 					$c->numerocertificado = $certificado->certificadoid;
-
-				else
+				else if($tipoc==2) //CA-AXXXXXX
 					$c->numerocertificado = 'CA-A'.str_pad($certificado->certificadoid, 6, '0', STR_PAD_LEFT);
+				else //CC-X
+					$c->numerocertificado = 'CC-' . $certificado->certificadoid;
 				
 				$c->save();
 
