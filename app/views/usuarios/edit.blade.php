@@ -94,6 +94,14 @@
         </div>
       </div>
     </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="txVupe" class="col-sm-4 control-label">Código VUPE</label>
+        <div class="col-sm-8">
+          {{ Form::text('txVupe', $empresa->codigovupe, array('class'=>'form-control','autocomplete'=>'off')) }}
+        </div>
+      </div>
+    </div><!-- codigo vupe -->
 		<!-- razon social -->
 	  <div class="col-md-12">
       <div class="form-group">

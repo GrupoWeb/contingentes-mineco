@@ -41,6 +41,7 @@ class usuariosdeempresaController extends crudController {
 
     $empresa                          = Empresa::find($usuario->empresaid);
     $empresa->nit                     = Input::get('txNIT');
+    $empresa->codigovupe              = Input::get('txVupe');
     $empresa->razonsocial             = Input::get('txRazonSocial');
     $empresa->propietario             = Input::get('txPropietario');
     $empresa->telefono                = Input::get('txTelefono');
