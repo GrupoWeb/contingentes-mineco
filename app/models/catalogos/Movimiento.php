@@ -19,10 +19,12 @@ class Movimiento extends Eloquent {
 				)
 			->leftJoin('authusuarios AS u', 'm.usuarioid',  '=', 'u.usuarioid')
 			->leftJoin('authusuarios AS u2', 'm.created_by', '=', 'u2.usuarioid')
+			->leftJoin('periodos AS p','m.periodoid','=','p.periodoid')
+			->leftJoin('contingentes AS c','p.contingenteid','=','c.contingenteid')
 			->orderBy('m.created_at')
 			->orderBy('m.movimientoid')
 			->where('m.periodoid', $aPeriodoId)
-			->whereIn('m.tipomovimientoid', array(3, 1, 4))
+			->whereRaw('IF(c.tipotratadoid=1,m.tipomovimientoid IN (1,2), m.tipomovimientoid IN(3,1,4) )')
 			->get();
 	}
 
