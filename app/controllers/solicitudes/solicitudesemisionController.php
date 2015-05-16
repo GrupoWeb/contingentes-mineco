@@ -68,6 +68,7 @@ class solicitudesemisionController extends crudController {
 				
 				$certificado                     = new Certificado;
 				$certificado->tratado            = $info->tratadolargo;
+				$certificado->producto           = $info->producto;
 				$certificado->usuarioid          = $emision->usuarioid;
 				$certificado->nombre             = $info->nombre;
 				$certificado->direccion          = $info->domiciliocomercial;
