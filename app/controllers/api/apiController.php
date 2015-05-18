@@ -131,8 +131,19 @@ class apiController extends BaseController {
 	public function vupeLegacy(){
 		$ret = ['licencia'=>'-','fecha_emision'=>null, 'fecha_vencimiento'=>null, 'toneladasmetricas'=>null,
 			'fraccionarancelaria'=>null, 'codigo_vupe'=>null];
+		
+		if(!Input::has('dace')) {
+			//$ret['error'] = 'Parámetros incompletos';
+			return json_encode($ret);
+		}
 
-		$json = json_decode(Input::get('dace'));
+		try {
+			$json = json_decode(Input::get('dace'));	
+		} catch (Exception $e) {
+			//$ret['error'] = 'JSON inválido';
+			return json_encode($ret);
+		}
+		
 
 		if (!property_exists($json, 'keycode')) {
 			//$ret['error'] = 'Datos invalidos';
