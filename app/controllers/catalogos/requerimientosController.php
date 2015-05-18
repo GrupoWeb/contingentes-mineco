@@ -13,7 +13,15 @@ class requerimientosController extends crudController {
 	}
 
 	public function getContingentes($id, $tipo) {
-		$id             = Crypt::decrypt($id);
+		try {
+			$id             = Crypt::decrypt($id);
+		} catch(\Exception $e) {
+			$id                      = -1;
+			$response['codigoerror'] = 3;
+			$response['error']       = 'Usuario/contingente/requerimiento invalido';
+		}
+
+		
 		$requerimientos = array();
 
 		if(Auth::check())
