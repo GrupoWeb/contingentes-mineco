@@ -150,7 +150,9 @@ class apiController extends BaseController {
 			return json_encode($ret);
 		}
 
-		$cert = Certificado::getCertificado((int)$json->correlativo);
+		$corr = $json->correlativo;
+		$corr = substr($corr, 1);
+		$cert = Certificado::getCertificado((int)$corr);
 		if ($cert) {
 			$nit = str_replace('-', '', trim($cert->nit));
 			$nitclient = str_replace('-', '', trim($json->nit));
