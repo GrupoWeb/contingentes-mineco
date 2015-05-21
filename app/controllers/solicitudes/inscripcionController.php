@@ -67,6 +67,7 @@ class inscripcionController extends BaseController {
 	}
 
 	public function getContingentes($tratadoid) {
+		$tratadoid = Crypt::decrypt($tratadoid);
 		if(Auth::check()) {
 			$usuarioCon = array();
     	$con        = DB::table("empresacontingentes")->select("contingenteid")->where("empresaid",Auth::user()->empresaid) ->get();

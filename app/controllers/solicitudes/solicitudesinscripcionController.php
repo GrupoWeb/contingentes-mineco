@@ -190,7 +190,8 @@ class solicitudesinscripcionController extends crudController {
   }
   
   public function update($id){
-  	$contingnete    = Crypt::decrypt(Input::get('contingentes'));
+  	$contingenteid  = Crypt::decrypt(Input::get('cmbContingente'));
+ 
 		$requerimientos = Contingenterequerimiento::getRequerimientos($contingenteid, 'inscripcion');
 
 		if(count(Input::file()) <= 0 && count($requerimientos) > 0) {
@@ -200,16 +201,15 @@ class solicitudesinscripcionController extends crudController {
 			return Redirect::to('/');
 		}
     
-		DB::transaction(function() {
+		DB::transaction(function() use ($contingenteid) {
 
 	    $empresaId = Auth::user()->empresaid;
 	      
-	    foreach (Input::get('contingentes') as $val) {
-	    	DB::table('empresacontingentes')->insert(array(
-					'empresaid'     => $empresaId, 
-					'contingenteid' => Crypt::decrypt($val))
-	    	);
-	    }
+    	DB::table('empresacontingentes')->insert(array(
+				'empresaid'     => $empresaId, 
+				'contingenteid' => $contingenteid
+    	));
+	    
 	    
 	    foreach (Input::file() as $key=>$val) { 
 	      if ($key=='txArchivo') continue;

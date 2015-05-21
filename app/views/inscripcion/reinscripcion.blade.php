@@ -24,7 +24,7 @@
           <div class="col-sm-10 div-tratados">
             <select name="tratados" class="selectpicker form-control" id="tratados">
               @foreach($tratados as $tratado)
-                <option value="{{ $tratado->tratadoid }}">{{ $tratado->nombrecorto }}</option>
+                <option value="{{ Crypt::encrypt($tratado->tratadoid) }}">{{ $tratado->nombrecorto }}</option>
               @endforeach
             </select>
           </div>
@@ -59,13 +59,13 @@
       $('#tratados').change(function(){
         $.get('/contingentes/tratado/' + $(this).val(), function(data){
           $('#div-contingente').html(data);
-          $('#contingentes').change();
+          $('#cmbContingente').change();
         });
       });
 
       $('#tratados').change();
 
-      $(document).on('change', '#contingentes', function(){
+      $(document).on('change', '#cmbContingente', function(){
         $('.nuevos').each(function( index ) {
           $('#frmRegistro').bootstrapValidator('removeField', $(this).attr('id')); 
           console.log($(this).attr('id'));
