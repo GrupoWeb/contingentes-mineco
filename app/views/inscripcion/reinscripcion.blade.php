@@ -10,7 +10,7 @@
   </script>
  
   <?php
-    $params = array('id'=>'frmRegistro','class'=>'form-horizontal', 'files'=>true,'method'=>'POST');
+    $params = array('id'=>'frmRegistro','class'=>'form-horizontal', 'files'=>true,'method'=>'PUT');
     $params['route'] = "solicitud.inscripcion.update";
   ?>
   {{Form::open($params) }}
