@@ -218,7 +218,7 @@
         <div class="col-sm-10 div-tratados">
           <select name="tratados" class="selectpicker form-control" id="tratados">
             @foreach($tratados as $tratado)
-              <option value="{{ $tratado->tratadoid }}">{{ $tratado->nombrecorto }}</option>
+              <option value="{{ Crypt::encrypt($tratado->tratadoid) }}">{{ $tratado->nombrecorto }}</option>
             @endforeach
           </select>
         </div>
