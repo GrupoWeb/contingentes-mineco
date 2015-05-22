@@ -7,10 +7,21 @@ class solicitudreinscripcionController extends crudController {
   }
   
   public function store(){
+  	if (!Input::has('cmbContingente')) {
+  		Session::flash('message', 'Contingente inválido');
+			Session::flash('type', 'danger');
+			return Redirect::to('/solicitud/inscripcion');
+  	}
   	$contingenteid  = Crypt::decrypt(Input::get('cmbContingente'));
- 
-		$requerimientos = Contingenterequerimiento::getRequerimientos($contingenteid, 'inscripcion');
 
+		$requerimientos = array();
+		if(Auth::check()) {
+			$requerimientos = Empresarequerimiento::getEmpresaRequerimientosIds();
+		}
+
+		$requerimientos = Contingenterequerimiento::getRequerimientos($contingenteid, 'Inscripcion', $requerimientos);
+
+		
 		if(count(Input::file()) <= 0 && count($requerimientos) > 0) {
 			Session::flash('message', 'No se ha cumplido con los requerimientos de archivos necesarios');
 			Session::flash('type', 'danger');
@@ -60,8 +71,9 @@ class solicitudreinscripcionController extends crudController {
 	    });
 	  } catch (Exception $e) {}
 
-  	return Redirect::to('/')
-    	->with('flashMessage',Config::get('login::signupexitoso'))
-    	->with('flashType','success');
+		Session::flash('message', 'Su solicitud de inscripción ha sido enviada');
+		Session::flash('type', 'success');
+
+  	return Redirect::to('/');
   }
 }

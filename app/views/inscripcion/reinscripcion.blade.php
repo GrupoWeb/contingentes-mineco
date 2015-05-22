@@ -17,6 +17,12 @@
     <h1 class="titulo">Solicitud de inscripci&oacute;n</h1>
     <div class="contenido contenido-full">
       <div class="col-md-12">
+        @if(Session::has('message'))
+          <div class="alert alert-{{ Session::get('type') }} alert-dismissable">
+            {{ Session::get('message') }}
+          </div>
+        @endif
+
         <div class="form-group">
           <label for="tratados" class="col-sm-2 control-label">Tratado</label>
           <div class="col-sm-10 div-tratados">
