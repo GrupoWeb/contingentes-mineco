@@ -44,7 +44,7 @@ class solicitudreinscripcionController extends crudController {
 	      if ($key=='txArchivo') continue;
 	    	if ($val) {
 					$arch   = Input::file($key);
-					$nombre = mt_rand(1, 1000) . date('Ymdhis') . '.' . strtolower($file->getClientOriginalExtension());
+					$nombre = mt_rand(1, 1000) . date('Ymdhis') . '.' . strtolower($arch->getClientOriginalExtension());
 					$res    = $arch->move(public_path() . '/archivos/' . $empresaId, $nombre);
 					DB::table('empresarequerimientos')->insert(array(
 						'empresaid'        => $empresaId,
