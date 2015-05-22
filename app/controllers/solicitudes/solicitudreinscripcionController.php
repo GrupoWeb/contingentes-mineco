@@ -64,3 +64,4 @@ class solicitudreinscripcionController extends crudController {
     	->with('flashMessage',Config::get('login::signupexitoso'))
     	->with('flashType','success');
   }
+}
