@@ -35,7 +35,9 @@ class solicitudreinscripcionController extends crudController {
 	      
     	DB::table('empresacontingentes')->insert(array(
 				'empresaid'     => $empresaId, 
-				'contingenteid' => $contingenteid
+				'contingenteid' => $contingenteid,
+				'created_at'		=> date_create(),
+				'updated_at'		=> date_create()
     	));
 	    
 	    
