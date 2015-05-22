@@ -55,7 +55,7 @@ Route::group(array('before' => array('tratados')), function() {
 		//=== SOLICITUDES
 		Route::resource('solicitud/asignacion', 'asignacionController', array('only'=>array('index','store')));
 		Route::resource('solicitud/emision', 'emisionController', array('only'=>array('index','store')));
-		Route::resource('solicitud/inscripcion', 'solicitudereinscripcionController', array('only'=>array('index','store')));
+		Route::resource('solicitud/inscripcion', 'solicitudreinscripcionController', array('only'=>array('index','store')));
 		Route::resource('solicitudespendientes/inscripcion', 'solicitudesinscripcionController',array('names' => array('index' => 'solicitudespendientes.inscripcion.index')));
 		Route::resource('solicitudespendientes/asignacion', 'solicitudesasignacionController');
 		Route::resource('solicitudespendientes/emision', 'solicitudesemisionController');
