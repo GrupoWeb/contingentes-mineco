@@ -40,12 +40,11 @@ class solicitudreinscripcionController extends crudController {
 				'updated_at'		=> date_create()
     	));
 	    
-	    
 	    foreach (Input::file() as $key=>$val) { 
 	      if ($key=='txArchivo') continue;
 	    	if ($val) {
 					$arch   = Input::file($key);
-					$nombre = date('YmdHis').$arch->getClientOriginalName();
+					$nombre = mt_rand(1, 1000) . date('Ymdhis') . '.' . strtolower($file->getClientOriginalExtension());
 					$res    = $arch->move(public_path() . '/archivos/' . $empresaId, $nombre);
 					DB::table('empresarequerimientos')->insert(array(
 						'empresaid'        => $empresaId,
