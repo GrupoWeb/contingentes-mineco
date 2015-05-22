@@ -589,13 +589,13 @@
       DB::table('authmodulopermisos')->insert(array(
           'modulopermisoid'	=> 108,
           'moduloid'        => 22,
-          'permisoid' 			=> 5
+          'permisoid' 			=> 3
       ));
             
       DB::table('authmodulopermisos')->insert(array(
           'modulopermisoid'	=> 109,
           'moduloid'        => 22,
-          'permisoid' 			=> 2
+          'permisoid' 			=> 1
       ));
 
       DB::table('authmodulopermisos')->insert(array(

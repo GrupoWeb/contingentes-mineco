@@ -10,11 +10,9 @@
   </script>
  
   <?php
-    $params = array('id'=>'frmRegistro','class'=>'form-horizontal', 'files'=>true,'method'=>'PUT');
-    $params['route'] = "solicitud.inscripcion.update";
+    $params = array('id'=>'frmRegistro','class'=>'form-horizontal', 'files'=>true,'method'=>'POST');
   ?>
   {{Form::open($params) }}
-    <input type="hidden" name="_method" value="PUT">
     <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
     <h1 class="titulo">Solicitud de inscripci&oacute;n</h1>
     <div class="contenido contenido-full">
