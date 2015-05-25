@@ -19,4 +19,16 @@ class Solicitudesemision extends Eloquent {
 			->where('usuarioid', $aUsuarioId)
 			->count();
 	}
+
+	public static function getSolicitud($aSolicitudId) {
+		return DB::table('solicitudesemision AS se')
+			->select('u.nombre', 'u.email', 't.nombrecorto AS tratado', 'estado',
+				DB::raw('DATE_FORMAT(se.created_at, "%d-%m-%Y %H:%i") AS fecha'))
+			->leftJoin('authusuarios AS u', 'se.usuarioid', '=', 'u.usuarioid')
+			->leftJoin('periodos AS p', 'se.periodoid', '=', 'p.periodoid')
+			->leftJoin('contingentes AS c', 'p.contingenteid', '=', 'c.contingenteid')
+			->leftJoin('tratados AS t', 'c.tratadoid', '=', 't.tratadoid')
+			->where('solicitudemisionid', $aSolicitudId)
+			->first();
+	}
 }

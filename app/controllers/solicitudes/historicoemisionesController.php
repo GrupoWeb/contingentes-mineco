@@ -34,8 +34,19 @@ class historicoemisionesController extends crudController {
 		Crud::setCampo(array('nombre'=>'Emitido','campo'=>'emitido','class'=>'text-right','tipo'=>'numeric','decimales'=>5));
 		Crud::setCampo(array('nombre'=>'Fecha de solicitud','campo'=>'solicitudesemision.created_at', 'tipo'=>'datetime','class'=>'text-right'));
 		Crud::setCampo(array('nombre'=>'Observaciones','campo'=>'observaciones'));
-		Crud::setCampo(array('nombre'=>'Estado','campo'=>'estado','class'=>'text-right'));
+		Crud::setCampo(array('nombre'=>'Estado','campo'=>'estado'));
+
+		Crud::setBotonExtra(array('url'=>'/historicosolicitudes/emision/archivos/{id}','icon'=>'fa fa-file-o','titulo'=>'Archivos adjuntos','class'=>'primary', 'target'=>'_blank'));
 		
 		Crud::setPermisos(array('add'=>false,'edit'=>false,'delete'=>false));
 	}
+
+	public function archivos($id) {
+		$id = Crypt::decrypt($id);
+
+		return View::make('historico.archivos')
+			->with('titulo', 'Archivos adjuntos para solicitud de emisión')
+			->with('solicitud', Solicitudesemision::getSolicitud($id))
+			->with('archivos', Solicitudemisionrequerimiento::getArchivos($id));
+	}	
 }

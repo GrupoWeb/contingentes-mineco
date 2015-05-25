@@ -31,8 +31,19 @@ class historicoinscripcionesController extends crudController {
 		Crud::setCampo(array('nombre'=>'Producto','campo'=>'p.nombre'));
 		Crud::setCampo(array('nombre'=>'Fecha de solicitud','campo'=>'si.created_at', 'tipo'=>'datetime','class'=>'text-right'));
 		Crud::setCampo(array('nombre'=>'Observaciones','campo'=>'si.observaciones'));
-		Crud::setCampo(array('nombre'=>'Estado','campo'=>'si.estado','class'=>'text-right'));
+		Crud::setCampo(array('nombre'=>'Estado','campo'=>'si.estado'));
+
+		Crud::setBotonExtra(array('url'=>'/historicosolicitudes/inscripcion/archivos/{id}','icon'=>'fa fa-file-o','titulo'=>'Archivos adjuntos','class'=>'primary', 'target'=>'_blank'));
 		
 		Crud::setPermisos(array('add'=>false,'edit'=>false,'delete'=>false));
 	}
+
+	public function archivos($id) {
+		$id = Crypt::decrypt($id);
+
+		return View::make('historico.archivosinscripcion')
+			->with('titulo', 'Archivos adjuntos para solicitud de inscripción')
+			->with('solicitud', Solicitudinscripcion::getSolicitud($id))
+			->with('archivos', Solicitudinscripcionrequemiento::getArchivos($id));
+	}	
 }
