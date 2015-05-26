@@ -168,9 +168,11 @@ class certificadosController extends crudController {
 	}
 
 	public function procesarliquidacion($id) {
-		$certificado           = Certificado::find(Crypt::decrypt($id));
-		$certificado->dua      = Input::get('txDua');
-		$certificado->real     = Input::get('txCantidad');
+		$certificado                   = Certificado::find(Crypt::decrypt($id));
+		$certificado->dua              = Input::get('txDua');
+		$certificado->real             = Input::get('txCantidad');
+		$certificado->cif              = Input::get('txCIF');
+		$certificado->fechaliquidacion = Components::fechaHumanoAMysql(Input::get('txFecha'));
 		$certificado->save();
 
 		Session::flash('message', 'Certificado liquidado exitosamente');

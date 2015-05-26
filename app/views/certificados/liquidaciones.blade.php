@@ -39,6 +39,15 @@
               )) }}
             </div>
           </div> <!-- valor CIF -->
+          <div class="form-group">
+            <label for="txFecha" class="col-sm-2 control-label">Fecha de liquidación:</label>
+            <div class="col-sm-6">
+              <div class="input-group date catalogoFechaHora">
+                {{ Form::text('txFecha', '', array('class'=>'form-control','id'=>'txFecha','data-date-format'=>'DD/MM/YYYY HH:mm')) }}
+                <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+              </div>    
+            </div>
+          </div> <!-- fecha liquidacion -->
           <hr>
           <div class="row">
             <div class="col-xs-4 pull-left">
@@ -64,6 +73,12 @@
 	          validating: 'glyphicon glyphicon-refresh'
 	      	}
 	    	});
+
+      $('.catalogoFechaHora').datetimepicker({
+        locale: 'es',
+        useCurrent: true,
+        format: 'DD-MM-YYYY HH:mm'
+      });
     });
   </script>
 @stop

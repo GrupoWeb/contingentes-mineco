@@ -15,3 +15,16 @@ WHERE
 ORDER BY 
   e.razonsocial, m.created_at;
   */
+
+<?php
+
+class utilizacionController extends BaseController {
+  
+  public function index() {
+
+  }
+
+  public function store() {
+    
+  }
+}
