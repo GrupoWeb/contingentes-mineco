@@ -6,7 +6,7 @@
       <div class="col-md-12">
         {{Form::open(array('class'=>'form-horizontal', 'id'=>'frmLiquidacion')) }}
           <div class="form-group">
-            <label for="txDua" class="col-sm-2 control-label"><span id="disponible">DUA</span></label>
+            <label for="txDua" class="col-sm-2 control-label">DUA</label>
             <div class="col-sm-6 div-contingente">
               {{ Form::text('txDua', '', array('class'=>'form-control', 
                 'data-bv-notEmpty'         => 'true',
@@ -16,7 +16,7 @@
             </div>
           </div> <!-- dua -->
           <div class="form-group">
-            <label for="txCantidad" class="col-sm-2 control-label"><span id="disponible">Cantidad real</span></label>
+            <label for="txCantidad" class="col-sm-2 control-label">Cantidad real</label>
             <div class="col-sm-6 div-contingente">
               {{ Form::text('txCantidad', '', array('class'=>'form-control', 
                 'data-bv-notEmpty'         => 'true',
@@ -27,6 +27,18 @@
               )) }}
             </div>
           </div> <!-- cantidad real -->
+          <div class="form-group">
+            <label for="txCIF" class="col-sm-2 control-label">Valor CIF</label>
+            <div class="col-sm-6 div-contingente">
+              {{ Form::text('txCIF', '', array('class'=>'form-control', 
+                'data-bv-notEmpty'         => 'true',
+                'data-bv-notEmpty-message' => 'El valor CIF es requerido',
+                'data-bv-numeric'          => 'true',
+                'data-bv-numeric-message'  => 'La cantidad debe ser numerica',
+                'autocomplete'             => 'off'
+              )) }}
+            </div>
+          </div> <!-- valor CIF -->
           <hr>
           <div class="row">
             <div class="col-xs-4 pull-left">

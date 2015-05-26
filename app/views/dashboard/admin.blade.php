@@ -22,7 +22,7 @@
 	@endif
 	<?php $tid = Session::get('tselected'); ?>
 	@if($tid == 0)
-		<div class="row">
+
 			<div class="col-lg-4 col-md-6">
 	      <div class="panel panel-primary">
           <div class="panel-heading">
@@ -89,7 +89,7 @@
           </a>
 	      </div>
 		  </div>
-	  </div>
+
 
 		@foreach($datos as $tratadoid=>$tratado)
 			<div class="col-sm-2">

@@ -1,8 +1,6 @@
 @extends('template/reporte')
 
 @section('content')
-	@include('partials/reportes/header')
-
 	<table class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
