@@ -15,7 +15,6 @@
 		"maxxscho/laravel-tcpdf": "0.*",
 		"xethron/migrations-generator": "dev-master",
 		"csgt/hermes": "dev-master"
-
 	},
 	"autoload": {
 		"classmap": [

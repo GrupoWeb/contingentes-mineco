@@ -88,6 +88,12 @@
           </div>
           <div class="radio">
             <label>
+              <input type="radio" name="formato" id="formatoPDF" value="pdf">
+              PDF
+            </label>
+          </div>
+          <div class="radio">
+            <label>
               <input type="radio" name="formato" id="formatoExcel" value="excel">
               Excel
             </label>

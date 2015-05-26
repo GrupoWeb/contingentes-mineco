@@ -1,8 +1,6 @@
 @extends('template/reporte')
 
 @section('content')
-	@include('partials/reportes/header')
-	
 	<?php $acreditadoLast = '__Primero__'; ?>
 	@foreach($movimientos as $movimiento)
 		@if($movimiento->acreditadoa<>$acreditadoLast)

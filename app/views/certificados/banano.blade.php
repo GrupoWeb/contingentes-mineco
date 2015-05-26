@@ -26,7 +26,6 @@
 	.border {
 		border: 1px solid black;
 	}
-
 </style>
 <table width="500" cellpadding="5" cellspacing="10" style="font-size: 8px; line-height: 7px">
 	<tr>

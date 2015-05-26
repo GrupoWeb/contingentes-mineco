@@ -1,4 +1,4 @@
-@if(Input::get('formato')=='excel')
+@if($formato =='excel')
 	<?php
 	  header('Content-Type: application/vnd.ms-excel');
 		header('Content-Disposition: attachment; filename="reporte' . date('YmdHi') . '.xls"');
@@ -29,7 +29,7 @@
 					<thead>
 						<tr>
 							<th rowspan="2" class="text-center" width="10%">
-								{{ (Input::get('formato')=='excel'? HTML::image('images/logo.jpg'):'') }}
+								{{ $formato <> 'excel' ? HTML::image('images/logo.jpg') : '' }}
 								<br>DACE - MINECO
 							</th>
 							<th colspan="3" class="text-center"><h4>{{$titulo}}</h4></th>

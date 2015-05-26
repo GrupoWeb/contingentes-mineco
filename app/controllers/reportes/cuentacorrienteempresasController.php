@@ -16,12 +16,32 @@ class cuentacorrienteempresasController extends BaseController {
 		
 		$periodoId = Crypt::decrypt(Input::get('cmbPeriodo'));
 		$periodo   = Periodo::getPeriodoInfo($periodoId);
+		$formato   = Input::get('formato');
 
-		return View::make('reportes/cuentacorrienteempresas')
-			->with('titulo', 'Cuenta Corriente - Empresas')
-			->with('tratado', $periodo->tratado)
-			->with('producto', $periodo->producto)
-			->with('movimientos', Movimiento::getCuentaCorrienteEmpresa($periodoId, $empresaId));
+		if($formato == 'pdf') {
+			PDF::SetTitle('Cuenta Corriente - Empresas');
+			PDF::AddPage();
+			PDF::setLeftMargin(20);
+
+			$html = View::make('reportes/cuentacorrienteempresaspdf')
+				->with('titulo', 'Cuenta Corriente - Empresas')
+				->with('tratado', $periodo->tratado)
+				->with('producto', $periodo->producto)
+				->with('movimientos', Movimiento::getCuentaCorrienteEmpresa($periodoId, $empresaId))
+				->with('formato', 'html');
+
+			PDF::writeHTML($html, true, false, true, false, '');
+			PDF::Output('CC-Empresas.pdf');
+		}
+
+		else {
+			return View::make('reportes/cuentacorrienteempresas')
+				->with('titulo', 'Cuenta Corriente - Empresas')
+				->with('tratado', $periodo->tratado)
+				->with('producto', $periodo->producto)
+				->with('movimientos', Movimiento::getCuentaCorrienteEmpresa($periodoId, $empresaId))
+				->with('formato', $formato);
+		}
 	}
 
 	public function getEmpresas($aContingenteId) {

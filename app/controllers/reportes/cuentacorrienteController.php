@@ -12,12 +12,32 @@ class cuentacorrienteController extends BaseController {
 	public function store() {
 		$periodoId = Crypt::decrypt(Input::get('cmbPeriodo'));
 		$periodo   = Periodo::getPeriodoInfo($periodoId);
+		$formato   = Input::get('formato');
 
-		return View::make('reportes/cuentacorriente')
-			->with('titulo', 'Cuenta Corriente - Contingentes')
-			->with('tratado', $periodo->tratado)
-			->with('producto', $periodo->producto)
-			->with('movimientos', Movimiento::getCuentaCorriente($periodoId));
+		if($formato == 'pdf') {
+			PDF::SetTitle('Cuenta Corriente - Contingentes');
+			PDF::AddPage();
+			PDF::setLeftMargin(20);
+
+			$html = View::make('reportes/cuentacorrientepdf')
+				->with('titulo', 'Cuenta Corriente - Contingentes')
+				->with('tratado', $periodo->tratado)
+				->with('producto', $periodo->producto)
+				->with('movimientos', Movimiento::getCuentaCorriente($periodoId))
+				->with('formato', 'html');
+
+			PDF::writeHTML($html, true, false, true, false, '');
+			PDF::Output('CC-Contingente.pdf');
+		}
+
+		else {
+			return View::make('reportes/cuentacorriente')
+				->with('titulo', 'Cuenta Corriente - Contingentes')
+				->with('tratado', $periodo->tratado)
+				->with('producto', $periodo->producto)
+				->with('movimientos', Movimiento::getCuentaCorriente($periodoId))
+				->with('formato', $formato);
+		}
 	}
 
 	public function getPeriodos($aContingenteId) {
