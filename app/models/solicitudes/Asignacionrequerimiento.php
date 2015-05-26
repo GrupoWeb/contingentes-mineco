@@ -11,4 +11,14 @@ class Asignacionrequerimiento extends Eloquent {
 			->where('ser.solicitudasignacionid',$id)
 			->get();
 	}
+
+	public static function getArchivos($aId) {
+		return DB::table('solicitudasignacionrequerimientos AS sar')
+			->select('r.nombre', 'sar.archivo', 'sa.usuarioid',
+				DB::raw('DATE_FORMAT(sar.created_at, "%d-%m-%Y %H:%i") AS fecha'))
+			->leftJoin('requerimientos AS r', 'sar.requerimientoid', '=', 'r.requerimientoid')
+			->leftJoin('solicitudasignacion AS sa', 'sar.solicitudasignacionid', '=', 'sa.solicitudasignacionid')
+			->where('sar.solicitudasignacionid', $aId)
+			->get();
+	}
 }

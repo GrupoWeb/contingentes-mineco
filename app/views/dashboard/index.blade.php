@@ -47,7 +47,7 @@
             </div>
             <div class="col-xs-9 text-right">
               <div class="huge">{{ number_format(abs($toneladas), 3) }}</div>
-              <div>Toneladas autorizadas</div>
+              <div>Toneladas en certificados</div>
             </div>
           </div>
         </div>

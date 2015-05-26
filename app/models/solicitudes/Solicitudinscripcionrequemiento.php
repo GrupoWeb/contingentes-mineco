@@ -12,4 +12,12 @@ class Solicitudinscripcionrequemiento extends Eloquent {
 			->get();
 	}
 
+	public static function getArchivos($aId) {
+		return DB::table('solicitudinscripcionrequemientos AS sir')
+			->select('r.nombre', 'sir.archivo', 'sir.solicitudinscripcionid',
+				DB::raw('DATE_FORMAT(sir.created_at, "%d-%m-%Y %H:%i") AS fecha'))
+			->leftJoin('requerimientos AS r', 'sir.requerimientoid', '=', 'r.requerimientoid')
+			->where('sir.solicitudinscripcionid', $aId)
+			->get();
+	}
 }

@@ -28,4 +28,14 @@ class Solicitudinscripcion extends Eloquent {
 			->get();
 	}
 
+	public static function getSolicitud($aSolicitudId) {
+		return DB::table('solicitudinscripciones AS si')
+			->select('si.nombre', 'si.email', 't.nombrecorto AS tratado', 'estado',
+				DB::raw('DATE_FORMAT(si.created_at, "%d-%m-%Y %H:%i") AS fecha'))
+			->leftJoin('solicitudinscripcioncontingentes AS sic', 'si.solicitudinscripcionid', '=', 'sic.solicitudinscripcionid')
+			->leftJoin('contingentes AS c', 'sic.contingenteid', '=', 'c.contingenteid')
+			->leftJoin('tratados AS t', 'c.tratadoid', '=', 't.tratadoid')
+			->where('si.solicitudinscripcionid', $aSolicitudId)
+			->first();
+	}
 }

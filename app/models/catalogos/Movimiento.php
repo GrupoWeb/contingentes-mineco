@@ -29,21 +29,25 @@ class Movimiento extends Eloquent {
 	}
 
 	public static function getCuentaCorrienteEmpresa($aPeriodoId, $aEmpresaId) {
-		return DB::table('movimientos AS m')
+		$query = DB::table('movimientos AS m')
 			->select(DB::raw('DATE_FORMAT(m.created_at, "%d-%m-%Y") AS fecha'), 'u.nombre AS acreditadoa', 
 				'u2.nombre AS acreditadopor', 'comentario','certificadoid', 
 				DB::raw('IF(m.tipomovimientoid = 3, cantidad, NULL) AS credito'),
-				DB::raw('IF(m.tipomovimientoid = 2, cantidad, NULL) AS debito')
-				)
+				DB::raw('IF(m.tipomovimientoid = 2, cantidad, NULL) AS debito'))
 			->leftJoin('authusuarios AS u', 'm.usuarioid',  '=', 'u.usuarioid')
 			->leftJoin('authusuarios AS u2', 'm.created_by', '=', 'u2.usuarioid')
+			->leftJoin('empresas AS e', 'u.empresaid', '=', 'e.empresaid')
 			->orderBy('u.nombre')
 			->orderBy('m.usuarioid')
 			->orderBy('m.created_at')
 			->orderBy('m.movimientoid')
 			->where('m.periodoid', $aPeriodoId)
-			->whereIn('m.tipomovimientoid', array(3, 2))
-			->get();
+			->whereIn('m.tipomovimientoid', array(3, 2));
+
+			if($aEmpresaId <> 0)
+				$query->where('e.empresaid', $aEmpresaId);
+
+			return $query->get();
 	}
 
 	public static function getSaldo($aUsuarioId, $aContingenteId) {
@@ -76,6 +80,7 @@ class Movimiento extends Eloquent {
 		return DB::table('movimientos')
 			->where('usuarioid', $aUsuarioId)
 			->where('tipomovimientoid', $tipoemision)
+			->whereNotNull('certificadoid')
 			->sum('cantidad');
 	}
 }
