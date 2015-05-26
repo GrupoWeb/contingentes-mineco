@@ -89,7 +89,6 @@ class dashboardController extends BaseController {
 				->with('emisiones', Solicitudesemision::getEmisionesUsuario(Auth::id()))
 				->with('toneladas', Movimiento::getToneladasUsuario(Auth::id()))
 				->with('tratados', Tratado::getTratadosDashboard());
-				//->with('productos', Contingente::getProductos());
 		}
 	}
 

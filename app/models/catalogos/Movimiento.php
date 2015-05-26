@@ -80,6 +80,7 @@ class Movimiento extends Eloquent {
 		return DB::table('movimientos')
 			->where('usuarioid', $aUsuarioId)
 			->where('tipomovimientoid', $tipoemision)
+			->whereNotNull('certificadoid')
 			->sum('cantidad');
 	}
 }
