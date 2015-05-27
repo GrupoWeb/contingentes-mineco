@@ -45,36 +45,47 @@ class solicitudesinscripcionController extends crudController {
 				$solicitud  = Solicitudinscripcion::find($solicitudid);
 				$rolempresa = Config::get('contingentes.rolempresa');
 
-				$empresaid = DB::table('empresas')->insertGetId(
-					array(					
-						'nit'                     => $solicitud->nit,
-						'razonsocial'             => $solicitud->nombre,
-						'propietario'             => $solicitud->propietario,
-						'domiciliofiscal'         => $solicitud->domiciliofiscal,
-						'domiciliocomercial'      => $solicitud->domiciliocomercial,
-						'direccionnotificaciones' => $solicitud->direccionnotificaciones,
-						'telefono'                => $solicitud->telefono,
-						'fax'                     => $solicitud->fax,
-						'encargadoimportaciones'  => $solicitud->encargadoimportaciones,
-						'codigovupe'							=> $solicitud->codigovupe,
-						'created_at'              => date_create(),
-						'updated_at'              => date_create()
-					)
-				);
+				$findempresa = Empresa::where('nit', $solicitud->nit)->first();
+				if(!$findempresa) {
+					$empresaid = DB::table('empresas')->insertGetId(
+						array(					
+							'nit'                     => $solicitud->nit,
+							'razonsocial'             => $solicitud->nombre,
+							'propietario'             => $solicitud->propietario,
+							'domiciliofiscal'         => $solicitud->domiciliofiscal,
+							'domiciliocomercial'      => $solicitud->domiciliocomercial,
+							'direccionnotificaciones' => $solicitud->direccionnotificaciones,
+							'telefono'                => $solicitud->telefono,
+							'fax'                     => $solicitud->fax,
+							'encargadoimportaciones'  => $solicitud->encargadoimportaciones,
+							'codigovupe'							=> $solicitud->codigovupe,
+							'created_at'              => date_create(),
+							'updated_at'              => date_create()
+						)
+					);
+				}
+				else
+					$empresaid = $findempresa->empresaid;
+
 				if($empresaid == 0) return 0;
 
-				$usuarioid  = DB::table('authusuarios')->insertGetId(
-					array(
-						'empresaid'  => $empresaid,
-						'nombre'     => $solicitud->nombre,
-						'email'      => $solicitud->email,
-						'password'   => $solicitud->password,
-						'created_at' => date_create(),
-						'updated_at' => date_create(),
-						'rolid'      => $rolempresa[0],
-						'activo'     => 1
-					)
-				);
+				$findusuario = Usuario::where('email', $solicitud->email)->first();
+				if(!$findusuario) {
+					$usuarioid  = DB::table('authusuarios')->insertGetId(
+						array(
+							'empresaid'  => $empresaid,
+							'nombre'     => $solicitud->nombre,
+							'email'      => $solicitud->email,
+							'password'   => $solicitud->password,
+							'created_at' => date_create(),
+							'updated_at' => date_create(),
+							'rolid'      => $rolempresa[0],
+							'activo'     => 1
+						)
+					);
+				}
+				else
+					$usuarioid = $findusuario->usuarioid;
 
 
 				if($usuarioid == 0) return 0;
@@ -103,8 +114,6 @@ class solicitudesinscripcionController extends crudController {
 					
 					if(!is_dir($destination))
 						mkdir($destination);
-
-
 
 					if (file_exists($source.'/'.$requerimiento->archivo))
 						rename($source.'/'.$requerimiento->archivo, $destination.'/'.$requerimiento->archivo);
