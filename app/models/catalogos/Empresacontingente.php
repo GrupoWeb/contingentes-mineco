@@ -68,4 +68,12 @@ class Empresacontingente extends Eloquent {
 			->where('empresaid', $aEmpresaId)
 			->count();
 	}
+
+	public static function listEmpresasContingente($aContingenteId) {
+		return DB::table('empresacontingentes AS ec')
+			->select('ec.empresaid', 'e.razonsocial AS nombre')
+			->leftJoin('empresas AS e', 'ec.empresaid', '=', 'e.empresaid')
+			->where('ec.contingenteid', $aContingenteId)
+			->get();
+	}
 }

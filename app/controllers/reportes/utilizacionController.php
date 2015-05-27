@@ -1,30 +1,82 @@
-
-/*
-SELECT 
-  e.nit, e.razonsocial, 
-  (SELECT SUM(m2.cantidad) FROM movimientos m2 WHERE m2.periodoid=m.periodoid) AS adjudicado,
-  m.created_at AS fecha, c.numerocertificado, c.fraccion, c.fechavencimiento, ABS(cantidad) AS cantidad,
-  c.dua, c.real, c.cif 
-FROM
-  movimientos AS m
-  LEFT JOIN authusuarios u ON m.usuarioid=u.usuarioid
-  LEFT JOIN empresas e ON u.empresaid=e.empresaid
-  LEFT JOIN certificados AS c ON m.certificadoid=c.certificadoid
-WHERE
-  tipomovimientoid = 2 AND periodoid=5
-ORDER BY 
-  e.razonsocial, m.created_at;
-  */
-
 <?php
 
 class utilizacionController extends BaseController {
   
   public function index() {
-
+    return View::make('reportes.filtros')
+      ->with('titulo', 'Utilización de contingentes')
+      ->with('tratados', Tratado::getTratados())
+      ->with('filters', array('tratados', 'fechaini', 'fechafin'));
   }
 
   public function store() {
+    $tratadoid     = Crypt::decrypt(Input::get('tratadoid'));
+    $contingenteid = Crypt::decrypt(Input::get('contingentes'));
+    $empresaid     = Crypt::decrypt(Input::get('cmbEmpresa'));
+    $fi            = Input::get('fechaini');
+    $ff            = Input::get('fechafin');
+    $formato       = Input::get('formato');
+
+    $utilizaciones = Movimiento::getUtilizaciones($contingenteid, $empresaid, ($fi <> '' ? Components::fechaHumanoAMysql($fi) : ''), ($ff <> '' ? Components::fechaHumanoAMysql($ff) : ''));
+    $data          = array();
+    foreach($utilizaciones as $utilizacion) {
+      if(isset($data[$utilizacion->nit][$utilizacion->razonsocial]['adjudicado']))
+        $data[$utilizacion->nit][$utilizacion->razonsocial]['adjudicado'] += $utilizacion->cantidad;
+      else
+        $data[$utilizacion->nit][$utilizacion->razonsocial]['adjudicado'] = $utilizacion->cantidad;
+      
+      $data[$utilizacion->nit][$utilizacion->razonsocial]['movimientos'][] = array(
+        'fecha'            => $utilizacion->fecha,
+        'certificado'      => $utilizacion->numerocertificado,
+        'fraccion'         => $utilizacion->fraccion,
+        'fechavencimiento' => $utilizacion->fechavencimiento,
+        'dua'              => $utilizacion->dua,
+        'real'             => $utilizacion->real,
+        'cif'              => $utilizacion->cif,
+        'fechaliquidacion' => $utilizacion->fechaliquidacion,
+        'cantidad'         => $utilizacion->cantidad,
+        'variacion'        => $utilizacion->variacion
+      );
+    }
+
+    if($formato == 'pdf') {
+      PDF::SetTitle('Utilización de contingentes');
+      PDF::AddPage();
+      PDF::setLeftMargin(20);
+
+      $html = View::make('reportes.utilizacionespdf')
+        ->with('utilizaciones', $data)
+        ->with('titulo', 'Utilización de contingentes')
+        ->with('tratado', Tratado::getNombre($tratadoid))
+        ->with('producto', Contingente::getProducto($contingenteid));
+
+      PDF::writeHTML($html, true, false, true, false, '');
+      PDF::Output('Utilizacion-Contingente.pdf');
+    }
     
+    else {
+      return View::make('reportes.utilizaciones')
+        ->with('utilizaciones', $data)
+        ->with('titulo', 'Utilización de contingentes')
+        ->with('tratado', Tratado::getNombre($tratadoid))
+        ->with('producto', Contingente::getProducto($contingenteid))
+        ->with('formato', $formato);
+    }
+  }
+
+  public function getContingentes($id) {
+    $id = Crypt::decrypt($id);
+
+    return View::make('partials/contingentelistado')
+      ->with('contingentes', Contingente::getContTratado($id))
+      ->with('nombre', 'contingentes')
+      ->with('id', 'contingentes');
+  }
+
+  public function getEmpresas($id) {
+    $id = Crypt::decrypt($id);
+
+    return View::make('partials/empresas')
+      ->with('empresas', Empresacontingente::listEmpresasContingente($id));
   }
 }

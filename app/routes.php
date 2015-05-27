@@ -30,6 +30,8 @@ Route::group(array('before' => array('tratados')), function() {
 	Route::get('c/{id}',array('as'=>'certificados.generar','uses'=>'certificadosController@generarPDF'));
 	Route::get('cuentacorriente/periodos/{id}', 'cuentacorrienteController@getPeriodos');
 	Route::get('cuentacorriente/empresas/{id}', 'cuentacorrienteempresasController@getEmpresas');
+	Route::get('utilizacion/contingentes/{id}', 'utilizacionController@getContingentes');
+	Route::get('utilizacion/empresas/{id}', 'utilizacionController@getEmpresas');
 	Route::get('changetratado/{id}', 'dashboardController@changetratado');
 	Route::get('tratado/detalle/{id}', 'dashboardController@detalletratado');
 
@@ -96,6 +98,7 @@ Route::group(array('before' => array('tratados')), function() {
 		Route::resource('cuentacorriente', 'cuentacorrienteController', array('only'=>array('index','store')));
 		Route::resource('cuentacorrienteempresas', 'cuentacorrienteempresasController', array('only'=>array('index','store')));
 		Route::resource('empresas', 'empresasController', array('only'=>array('index', 'store')));
+		Route::resource('utilizacion', 'utilizacionController', array('only'=>array('index', 'store')));
 		Route::get('tratado/graficas/saldo/{id}', array('as'=>'tratado.graficas.saldo', 'uses'=>'graficasController@saldo'));
 	  
 	  //=== ADMIN

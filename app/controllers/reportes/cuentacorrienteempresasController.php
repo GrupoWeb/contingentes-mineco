@@ -10,10 +10,7 @@ class cuentacorrienteempresasController extends BaseController {
 	}
 
 	public function store() {
-		$empresaId = 0;
-		if (Input::has('cmbEmpresa'))
-			$empresaId = Crypt::decrypt(Input::get('cmbEmpresa'));
-		
+		$empresaId = Crypt::decrypt(Input::get('cmbEmpresa'));
 		$periodoId = Crypt::decrypt(Input::get('cmbPeriodo'));
 		$periodo   = Periodo::getPeriodoInfo($periodoId);
 		$formato   = Input::get('formato');

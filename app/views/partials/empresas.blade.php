@@ -1,5 +1,5 @@
 <select name="cmbEmpresa" class="selectpicker form-control">  
-	<option value="">Todas</option>         
+	<option value="{{ Crypt::encrypt(0) }}">Todas</option>         
   @foreach ($empresas as $empresa)
     <option value="{{ Crypt::encrypt($empresa->empresaid) }}">{{ $empresa->nombre }}</option>
   @endforeach

@@ -12,4 +12,3 @@
   @endforeach
   </optgroup>
 </select>
-

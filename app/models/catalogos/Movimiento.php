@@ -83,4 +83,39 @@ class Movimiento extends Eloquent {
 			->whereNotNull('certificadoid')
 			->sum('cantidad');
 	}
-}
+
+	public static function getUtilizaciones($aContingenteid, $aEmpresaid, $aFechainicio, $aFechafin) {
+		$query = DB::table('movimientos AS m')
+			->select('e.nit', 'e.razonsocial', 'c.numerocertificado', 'c.fraccion',
+				'c.dua', 'c.real', 'c.cif', 'c.variacion',
+				DB::raw('DATE_FORMAT(m.created_at, "%d/%m/%y %H:%i") AS fecha'),
+				DB::raw('DATE_FORMAT(c.fechavencimiento, "%d/%m/%y %H:%i") AS fechavencimiento'),
+				DB::raw('DATE_FORMAT(c.fechaliquidacion, "%d/%m/%y %H:%i") AS fechaliquidacion'),
+				DB::raw('(SELECT SUM(m2.cantidad) FROM movimientos m2 WHERE m2.periodoid=m.periodoid) AS adjudicado'),
+				DB::raw('ABS(cantidad) AS cantidad'))
+			->leftJoin('authusuarios AS u', 'm.usuarioid', '=', 'u.usuarioid')
+			->leftJoin('empresas AS e', 'u.empresaid', '=', 'e.empresaid')
+			->leftJoin('certificados AS c', 'm.certificadoid', '=', 'c.certificadoid')
+			->leftJoin('periodos AS p', 'm.periodoid', '=', 'p.periodoid')
+			->leftJoin('contingentes AS cn', 'p.contingenteid', '=', 'cn.contingenteid')
+			->where('tipomovimientoid', 2)
+			->where('cn.contingenteid', $aContingenteid);
+
+		if($aEmpresaid <> 0)
+			$query->where('u.empresaid', $aEmpresaid);
+
+		if($aFechainicio <> '' && $aFechafin <> '')
+			$query->whereBetween('m.created_at', array($aFechainicio, $aFechafin));
+			
+		$query->orderBy('e.razonsocial');
+		$query->orderBy('m.created_at');
+
+		return $query->get();
+	}
+} 
+
+
+
+
+
+
