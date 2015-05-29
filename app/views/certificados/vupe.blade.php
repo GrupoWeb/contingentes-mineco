@@ -31,6 +31,7 @@
 		border: 1px solid black;
 	}
 </style>
+<br/><br/><br/><br/><br/><br/>
 <table width="{{ $ancho }}" align="center">
 	<tr>
 		<td>&nbsp;</td>
@@ -108,7 +109,7 @@
 	</tr>
 	<tr>
 		<td colspan="4" class="border">
-			<br/><br/><br/><br/><br/><br/><br/><br/>
+			<br/><br/><br/><br/><br/><br/>
 		</td>
 	</tr>
 </table>

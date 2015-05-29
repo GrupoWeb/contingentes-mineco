@@ -34,7 +34,7 @@
 <table width="{{ $ancho }}" align="center">
 	<tr>
 		<td>&nbsp;</td>
-		<td colspan="2" class="center"><br/><br/><br/>Certificado No.: {{ $datos->numerocertificado }}<br /><br /><br /><br /></td>
+		<td colspan="2" class="center">Certificado No.: {{ $datos->numerocertificado }}<br /><br /><br /><br /></td>
 		<td>&nbsp;</td>
 	</tr>
 	<tr>
@@ -110,7 +110,7 @@
 	</tr>
 	<tr>
 		<td colspan="4" class="border">
-			<br/><br/><br/><br/><br/>
+			<br/><br/><br/><br/><br/><br/><br/><br/>
 		</td>
 	</tr>
 </table>
