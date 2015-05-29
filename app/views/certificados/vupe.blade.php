@@ -31,11 +31,11 @@
 		border: 1px solid black;
 	}
 </style>
-<br/><br/><br/><br/><br/><br/>
+<br/><br/><br/><br/><br/>
 <table width="{{ $ancho }}" align="center">
 	<tr>
 		<td>&nbsp;</td>
-		<td colspan="2" class="center">Licencia No.: {{ $datos->numerocertificado }}<br /><br /><br /><br /></td>
+		<td colspan="2" class="center">Licencia No.: {{ $datos->numerocertificado }}<br /><br /></td>
 		<td>&nbsp;</td>
 	</tr>
 	<tr>
