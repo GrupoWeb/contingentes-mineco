@@ -1,5 +1,5 @@
 <?php
-	$ancho = 500;
+	$ancho = 495;
 ?>
 
 <style>
