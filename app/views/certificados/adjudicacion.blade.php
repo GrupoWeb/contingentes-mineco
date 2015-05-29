@@ -38,7 +38,7 @@
 		<td>&nbsp;</td>
 	</tr>
 	<tr>
-		<td colspan="4" class="center"><br /><h3>{{ $datos->tratado }}</h3></td>
+		<td colspan="4" class="center"><br /><br/><br/><br/><h3>{{ $datos->tratado }}</h3></td>
 	</tr>
 	<tr>
 		<td colspan="4" class="center"><br /><h4>La Dirección de Administración del Comercio Exterior<br>-DACE-</h4></td>
@@ -110,7 +110,7 @@
 	</tr>
 	<tr>
 		<td colspan="4" class="border">
-			<br/><br/><br/><br/><br/><br/><br/><br/>
+			<br/><br/><br/><br/><br/>
 		</td>
 	</tr>
 </table>
