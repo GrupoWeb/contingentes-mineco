@@ -34,11 +34,11 @@
 <table width="{{ $ancho }}" align="center">
 	<tr>
 		<td>&nbsp;</td>
-		<td colspan="2" class="center">Certificado No.: {{ $datos->numerocertificado }}<br /><br /><br /><br /></td>
+		<td colspan="2" class="center"><br/><br/><br/>Certificado No.: {{ $datos->numerocertificado }}<br /><br /><br /><br /></td>
 		<td>&nbsp;</td>
 	</tr>
 	<tr>
-		<td colspan="4" class="center"><br /><br/><br/><br/><h3>{{ $datos->tratado }}</h3></td>
+		<td colspan="4" class="center"><br /><h3>{{ $datos->tratado }}</h3></td>
 	</tr>
 	<tr>
 		<td colspan="4" class="center"><br /><h4>La Dirección de Administración del Comercio Exterior<br>-DACE-</h4></td>
