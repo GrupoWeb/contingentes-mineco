@@ -42,7 +42,7 @@
 		<td colspan="4" class="center"><br /><h3>LICENCIA DE EXPORTACION<br>{{ strtoupper($datos->producto) }}</h3></td>
 	</tr>
 	<tr>
-		<td colspan="4" class="center"><br /><h4>La Dirección de Administración del Comercio Exterior<br>-DACE-</h4></td>
+		<td colspan="4" class="center"><h4>La Dirección de Administración del Comercio Exterior<br>-DACE-</h4></td>
 	</tr>
 	<tr>
 		<td colspan="4" class="size10 justify">{{ $datos->tratadodescripcion }}<br /></td>
