@@ -89,10 +89,13 @@ class Movimiento extends Eloquent {
 		$query = DB::table('movimientos AS m')
 			->select('u.usuarioid AS nit', 'e.razonsocial', 'c.numerocertificado', 'c.fraccion',
 				'c.dua', 'c.real', 'c.cif', 'c.variacion','u.usuarioid',
-				DB::raw('DATE_FORMAT(m.created_at, "%d/%m/%y %H:%i") AS fecha'),
-				DB::raw('DATE_FORMAT(c.fechavencimiento, "%d/%m/%y %H:%i") AS fechavencimiento'),
-				DB::raw('DATE_FORMAT(c.fechaliquidacion, "%d/%m/%y %H:%i") AS fechaliquidacion'),
-				DB::raw('(SELECT SUM(m2.cantidad) FROM movimientos m2 WHERE m2.periodoid=m.periodoid) AS adjudicado'),
+				DB::raw('DATE_FORMAT(m.created_at, "%d/%m/%y") AS fecha'),
+				DB::raw('DATE_FORMAT(c.fechavencimiento, "%d/%m/%y") AS fechavencimiento'),
+				DB::raw('DATE_FORMAT(c.fechaliquidacion, "%d/%m/%y") AS fechaliquidacion'),
+				DB::raw('(SELECT SUM(m2.cantidad) FROM movimientos m2
+					LEFT JOIN authusuarios AS u2 ON m2.usuarioid=u2.usuarioid
+					LEFT JOIN empresas AS e2 ON e2.empresaid=u2.empresaid 
+					WHERE m2.periodoid=m.periodoid AND m2.tipomovimientoid=3 AND e2.empresaid=e.empresaid) AS asignado'),
 				DB::raw('ABS(cantidad) AS cantidad'))
 			->leftJoin('authusuarios AS u', 'm.usuarioid', '=', 'u.usuarioid')
 			->leftJoin('empresas AS e', 'u.empresaid', '=', 'e.empresaid')

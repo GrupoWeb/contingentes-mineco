@@ -17,10 +17,14 @@ class utilizacionController extends BaseController {
     $ff            = Input::get('fechafin');
     $formato       = Input::get('formato');
 
+    //Validamos el tipo de tratado para mostrar cantidad asignada, de lo contrario
+    //solo mandamos la suma de lo adjudicado
+    $asignacion    = Contingente::getTipoTratado($contingenteid);
+  
     $utilizaciones = Movimiento::getUtilizaciones($contingenteid, $empresaid, ($fi <> '' ? Components::fechaHumanoAMysql($fi) : ''), ($ff <> '' ? Components::fechaHumanoAMysql($ff) : ''));
     $data          = array();
     foreach($utilizaciones as $utilizacion) {
-      //$data[$utilizacion->nit][$utilizacion->razonsocial]['usuarioid'] = $utilizacion->usuarioid;
+      $data[$utilizacion->nit][$utilizacion->razonsocial]['asignado'] = $utilizacion->asignado;
 
       if(isset($data[$utilizacion->nit][$utilizacion->razonsocial]['adjudicado']))
         $data[$utilizacion->nit][$utilizacion->razonsocial]['adjudicado'] += $utilizacion->cantidad;
@@ -59,6 +63,7 @@ class utilizacionController extends BaseController {
     else {
       return View::make('reportes.utilizaciones')
         ->with('utilizaciones', $data)
+        ->with('esasignacion', $asignacion)
         ->with('titulo', 'Utilización de contingentes')
         ->with('tratado', Tratado::getNombre($tratadoid) . ' | ' . $tratadoid)
         ->with('producto', Contingente::getProducto($contingenteid) . ' | ' . $contingenteid)
