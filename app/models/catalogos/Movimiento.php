@@ -85,9 +85,10 @@ class Movimiento extends Eloquent {
 	}
 
 	public static function getUtilizaciones($aContingenteid, $aEmpresaid, $aFechainicio, $aFechafin) {
+		//Debug se cambio e.nit por u.usuarioid
 		$query = DB::table('movimientos AS m')
-			->select('e.nit', 'e.razonsocial', 'c.numerocertificado', 'c.fraccion',
-				'c.dua', 'c.real', 'c.cif', 'c.variacion',
+			->select('u.usuarioid AS nit', 'e.razonsocial', 'c.numerocertificado', 'c.fraccion',
+				'c.dua', 'c.real', 'c.cif', 'c.variacion','u.usuarioid',
 				DB::raw('DATE_FORMAT(m.created_at, "%d/%m/%y %H:%i") AS fecha'),
 				DB::raw('DATE_FORMAT(c.fechavencimiento, "%d/%m/%y %H:%i") AS fechavencimiento'),
 				DB::raw('DATE_FORMAT(c.fechaliquidacion, "%d/%m/%y %H:%i") AS fechaliquidacion'),

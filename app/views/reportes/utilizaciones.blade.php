@@ -29,19 +29,19 @@
 			@foreach($utilizaciones as $nit=>$valores)
 				@foreach($valores as $nombre=>$movimientos)
 					<tr>
-						<td rowspan="{{ count($movimientos) }}">{{ $nit }}</td>
-						<td rowspan="{{ count($movimientos) }}">{{ $nombre }}</td>
-						<td rowspan="{{ count($movimientos) }}">{{ number_format($movimientos['adjudicado'], 3) }}</td>
+						<td rowspan="{{ count($movimientos['movimientos']) }}">{{ $nit }}</td>
+						<td rowspan="{{ count($movimientos['movimientos']) }}">{{ $nombre }}</td>
+						<td class="text-right" rowspan="{{ count($movimientos['movimientos']) }}">{{ number_format($movimientos['adjudicado'], 3) }}</td>
 						<?php $i=1; ?>
 						@foreach($movimientos['movimientos'] as $movimiento)
-							@if($i==2)
-								</tr><tr>
+							@if ($i>1) 
+								{{'<tr>'}} 
 							@endif
-								<td>{{ $movimiento['certificado'] }}</td>
+								<td>{{ $movimiento['certificado']  }}</td>
 								<td>{{ $movimiento['fecha'] }}</td>
 								<td>{{ $movimiento['fraccion'] }}</td>
 								<td>{{ $movimiento['fechavencimiento'] }}</td>
-								<td>{{ number_format($movimiento['cantidad'], 3) }}</td>
+								<td class="text-right">{{ number_format($movimiento['cantidad'], 3) }}</td>
 								@if($movimiento['dua'] <> '')
 									<td>{{ $movimiento['fechaliquidacion'] }}</td>
 									<td>{{ $movimiento['dua'] }}</td>
@@ -59,11 +59,10 @@
 									<td>&nbsp;</td>
 									<td>&nbsp;</td>
 								@endif
-							@if($i<>1)
-								</tr>
-							@endif
+							</tr>
 							<?php $i++; ?>
 						@endforeach
+					}
 				@endforeach
 			@endforeach
 		</tbody>

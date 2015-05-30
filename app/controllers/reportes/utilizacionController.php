@@ -20,6 +20,8 @@ class utilizacionController extends BaseController {
     $utilizaciones = Movimiento::getUtilizaciones($contingenteid, $empresaid, ($fi <> '' ? Components::fechaHumanoAMysql($fi) : ''), ($ff <> '' ? Components::fechaHumanoAMysql($ff) : ''));
     $data          = array();
     foreach($utilizaciones as $utilizacion) {
+      //$data[$utilizacion->nit][$utilizacion->razonsocial]['usuarioid'] = $utilizacion->usuarioid;
+
       if(isset($data[$utilizacion->nit][$utilizacion->razonsocial]['adjudicado']))
         $data[$utilizacion->nit][$utilizacion->razonsocial]['adjudicado'] += $utilizacion->cantidad;
       else
@@ -58,8 +60,8 @@ class utilizacionController extends BaseController {
       return View::make('reportes.utilizaciones')
         ->with('utilizaciones', $data)
         ->with('titulo', 'Utilización de contingentes')
-        ->with('tratado', Tratado::getNombre($tratadoid))
-        ->with('producto', Contingente::getProducto($contingenteid))
+        ->with('tratado', Tratado::getNombre($tratadoid) . ' | ' . $tratadoid)
+        ->with('producto', Contingente::getProducto($contingenteid) . ' | ' . $contingenteid)
         ->with('formato', $formato);
     }
   }
