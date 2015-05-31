@@ -95,7 +95,7 @@ class Movimiento extends Eloquent {
 				DB::raw('(SELECT SUM(m2.cantidad) FROM movimientos m2
 					LEFT JOIN authusuarios AS u2 ON m2.usuarioid=u2.usuarioid
 					LEFT JOIN empresas AS e2 ON e2.empresaid=u2.empresaid 
-					WHERE m2.periodoid=m.periodoid AND m2.tipomovimientoid=3 AND e2.empresaid=e.empresaid) AS asignado'),
+					WHERE m2.periodoid=m.periodoid AND m2.tipomovimientoid IN(3,4) AND e2.empresaid=e.empresaid) AS asignado'),
 				DB::raw('ABS(cantidad) AS cantidad'))
 			->leftJoin('authusuarios AS u', 'm.usuarioid', '=', 'u.usuarioid')
 			->leftJoin('empresas AS e', 'u.empresaid', '=', 'e.empresaid')
