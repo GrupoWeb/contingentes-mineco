@@ -25,6 +25,7 @@ class utilizacionController extends BaseController {
     $data          = array();
     foreach($utilizaciones as $utilizacion) {
       $data[$utilizacion->nit][$utilizacion->razonsocial]['asignado'] = $utilizacion->asignado;
+      $data[$utilizacion->nit][$utilizacion->razonsocial]['volumentotal'] = $utilizacion->volumentotal;
 
       if(isset($data[$utilizacion->nit][$utilizacion->razonsocial]['adjudicado']))
         $data[$utilizacion->nit][$utilizacion->razonsocial]['adjudicado'] += $utilizacion->cantidad;
@@ -68,8 +69,8 @@ class utilizacionController extends BaseController {
         ->with('utilizaciones', $data)
         ->with('esasignacion', $asignacion)
         ->with('titulo', 'Utilización de contingentes')
-        ->with('tratado', Tratado::getNombre($tratadoid) . ' | ' . $tratadoid)
-        ->with('producto', Contingente::getProducto($contingenteid) . ' | ' . $contingenteid)
+        ->with('tratado', Tratado::getNombre($tratadoid))
+        ->with('producto', Contingente::getProducto($contingenteid))
         ->with('formato', $formato);
     }
   }

@@ -34,15 +34,17 @@
 		</thead>
 		<tbody>
 			<?php 
-				$asignadot   = 0;
-				$adjudicadot = 0;
+				$asignadot    = 0;
+				$adjudicadot  = 0;
+				$volumentotal = 0;
 			?>
 			@foreach($utilizaciones as $nit=>$valores)
 				@foreach($valores as $nombre=>$movimientos)
 					<?php
-						$cuantos      = count($movimientos['movimientos']);
-						$asignadot   += $movimientos['asignado'];
-						$adjudicadot += $movimientos['adjudicado'];
+						$cuantos        = count($movimientos['movimientos']);
+						$asignadot     += $movimientos['asignado'];
+						$adjudicadot   += $movimientos['adjudicado'];
+						$volumentotalt  = $movimientos['volumentotal'];
 					?>
 					<tr>
 						<td rowspan="{{ $cuantos }}">{{ $nit }}</td>
@@ -87,19 +89,38 @@
 				@endforeach
 			@endforeach
 		</tbody>
-		<tfoot>
-			<tr>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-				@if($esasignacion==1)
-					<td class="text-right">{{ number_format($asignadot, 3) }}</td>
-					<td class="text-right">{{ number_format($adjudicadot, 3) }}</td>
-					<td class="text-right">{{ number_format($asignadot-$adjudicadot, 3) }}</td>
-				@else
-					<td colspan="3" class="text-right">{{ number_format($adjudicadot, 3) }}</td>
-				@endif
-				<td colspan="12">&nbsp;</td>
-			</tr>
-		</tfoot>
 	</table>
+	<br><br>
+	<div class="row">
+		<div class="col-sm-6">
+			<table class="table table-striped table-bordered table-condensed">
+				@if($esasignacion==1)
+				<tr>
+					<td>Asignado</td>
+					<td class="text-right"><strong>{{ number_format($asignadot, 3) }}</td>
+				</tr>
+				@else
+				<tr>
+					<td>Cuota total</td>
+					<td class="text-right"><strong>{{ number_format($volumentotalt, 3) }}</td>
+				</tr>
+				@endif
+				<tr>
+					<td>Adjudicado</td>
+					<td class="text-right"><strong>{{ number_format($adjudicadot, 3) }}</td>
+				</tr>
+				@if($esasignacion==1)
+				<tr>
+					<td>Saldo</td>
+					<td class="text-right"><strong>{{ number_format($asignadot-$adjudicadot, 3) }}</td>
+				</tr>
+				@else
+				<tr>
+					<td>Saldo</td>
+					<td class="text-right"><strong>{{ number_format($volumentotalt-$adjudicadot, 3) }}</td>
+				</tr>
+				@endif
+			</table>
+		</div>
+	</div>
 @stop
