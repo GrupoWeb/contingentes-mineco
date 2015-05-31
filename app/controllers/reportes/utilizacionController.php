@@ -52,6 +52,7 @@ class utilizacionController extends BaseController {
 
       $html = View::make('reportes.utilizacionespdf')
         ->with('utilizaciones', $data)
+        ->with('esasignacion', $asignacion)
         ->with('titulo', 'Utilización de contingentes')
         ->with('tratado', Tratado::getNombre($tratadoid))
         ->with('producto', Contingente::getProducto($contingenteid));

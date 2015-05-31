@@ -1,6 +1,10 @@
 @extends('template.template')
 
 @section('content')
+	{{ HTML::style('css/fontawesome-iconpicker.min.css') }}
+	{{ HTML::script('js/fontawesome-iconpicker.min.js') }}
+
+
 	<ol class="breadcrumb">
 	  <li><a href="http://contingentes.local/tratados">Tratados &amp; contingentes</a></li>
 	  <li class="active">{{ $data ? 'Editar' : 'Nuevo' }}</li>
@@ -72,21 +76,14 @@
 		<div class="form-group">
 			<label class="col-sm-2 control-label" for="icono">&Iacute;cono</label>
 			<div class="col-sm-4">
-  			<select name="icono" class="selectpicker form-control">
-  				<option data-content="<i class='fa fa-file-text-o fa-lg'></i>" value="fa-file-text-o"  {{ $data ? (($data->icono == 'fa-file-text-o') ? 'selected' : '') : '' }}></option>
-  				<option data-content="<i class='fa fa-globe fa-lg'></i>" value="fa-globe"  {{ $data ? (($data->icono == 'fa-globe') ? 'selected' : '') : '' }}></option>
-  				<option data-content="<i class='fa fa-anchor fa-lg'></i>" value="fa-anchor"  {{ $data ? (($data->icono == 'fa-anchor') ? 'selected' : '') : '' }}></option>
-  				<option data-content="<i class='fa fa-cloud fa-lg'></i>" value="fa-cloud"  {{ $data ? (($data->icono == 'fa-cloud') ? 'selected' : '') : '' }}></option>
-  				<option data-content="<i class='fa fa-pie-chart fa-lg'></i>" value="fa-pie-chart"  {{ $data ? (($data->icono == 'fa-pie-chart') ? 'selected' : '') : '' }}></option>
-  				<option data-content="<i class='fa fa-users fa-lg'></i>" value="fa-users"  {{ $data ? (($data->icono == 'fa-users') ? 'selected' : '') : '' }}></option>
-  			</select>
+				<input name="icono" class="form-control icono" value="{{ $data?$data->icono:''}}">
   		</div>		   
 		</div>
 		<div class="form-group">
 			<div class="col-sm-10 col-sm-offset-2">
 				<div class="checkbox">
 			    <label>
-			      <input type="checkbox" value="1" name="activo"> Activo
+			      <input type="checkbox" value="1" name="activo" {{ $data?($data->activo==1?'checked':''):'' }}> Activo
 			    </label>
 		    </div>
 		  </div>
@@ -100,6 +97,7 @@
 
 	<script type="text/javascript">
 		$(function() {
+			$('.icono').iconpicker();
 			$('.catalogoFecha').datetimepicker();
 			$('.selectpicker').selectpicker();
 			$('#frmCrud').bootstrapValidator({
