@@ -33,10 +33,18 @@
 			</tr>
 		</thead>
 		<tbody>
+			<?php 
+				$asignadot   = 0;
+				$adjudicadot = 0;
+			?>
 			@foreach($utilizaciones as $nit=>$valores)
 				@foreach($valores as $nombre=>$movimientos)
+					<?php
+						$cuantos      = count($movimientos['movimientos']);
+						$asignadot   += $movimientos['asignado'];
+						$adjudicadot += $movimientos['adjudicado'];
+					?>
 					<tr>
-						<?php $cuantos = count($movimientos['movimientos']); ?>
 						<td rowspan="{{ $cuantos }}">{{ $nit }}</td>
 						<td rowspan="{{ $cuantos }}">{{ $nombre }}</td>
 						@if($esasignacion==1)
@@ -79,5 +87,19 @@
 				@endforeach
 			@endforeach
 		</tbody>
+		<tfoot>
+			<tr>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				@if($esasignacion==1)
+					<td class="text-right">{{ number_format($asignadot, 3) }}</td>
+					<td class="text-right">{{ number_format($adjudicadot, 3) }}</td>
+					<td class="text-right">{{ number_format($asignadot-$adjudicadot, 3) }}</td>
+				@else
+					<td colspan="3" class="text-right">{{ number_format($adjudicadot, 3) }}</td>
+				@endif
+				<td colspan="12">&nbsp;</td>
+			</tr>
+		</tfoot>
 	</table>
 @stop

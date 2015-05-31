@@ -31,10 +31,12 @@ class utilizacionController extends BaseController {
       else
         $data[$utilizacion->nit][$utilizacion->razonsocial]['adjudicado'] = $utilizacion->cantidad;
       
+      $fraccion = explode(' ', $utilizacion->fraccion);
+
       $data[$utilizacion->nit][$utilizacion->razonsocial]['movimientos'][] = array(
         'fecha'            => $utilizacion->fecha,
         'certificado'      => $utilizacion->numerocertificado,
-        'fraccion'         => $utilizacion->fraccion,
+        'fraccion'         => $fraccion[0],
         'fechavencimiento' => $utilizacion->fechavencimiento,
         'dua'              => $utilizacion->dua,
         'real'             => $utilizacion->real,
