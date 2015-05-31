@@ -94,16 +94,16 @@
 	<div class="row">
 		<div class="col-sm-6">
 			<table class="table table-striped table-bordered table-condensed">
+				<tr>
+					<td>Cuota total</td>
+					<td class="text-right"><strong>{{ number_format($volumentotalt, 3) }}</td>
+				</tr>
 				@if($esasignacion==1)
 				<tr>
 					<td>Asignado</td>
 					<td class="text-right"><strong>{{ number_format($asignadot, 3) }}</td>
 				</tr>
 				@else
-				<tr>
-					<td>Cuota total</td>
-					<td class="text-right"><strong>{{ number_format($volumentotalt, 3) }}</td>
-				</tr>
 				@endif
 				<tr>
 					<td>Adjudicado</td>
