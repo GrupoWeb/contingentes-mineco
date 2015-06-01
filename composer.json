@@ -14,7 +14,8 @@
 		"csgt/components": "dev-master",
 		"maxxscho/laravel-tcpdf": "0.*",
 		"xethron/migrations-generator": "dev-master",
-		"csgt/hermes": "dev-master"
+		"csgt/hermes": "dev-master",
+		"guzzlehttp/guzzle": "~4.0"
 	},
 	"autoload": {
 		"classmap": [

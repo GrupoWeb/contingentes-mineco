@@ -45,6 +45,8 @@
 						$asignadot     += $movimientos['asignado'];
 						$adjudicadot   += $movimientos['adjudicado'];
 						$volumentotalt  = $movimientos['volumentotal'];
+
+						if ($cuantos==0) $cuantos=1;
 					?>
 					<tr>
 						<td rowspan="{{ $cuantos }}">{{ $nit }}</td>
@@ -57,6 +59,11 @@
 							<td rowspan="{{ $cuantos }}" colspan="3" class="text-right">{{ number_format($movimientos['adjudicado'], 3) }}</td>
 						@endif
 						<?php $i=1; ?>
+						@if(count($movimientos['movimientos'])==0)
+							<td colspan="12">&nbsp;</td>
+						</tr>
+						@endif
+
 						@foreach($movimientos['movimientos'] as $movimiento)
 							@if ($i>1) 
 								{{'<tr>'}} 

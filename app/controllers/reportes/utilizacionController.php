@@ -22,30 +22,40 @@ class utilizacionController extends BaseController {
     $asignacion    = Contingente::getTipoTratado($contingenteid);
   
     $utilizaciones = Movimiento::getUtilizaciones($contingenteid, $empresaid, ($fi <> '' ? Components::fechaHumanoAMysql($fi) : ''), ($ff <> '' ? Components::fechaHumanoAMysql($ff) : ''));
+    //dd(DB::getQueryLog());
+
     $data          = array();
     foreach($utilizaciones as $utilizacion) {
       $data[$utilizacion->nit][$utilizacion->razonsocial]['asignado'] = $utilizacion->asignado;
       $data[$utilizacion->nit][$utilizacion->razonsocial]['volumentotal'] = $utilizacion->volumentotal;
-
-      if(isset($data[$utilizacion->nit][$utilizacion->razonsocial]['adjudicado']))
-        $data[$utilizacion->nit][$utilizacion->razonsocial]['adjudicado'] += $utilizacion->cantidad;
-      else
-        $data[$utilizacion->nit][$utilizacion->razonsocial]['adjudicado'] = $utilizacion->cantidad;
       
-      $fraccion = explode(' ', $utilizacion->fraccion);
+      if ($utilizacion->tipomovimientoid==2) {       
+        if(isset($data[$utilizacion->nit][$utilizacion->razonsocial]['adjudicado']))
+          $data[$utilizacion->nit][$utilizacion->razonsocial]['adjudicado'] += $utilizacion->cantidad;
+        else
+          $data[$utilizacion->nit][$utilizacion->razonsocial]['adjudicado'] = $utilizacion->cantidad;
 
-      $data[$utilizacion->nit][$utilizacion->razonsocial]['movimientos'][] = array(
-        'fecha'            => $utilizacion->fecha,
-        'certificado'      => $utilizacion->numerocertificado,
-        'fraccion'         => $fraccion[0],
-        'fechavencimiento' => $utilizacion->fechavencimiento,
-        'dua'              => $utilizacion->dua,
-        'real'             => $utilizacion->real,
-        'cif'              => $utilizacion->cif,
-        'fechaliquidacion' => $utilizacion->fechaliquidacion,
-        'cantidad'         => $utilizacion->cantidad,
-        'variacion'        => $utilizacion->variacion
-      );
+        $fraccion = explode(' ', $utilizacion->fraccion);
+
+        $data[$utilizacion->nit][$utilizacion->razonsocial]['movimientos'][] = array(
+          'fecha'            => $utilizacion->fecha,
+          'certificado'      => $utilizacion->numerocertificado,
+          'fraccion'         => $fraccion[0],
+          'fechavencimiento' => $utilizacion->fechavencimiento,
+          'dua'              => $utilizacion->dua,
+          'real'             => $utilizacion->real,
+          'cif'              => $utilizacion->cif,
+          'fechaliquidacion' => $utilizacion->fechaliquidacion,
+          'cantidad'         => $utilizacion->cantidad,
+          'variacion'        => $utilizacion->variacion
+        );
+      }
+      else {
+        if (!isset($data[$utilizacion->nit][$utilizacion->razonsocial]['movimientos']))
+          $data[$utilizacion->nit][$utilizacion->razonsocial]['movimientos'] = array();
+        if (!isset($data[$utilizacion->nit][$utilizacion->razonsocial]['adjudicado']))
+          $data[$utilizacion->nit][$utilizacion->razonsocial]['adjudicado'] = 0;
+      }
     }
 
     if($formato == 'pdf') {

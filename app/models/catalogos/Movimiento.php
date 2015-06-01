@@ -85,9 +85,9 @@ class Movimiento extends Eloquent {
 	}
 
 	public static function getUtilizaciones($aContingenteid, $aEmpresaid, $aFechainicio, $aFechafin) {
-		$query = DB::table('movimientos AS m')
+		$query = DB::table('authusuarios AS u')
 			->select('e.nit AS nit', 'e.razonsocial', 'c.numerocertificado', 'c.fraccion',
-				'c.dua', 'c.real', 'c.cif', 'c.variacion','u.usuarioid',
+				'c.dua', 'c.real', 'c.cif', 'c.variacion','u.usuarioid', 'm.tipomovimientoid',
 				DB::raw('DATE_FORMAT(m.created_at, "%d/%m/%y") AS fecha'),
 				DB::raw('DATE_FORMAT(c.fechavencimiento, "%d/%m/%y") AS fechavencimiento'),
 				DB::raw('DATE_FORMAT(c.fechaliquidacion, "%d/%m/%y") AS fechaliquidacion'),
@@ -97,13 +97,13 @@ class Movimiento extends Eloquent {
 					WHERE m2.periodoid=m.periodoid AND m2.tipomovimientoid IN(3,4) AND e2.empresaid=e.empresaid) AS asignado'),
 				DB::raw('(SELECT SUM(m2.cantidad) FROM movimientos m2 
 					WHERE m2.periodoid=m.periodoid AND m2.tipomovimientoid=1) AS volumentotal'),
-				DB::raw('(cantidad*-1) AS cantidad'))
-			->leftJoin('authusuarios AS u', 'm.usuarioid', '=', 'u.usuarioid')
-			->leftJoin('empresas AS e', 'u.empresaid', '=', 'e.empresaid')
+				DB::raw('(m.cantidad*-1) AS cantidad'))
+			->leftJoin('empresas AS e', 'e.empresaid', '=', 'u.empresaid')
+			->leftJoin('movimientos AS m', 'u.usuarioid', '=', 'm.usuarioid')
 			->leftJoin('certificados AS c', 'm.certificadoid', '=', 'c.certificadoid')
 			->leftJoin('periodos AS p', 'm.periodoid', '=', 'p.periodoid')
 			->leftJoin('contingentes AS cn', 'p.contingenteid', '=', 'cn.contingenteid')
-			->where('tipomovimientoid', 2)
+			->whereIn('m.tipomovimientoid', array(2,3))
 			->where('cn.contingenteid', $aContingenteid);
 
 		if($aEmpresaid <> 0)
@@ -113,6 +113,7 @@ class Movimiento extends Eloquent {
 			$query->whereBetween('m.created_at', array($aFechainicio, $aFechafin));
 			
 		$query->orderBy('e.razonsocial');
+		$query->orderBy('m.tipomovimientoid');
 		$query->orderBy('m.created_at');
 
 		return $query->get();
