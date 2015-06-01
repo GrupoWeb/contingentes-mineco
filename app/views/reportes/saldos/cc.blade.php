@@ -4,8 +4,6 @@
 	{{ HTML::script('js/highcharts-exporting.js') }}
 	{{ HTML::script('js/highcharts.js') }}
 
-	@include('partials/reportes/header')
-
 	<div id="container"></div>
 
 	<script>

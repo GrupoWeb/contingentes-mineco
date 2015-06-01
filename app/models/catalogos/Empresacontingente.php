@@ -56,7 +56,7 @@ class Empresacontingente extends Eloquent {
 			->leftJoin('empresacontingentes AS ec', 'e.empresaid', '=', 'ec.empresaid')
 			->leftJoin('movimientos AS m', 'm.usuarioid', '=', 'u.usuarioid')
 			->whereIn('u.rolid', Config::get('contingentes.rolempresa'))
-			->where('m.tipomovimientoid', DB::table('tiposmovimiento')->where('nombre', 'Asignación')->pluck('tipomovimientoid'))
+			#->where('m.tipomovimientoid', DB::table('tiposmovimiento')->where('nombre', 'Asignación')->pluck('tipomovimientoid'))
 			->where('ec.contingenteid', $aContingenteId)
 			->groupBy('e.empresaid')
 			->orderBy('razonsocial')

@@ -44,6 +44,7 @@ class graficasController extends BaseController {
 		}
 
 		return View::make('reportes.saldos.'.$view)
+			->with('formato','html')
 			->with('titulo', 'Consumo de contingente por empresa')
 			->with('tratado', Tratado::getNombre($contingente->tratadoid))
 			->with('producto', Producto::getNombre($contingente->productoid))
