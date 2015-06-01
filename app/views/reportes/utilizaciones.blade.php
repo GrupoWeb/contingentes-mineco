@@ -34,9 +34,9 @@
 		</thead>
 		<tbody>
 			<?php 
-				$asignadot    = 0;
-				$adjudicadot  = 0;
-				$volumentotal = 0;
+				$asignadot     = 0;
+				$adjudicadot   = 0;
+				$volumentotalt = 0;
 			?>
 			@foreach($utilizaciones as $nit=>$valores)
 				@foreach($valores as $nombre=>$movimientos)
