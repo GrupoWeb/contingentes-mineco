@@ -97,7 +97,7 @@ class Movimiento extends Eloquent {
 					WHERE m2.periodoid=m.periodoid AND m2.tipomovimientoid IN(3,4) AND e2.empresaid=e.empresaid) AS asignado'),
 				DB::raw('(SELECT SUM(m2.cantidad) FROM movimientos m2 
 					WHERE m2.periodoid=m.periodoid AND m2.tipomovimientoid=1) AS volumentotal'),
-				DB::raw('ABS(cantidad) AS cantidad'))
+				DB::raw('(cantidad*-1) AS cantidad'))
 			->leftJoin('authusuarios AS u', 'm.usuarioid', '=', 'u.usuarioid')
 			->leftJoin('empresas AS e', 'u.empresaid', '=', 'e.empresaid')
 			->leftJoin('certificados AS c', 'm.certificadoid', '=', 'c.certificadoid')
