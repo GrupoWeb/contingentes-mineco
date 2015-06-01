@@ -13,8 +13,8 @@ class utilizacionController extends BaseController {
     $tratadoid     = Crypt::decrypt(Input::get('tratadoid'));
     $contingenteid = Crypt::decrypt(Input::get('contingentes'));
     $empresaid     = Crypt::decrypt(Input::get('cmbEmpresa'));
-    $fi            = Input::get('fechaini');
-    $ff            = Input::get('fechafin');
+    $fi            = Input::get('fechaini') . ' 00:00';
+    $ff            = Input::get('fechafin') . ' 23:59';
     $formato       = Input::get('formato');
 
     //Validamos el tipo de tratado para mostrar cantidad asignada, de lo contrario
