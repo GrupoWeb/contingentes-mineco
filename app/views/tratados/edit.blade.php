@@ -45,12 +45,6 @@
   		</div>		   
 		</div>
 		<div class="form-group">
-			<label class="col-sm-2 control-label" for="variacion">Variación (%)</label>
-			<div class="col-sm-10">
-				{{ Form::text('variacion', ($data ? $data->variacion : ''), array('class'=>'form-control')) }}
-  		</div>		   
-		</div>
-		<div class="form-group">
 			<label class="col-sm-2 control-label" for="paisid">País</label>
 			<div class="col-sm-4">
   			<select name="paisid" class="selectpicker form-control">

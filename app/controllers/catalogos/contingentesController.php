@@ -30,6 +30,7 @@ class contingentesController extends crudController {
 		Crud::setCampo(array('nombre'=>'Producto', 'campo'=>'p.productoid', 'tipo'=>'combobox', 'query'=>'SELECT nombre, productoid FROM productos ORDER BY nombre', 'combokey'=>'productoid', 'editable'=>true, 'show'=>false));
 		Crud::setCampo(array('nombre'=>'Unidad de medida', 'campo'=>'unidadmedidaid', 'tipo'=>'combobox', 'query'=>'SELECT CONCAT(nombre," (",nombrecorto,")") AS nombre, unidadmedidaid FROM unidadesmedida ORDER BY nombre', 'combokey'=>'unidadmedidaid', 'editable'=>true, 'show'=>false));
 	 	Crud::setCampo(array('nombre'=>'Tipo tratado', 'campo'=>'tipotratadoid', 'tipo'=>'combobox', 'query'=>'SELECT nombre, tipotratadoid FROM tipotratados', 'combokey'=>'tipotratadoid', 'editable'=>true, 'show'=>false));
+	 	Crud::setCampo(array('nombre'=>'Variación (%)', 'campo'=>'variacion', 'class'=>'text-right', 'reglas'=>array('numeric', 'notEmpty'), 'reglasmensaje'=>'El valor debe ser numérico'));
 	 	Crud::setCampo(array('nombre'=>'Plantilla certificado', 'campo'=>'plantillaid', 'tipo'=>'combobox', 'query'=>'SELECT nombre, plantillaid FROM plantillascertificados', 'combokey'=>'plantillaid', 'editable'=>true, 'show'=>false));
 	 	Crud::setCampo(array('nombre'=>'Requiere Asignación', 'campo'=>'t.asignacion', 'tipo'=>'bool','editable'=>false));	
 	 	Crud::setCampo(array('nombre'=>'Texto certificado','campo'=>'textocertificado', 'tipo'=>'textarea', 'show'=>false, 'reglas'=>array('notEmpty'),'reglasmensaje'=>'El texto es requerido'));
