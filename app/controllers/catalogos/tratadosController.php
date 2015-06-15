@@ -32,6 +32,8 @@ class tratadosController extends crudController {
 	 	Crud::setCampo(array('nombre'=>'Color','campo'=>'clase','tipo'=>'enum','enumarray'=>array('sucess','warning','danger','primary','info','default'),'show'=>false));
 	 	Crud::setCampo(array('nombre'=>'Icono','campo'=>'icono','tipo'=>'enum','enumarray'=>array('sucess','warning','danger','primary','info','default'),'show'=>false));
 
+		Crud::setCampo(array('nombre'=>'Normativo', 'campo'=>'tratados.normativo', 'tipo'=>'file','filepath'=>'/normativos/', 'class'=>'text-center'));	
+
 	 	Crud::setBotonExtra(array('url'=>'contingentes?tratado=','icon'=>'glyphicon glyphicon-certificate','titulo'=>'Asignar Contingentes'));
 	 
 	 	Crud::setPermisos(Cancerbero::tienePermisosCrud('tratados'));

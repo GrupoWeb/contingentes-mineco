@@ -15,7 +15,7 @@ return array(
 	'roladmin'        => array(1,2),
 	'rolempresa'			=> array(3),
 	'tratadosExclude' => array('cuentacorriente', 'login', 'reset','cancerbero','paises',
-		'productos','requerimientos','solicitud','', 'unidadesmedida', 
+		'productos','requerimientos','solicitud','', 'unidadesmedida','inicio', 
 		'usuarios', 'usuarioempresas', 'roles','cuentacorrienteempresas','usuariosextra','utilizacion'),
 
 );

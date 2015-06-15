@@ -34,6 +34,9 @@ class contingentesController extends crudController {
 	 	Crud::setCampo(array('nombre'=>'Plantilla certificado', 'campo'=>'plantillaid', 'tipo'=>'combobox', 'query'=>'SELECT nombre, plantillaid FROM plantillascertificados', 'combokey'=>'plantillaid', 'editable'=>true, 'show'=>false));
 	 	Crud::setCampo(array('nombre'=>'Requiere Asignación', 'campo'=>'t.asignacion', 'tipo'=>'bool','editable'=>false));	
 	 	Crud::setCampo(array('nombre'=>'Texto certificado','campo'=>'textocertificado', 'tipo'=>'textarea', 'show'=>false, 'reglas'=>array('notEmpty'),'reglasmensaje'=>'El texto es requerido'));
+	
+		Crud::setCampo(array('nombre'=>'Normativo', 'campo'=>'contingentes.normativo', 'tipo'=>'file','filepath'=>'/normativos/', 'class'=>'text-center'));	
+
 
 	 	Crud::setBotonExtra(array('url'=>'contingente/requerimientos/{id}?tratado='.Input::get('tratado'),'icon'=>'glyphicon glyphicon-list-alt','titulo'=>'Requerimientos'));
 	 	Crud::setBotonExtra(array('url'=>'partidasarancelarias?contingente={id}','icon'=>'glyphicon glyphicon-th','titulo'=>'Fracciones arancelarias', 'class'=>'success'));
