@@ -146,6 +146,7 @@ class solicitudesinscripcionController extends crudController {
 					Mail::send('emails/solicitudinscripcionresultado', array(
 						'nombre'        => $usuario->nombre,
 						'fecha'         => $usuario->created_at,
+						'email'         => $usuario->email,
 						'estado'        => 'Aprobada',
 						'observaciones' => Input::get('txObservaciones')), function($msg) use ($email, $admins, $empresas){
 			       	$msg->to($email)->subject('Solicitud de Inscripción DACE - MINECO');

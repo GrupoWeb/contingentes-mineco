@@ -90,6 +90,7 @@ class solicitudesasignacionController extends crudController {
 						'nombre'        => $usuario->nombre,
 						'fecha'         => $asignacion->created_at,
 						'estado'        => 'Aprobada',
+						'contingente'   => $asignacion->producto,
 						'solicitado'    => $asignacion->solicitado,
 						'asignado'      => $cantidad,
 						'observaciones' => Input::get('txObservaciones')), function($msg) use ($email, $admins, $empresas){
@@ -125,6 +126,7 @@ class solicitudesasignacionController extends crudController {
 						'nombre'        => $usuario->nombre,
 						'fecha'         => $asignacion->created_at,
 						'estado'        => 'Rechazada',
+						'contingente'   => $asignacion->producto,
 						'solicitado'    => $asignacion->solicitado,
 						'asignado'      => 0,
 						'observaciones' => Input::get('txObservaciones')), function($msg) use ($email, $admins, $empresas){

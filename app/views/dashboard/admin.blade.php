@@ -89,7 +89,7 @@
           </a>
 	      </div>
 		  </div>
-
+		  <div class="clearfix"></div>
 
 		@foreach($datos as $tratadoid=>$tratado)
 			<div class="col-sm-2">

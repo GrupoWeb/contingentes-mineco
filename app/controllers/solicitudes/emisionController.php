@@ -10,6 +10,7 @@ class emisionController extends BaseController {
 		$contingenteid  = Input::get('cmbContingentes');
 		$contingente    = Crypt::decrypt($contingenteid);
 		$requerimientos = Contingenterequerimiento::getRequerimientos($contingenteid, 'emision');
+		$producto       = Contingente::getNombre($contingente);
 		$solicitado     = Input::get('cantidad', 0);
 
 		if(count(Input::file()) <= 0 && count($requerimientos) > 0) {
@@ -94,6 +95,7 @@ class emisionController extends BaseController {
 				try {
 					Mail::send('emails/solicitudemision', array(
 			      'nombre' => Auth::user()->nombre,
+			      'contingente' => $producto,
 			      'fecha'  => date('d-m-Y H:i')
 			      ), function($msg) use ($email, $admins, $empresas){
 			            $msg->to($email)->subject('Solicitud de emisión');

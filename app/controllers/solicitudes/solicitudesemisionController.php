@@ -25,7 +25,7 @@ class solicitudesemisionController extends crudController {
 		Crud::setCampo(array('nombre'=>'Usuario','campo'=>'u.nombre'));
 		Crud::setCampo(array('nombre'=>'Tratado','campo'=>'t.nombrecorto'));
 		Crud::setCampo(array('nombre'=>'Producto','campo'=>'d.nombre','class'=>'text-right'));
-		Crud::setCampo(array('nombre'=>'Monto Solicitado','campo'=>'solicitado','tipo'=>'numeric','class'=>'text-right'));
+		Crud::setCampo(array('nombre'=>'Monto Solicitado','campo'=>'solicitado','tipo'=>'numeric', 'decimales'=>4,'class'=>'text-right'));
 		Crud::setCampo(array('nombre'=>'Fecha de solicitud','campo'=>'solicitudesemision.created_at', 'tipo'=>'datetime','class'=>'text-right'));
 		
 		Crud::setPermisos(Cancerbero::tienePermisosCrud('solicitudespendientes.emision'));
@@ -122,6 +122,7 @@ class solicitudesemisionController extends crudController {
 				$email    = $usuario->email;
 				$emision  = Emisionpendiente::find($elID);
 				$empresas = Usuario::listEmpresaEmails($usuario->empresaid, $usuario->usuarioid);
+				$producto = $result['emision']->producto;
 
 				Session::flash('type','success');
 				Session::flash('message','La solicitud de emisión fue procesada correctamente');
@@ -132,6 +133,7 @@ class solicitudesemisionController extends crudController {
 						'fecha'         => $result['emision']->created_at,
 						'url'           => url('c/'.Crypt::encrypt($result['certificado']->certificadoid)),
 						'estado'        => 'Aprobada',
+						'contingente'   => $producto,
 						'solicitado'    => $emision->solicitado,
 						'emitido'       => $cantidad,
 						'observaciones' => Input::get('txObservaciones')), function($msg) use ($email, $admins, $empresas){

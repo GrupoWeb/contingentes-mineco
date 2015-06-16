@@ -4,5 +4,6 @@
 @stop
 @section('content')
 	Estimad(a) Usuari(a): {{ $nombre }} <br /><br />
-	Se ha registrado una solicitud de inscripción en el Sistema de Contingentes Arancelarios, la cual será revisada para dicha autorización. En breve recibirás un correo dando respuesta a tu solicitud. <br />
+	Se ha registrado una solicitud de inscripción en el Sistema de Contingentes Arancelarios, la cual será revisada para su autorización. En breve recibirá un correo dando respuesta a su solicitud.
+<br />
 @stop

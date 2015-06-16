@@ -3,7 +3,7 @@
 	Solicitud de asignación
 @stop
 @section('content')
-	Se ha recibido una solicitud de asignación con los siguientes datos: <br>
+	Se ha recibido una solicitud de asignación con los datos siguientes: <br>
 	<strong>Fecha:</strong> {{$fecha}}<br>
 	<strong>Nombre:</strong> {{$nombre}}<br><br>
 	<strong>Contingente:</strong> {{$contingente}}<br><br>

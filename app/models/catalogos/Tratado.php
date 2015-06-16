@@ -7,6 +7,8 @@ class Tratado extends Eloquent {
 		return DB::table('tratados')
 			->select('tratadoid', 'nombre', 'nombrecorto', 'tipo', 'clase', 'icono')
 			->whereRaw('tratadoid IN (SELECT DISTINCT tratadoid FROM contingentes)')
+			->orderBy('tipo')
+			->orderBy('nombrecorto')
 			->get();
 	}
 
@@ -41,7 +43,8 @@ class Tratado extends Eloquent {
 
 	public static function getTratadosDashboard() {
 		return DB::table('tratados AS t')
-			->select('tratadoid', 'nombrecorto')
+			->select('tratadoid', 'nombrecorto','tipo')
+			->orderBy('tipo')
 			->orderBy('nombrecorto')
 			->get();
 	}

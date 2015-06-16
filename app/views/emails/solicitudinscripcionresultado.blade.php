@@ -3,17 +3,18 @@
 	Solicitud de inscripción
 @stop
 @section('content')
-	La solicitud de inscripción con los siguientes datos: <br>
+	La solicitud de inscripción con los datos siguientes: <br>
 	<strong>Fecha:</strong> {{$fecha}}<br>
 	<strong>Nombre:</strong> {{$nombre}}<br>
 	ha sido <h3 style="color: {{ $estado == 'Aprobada' ? 'green' : 'red' }}">{{ $estado }}</h3>
 
 	@if($estado=='Aprobada')
-	Desde ya puedes ingresar al portal web para realizar tus solicitudes de certificados. <br>
+		<strong>Usuario:</strong> {{$email}}<br>
+		<strong>Contraseña:</strong> (La que ingresó en el formulario de inscripción)<br>
 	@endif
 
 	@if ($observaciones<>'')
-		con las siguientes observaciones: <br />
+		<strong>Observaciones:</strong><br />
 		{{ $observaciones }}
 	@endif
 @stop

@@ -15,18 +15,21 @@
 	    <div style="background-color: #d3d7d8; margin: 0 auto 8px auto; width: 90%; max-width: 800px; padding: 18px 10px 18px 10px;">
 				@yield('content')
 				<br />
-				<p>Para mayor informaci&oacute;n puede escribir a <a href="mailto:{{Config::get('website.email')}}">{{Config::get('website.email')}}</a> o dirigiéndose a la página web <a href="{{Config::get('website.url')}}">{{Config::get('website.url')}}</a></p>
+				<p style="font-size:12px;">Para mayor informaci&oacute;n puede escribir a <a href="mailto:{{Config::get('website.email')}}">{{Config::get('website.email')}}</a> o dirigiéndose a la página web <a href="{{Config::get('website.url')}}">{{Config::get('website.url')}}</a></p>
+				<p style="font-size:12px;">Todas las gestiones que realice a través de este sistema <strong>NO TIENE NINGUN COSTO</strong>
 			</div>
 			&nbsp;
 		</div>
-		<p style="text-align:center; font-size: 12px;"><small>
-					<strong>Direcci&oacute;n de Administraci&oacute;n de Comercio Exterior</strong><br/>
-					Ministerio de Econom&iacute;a <br/>
+		<div>
+			<p style="text-align:center; font-size: 12px; border: solid thin #666; padding: 5px; width: 80%; max-width: 700px; margin: 15px auto 15px auto;"><small>
+					<strong>Direcci&oacute;n de Administraci&oacute;n de Comercio Exterior - DACE <br/>
+					Ministerio de Econom&iacute;a </strong><br/>
 					8a Avenida 10-43, zona 1<br/>
 					Ciudad de Guatemala, 01001<br/>
-					Teléfonos: (502) 2412 0200 Ext. 4200<br/>
-					Fax: (502) 2232 7449
-				</small></p>
+					Teléfonos: (502) 2412 0200 Ext. 4203, 4209 o 4212<br/>
+					Fax: (502) 2412 0319
+				</small>
+			</p>
+		</div>
 	</body>
 </html>
-
