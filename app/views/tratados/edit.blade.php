@@ -11,7 +11,7 @@
 	</ol>
 	
 	@if($data)
-		{{ Form::open(array('url'=>'tratados/'.Crypt::encrypt($data->tratadoid), 'id'=>'frmCrud', 'class'=>'form-horizontal bv-form', 'novalidate'=>'novalidate')) }}
+		{{ Form::open(array('url'=>'tratados/'.Crypt::encrypt($data->tratadoid), 'id'=>'frmCrud', 'class'=>'form-horizontal bv-form', 'novalidate'=>'novalidate','files'=>true)) }}
 			{{ Form::hidden('_method', 'PUT') }}
 	@else
 		{{ Form::open(array('url'=>'tratados', 'id'=>'frmCrud', 'class'=>'form-horizontal bv-form', 'novalidate'=>'novalidate')) }}
@@ -73,6 +73,16 @@
 				<input name="icono" class="form-control icono" value="{{ $data?$data->icono:''}}">
   		</div>		   
 		</div>
+
+		<div class="form-group">
+			<label class="col-sm-2 control-label" for="normativo">Normativo</label>
+			<div class="col-sm-10">
+				<input type="file" name="normativo">
+				<p class="help-block"></p>
+			</div>
+		</div>
+
+
 		<div class="form-group">
 			<div class="col-sm-10 col-sm-offset-2">
 				<div class="checkbox">
