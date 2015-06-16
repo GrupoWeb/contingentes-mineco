@@ -1,0 +1,41 @@
+body {
+  /*font-family: Archivo Narrow;*/
+  font-family: "Raleway",sans-serif;
+}
+
+h2 {
+	font-family: "Archivo Narrow", sans-serif;
+}
+
+.navbar-inverse {
+  background-color: #0054a4;
+  padding: 5px;
+}
+
+.navbar-brand {
+  padding: 0;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+  color: #cfcfcf;
+}
+
+.navbar {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+}
+
+footer {
+  padding: 30px 0;
+}
+
+.info-inferior div p {
+  height: 100px;
+  overflow: hidden;
+}
+
+.panel-producto {
+  height: 50px;
+  overflow: hidden;
+}

@@ -24,7 +24,7 @@
         @endif
 
         <div class="form-group">
-          <label for="tratados" class="col-sm-2 control-label">Tratado</label>
+          <label for="tratados" class="col-sm-2 control-label">Acuerdo Comercial</label>
           <div class="col-sm-10 div-tratados">
             <select name="tratados" class="selectpicker form-control" id="tratados">
               @foreach($tratados as $tratado)
@@ -42,7 +42,7 @@
       </div>
       <div class="col-md-12">
         <h4 class="titulo">Requerimientos</h4>
-        A continuación se enumeran los requerimientos para todos los contingentes seleccionados.
+         A continuación se enumeran los documentos que deben adjuntarse para aplicar a un contigente arancelario.
         <hr>
         <div class="requerimientos"></div>
         <div class="row">

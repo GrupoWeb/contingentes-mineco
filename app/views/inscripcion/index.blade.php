@@ -1,14 +1,20 @@
-@extends('template/inscripcion')
+@extends('template/home')
 @section('content')
 	{{ HTML::style('packages/csgt/components/css/bootstrap-fileinput.min.css') }}
-	{{ HTML::script('packages/csgt/components/js/bootstrap-fileinput.min.js') }}
+  {{ HTML::style('packages/csgt/components/css/bootstrapValidator.min.css') }}
+  {{ HTML::style('packages/csgt/components/css/bootstrap-select.min.css') }}
 
+  {{ HTML::script('packages/csgt/components/js/bootstrap-select.min.js') }}
+	{{ HTML::script('packages/csgt/components/js/bootstrap-fileinput.min.js') }}
+  {{ HTML::script('packages/csgt/components/js/bootstrapValidator.min.js') }}
+  {{ HTML::script('packages/csgt/components/js/bootstrapValidatorExtra.js') }}
 	<?php
     $params = array('id'=>'frmRegistro','class'=>'form-horizontal', 'files'=>true);
     if ($route) $params['route'] = $route;
   ?>
 	{{Form::open($params) }}
 	<div class="contenido">
+    <h1 class="titulo">Solicitud de inscripción</h1>
 		<div class="col-md-12">
 			<h4 class="titulo">Datos Generales</h4>
 		</div>
@@ -47,7 +53,7 @@
     <!-- representante legal  -->
 		<div class="col-md-12">
       <div class="form-group">
-        <label for="txNombre" class="col-sm-2 control-label">3. Rep. Legal</label>
+        <label for="txNombre" class="col-sm-2 control-label">3. Representante Legal</label>
         <div class="col-sm-10">
           {{ Form::text('txPropietario', '', array('class'=>'form-control', 
             'data-bv-notEmpty'         =>'true',
@@ -187,34 +193,21 @@
     <!--encargado -->
     <div class="col-md-6">
       <div class="form-group">
-        <label for="txNombre" class="col-sm-4 control-label">11. Encargado</label>
+        <label for="txNombre" class="col-sm-4 control-label">11. Contacto</label>
         <div class="col-sm-8">
           {{ Form::text('txEncargadoImportaciones', '', array('class'=>'form-control', 
             'data-bv-notEmpty'         =>'true',
-            'data-bv-notEmpty-message' => 'El nombre del encargado es requerido',
+            'data-bv-notEmpty-message' => 'El nombre del contacto es requerido',
             'autocomplete'             => 'off',
             'placeholder'              => 'Importacion/exportacion'
             )) }}
         </div>
       </div>
-    </div>
-    <!-- codigo VUPE -->
-    <div class="clearfix"></div>
-    <div class="col-md-12">
-      <div class="form-group">
-        <label for="txVUPE" class="col-sm-2 control-label">12. Código VUPE</label>
-        <div class="col-sm-10">
-          {{ Form::text('txVUPE', '', array('class'=>'form-control', 
-            'autocomplete' => 'off',
-            'placeholder'  => 'Solamente requerido para exportación de metales'
-            )) }}
-        </div>
-      </div>
-    </div>   
+    </div> 
     <!--tratados -->
     <div class="col-md-12">
       <div class="form-group">
-        <label for="tratados" class="col-sm-2 control-label">13. Tratado</label>
+        <label for="tratados" class="col-sm-2 control-label">12. Acuerdo Comercial</label>
         <div class="col-sm-10 div-tratados">
           <select name="tratados" class="selectpicker form-control" id="tratados">
             @foreach($tratados as $tratado)
@@ -227,14 +220,28 @@
     <!-- contingente -->
     <div class="col-md-12">
       <div class="form-group">
-        <label for="cmbContingente" class="col-sm-2 control-label">14.Contingente</label>
+        <label for="cmbContingente" class="col-sm-2 control-label">13. Contingente</label>
         <div class="col-sm-10 div-contingente" id="div-contingente"></div>
       </div>
     </div>
+    <!-- codigo VUPE -->
+    <div class="clearfix"></div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="txVUPE" class="col-sm-2 control-label">14. Código VUPE</label>
+        <div class="col-sm-10">
+          {{ Form::text('txVUPE', '', array('class'=>'form-control', 
+            'autocomplete' => 'off',
+            'placeholder'  => 'Unicamente requerido para exportación de desperdicios y desechos de metales'
+            )) }}
+        </div>
+      </div>
+    </div>  
+
 		<div class="clearfix"></div>
 		<div class="col-md-12">
 			<h4 class="titulo">Requerimientos</h4>
-		  A continuación se enumeran los requerimientos para todos los contingentes seleccionados.
+		  A continuación se enumeran los documentos que deben adjuntarse para aplicar a un contigente arancelario.
 		  <hr>
 		  <div class="requerimientos">
 		    

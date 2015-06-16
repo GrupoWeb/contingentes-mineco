@@ -14,6 +14,11 @@
 //Legacy
 Route::get('api/vupe/','apiController@vupeLegacy');
 
+//Informativas
+Route::get('/', array('as'=>'index.index', 'uses'=>'homeController@index'));
+Route::get('acuerdoscomerciales', array('as'=>'index.index', 'uses'=>'homeController@acuerdoscomerciales'));
+Route::get('manuales', array('as'=>'index.index', 'uses'=>'homeController@manuales'));
+
 //API
 Route::group(array('before' => array('auth_basic')), function() {
 	Route::get('api/certificado/{id}', 'apiController@certificado');
@@ -52,7 +57,7 @@ Route::group(array('before' => array('tratados')), function() {
   Route::get('contingente/paises/{id}', 'emisionController@getPaises');
 
 	Route::group(array('before' => array('auth', 'cancerbero', 'menu')), function() {
-		Route::get('/', array('as'=>'index.index', 'uses'=>'dashboardController@index'));
+		Route::get('inicio', array('as'=>'index.index', 'uses'=>'dashboardController@index'));
 		
 		//=== SOLICITUDES
 		Route::resource('solicitud/asignacion', 'asignacionController', array('only'=>array('index','store')));
