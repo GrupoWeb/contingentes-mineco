@@ -16,7 +16,7 @@
 	<div class="row">
 	  <div class="col-lg-12">
 	    <div class="well text-center">
-	      Cualquier duda o comentario, estamos para servirle.  <strong>2412 0200</strong> ext. 4023, 4209 o 4212 
+	      Cualquier duda o comentario, estamos para servirle.  <strong>2412 0200</strong> ext. 4203, 4209 o 4212 
 	    </div>
 	  </div>
 	</div>

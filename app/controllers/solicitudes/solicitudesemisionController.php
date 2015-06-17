@@ -71,7 +71,7 @@ class solicitudesemisionController extends crudController {
 				$certificado->producto           = $info->producto;
 				$certificado->usuarioid          = $emision->usuarioid;
 				$certificado->nombre             = $info->nombre;
-				$certificado->direccion          = $info->domiciliocomercial;
+				$certificado->direccion          = $info->domiciliofiscal;
 				$certificado->nit                = $info->nit;
 				$certificado->codigovupe         = $info->codigovupe;
 				$certificado->telefono           = $info->telefono;
