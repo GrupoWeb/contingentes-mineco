@@ -14,9 +14,11 @@ class Solicitudesemision extends Eloquent {
 			->get();
 	}
 
-	public static function getEmisionesUsuario($aUsuarioId) {
-		return DB::table('solicitudesemision')
-			->where('usuarioid', $aUsuarioId)
+	public static function getEmisionesPendientes($aEmpresaId) {
+		return DB::table('solicitudesemision AS s')
+			->leftJoin('authusuarios AS u','u.usuarioid', '=','s.usuarioid')
+			->where('u.empresaid', $aEmpresaId)
+			->where('s.estado','Pendiente')
 			->count();
 	}
 

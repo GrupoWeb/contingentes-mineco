@@ -23,7 +23,11 @@ class historicoemisionesController extends crudController {
 		}
 
 		if(in_array(Auth::user()->rolid, Config::get('contingentes.rolempresa'))) {
-			Crud::setWhere('u.email', Auth::user()->email);
+			Crud::setWhere('u.empresaid', Auth::user()->empresaid);
+		}
+
+		if(Input::has('estado')) {
+			Crud::setWhere('estado',Input::get('estado'));
 		}
 
 		Crud::setCampo(array('nombre'=>'Nombre','campo'=>'u.nombre'));

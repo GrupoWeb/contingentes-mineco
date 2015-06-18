@@ -86,8 +86,8 @@ class dashboardController extends BaseController {
 			return View::make('dashboard.index')
 				->with('admin', $admin)
 				->with('contingentes', Empresacontingente::getContingentesEmpresa(Auth::user()->empresaid))
-				->with('emisiones', Solicitudesemision::getEmisionesUsuario(Auth::id()))
-				->with('toneladas', Movimiento::getToneladasUsuario(Auth::id()))
+				->with('emisiones', Solicitudesemision::getEmisionesPendientes(Auth::user()->empresaid))
+				->with('certificados', Movimiento::getCuantosCertificadosEmpresa(Auth::user()->empresaid))
 				->with('tratados', Tratado::getTratadosDashboard());
 		}
 	}

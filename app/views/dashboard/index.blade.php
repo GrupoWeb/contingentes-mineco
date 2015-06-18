@@ -7,8 +7,8 @@
 		</div>
 	@endif
 
-	<div class="row">
-		<div class="col-lg-4 col-md-6">
+	<!--<div class="row"> -->
+		<div class="col-md-4 col-xs-12">
       <div class="panel panel-primary">
         <div class="panel-heading">
           <div class="row">
@@ -21,9 +21,16 @@
             </div>
           </div>
         </div>
+        <a href="/solicitud/inscripcion">
+          <div class="panel-footer">
+            <span class="pull-left">Solicitar otro</span>
+            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+            <div class="clearfix"></div>
+          </div>
+        </a>
       </div>
 	  </div>
-	  <div class="col-lg-4 col-md-6">
+	  <div class="col-md-4 col-xs-12">
       <div class="panel panel-green">
         <div class="panel-heading">
           <div class="row">
@@ -32,13 +39,20 @@
             </div>
             <div class="col-xs-9 text-right">
               <div class="huge">{{ $emisiones }}</div>
-              <div>Solicitudes de Emisión</div>
+              <div>Emisiones Pendientes</div>
             </div>
           </div>
         </div>
+        <a href="/historicosolicitudes/emision?estado=Pendiente">
+          <div class="panel-footer">
+            <span class="pull-left">Ver</span>
+            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+            <div class="clearfix"></div>
+          </div>
+        </a>
       </div>
 	  </div>
-	  <div class="col-lg-4 col-md-6">
+	  <div class="col-md-4 col-xs-12">
       <div class="panel panel-red">
         <div class="panel-heading">
           <div class="row">
@@ -46,15 +60,22 @@
               <i class="fa fa-ship fa-5x"></i>
             </div>
             <div class="col-xs-9 text-right">
-              <div class="huge">{{ number_format(abs($toneladas), 3) }}</div>
-              <div>Toneladas en certificados</div>
+              <div class="huge">{{ number_format($certificados) }}</div>
+              <div>Certificados Emitidos</div>
             </div>
           </div>
         </div>
+        <a href="/certificados">
+          <div class="panel-footer">
+            <span class="pull-left">Ver</span>
+            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+            <div class="clearfix"></div>
+          </div>
+        </a>
       </div>
 	  </div>
-  </div>
-
+  <!--</div>-->
+  <div class="clearfix"></div>
   <div class="row">
 		<div class="col-md-6">
 			<div class="panel panel-default">

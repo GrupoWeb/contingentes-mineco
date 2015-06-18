@@ -6,6 +6,7 @@ class certificadosController extends crudController {
 		Crud::setTitulo('Certificados');
 		Crud::setTabla('certificados');
 		Crud::setTablaId('certificadoid');
+		Crud::setLeftJoin('authusuarios AS u', 'certificados.usuarioid', '=', 'u.usuarioid');
 
 		$tselected = Session::get('tselected');
 		if($tselected <> 0) {
@@ -23,7 +24,7 @@ class certificadosController extends crudController {
 		}
 
 		if(in_array(Auth::user()->rolid, Config::get('contingentes.rolempresa'))) {
-			Crud::setWhere('usuarioid', Auth::id());
+			Crud::setWhere('u.empresaid', Auth::user()->empresaid);
 		}
 
 		Crud::setCampo(array('nombre'=>'No.','campo'=>'certificados.numerocertificado'));

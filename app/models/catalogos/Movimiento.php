@@ -74,14 +74,13 @@ class Movimiento extends Eloquent {
 			->first();
 	}
 
-	public static function getToneladasUsuario($aUsuarioId) {
-		$tipoemision = DB::table('tiposmovimiento')->where('nombre', 'Certificado')->pluck('tipomovimientoid');
-
-		return DB::table('movimientos')
-			->where('usuarioid', $aUsuarioId)
-			->where('tipomovimientoid', $tipoemision)
-			->whereNotNull('certificadoid')
-			->sum('cantidad');
+	public static function getCuantosCertificadosEmpresa($aEmpresaId) {
+		return DB::table('movimientos AS m')
+			->leftJoin('authusuarios AS u','m.usuarioid','=','u.usuarioid')
+			->leftJoin('tiposmovimiento AS t', 'm.tipomovimientoid','=','t.tipomovimientoid')
+			->where('u.empresaid', $aEmpresaId)
+			->where('t.nombre', 'Certificado')
+			->count();
 	}
 
 	public static function getUtilizaciones($aContingenteid, $aEmpresaid, $aFechainicio, $aFechafin) {
