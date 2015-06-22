@@ -36,14 +36,11 @@
 	        <div class="form-group">
 	          <label class="col-sm-2 control-label" for="fechaini">Fecha Inicial:</label>
 	          <div class="col-sm-10">
-	            <?php 
-	              $iniciomes = date('01/m/Y');
-	            ?>
-	            <div class="input-group date catalogoFecha">
-	              {{ Form::text('fechaini', $iniciomes , array('class' => 'form-control', 'data-date-language'=>'es', 
-	              'data-date-pickTime'=>false)) }}
-	              <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
-	            </div>
+	            <?php $iniciomes = date('01/m/Y'); ?>
+		          <div class="input-group date catalogoFecha">
+		            {{ Form::text('fechaini', $iniciomes , array('class' => 'form-control', 'data-format' => 'dd/MM/yyyy')) }}
+		            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+		          </div>
 	          </div>
 	        </div>
 	      </div>
@@ -53,14 +50,11 @@
 	        <div class="form-group">
 	          <label class="col-sm-2 control-label" for="fechafin">Fecha Final:</label>
 	          <div class="col-sm-10">
-	            <?php 
-	              $hoy = date('d/m/Y');
-	            ?>
-	            <div class="input-group date catalogoFecha">
-	              {{ Form::text('fechafin', $hoy , array('class' => 'form-control', 'data-date-language'=>'es', 
-	              'data-date-pickTime'=>false)) }}
-	              <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
-	            </div>
+	            <?php $hoy = date('d/m/Y'); ?>
+		          <div class="input-group date catalogoFecha">
+		            {{ Form::text('fechafin', $hoy, array('class' => 'form-control', 'data-format' => 'dd/MM/yyyy')) }}
+		            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+		          </div>
 	          </div>
 	        </div>
 	      </div>
@@ -145,7 +139,12 @@
 
 	<script type="text/javascript">
 		$(function() {
-			$('.catalogoFecha').datetimepicker();
+			$('.catalogoFecha').datetimepicker({
+				locale: 'es',
+        format : 'DD/MM/YYYY',
+				useCurrent: true
+			});
+			
 	    $('.selectpicker').selectpicker();
 
 	    @if(in_array('contingentes', $filters))
