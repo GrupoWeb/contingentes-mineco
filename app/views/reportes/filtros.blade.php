@@ -2,7 +2,7 @@
 
 @section('content')
 	<h3 class="text-primary">{{$titulo}}</h3>
-  {{Form::open(array('class'=>'form-horizontal','role'=>'form', 'target'=>'_blank'))}}
+  {{Form::open(array('class'=>'form-horizontal', 'target'=>'_blank', 'id'=>'frmFiltros'))}}
 	  <div class="panel panel-default">
 	    <br>
 	    @if(in_array('tratados', $filters))
@@ -38,7 +38,8 @@
 	          <div class="col-sm-10">
 	            <?php $iniciomes = date('01/m/Y'); ?>
 		          <div class="input-group date catalogoFecha">
-		            {{ Form::text('fechaini', $iniciomes , array('class' => 'form-control', 'data-format' => 'dd/MM/yyyy')) }}
+		            {{ Form::text('fechaini', $iniciomes , array('class'=>'form-control', 'data-format'=>'dd/MM/yyyy','data-bv-notEmpty'=>'true',
+              		'data-bv-notEmpty-message'=>'La fecha de inicio es necesaria')) }}
 		            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
 		          </div>
 	          </div>
@@ -52,7 +53,8 @@
 	          <div class="col-sm-10">
 	            <?php $hoy = date('d/m/Y'); ?>
 		          <div class="input-group date catalogoFecha">
-		            {{ Form::text('fechafin', $hoy, array('class' => 'form-control', 'data-format' => 'dd/MM/yyyy')) }}
+		            {{ Form::text('fechafin', $hoy, array('class'=>'form-control','data-format'=>'dd/MM/yyyy','data-bv-notEmpty'=>'true',
+              		'data-bv-notEmpty-message'=>'La fecha de inicio es necesaria')) }}
 		            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
 		          </div>
 	          </div>
@@ -139,12 +141,28 @@
 
 	<script type="text/javascript">
 		$(function() {
+			$('#frmFiltros')
+          .bootstrapValidator({
+            excluded: ':disabled',
+            feedbackIcons: {
+              valid: 'glyphicon glyphicon-ok',
+              invalid: 'glyphicon glyphicon-remove',
+              validating: 'glyphicon glyphicon-refresh'
+            },
+        })
+        .on('error.field.bv', function(e, data) {
+          data.bv.disableSubmitButtons(false);
+        })
+        .on('success.field.bv', function(e, data) {
+          data.bv.disableSubmitButtons(false);
+      });
+
 			$('.catalogoFecha').datetimepicker({
 				locale: 'es',
         format : 'DD/MM/YYYY',
 				useCurrent: true
 			});
-			
+
 	    $('.selectpicker').selectpicker();
 
 	    @if(in_array('contingentes', $filters))
