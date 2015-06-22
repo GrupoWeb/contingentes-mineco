@@ -193,7 +193,7 @@
     <!--encargado -->
     <div class="col-md-6">
       <div class="form-group">
-        <label for="txNombre" class="col-sm-4 control-label">11. Contacto</label>
+        <label for="txNombre" class="col-sm-4 control-label">11. Nombre del Contacto</label>
         <div class="col-sm-8">
           {{ Form::text('txEncargadoImportaciones', '', array('class'=>'form-control', 
             'data-bv-notEmpty'         =>'true',

@@ -129,3 +129,8 @@ h4.titulo {
 .huge {
     font-size: 40px;
 }
+
+.landing-title {
+	background-color: #0054a4; 
+	color: #fff
+}
