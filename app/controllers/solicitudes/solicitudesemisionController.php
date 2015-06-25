@@ -9,6 +9,7 @@ class solicitudesemisionController extends crudController {
 		Crud::setTablaId('solicitudemisionid');
 		
 		Crud::setLeftJoin('authusuarios AS u', 'solicitudesemision.usuarioid', '=', 'u.usuarioid');
+		Crud::setLeftJoin('empresas AS e', 'u.empresaid', '=', 'e.empresaid');
 		Crud::setLeftJoin('periodos AS p', 'solicitudesemision.periodoid', '=', 'p.periodoid');
 		Crud::setLeftJoin('contingentes AS c', 'p.contingenteid', '=', 'c.contingenteid');
 		Crud::setLeftJoin('tratados AS t', 'c.tratadoid', '=', 't.tratadoid');
@@ -23,6 +24,7 @@ class solicitudesemisionController extends crudController {
 		}
 
 		Crud::setCampo(array('nombre'=>'Usuario','campo'=>'u.nombre'));
+		Crud::setCampo(array('nombre'=>'Empresa','campo'=>'e.razonsocial'));
 		Crud::setCampo(array('nombre'=>'Tratado','campo'=>'t.nombrecorto'));
 		Crud::setCampo(array('nombre'=>'Producto','campo'=>'d.nombre'));
 		Crud::setCampo(array('nombre'=>'Fecha de solicitud','campo'=>'solicitudesemision.created_at', 'tipo'=>'datetime'));
