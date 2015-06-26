@@ -114,7 +114,7 @@ class emisionController extends BaseController {
 
 	public function getPaises($aContingenteId) {
 		$contingentepais = Contingente::getPais(Crypt::decrypt($aContingenteId));
-
+		
 		return View::make('emision.paises')
 			->with('contingentepais', $contingentepais)
 			->with('paises', Pais::getPaises());

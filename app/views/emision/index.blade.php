@@ -21,7 +21,7 @@
                   <optgroup label="{{ $contingente->tratado }}">
                   <?php $grupoActual = $contingente->tratado; ?>  
                 @endif
-                <option value="{{ Crypt::encrypt($contingente->contingenteid) }}" data-tratado="{{Crypt::encrypt($contingente->tratadoid) }}">{{ $contingente->producto }}</option>
+                <option value="{{ Crypt::encrypt($contingente->contingenteid) }}" data-tratado="{{Crypt::encrypt($contingente->tratadoid) }}" data-pais="{{ $contingente->paisid ? $contingente->paisid : 0 }}">{{ $contingente->producto }}</option>
               @endforeach
               </optgroup>
             </select>
@@ -55,12 +55,7 @@
             <p class="help-block disponible-block"></p>
           </div>
         </div> <!-- disponible -->
-        <div class="form-group">
-          <label for="pais" class="col-sm-2 control-label">País procedencia</label>
-          <div class="col-sm-6 div-contingente">
-            <div id="pais"></div>
-          </div>
-        </div> <!-- pais -->
+        <div id="pais"></div>
         <h4 class="titulo">Requerimientos</h4>
         A continuación se enumeran los requerimientos para todos los contingentes seleccionados.
         <hr>
@@ -82,9 +77,14 @@
       $('.selectpicker').selectpicker();
 
       $("#cmbContingentes").change(function() {
+          var pais = $('option:selected', this).attr('data-pais');
+
           $('#divPartidas').html('<p class="form-control-static"><i class="fa fa-lg fa-spinner fa-pulse"></i></p>');
           $('.disponible-block').html($('#divPartidas').html());
-          $('#pais').html($('#divPartidas').html());
+          
+          if(pais != 0)
+            $('#pais').html($('#divPartidas').html());
+          
           $('.requerimientos').html($('#divPartidas').html());
           $('.nuevos').remove();
           $.get('/requerimientos/contingentes/' + $(this).val() + '/emision', function(data){
@@ -122,9 +122,11 @@
             window.location = '/';
           });
 
-          $.get('/contingente/paises/' + $(this).val(), function(data){
-            $('#pais').html(data);
-          });
+          if(pais != 0) {
+            $.get('/contingente/paises/' + $(this).val(), function(data){
+              $('#pais').html(data);
+            });
+          }
       });
 
       $("#cmbContingentes").change();
