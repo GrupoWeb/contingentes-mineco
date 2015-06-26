@@ -118,7 +118,7 @@ class Movimiento extends Eloquent {
 		return $query->get();
 	}
 
-	public static function getConsolidadoUtilizacion() {
+	public static function getConsolidadoUtilizacion($aInicio, $aFin) {
 		$activado = DB::table('tiposmovimiento')->where('nombre', 'Cuota')->pluck('tipomovimientoid');
 		$asignado = DB::table('tiposmovimiento')->where('nombre', 'Asignación')->pluck('tipomovimientoid');
 		$emitido  = DB::table('tiposmovimiento')->where('nombre', 'Certificado')->pluck('tipomovimientoid');
@@ -126,8 +126,8 @@ class Movimiento extends Eloquent {
 		return DB::table('periodos AS p')
 			->select('p.contingenteid', 't.nombrecorto', 'pr.nombre',
 				DB::raw("(SELECT IFNULL(SUM(cantidad), 0) FROM movimientos AS m WHERE m.tipomovimientoid = $activado AND m.periodoid = p.periodoid) AS activado"),
-				DB::raw("(SELECT IFNULL(ABS(SUM(cantidad)), 0) FROM movimientos AS m WHERE m.tipomovimientoid = $asignado AND m.periodoid = p.periodoid) AS asignado"),
-				DB::raw("(SELECT IFNULL(ABS(SUM(cantidad)), 0) FROM movimientos AS m WHERE m.tipomovimientoid = $emitido AND m.periodoid = p.periodoid) AS emitido"))
+				DB::raw("(SELECT IFNULL(ABS(SUM(cantidad)), 0) FROM movimientos AS m WHERE m.tipomovimientoid = $asignado AND m.periodoid = p.periodoid AND m.created_at BETWEEN '".$aInicio."' AND '".$aFin."') AS asignado"),
+				DB::raw("(SELECT IFNULL(ABS(SUM(cantidad)), 0) FROM movimientos AS m WHERE m.tipomovimientoid = $emitido AND m.periodoid = p.periodoid AND m.created_at BETWEEN '".$aInicio."' AND '".$aFin."') AS emitido"))
 			->leftJoin('contingentes AS c', 'p.contingenteid', '=', 'c.contingenteid')
 			->leftJoin('productos AS pr', 'c.productoid', '=', 'pr.productoid')
 			->leftJoin('tratados AS t', 'c.tratadoid', '=', 't.tratadoid')

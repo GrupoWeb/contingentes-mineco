@@ -6,14 +6,24 @@ class consolidadoutilizacionController extends BaseController {
 		return View::make('reportes/filtros')
 			->with('titulo', 'Consolidado de utilización de contingentes')
 			->with('contingentes', Contingente::getContingentes())
-			->with('filters', array());
+			->with('filters', array('fechaini','fechafin'));
 	}
 
 	public function store() {
 		$formato  = Input::get('formato');
-		$tratados = Movimiento::getConsolidadoUtilizacion();
+		$fi       = Input::get('fechaini') . ' 00:00';
+    $ff       = Input::get('fechafin') . ' 23:59';
 
-		$data = array();
+		$finicio = '';
+		if($fi <> '')
+			$finicio = Components::fechaHumanoAMysql($fi);
+
+		$ffin = '';
+		if($ff <> '')
+			$ffin = Components::fechaHumanoAMysql($ff);
+
+		$tratados = Movimiento::getConsolidadoUtilizacion($finicio, $ffin);
+		$data     = array();
 		foreach($tratados as $tratado) {
 			$data[$tratado->nombrecorto][] = array(
 				'producto'  => $tratado->nombre,
