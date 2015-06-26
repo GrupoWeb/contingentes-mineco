@@ -69,9 +69,9 @@
 	@foreach($utilizaciones as $nit=>$valores)
 		@foreach($valores as $nombre=>$movimientos)
 			<tr>
-				<td rowspan="{{ count($movimientos) }}">{{ $nit }}</td>
-				<td rowspan="{{ count($movimientos) }}">{{ $nombre }}</td>
-				<td rowspan="{{ count($movimientos) }}">{{ number_format($movimientos['adjudicado'], 3) }}</td>
+				<td rowspan="{{ count($movimientos) }}" style="vertical-align: middle;">{{ $nit }}</td>
+				<td rowspan="{{ count($movimientos) }}" style="vertical-align: middle;">{{ $nombre }}</td>
+				<td rowspan="{{ count($movimientos) }}" style="vertical-align: middle;">{{ number_format($movimientos['adjudicado'], 3) }}</td>
 				<?php $i=1; ?>
 				@foreach($movimientos['movimientos'] as $movimiento)
 					@if($i==2)

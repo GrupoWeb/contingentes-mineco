@@ -283,6 +283,15 @@
 				'icono'         	=> null
 			));
 
+			DB::table('authmenu')->insert(array(
+				'menuid'					=> 36,
+				'padreid'        	=> 21,
+				'modulopermisoid' => 154,
+				'nombre'         	=> 'Consolidado de utilización de contingentes',
+				'orden' 					=> 400,
+				'icono'         	=> null
+			));
+
 			DB::table('authmenu')->update(array('created_at'=>date_create(), 'updated_at'=>date_create()));
 		  DB::statement('SET FOREIGN_KEY_CHECKS=1');
 		}

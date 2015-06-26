@@ -117,10 +117,23 @@ class Movimiento extends Eloquent {
 
 		return $query->get();
 	}
-} 
 
+	public static function getConsolidadoUtilizacion() {
+		$activado = DB::table('tiposmovimiento')->where('nombre', 'Cuota')->pluck('tipomovimientoid');
+		$asignado = DB::table('tiposmovimiento')->where('nombre', 'Asignación')->pluck('tipomovimientoid');
+		$emitido  = DB::table('tiposmovimiento')->where('nombre', 'Certificado')->pluck('tipomovimientoid');
 
-
-
-
-
+		return DB::table('periodos AS p')
+			->select('p.contingenteid', 't.nombrecorto', 'pr.nombre',
+				DB::raw("(SELECT IFNULL(SUM(cantidad), 0) FROM movimientos AS m WHERE m.tipomovimientoid = $activado AND m.periodoid = p.periodoid) AS activado"),
+				DB::raw("(SELECT IFNULL(ABS(SUM(cantidad)), 0) FROM movimientos AS m WHERE m.tipomovimientoid = $asignado AND m.periodoid = p.periodoid) AS asignado"),
+				DB::raw("(SELECT IFNULL(ABS(SUM(cantidad)), 0) FROM movimientos AS m WHERE m.tipomovimientoid = $emitido AND m.periodoid = p.periodoid) AS emitido"))
+			->leftJoin('contingentes AS c', 'p.contingenteid', '=', 'c.contingenteid')
+			->leftJoin('productos AS pr', 'c.productoid', '=', 'pr.productoid')
+			->leftJoin('tratados AS t', 'c.tratadoid', '=', 't.tratadoid')
+			->whereRaw('NOW() between fechainicio AND fechafin')
+			->orderBy('t.nombrecorto')
+			->orderBy('pr.nombre')
+			->get();
+	}
+}

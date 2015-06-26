@@ -49,14 +49,14 @@
 						if ($cuantos==0) $cuantos=1;
 					?>
 					<tr>
-						<td rowspan="{{ $cuantos }}">{{ $nit }}</td>
-						<td rowspan="{{ $cuantos }}">{{ $nombre }}</td>
+						<td rowspan="{{ $cuantos }}" style="vertical-align: middle;">{{ $nit }}</td>
+						<td rowspan="{{ $cuantos }}" style="vertical-align: middle;">{{ $nombre }}</td>
 						@if($esasignacion==1)
 							<td rowspan="{{ $cuantos }}" class="text-right">{{ number_format($movimientos['asignado'], 3) }}</td>
 							<td rowspan="{{ $cuantos }}" class="text-right">{{ number_format($movimientos['adjudicado'], 3) }}</td>
 							<td rowspan="{{ $cuantos }}" class="text-right">{{ number_format($movimientos['asignado']-$movimientos['adjudicado'], 3) }}</td>
 						@else
-							<td rowspan="{{ $cuantos }}" colspan="3" class="text-right">{{ number_format($movimientos['adjudicado'], 3) }}</td>
+							<td rowspan="{{ $cuantos }}" colspan="3" class="text-right" style="vertical-align: middle;">{{ number_format($movimientos['adjudicado'], 3) }}</td>
 						@endif
 						<?php $i=1; ?>
 						@if(count($movimientos['movimientos'])==0)

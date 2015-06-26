@@ -196,6 +196,12 @@ class ModulosSeeder extends Seeder {
 			'nombrefriendly' => 'Utilización de contingentes'
 		));
 
+		DB::table('authmodulos')->insert(array(
+			'moduloid'       => 33,
+			'nombre'         => 'consolidadoutilizacion',
+			'nombrefriendly' => 'Consolidado de utilización de contingentes'
+		));
+
 		DB::table('authmodulos')->update(array('created_at'=>date_create(), 'updated_at'=>date_create()));
 	  DB::statement('SET FOREIGN_KEY_CHECKS=1');
 	}
