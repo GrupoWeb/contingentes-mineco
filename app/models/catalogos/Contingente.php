@@ -94,10 +94,37 @@ class Contingente extends Eloquent {
 	}
 
 	public static function getProductos($aTratadoId) {
-		return DB::table('contingentes AS c')
-			->leftJoin('productos AS p', 'c.productoid', '=', 'p.productoid')
+		$contingentes = DB::table('contingentes')
 			->where('tratadoid', $aTratadoId)
-			->orderBy('p.nombre')
-			->lists('p.nombre');
+			->lists('contingenteid');
+
+
+		return DB::table('periodos AS p')
+			->select('pr.nombre', 'c.normativo', 'u.nombrecorto',
+				DB::raw("(SELECT 
+						sum(cantidad)
+					FROM movimientos AS m
+					WHERE tipomovimientoid = ".DB::table('tiposmovimiento')->where('nombre', 'cuota')->pluck('tipomovimientoid')."
+					AND m.periodoid = p.periodoid) AS activado"))
+			->leftJoin('contingentes AS c', 'p.contingenteid', '=', 'c.contingenteid')
+			->leftJoin('unidadesmedida AS u', 'c.unidadmedidaid', '=', 'u.unidadmedidaid')
+			->leftJoin('productos AS pr', 'c.productoid', '=', 'pr.productoid')
+			->whereRaw("NOW() BETWEEN fechainicio AND fechafin")
+			->whereIn('p.contingenteid', $contingentes)
+			->orderBy('pr.nombre')
+			->get();
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

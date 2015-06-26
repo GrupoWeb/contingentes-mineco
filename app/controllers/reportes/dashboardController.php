@@ -100,7 +100,7 @@ class dashboardController extends BaseController {
 
 	public function detalletratado($id) {
 		$id = Crypt::decrypt($id);
-
+		
 		return View::make('dashboard.productos')
 			->with('info', Tratado::getTratadoDashboard($id))
 			->with('productos', Contingente::getProductos($id));
