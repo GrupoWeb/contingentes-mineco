@@ -88,7 +88,8 @@ class dashboardController extends BaseController {
 				->with('contingentes', Empresacontingente::getContingentesEmpresa(Auth::user()->empresaid))
 				->with('emisiones', Solicitudesemision::getEmisionesPendientes(Auth::user()->empresaid))
 				->with('certificados', Movimiento::getCuantosCertificadosEmpresa(Auth::user()->empresaid))
-				->with('tratados', Tratado::getTratadosDashboard());
+				->with('tratados', Tratado::getTratadosDashboard())
+				->with('empresa', Empresa::find(Auth::user()->empresaid));
 		}
 	}
 
