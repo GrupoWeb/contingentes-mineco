@@ -31,11 +31,12 @@
 					</tr>
 				</thead>
 				<tbody>
+		@else
+			<?php $saldo=0; $debitot=0; $creditot=0; ?>
 		@endif
-
 		<?php 
-			$saldo += (float)$movimiento->credito-(float)abs($movimiento->debito); 
-			$debitot += (float)abs($movimiento->debito);
+			$saldo    += (float)$movimiento->credito-(float)abs($movimiento->debito); 
+			$debitot  += (float)abs($movimiento->debito);
 			$creditot += (float)$movimiento->credito;
 		?>
 		<tr>
