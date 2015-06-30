@@ -51,7 +51,10 @@ class emisionController extends BaseController {
 					$solicitud->periodoid  = $periodo; //Periodo::getPeriodo($contingente);
 					$solicitud->solicitado = $solicitado;
 					$solicitud->estado     = 'Pendiente';
-					$solicitud->paisid     = Crypt::decrypt(Input::get('cmbPais'));
+
+					if(Input::has('cmbPais'))
+						$solicitud->paisid = Crypt::decrypt(Input::get('cmbPais'));
+
 					$solicitud->save();
 
 					$partidas                     = new Solicitudemisionpartida;
