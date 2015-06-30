@@ -41,8 +41,18 @@ class cuentacorrienteController extends BaseController {
 	}
 
 	public function getPeriodos($aContingenteId) {
-		return View::make('partials/periodos')
-			->with('periodos', Periodo::getPeriodosContingente(Crypt::decrypt($aContingenteId)));
+		$response = array('codigoerror'=>0, 'error'=>'', 'data' => '');
+		$periodos = Periodo::getPeriodosContingente(Crypt::decrypt($aContingenteId));
+
+		if(count($periodos) <= 0){
+			$response['codigoerror'] = 1;
+			$response['error']       = 'No se tienen períodos activos para el contingente seleccionado';
+		}
+
+		else
+			$response['data'] = View::make('partials/periodos')->with('periodos', $periodos)->render();
+		
+		return Response::json($response);
 	}
 
 	private function getFechaMySql($aFecha) {

@@ -153,7 +153,13 @@
 	        $('#eid').html('<p class="form-control-static"><i class="fa fa-lg fa-spinner fa-pulse"></i></p>');
 
 	        $.get('cuentacorriente/periodos/' + $(this).find('option:selected').val(), function(data){
-	          $('#pid').html(data);
+	        	console.log(data);
+            if(data.codigoerror != 0) {
+              alert( "Error: " + data.error);
+              window.location = '/';
+            }
+            else
+	          	$('#pid').html(data.data);
 	        });
 
 	        @if (in_array('empresas', $filters))
