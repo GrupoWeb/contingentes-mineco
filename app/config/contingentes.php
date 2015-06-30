@@ -17,5 +17,5 @@ return array(
 	'tratadosExclude' => array('cuentacorriente', 'login', 'reset','cancerbero','paises',
 		'productos','requerimientos','solicitud','', 'unidadesmedida','inicio', 
 		'usuarios', 'usuarioempresas', 'roles','cuentacorrienteempresas','usuariosextra','utilizacion'),
-
+	'variospaises'    => 8,
 );
