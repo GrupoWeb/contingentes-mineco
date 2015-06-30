@@ -27,15 +27,18 @@
 		text-align: center;
 	}
 
+	.right {
+		text-align: right;
+	}
+
 	.border {
 		border: 1px solid black;
 	}
 </style>
-
 <table width="500" cellpadding="3" style="font-size: 8px; line-height: 7px" border="1">
 	<tr>
 		<th rowspan="2">DACE - MINECO</th>
-		<th colspan="3" class="text-center"><h4>{{$titulo}}</h4></th>
+		<th colspan="3" class="center"><h4>{{$titulo}}</h4></th>
 	</tr>
 	<tr>
 		<th>{{ $tratado }}</th>
@@ -48,11 +51,18 @@
 	<tr>
 		<th rowspan="2">NIT</th>
 		<th rowspan="2">Importador</th>
-		<th rowspan="2">Vol. Asignado</th>
-		<th colspan="5" align="center">Adjudicado</th>
-		<th colspan="7" align="center">Liquidado</th>
+		<th colspan="3" class="center">Volúmen</th>
+		<th colspan="5" class="center">Adjudicado</th>
+		<th colspan="7" class="center">Liquidado</th>
 	</tr>
 	<tr>
+		@if($esasignacion==1)
+			<th>Asignado</th>
+			<th>Adjudicado</th>
+			<th>Saldo</th>
+		@else
+			<th colspan="3">Adjudicado</th>
+		@endif
 		<th>No.</th>
 		<th>Fecha</th>
 		<th>Fracción</th>
@@ -66,22 +76,46 @@
 		<th>CIF</th>
 		<th>$/TM</th>
 	</tr>
+	<?php 
+		$asignadot     = 0;
+		$adjudicadot   = 0;
+		$volumentotalt = 0;
+	?>
 	@foreach($utilizaciones as $nit=>$valores)
 		@foreach($valores as $nombre=>$movimientos)
+			<?php
+				$cuantos        = count($movimientos['movimientos']);
+				$asignadot     += $movimientos['asignado'];
+				$adjudicadot   += $movimientos['adjudicado'];
+				$volumentotalt  = $movimientos['volumentotal'];
+
+				if ($cuantos==0) $cuantos=1;
+			?>
 			<tr>
-				<td rowspan="{{ count($movimientos) }}" style="vertical-align: middle;">{{ $nit }}</td>
-				<td rowspan="{{ count($movimientos) }}" style="vertical-align: middle;">{{ $nombre }}</td>
-				<td rowspan="{{ count($movimientos) }}" style="vertical-align: middle;">{{ number_format($movimientos['adjudicado'], 3) }}</td>
+				<td rowspan="{{ $cuantos }}" style="vertical-align: middle;">{{ $nit }}</td>
+				<td rowspan="{{ $cuantos }}" style="vertical-align: middle;">{{ $nombre }}</td>
+				@if($esasignacion==1)
+					<td rowspan="{{ $cuantos }}" class="right">{{ number_format($movimientos['asignado'], 3) }}</td>
+					<td rowspan="{{ $cuantos }}" class="right">{{ number_format($movimientos['adjudicado'], 3) }}</td>
+					<td rowspan="{{ $cuantos }}" class="right">{{ number_format($movimientos['asignado']-$movimientos['adjudicado'], 3) }}</td>
+				@else
+					<td rowspan="{{ $cuantos }}" colspan="3" class="right" style="vertical-align: middle;">{{ number_format($movimientos['adjudicado'], 3) }}</td>
+				@endif
 				<?php $i=1; ?>
+				@if(count($movimientos['movimientos'])==0)
+					<td colspan="12">&nbsp;</td>
+				</tr>
+				@endif
+
 				@foreach($movimientos['movimientos'] as $movimiento)
-					@if($i==2)
-						</tr><tr>
+					@if ($i>1) 
+						{{'<tr>'}} 
 					@endif
-						<td>{{ $movimiento['certificado'] }}</td>
+						<td>{{ $movimiento['certificado']  }}</td>
 						<td>{{ $movimiento['fecha'] }}</td>
 						<td>{{ $movimiento['fraccion'] }}</td>
 						<td>{{ $movimiento['fechavencimiento'] }}</td>
-						<td>{{ number_format($movimiento['cantidad'], 3) }}</td>
+						<td class="right">{{ number_format($movimiento['cantidad'], 3) }}</td>
 						@if($movimiento['dua'] <> '')
 							<td>{{ $movimiento['fechaliquidacion'] }}</td>
 							<td>{{ $movimiento['dua'] }}</td>
@@ -99,9 +133,7 @@
 							<td>&nbsp;</td>
 							<td>&nbsp;</td>
 						@endif
-					@if($i<>1)
-						</tr>
-					@endif
+					</tr>
 					<?php $i++; ?>
 				@endforeach
 		@endforeach
