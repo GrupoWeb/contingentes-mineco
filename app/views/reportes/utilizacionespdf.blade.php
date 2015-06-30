@@ -139,3 +139,31 @@
 		@endforeach
 	@endforeach
 </table>
+<br /><br /><br />
+<table width="500" cellpadding="3" style="font-size: 8px; line-height: 7px" border="1">
+	<tr>
+		<td>Cuota total</td>
+		<td class="right"><strong>{{ number_format($volumentotalt, 3) }}</strong></td>
+	</tr>
+	@if($esasignacion==1)
+	<tr>
+		<td>Asignado</td>
+		<td class="right"><strong>{{ number_format($asignadot, 3) }}</strong></td>
+	</tr>
+	@endif
+	<tr>
+		<td>Adjudicado</td>
+		<td class="right"><strong>{{ number_format($adjudicadot, 3) }}</strong></td>
+	</tr>
+	@if($esasignacion==1)
+	<tr>
+		<td>Saldo</td>
+		<td class="right"><strong>{{ number_format($asignadot-$adjudicadot, 3) }}</strong></td>
+	</tr>
+	@else
+	<tr>
+		<td>Saldo</td>
+		<td class="right"><strong>{{ number_format($volumentotalt-$adjudicadot, 3) }}</strong></td>
+	</tr>
+	@endif
+</table>

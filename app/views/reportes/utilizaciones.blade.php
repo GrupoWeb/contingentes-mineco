@@ -103,28 +103,27 @@
 			<table class="table table-striped table-bordered table-condensed">
 				<tr>
 					<td>Cuota total</td>
-					<td class="text-right"><strong>{{ number_format($volumentotalt, 3) }}</td>
+					<td class="text-right"><strong>{{ number_format($volumentotalt, 3) }}</strong></td>
 				</tr>
 				@if($esasignacion==1)
 				<tr>
 					<td>Asignado</td>
-					<td class="text-right"><strong>{{ number_format($asignadot, 3) }}</td>
+					<td class="text-right"><strong>{{ number_format($asignadot, 3) }}</strong></td>
 				</tr>
-				@else
 				@endif
 				<tr>
 					<td>Adjudicado</td>
-					<td class="text-right"><strong>{{ number_format($adjudicadot, 3) }}</td>
+					<td class="text-right"><strong>{{ number_format($adjudicadot, 3) }}</strong></td>
 				</tr>
 				@if($esasignacion==1)
 				<tr>
 					<td>Saldo</td>
-					<td class="text-right"><strong>{{ number_format($asignadot-$adjudicadot, 3) }}</td>
+					<td class="text-right"><strong>{{ number_format($asignadot-$adjudicadot, 3) }}</strong></td>
 				</tr>
 				@else
 				<tr>
 					<td>Saldo</td>
-					<td class="text-right"><strong>{{ number_format($volumentotalt-$adjudicadot, 3) }}</td>
+					<td class="text-right"><strong>{{ number_format($volumentotalt-$adjudicadot, 3) }}</strong></td>
 				</tr>
 				@endif
 			</table>
