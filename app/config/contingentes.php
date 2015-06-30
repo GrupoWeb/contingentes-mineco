@@ -12,7 +12,7 @@ return array(
 	|
 	*/
 
-	'roladmin'        => array(1,2),
+	'roladmin'        => array(1,2,4),
 	'rolempresa'			=> array(3),
 	'tratadosExclude' => array('cuentacorriente', 'login', 'reset','cancerbero','paises',
 		'productos','requerimientos','solicitud','', 'unidadesmedida','inicio', 
