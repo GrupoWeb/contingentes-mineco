@@ -113,9 +113,3 @@ Route::group(array('before' => array('tratados')), function() {
 	  Route::resource('usuarioswebservice', 'usuarioswebserviceController');
 	});
 });
-
-
-Route::get('prueba', function() {
-	$objeto = new Numeroaletras('153.102',2);
-	dd($objeto);
-});

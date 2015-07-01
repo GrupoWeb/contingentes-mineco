@@ -67,6 +67,14 @@ class solicitudesemisionController extends crudController {
 				if (!$res) return false;
 
 				$info = Emisionpendiente::getSolicitudPendiente($elID);
+
+				$letras = '';
+				try {
+					$objeto = new Numeroaletras($cantidad);
+					$letras = $objeto->getLetras();	
+				} catch (Exception $e) {
+					$letras = Components::numeroALetras($cantidad,null, 2);
+				}
 				
 				$certificado                     = new Certificado;
 				$certificado->tratado            = $info->tratadolargo;
@@ -78,7 +86,7 @@ class solicitudesemisionController extends crudController {
 				$certificado->codigovupe         = $info->codigovupe;
 				$certificado->telefono           = $info->telefono;
 				$certificado->volumen            = $cantidad;
-				$certificado->volumenletras      = Components::numeroALetras($cantidad,null, 2);
+				$certificado->volumenletras      = $letras;
 				$certificado->fraccion           = $info->fraccion;
 				$certificado->paisid             = $info->paisid;
 				$certificado->variacion          = $info->variacion;
