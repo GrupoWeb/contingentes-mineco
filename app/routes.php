@@ -106,6 +106,7 @@ Route::group(array('before' => array('tratados')), function() {
 		Route::resource('utilizacion', 'utilizacionController', array('only'=>array('index', 'store')));
 		Route::resource('consolidadoutilizacion', 'consolidadoutilizacionController', array('only'=>array('index', 'store')));
 		Route::resource('utilizacionporempresa', 'utilizacionempresaController', array('only'=>array('index', 'store')));
+		Route::resource('utilizacionporempresagrafica', 'utilizacionempresagraficaController', array('only'=>array('index', 'store')));
 		Route::get('tratado/graficas/saldo/{id}', array('as'=>'tratado.graficas.saldo', 'uses'=>'graficasController@saldo'));
 	  
 	  //=== ADMIN

@@ -120,31 +120,33 @@
 	        </div>
 	      </div>
 	    @endif
-	    <div class="col-sm-12">
-	      <div class="form-group">
-	        <label class="col-sm-2 control-label" for="formato">Formato:</label>
-	        <div class="col-sm-10">
-	          <div class="radio">
-	            <label>
-	              <input type="radio" name="formato" id="formatoHTML" value="html" checked>
-	              HTML
-	            </label>
-	          </div>
-	          <div class="radio">
-	            <label>
-	              <input type="radio" name="formato" id="formatoPDF" value="pdf">
-	              PDF
-	            </label>
-	          </div>
-	          <div class="radio">
-	            <label>
-	              <input type="radio" name="formato" id="formatoExcel" value="excel">
-	              Excel
-	            </label>
-	          </div>
-	        </div>
-	      </div>
-	    </div>
+	    @if(in_array('formato', $filters))
+		    <div class="col-sm-12">
+		      <div class="form-group">
+		        <label class="col-sm-2 control-label" for="formato">Formato:</label>
+		        <div class="col-sm-10">
+		          <div class="radio">
+		            <label>
+		              <input type="radio" name="formato" id="formatoHTML" value="html" checked>
+		              HTML
+		            </label>
+		          </div>
+		          <div class="radio">
+		            <label>
+		              <input type="radio" name="formato" id="formatoPDF" value="pdf">
+		              PDF
+		            </label>
+		          </div>
+		          <div class="radio">
+		            <label>
+		              <input type="radio" name="formato" id="formatoExcel" value="excel">
+		              Excel
+		            </label>
+		          </div>
+		        </div>
+		      </div>
+		    </div>
+		  @endif
 	    <div class="col-sm-12">
 	      <div class="form-group">
 	        <div class="col-sm-2">&nbsp;</div>

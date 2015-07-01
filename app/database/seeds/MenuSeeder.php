@@ -301,6 +301,15 @@
 				'icono'         	=> null
 			));
 
+			DB::table('authmenu')->insert(array(
+				'menuid'					=> 38,
+				'padreid'        	=> 21,
+				'modulopermisoid' => 158,
+				'nombre'         	=> 'Gráfica utilización de contingentes por empresa',
+				'orden' 					=> 370,
+				'icono'         	=> null
+			));
+
 			DB::table('authmenu')->update(array('created_at'=>date_create(), 'updated_at'=>date_create()));
 		  DB::statement('SET FOREIGN_KEY_CHECKS=1');
 		}

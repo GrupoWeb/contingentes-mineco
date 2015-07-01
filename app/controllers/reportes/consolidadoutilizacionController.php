@@ -6,7 +6,7 @@ class consolidadoutilizacionController extends BaseController {
 		return View::make('reportes/filtros')
 			->with('titulo', 'Consolidado de utilización de contingentes')
 			->with('contingentes', Contingente::getContingentes())
-			->with('filters', array('fechaini','fechafin'));
+			->with('filters', array('fechaini','fechafin','formato'));
 	}
 
 	public function store() {

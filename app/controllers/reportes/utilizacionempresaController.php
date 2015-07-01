@@ -6,7 +6,7 @@ class utilizacionempresaController extends BaseController {
     return View::make('reportes.filtros')
       ->with('titulo', 'Utilización de contingentes por empresa')
       ->with('tratados', Tratado::getTratados())
-      ->with('filters', array('solotratados'));
+      ->with('filters', array('solotratados','formato'));
   }
 
   public function store() {
@@ -67,8 +67,6 @@ class utilizacionempresaController extends BaseController {
         'totalsaldo'      => $totalsaldo
       );
     }
-
-    //return Response::json($totales);
 
     return View::make('reportes.utilizacionporempresa')
       ->with('movimientos', $data)

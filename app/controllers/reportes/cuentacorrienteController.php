@@ -6,7 +6,7 @@ class cuentacorrienteController extends BaseController {
 		return View::make('reportes/filtros')
 			->with('titulo', 'Cuenta Corriente - Contingentes')
 			->with('contingentes', Contingente::getContingentes())
-			->with('filters', array('contingentes', 'periodos'));
+			->with('filters', array('contingentes', 'periodos','formato'));
 	}
 
 	public function store() {
