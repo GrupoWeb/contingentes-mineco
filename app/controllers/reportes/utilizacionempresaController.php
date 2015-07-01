@@ -27,7 +27,13 @@ class utilizacionempresaController extends BaseController {
         if($movimiento->certificadoid)
           $liquidado = Certificado::getLiquidado($movimiento->certificadoid);
 
-        $vals = array('asignado'=>0,'emitido'=>0,'liquidado'=>$liquidado,'saldo'=>0);
+        $vals = array(
+          'asignado'  => (isset($data[$movimiento->nombre][$movimiento->razonsocial]['asignado']) ? $data[$movimiento->nombre][$movimiento->razonsocial]['asignado'] : 0),
+          'emitido'   => (isset($data[$movimiento->nombre][$movimiento->razonsocial]['emitido']) ? $data[$movimiento->nombre][$movimiento->razonsocial]['emitido'] : 0),
+          'liquidado' => $liquidado,
+          'saldo'     => (isset($data[$movimiento->nombre][$movimiento->razonsocial]['saldo']) ? $data[$movimiento->nombre][$movimiento->razonsocial]['saldo'] : 0)
+        );
+
         if($movimiento->tipomovimientoid == $autorizado)
           $vals['asignado'] = $movimiento->monto;
 
