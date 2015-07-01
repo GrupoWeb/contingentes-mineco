@@ -25,4 +25,10 @@ class Certificado extends Eloquent {
 			->where('c.certificadoid', $aId)
 			->first();
 	}
+
+	public static function getLiquidado($aCertificadoId) {
+		return DB::table('certificados')
+			->where('certificadoid', $aCertificadoId)
+			->pluck('real');
+	}
 }

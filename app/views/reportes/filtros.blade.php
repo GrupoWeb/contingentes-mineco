@@ -5,6 +5,26 @@
   {{Form::open(array('class'=>'form-horizontal', 'target'=>'_blank', 'id'=>'frmFiltros'))}}
 	  <div class="panel panel-default">
 	    <br>
+	    @if(in_array('solotratados', $filters))
+	      <div class="col-sm-12">
+	        <div class="form-group">
+	          <label class="col-sm-2 control-label" for="tratadoid">Tratados:</label>
+	          <div class="col-sm-10">
+	            <select id="tratadoid" name="tratadoid" class="selectpicker form-control">    
+	              @foreach ($tratados as $tratado)
+	                <option value="{{ Crypt::encrypt($tratado->tratadoid) }}">{{ $tratado->nombrecorto }}</option>
+	              @endforeach
+	            </select>
+	          </div>
+	        </div>
+	      </div>
+	      <div class="col-sm-12">
+	        <div class="form-group">
+	          <label class="col-sm-2 control-label" for="tratadoid">Contingentes:</label>
+	          <div class="col-sm-10"><div id="contingentediv"></div></div>
+	        </div>
+	      </div>
+	    @endif
 	    @if(in_array('tratados', $filters))
 	      <div class="col-sm-12">
 	        <div class="form-group">
@@ -177,6 +197,18 @@
 	    	$('#tratadoid').change(function(){
 	    		$('#contingentediv').html('<p class="form-control-static"><i class="fa fa-lg fa-spinner fa-pulse"></i></p>');
 	    		$('#empresadiv').html('<p class="form-control-static"><i class="fa fa-lg fa-spinner fa-pulse"></i></p>');
+
+	    		$.get('utilizacion/contingentes/' + $(this).find('option:selected').val(), function(data){
+	          $('#contingentediv').html(data);
+	        });
+	    	});
+
+	    	$('#tratadoid').change();
+	    @endif
+
+	    @if(in_array('solotratados', $filters))
+	    	$('#tratadoid').change(function(){
+	    		$('#contingentediv').html('<p class="form-control-static"><i class="fa fa-lg fa-spinner fa-pulse"></i></p>');
 
 	    		$.get('utilizacion/contingentes/' + $(this).find('option:selected').val(), function(data){
 	          $('#contingentediv').html(data);

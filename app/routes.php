@@ -105,9 +105,16 @@ Route::group(array('before' => array('tratados')), function() {
 		Route::resource('empresas', 'empresasController', array('only'=>array('index', 'store')));
 		Route::resource('utilizacion', 'utilizacionController', array('only'=>array('index', 'store')));
 		Route::resource('consolidadoutilizacion', 'consolidadoutilizacionController', array('only'=>array('index', 'store')));
+		Route::resource('utilizacionporempresa', 'utilizacionempresaController', array('only'=>array('index', 'store')));
 		Route::get('tratado/graficas/saldo/{id}', array('as'=>'tratado.graficas.saldo', 'uses'=>'graficasController@saldo'));
 	  
 	  //=== ADMIN
 	  Route::resource('usuarioswebservice', 'usuarioswebserviceController');
 	});
+});
+
+
+Route::get('prueba', function() {
+	$objeto = new Numeroaletras('153.102',2);
+	dd($objeto);
 });

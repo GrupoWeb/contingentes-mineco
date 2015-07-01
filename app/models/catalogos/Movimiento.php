@@ -136,4 +136,23 @@ class Movimiento extends Eloquent {
 			->orderBy('pr.nombre')
 			->get();
 	}
+
+
+	public static function getUtilizacionEmpresas($aTratadoId, $aContingenteId) {
+		return DB::table('movimientos AS m')
+			->select('pr.nombre', 'e.razonsocial',  'm.tipomovimientoid', 'm.certificadoid', 'tt.asignacion',
+				DB::raw('SUM(ABS(m.cantidad)) AS monto'))
+			->leftJoin('periodos AS p', 'm.periodoid', '=', 'p.periodoid')
+			->leftJoin('contingentes AS c', 'p.contingenteid', '=', 'c.contingenteid')
+			->leftJoin('productos AS pr', 'c.productoid', '=', 'pr.productoid')
+			->leftJoin('authusuarios AS u', 'm.usuarioid', '=', 'u.usuarioid')
+			->leftJoin('empresas AS e', 'u.empresaid', '=', 'e.empresaid')
+			->leftJoin('tipotratados AS tt', 'c.tipotratadoid', '=', 'tt.tipotratadoid')
+			->where('tratadoid', $aTratadoId)
+			->where('p.contingenteid', $aContingenteId)
+			->groupBy('razonsocial')
+			->groupBy('tipomovimientoid')
+			->orderBy('pr.nombre')
+			->get();
+	}
 }
