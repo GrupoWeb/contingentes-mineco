@@ -68,13 +68,13 @@ class solicitudesemisionController extends crudController {
 
 				$info = Emisionpendiente::getSolicitudPendiente($elID);
 
-				$letras = '';
+				/*$letras = '';
 				try {
 					$objeto = new Numeroaletras($cantidad);
 					$letras = $objeto->getLetras();	
-				} catch (Exception $e) {
+				} catch (Exception $e) {*/
 					$letras = Components::numeroALetras($cantidad,null, 2);
-				}
+				//}
 				
 				$certificado                     = new Certificado;
 				$certificado->tratado            = $info->tratadolargo;
