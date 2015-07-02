@@ -47,7 +47,7 @@ class contingentesController extends crudController {
 	}
 
 	public function getSaldo($contingenteid) {
-		$disponible             = DB::select(DB::raw('SELECT getSaldo('.Crypt::decrypt($contingenteid).','.Auth::id().') AS disponible'));
+		$disponible             = DB::select(DB::raw('SELECT getSaldo('.Crypt::decrypt($contingenteid).','.Auth::user()->empresaid.') AS disponible'));
 		$response['disponible'] = $disponible[0]->disponible;
 		$response['unidad']     = Contingente::getUnidadMedida($contingenteid);
 
@@ -58,7 +58,7 @@ class contingentesController extends crudController {
 		$response = array('codigoerror'=>0, 'error'=>'');
 
 		try {
-			$disponible             = DB::select(DB::raw('SELECT getSaldoAsignacion('.Crypt::decrypt($contingenteid).','.Auth::id().') AS disponible'));
+			$disponible             = DB::select(DB::raw('SELECT getSaldoAsignacion('.Crypt::decrypt($contingenteid).','.Auth::user()->empresaid.') AS disponible'));
 			$response['disponible'] = $disponible[0]->disponible;
 			$response['unidad']     = Contingente::getUnidadMedida($contingenteid);
 		} catch(\Exception $e) {
