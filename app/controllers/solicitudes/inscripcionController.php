@@ -103,12 +103,23 @@ class inscripcionController extends BaseController {
 			return Redirect::to('/');
 		}
 
-		DB::transaction(function() use($contingenteid) {
+		$nit       = Input::get('txNIT');
+		$empresa   = DB::table('empresas')->where('nit', $nit)->firts();
+		$solicitud = DB::table('solicitudinscripciones')->where('nit', $nit)->where('estado', 'Pendiente')->first();
+
+		if($solicitud || $empresa) {
+			Session::flash('message', 'El NIT ya se encuentra registrado en el sistema');
+			Session::flash('type', 'danger');
+
+			return Redirect::to('/');
+		}
+
+		DB::transaction(function() use($contingenteid,$nit) {
 			$inscripcion                          = new Solicitudinscripcion;
 			$inscripcion->estado                  = 'Pendiente';
 			$inscripcion->email                   = Input::get('email');
 			$inscripcion->password                = Hash::make(Input::get('txPassword'));
-			$inscripcion->nit                     = Input::get('txNIT');
+			$inscripcion->nit                     = $nit;
 			$inscripcion->nombre                  = Input::get('txRazonSocial');
 			$inscripcion->propietario             = Input::get('txPropietario');
 			$inscripcion->domiciliofiscal         = Input::get('txDomicilioFiscal');
