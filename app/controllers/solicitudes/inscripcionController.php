@@ -107,7 +107,7 @@ class inscripcionController extends BaseController {
 		$empresa   = DB::table('empresas')->where('nit', $nit)->firts();
 		$solicitud = DB::table('solicitudinscripciones')->where('nit', $nit)->where('estado', 'Pendiente')->first();
 
-		if(!$solicitud && !$empresa) {
+		if($solicitud || $empresa) {
 			Session::flash('message', 'El NIT ya se encuentra registrado en el sistema');
 			Session::flash('type', 'danger');
 
