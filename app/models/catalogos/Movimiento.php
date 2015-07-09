@@ -50,16 +50,17 @@ class Movimiento extends Eloquent {
 			return $query->get();
 	}
 
-	public static function getSaldo($aUsuarioId, $aContingenteId) {
+	public static function getSaldo($aEmpresaId, $aContingenteId) {
 		return DB::table('movimientos AS m')
 			->select(DB::raw('SUM(cantidad) AS total, getSaldo(p.contingenteid, m.usuarioid) AS disponible'))
 			->leftJoin('periodos AS p','m.periodoid','=','p.periodoid')
 			->leftJoin('contingentes AS c','p.contingenteid','=','c.contingenteid')
 			->leftJoin('tipomovimientoidtratados AS tt','c.tipomovimientoidtratadoid','=','tt.tipomovimientoidtratadoid')
+			->leftJoin('authusuarios AS u','u.usuarioid','m.usuarioid')
 			->whereRaw('NOW() BETWEEN p.fechainicio AND p.fechafin')
 			->whereRaw('(if(tt.`asignacion`=1, m.tipomovimientoid IN(3), m.tipomovimientoid IN(1)))')
 			->where('p.contingenteid', $aContingenteId)
-			->where('m.usuarioid', $aUsuarioId)
+			->where('u.empresaid', $aEmpresaId)
 			->first();
 	}
 
@@ -117,10 +118,13 @@ class Movimiento extends Eloquent {
 
 		return $query->get();
 	}
+
+	public static function getConsumoYSaldo($aEmpresaId, $aContingenteId) {
+		return DB::table('tipotratados')
+		    ->select(
+					DB::raw('(SELECT getTotalContingente(' . $aContingenteId . ',' . $aEmpresaId . ')) AS total'),
+					DB::raw('(SELECT getSaldo(' . $aContingenteId . ',' . $aEmpresaId . ')) AS saldo')
+				)
+				->first();
+	}
 } 
-
-
-
-
-
-

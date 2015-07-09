@@ -7,7 +7,7 @@
 		</div>
 	@endif
 
-	<!--<div class="row"> -->
+	<div class="row">
 		<div class="col-md-4 col-xs-12">
       <div class="panel panel-primary">
         <div class="panel-heading">
@@ -16,7 +16,7 @@
               <i class="fa fa-cart-plus fa-5x"></i>
             </div>
             <div class="col-xs-9 text-right">
-              <div class="huge">{{ $contingentes }}</div>
+              <div class="huge">{{ count($contingentes) }}</div>
               <div>Contingentes inscritos</div>
             </div>
           </div>
@@ -74,44 +74,21 @@
         </a>
       </div>
 	  </div>
-  <!--</div>-->
   <div class="clearfix"></div>
-  <div class="row">
+  @foreach($contingentes as $contingente)
 		<div class="col-md-6">
 			<div class="panel panel-default">
 			  <div class="panel-heading">
-			      <i class="fa fa-file-text fa-fw"></i> Listado de tratados
+			    <i class="fa {{$contingente->icono}}"></i> {{$contingente->tratado}} - {{$contingente->producto}}
 			  </div>
 			  <div class="panel-body">
-			    <ul class="list-group">
-			    	@foreach($tratados as $tratado)
-					  	<li class="list-group-item">
-					  		<a 
-									href        = "#" 
-									class       = "tratadolist" 
-									data-toggle = "modal"
-									data-target = "#myModal"
-									data-tid    = "{{ Crypt::encrypt($tratado->tratadoid) }}"
-									data-title  = "{{ $tratado->nombrecorto }}">
-					  				{{ $tratado->nombrecorto }}
-					  		</a>
-					  	</li>
-					  @endforeach
-					</ul>
+			    Aqui va la grafica
 			  </div>
 			</div>
 		</div>
-		<div class="col-md-6">
-			<div class="panel panel-default">
-			  <div class="panel-heading">
-			      <i class="fa fa-area-chart fa-fw"></i> Gráfica (pendiente)
-			  </div>
-			  <div class="panel-body">
-			  	<div id="grTiempos"></div>
-			  </div>
-			</div>
-		</div>
-	</div>
+  @endforeach
+  </div>
+
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	  <div class="modal-dialog">
 	    <div class="modal-content">

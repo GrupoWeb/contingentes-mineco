@@ -21,11 +21,13 @@ class Empresacontingente extends Eloquent {
 	
   public static function contingentesEmpresa($aEmpresaId) {
 	  return DB::table('empresacontingentes AS uc')
-			->select('uc.contingenteid', 't.nombrecorto AS tratado', 'p.nombre AS producto', 'c.tratadoid')
+			->select('uc.contingenteid', 't.nombrecorto AS tratado', 'p.nombre AS producto', 'c.tratadoid', 't.icono')
 			->leftJoin('contingentes AS c', 'uc.contingenteid', '=', 'c.contingenteid')
 			->leftJoin('tratados AS t', 'c.tratadoid', '=', 't.tratadoid')
 			->leftJoin('productos AS p', 'c.productoid', '=', 'p.productoid')
 			->where('uc.empresaid',$aEmpresaId)
+			->orderBy('t.nombrecorto')
+			->orderBy('p.nombre')
 			->get();
 	}
 
@@ -61,12 +63,6 @@ class Empresacontingente extends Eloquent {
 			->groupBy('e.empresaid')
 			->orderBy('razonsocial')
 			->get();
-	}
-
-	public static function getContingentesEmpresa($aEmpresaId) {
-		return DB::table('empresacontingentes')
-			->where('empresaid', $aEmpresaId)
-			->count();
 	}
 
 	public static function listEmpresasContingente($aContingenteId) {
