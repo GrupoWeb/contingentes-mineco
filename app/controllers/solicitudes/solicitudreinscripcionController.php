@@ -57,7 +57,7 @@ class solicitudreinscripcionController extends crudController {
 	      if ($key == 'txArchivo') continue;
 	    	if ($val) {
 					$arch   = Input::file($key);
-					$nombre = date('YmdHis').$arch->getClientOriginalName();
+					$nombre = date('Ymdhis') . mt_rand(1, 1000) . '.' . strtolower($arch->getClientOriginalExtension());
 					$res    = $arch->move(public_path() . '/archivos/solicitudes/'.$inscripcion->solicitudinscripcionid, $nombre);
 					
 					$requerimiento                         = new Solicitudinscripcionrequemiento;

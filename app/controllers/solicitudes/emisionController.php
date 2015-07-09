@@ -51,7 +51,10 @@ class emisionController extends BaseController {
 					$solicitud->periodoid  = $periodo; //Periodo::getPeriodo($contingente);
 					$solicitud->solicitado = $solicitado;
 					$solicitud->estado     = 'Pendiente';
-					$solicitud->paisid     = Crypt::decrypt(Input::get('cmbPais'));
+
+					if(Input::has('cmbPais'))
+						$solicitud->paisid = Crypt::decrypt(Input::get('cmbPais'));
+
 					$solicitud->save();
 
 					$partidas                     = new Solicitudemisionpartida;
@@ -63,7 +66,7 @@ class emisionController extends BaseController {
 			      if ($key=='txArchivo') continue;
 			    	if ($val) {
 							$arch   = Input::file($key);
-							$nombre = date('YmdHis').$arch->getClientOriginalName();
+							$nombre = date('Ymdhis') . mt_rand(1, 1000) . '.' . strtolower($arch->getClientOriginalExtension());
 							$res    = $arch->move(public_path() . '/archivos/' . Auth::id(), $nombre);
 							
 							DB::table('solicitudemisionrequerimientos')->insert(array(
@@ -114,7 +117,7 @@ class emisionController extends BaseController {
 
 	public function getPaises($aContingenteId) {
 		$contingentepais = Contingente::getPais(Crypt::decrypt($aContingenteId));
-
+		
 		return View::make('emision.paises')
 			->with('contingentepais', $contingentepais)
 			->with('paises', Pais::getPaises());

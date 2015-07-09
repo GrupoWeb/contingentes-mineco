@@ -49,14 +49,14 @@
 						if ($cuantos==0) $cuantos=1;
 					?>
 					<tr>
-						<td rowspan="{{ $cuantos }}">{{ $nit }}</td>
-						<td rowspan="{{ $cuantos }}">{{ $nombre }}</td>
+						<td rowspan="{{ $cuantos }}" style="vertical-align: middle;">{{ $nit }}</td>
+						<td rowspan="{{ $cuantos }}" style="vertical-align: middle;">{{ $nombre }}</td>
 						@if($esasignacion==1)
 							<td rowspan="{{ $cuantos }}" class="text-right">{{ number_format($movimientos['asignado'], 3) }}</td>
 							<td rowspan="{{ $cuantos }}" class="text-right">{{ number_format($movimientos['adjudicado'], 3) }}</td>
 							<td rowspan="{{ $cuantos }}" class="text-right">{{ number_format($movimientos['asignado']-$movimientos['adjudicado'], 3) }}</td>
 						@else
-							<td rowspan="{{ $cuantos }}" colspan="3" class="text-right">{{ number_format($movimientos['adjudicado'], 3) }}</td>
+							<td rowspan="{{ $cuantos }}" colspan="3" class="text-right" style="vertical-align: middle;">{{ number_format($movimientos['adjudicado'], 3) }}</td>
 						@endif
 						<?php $i=1; ?>
 						@if(count($movimientos['movimientos'])==0)
@@ -103,28 +103,27 @@
 			<table class="table table-striped table-bordered table-condensed">
 				<tr>
 					<td>Cuota total</td>
-					<td class="text-right"><strong>{{ number_format($volumentotalt, 3) }}</td>
+					<td class="text-right"><strong>{{ number_format($volumentotalt, 3) }}</strong></td>
 				</tr>
 				@if($esasignacion==1)
 				<tr>
 					<td>Asignado</td>
-					<td class="text-right"><strong>{{ number_format($asignadot, 3) }}</td>
+					<td class="text-right"><strong>{{ number_format($asignadot, 3) }}</strong></td>
 				</tr>
-				@else
 				@endif
 				<tr>
 					<td>Adjudicado</td>
-					<td class="text-right"><strong>{{ number_format($adjudicadot, 3) }}</td>
+					<td class="text-right"><strong>{{ number_format($adjudicadot, 3) }}</strong></td>
 				</tr>
 				@if($esasignacion==1)
 				<tr>
 					<td>Saldo</td>
-					<td class="text-right"><strong>{{ number_format($asignadot-$adjudicadot, 3) }}</td>
+					<td class="text-right"><strong>{{ number_format($asignadot-$adjudicadot, 3) }}</strong></td>
 				</tr>
 				@else
 				<tr>
 					<td>Saldo</td>
-					<td class="text-right"><strong>{{ number_format($volumentotalt-$adjudicadot, 3) }}</td>
+					<td class="text-right"><strong>{{ number_format($volumentotalt-$adjudicadot, 3) }}</strong></td>
 				</tr>
 				@endif
 			</table>

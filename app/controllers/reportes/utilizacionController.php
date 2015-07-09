@@ -6,7 +6,7 @@ class utilizacionController extends BaseController {
     return View::make('reportes.filtros')
       ->with('titulo', 'Utilización de contingentes')
       ->with('tratados', Tratado::getTratados())
-      ->with('filters', array('tratados', 'fechaini', 'fechafin'));
+      ->with('filters', array('tratados', 'fechaini', 'fechafin','formato'));
   }
 
   public function store() {

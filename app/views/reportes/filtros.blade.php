@@ -2,9 +2,29 @@
 
 @section('content')
 	<h3 class="text-primary">{{$titulo}}</h3>
-  {{Form::open(array('class'=>'form-horizontal','role'=>'form', 'target'=>'_blank'))}}
+  {{Form::open(array('class'=>'form-horizontal', 'target'=>'_blank', 'id'=>'frmFiltros'))}}
 	  <div class="panel panel-default">
 	    <br>
+	    @if(in_array('solotratados', $filters))
+	      <div class="col-sm-12">
+	        <div class="form-group">
+	          <label class="col-sm-2 control-label" for="tratadoid">Tratados:</label>
+	          <div class="col-sm-10">
+	            <select id="tratadoid" name="tratadoid" class="selectpicker form-control">    
+	              @foreach ($tratados as $tratado)
+	                <option value="{{ Crypt::encrypt($tratado->tratadoid) }}">{{ $tratado->nombrecorto }}</option>
+	              @endforeach
+	            </select>
+	          </div>
+	        </div>
+	      </div>
+	      <div class="col-sm-12">
+	        <div class="form-group">
+	          <label class="col-sm-2 control-label" for="tratadoid">Contingentes:</label>
+	          <div class="col-sm-10"><div id="contingentediv"></div></div>
+	        </div>
+	      </div>
+	    @endif
 	    @if(in_array('tratados', $filters))
 	      <div class="col-sm-12">
 	        <div class="form-group">
@@ -36,14 +56,11 @@
 	        <div class="form-group">
 	          <label class="col-sm-2 control-label" for="fechaini">Fecha Inicial:</label>
 	          <div class="col-sm-10">
-	            <?php 
-	              $iniciomes = date('01/m/Y');
-	            ?>
-	            <div class="input-group date catalogoFecha">
-	              {{ Form::text('fechaini', $iniciomes , array('class' => 'form-control', 'data-date-language'=>'es', 
-	              'data-date-pickTime'=>false)) }}
-	              <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
-	            </div>
+	            <?php $iniciomes = date('01/m/Y'); ?>
+		          <div class="input-group date catalogoFecha">
+		            {{ Form::text('fechaini', $iniciomes , array('class'=>'form-control', 'data-format'=>'dd/MM/yyyy')) }}
+		            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+		          </div>
 	          </div>
 	        </div>
 	      </div>
@@ -53,14 +70,11 @@
 	        <div class="form-group">
 	          <label class="col-sm-2 control-label" for="fechafin">Fecha Final:</label>
 	          <div class="col-sm-10">
-	            <?php 
-	              $hoy = date('d/m/Y');
-	            ?>
-	            <div class="input-group date catalogoFecha">
-	              {{ Form::text('fechafin', $hoy , array('class' => 'form-control', 'data-date-language'=>'es', 
-	              'data-date-pickTime'=>false)) }}
-	              <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
-	            </div>
+	            <?php $hoy = date('d/m/Y'); ?>
+		          <div class="input-group date catalogoFecha">
+		            {{ Form::text('fechafin', $hoy, array('class'=>'form-control','data-format'=>'dd/MM/yyyy')) }}
+		            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+		          </div>
 	          </div>
 	        </div>
 	      </div>
@@ -106,31 +120,33 @@
 	        </div>
 	      </div>
 	    @endif
-	    <div class="col-sm-12">
-	      <div class="form-group">
-	        <label class="col-sm-2 control-label" for="formato">Formato:</label>
-	        <div class="col-sm-10">
-	          <div class="radio">
-	            <label>
-	              <input type="radio" name="formato" id="formatoHTML" value="html" checked>
-	              HTML
-	            </label>
-	          </div>
-	          <div class="radio">
-	            <label>
-	              <input type="radio" name="formato" id="formatoPDF" value="pdf">
-	              PDF
-	            </label>
-	          </div>
-	          <div class="radio">
-	            <label>
-	              <input type="radio" name="formato" id="formatoExcel" value="excel">
-	              Excel
-	            </label>
-	          </div>
-	        </div>
-	      </div>
-	    </div>
+	    @if(in_array('formato', $filters))
+		    <div class="col-sm-12">
+		      <div class="form-group">
+		        <label class="col-sm-2 control-label" for="formato">Formato:</label>
+		        <div class="col-sm-10">
+		          <div class="radio">
+		            <label>
+		              <input type="radio" name="formato" id="formatoHTML" value="html" checked>
+		              HTML
+		            </label>
+		          </div>
+		          <div class="radio">
+		            <label>
+		              <input type="radio" name="formato" id="formatoPDF" value="pdf">
+		              PDF
+		            </label>
+		          </div>
+		          <div class="radio">
+		            <label>
+		              <input type="radio" name="formato" id="formatoExcel" value="excel">
+		              Excel
+		            </label>
+		          </div>
+		        </div>
+		      </div>
+		    </div>
+		  @endif
 	    <div class="col-sm-12">
 	      <div class="form-group">
 	        <div class="col-sm-2">&nbsp;</div>
@@ -145,7 +161,12 @@
 
 	<script type="text/javascript">
 		$(function() {
-			$('.catalogoFecha').datetimepicker();
+			$('.catalogoFecha').datetimepicker({
+				locale: 'es',
+        format : 'DD/MM/YYYY',
+				useCurrent: true
+			});
+
 	    $('.selectpicker').selectpicker();
 
 	    @if(in_array('contingentes', $filters))
@@ -154,7 +175,13 @@
 	        $('#eid').html('<p class="form-control-static"><i class="fa fa-lg fa-spinner fa-pulse"></i></p>');
 
 	        $.get('cuentacorriente/periodos/' + $(this).find('option:selected').val(), function(data){
-	          $('#pid').html(data);
+	        	console.log(data);
+            if(data.codigoerror != 0) {
+              alert( "Error: " + data.error);
+              window.location = '/';
+            }
+            else
+	          	$('#pid').html(data.data);
 	        });
 
 	        @if (in_array('empresas', $filters))
@@ -172,6 +199,18 @@
 	    	$('#tratadoid').change(function(){
 	    		$('#contingentediv').html('<p class="form-control-static"><i class="fa fa-lg fa-spinner fa-pulse"></i></p>');
 	    		$('#empresadiv').html('<p class="form-control-static"><i class="fa fa-lg fa-spinner fa-pulse"></i></p>');
+
+	    		$.get('utilizacion/contingentes/' + $(this).find('option:selected').val(), function(data){
+	          $('#contingentediv').html(data);
+	        });
+	    	});
+
+	    	$('#tratadoid').change();
+	    @endif
+
+	    @if(in_array('solotratados', $filters))
+	    	$('#tratadoid').change(function(){
+	    		$('#contingentediv').html('<p class="form-control-static"><i class="fa fa-lg fa-spinner fa-pulse"></i></p>');
 
 	    		$.get('utilizacion/contingentes/' + $(this).find('option:selected').val(), function(data){
 	          $('#contingentediv').html(data);

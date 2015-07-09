@@ -6,7 +6,7 @@ class Empresacontingente extends Eloquent {
 
 	public static function getContingentes($asignacion=false) {
 		$query = DB::table('empresacontingentes AS uc')
-			->select('uc.contingenteid', 't.nombrecorto AS tratado', 'p.nombre AS producto', 'c.tratadoid','t.tipo')
+			->select('uc.contingenteid', 't.nombrecorto AS tratado', 'p.nombre AS producto', 'c.tratadoid','t.tipo', 't.paisid AS paisid')
 			->leftJoin('contingentes AS c', 'uc.contingenteid', '=', 'c.contingenteid')
 			->leftJoin('tratados AS t', 'c.tratadoid', '=', 't.tratadoid')
 			->leftJoin('productos AS p', 'c.productoid', '=', 'p.productoid')

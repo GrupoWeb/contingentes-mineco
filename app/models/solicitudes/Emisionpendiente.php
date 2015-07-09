@@ -15,7 +15,7 @@ class Emisionpendiente extends Eloquent {
 					WHERE sep.solicitudemisionid = se.solicitudemisionid LIMIT 1) AS fraccion'),
 				DB::raw('(IF((SELECT DATE_ADD(NOW(), INTERVAL t.mesesvalidez MONTH)) > p.fechafin, CONCAT(p.fechafin," ",TIME((SELECT DATE_ADD(NOW(), INTERVAL t.mesesvalidez MONTH)))), (SELECT DATE_ADD(NOW(), INTERVAL t.mesesvalidez MONTH)))) AS vencimiento'))
 			->leftJoin('authusuarios AS u', 'se.usuarioid', '=', 'u.usuarioid')
-			->leftJoin('empresas AS e','e.empresaid','=','u.usuarioid')
+			->leftJoin('empresas AS e','e.empresaid','=','u.empresaid')
 			->leftJoin('periodos AS p', 'se.periodoid', '=', 'p.periodoid')
 			->leftJoin('contingentes AS c', 'p.contingenteid', '=', 'c.contingenteid')
 			->leftJoin('tratados AS t', 'c.tratadoid', '=', 't.tratadoid')

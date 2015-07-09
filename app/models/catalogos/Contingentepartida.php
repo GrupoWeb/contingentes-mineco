@@ -12,4 +12,12 @@ class Contingentepartida extends Eloquent {
 			->where('activa', 1)
 			->get();
 	}
+
+	public static function listPartidas($aContingenteId) {
+		return DB::table('contingentepartidas')
+			->orderBy('partida')
+			->where('contingenteid', $aContingenteId)
+			->where('activa', 1)
+			->lists('partida');
+	}
 }

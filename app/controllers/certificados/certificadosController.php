@@ -34,7 +34,7 @@ class certificadosController extends crudController {
 		Crud::setCampo(array('nombre'=>'Liquidado','campo'=>'(IF(dua IS NULL, 0, 1))','tipo'=>'bool'));
 		Crud::setCampo(array('nombre'=>'Anulado','campo'=>'anulado','tipo'=>'bool'));
 
-		Crud::setOrderBy(array('columna'=>0,'direccion'=>'desc'));
+		Crud::setOrderBy(array('columna'=>1,'direccion'=>'desc'));
 
 	 	if(!in_array(Auth::user()->rolid, Config::get('contingentes.rolempresa'))) {
 	 		Crud::setBotonExtra(array('url'=>'c/{id}','icon'=>'fa fa-file-pdf-o','titulo'=>'Generar','class'=>'primary', 'target'=>'_blank'));

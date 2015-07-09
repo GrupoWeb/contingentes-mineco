@@ -56,7 +56,7 @@ class asignacionController extends BaseController {
 			      if ($key=='txArchivo') continue;
 			    	if ($val) {
 							$arch   = Input::file($key);
-							$nombre = date('YmdHis').$arch->getClientOriginalName();
+							$nombre = date('Ymdhis') . mt_rand(1, 1000) . '.' . strtolower($arch->getClientOriginalExtension());
 							$res    = $arch->move(public_path() . '/archivos/' . Auth::id(), $nombre);
 							DB::table('solicitudasignacionrequerimientos')->insert(array(
 								'solicitudasignacionid' => $solicitud->id,

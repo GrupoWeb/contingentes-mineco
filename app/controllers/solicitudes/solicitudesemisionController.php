@@ -9,6 +9,7 @@ class solicitudesemisionController extends crudController {
 		Crud::setTablaId('solicitudemisionid');
 		
 		Crud::setLeftJoin('authusuarios AS u', 'solicitudesemision.usuarioid', '=', 'u.usuarioid');
+		Crud::setLeftJoin('empresas AS e', 'u.empresaid', '=', 'e.empresaid');
 		Crud::setLeftJoin('periodos AS p', 'solicitudesemision.periodoid', '=', 'p.periodoid');
 		Crud::setLeftJoin('contingentes AS c', 'p.contingenteid', '=', 'c.contingenteid');
 		Crud::setLeftJoin('tratados AS t', 'c.tratadoid', '=', 't.tratadoid');
@@ -23,6 +24,7 @@ class solicitudesemisionController extends crudController {
 		}
 
 		Crud::setCampo(array('nombre'=>'Usuario','campo'=>'u.nombre'));
+		Crud::setCampo(array('nombre'=>'Empresa','campo'=>'e.razonsocial'));
 		Crud::setCampo(array('nombre'=>'Tratado','campo'=>'t.nombrecorto'));
 		Crud::setCampo(array('nombre'=>'Producto','campo'=>'d.nombre'));
 		Crud::setCampo(array('nombre'=>'Fecha de solicitud','campo'=>'solicitudesemision.created_at', 'tipo'=>'datetime'));
@@ -65,6 +67,14 @@ class solicitudesemisionController extends crudController {
 				if (!$res) return false;
 
 				$info = Emisionpendiente::getSolicitudPendiente($elID);
+
+				/*$letras = '';
+				try {
+					$objeto = new Numeroaletras($cantidad);
+					$letras = $objeto->getLetras();	
+				} catch (Exception $e) {*/
+					$letras = Components::numeroALetras($cantidad,null, 2);
+				//}
 				
 				$certificado                     = new Certificado;
 				$certificado->tratado            = $info->tratadolargo;
@@ -76,7 +86,7 @@ class solicitudesemisionController extends crudController {
 				$certificado->codigovupe         = $info->codigovupe;
 				$certificado->telefono           = $info->telefono;
 				$certificado->volumen            = $cantidad;
-				$certificado->volumenletras      = Components::numeroALetras($cantidad,null, 2);
+				$certificado->volumenletras      = $letras;
 				$certificado->fraccion           = $info->fraccion;
 				$certificado->paisid             = $info->paisid;
 				$certificado->variacion          = $info->variacion;

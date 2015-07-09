@@ -283,6 +283,33 @@
 				'icono'         	=> null
 			));
 
+			DB::table('authmenu')->insert(array(
+				'menuid'					=> 36,
+				'padreid'        	=> 21,
+				'modulopermisoid' => 154,
+				'nombre'         	=> 'Consolidado de utilización de contingentes',
+				'orden' 					=> 400,
+				'icono'         	=> null
+			));
+
+			DB::table('authmenu')->insert(array(
+				'menuid'					=> 37,
+				'padreid'        	=> 21,
+				'modulopermisoid' => 156,
+				'nombre'         	=> 'Utilización de contingentes por empresa',
+				'orden' 					=> 350,
+				'icono'         	=> null
+			));
+
+			DB::table('authmenu')->insert(array(
+				'menuid'					=> 38,
+				'padreid'        	=> 21,
+				'modulopermisoid' => 158,
+				'nombre'         	=> 'Gráfica utilización de contingentes por empresa',
+				'orden' 					=> 370,
+				'icono'         	=> null
+			));
+
 			DB::table('authmenu')->update(array('created_at'=>date_create(), 'updated_at'=>date_create()));
 		  DB::statement('SET FOREIGN_KEY_CHECKS=1');
 		}

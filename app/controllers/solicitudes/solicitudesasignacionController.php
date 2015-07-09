@@ -9,6 +9,7 @@ class solicitudesasignacionController extends crudController {
 		Crud::setTablaId('solicitudasignacionid');
 		
 		Crud::setLeftJoin('authusuarios AS u', 'solicitudasignacion.usuarioid', '=', 'u.usuarioid');
+		Crud::setLeftJoin('empresas AS e', 'u.empresaid', '=', 'e.empresaid');
 		Crud::setLeftJoin('periodos AS p', 'solicitudasignacion.periodoid', '=', 'p.periodoid');
 		Crud::setLeftJoin('contingentes AS c', 'p.contingenteid', '=', 'c.contingenteid');
 		Crud::setLeftJoin('tratados AS t', 'c.tratadoid', '=', 't.tratadoid');
@@ -23,6 +24,7 @@ class solicitudesasignacionController extends crudController {
 		}
 
 		Crud::setCampo(array('nombre'=>'Usuario','campo'=>'u.nombre'));
+		Crud::setCampo(array('nombre'=>'Empresa','campo'=>'e.razonsocial'));
 		Crud::setCampo(array('nombre'=>'Tratado','campo'=>'t.nombrecorto'));
 		Crud::setCampo(array('nombre'=>'Producto','campo'=>'d.nombre','class'=>'text-right'));
 		Crud::setCampo(array('nombre'=>'Monto Solicitado','campo'=>'solicitado','tipo'=>'numeric','class'=>'text-right','decimales'=>3));

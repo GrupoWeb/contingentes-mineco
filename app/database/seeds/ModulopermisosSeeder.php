@@ -845,6 +845,42 @@
 				'permisoid' 			=> 3
 			));
 
+			DB::table('authmodulopermisos')->insert(array(
+				'modulopermisoid'	=> 154,
+				'moduloid'        => 33,
+				'permisoid' 			=> 1
+			));
+
+			DB::table('authmodulopermisos')->insert(array(
+				'modulopermisoid'	=> 155,
+				'moduloid'        => 33,
+				'permisoid' 			=> 3
+			));
+
+			DB::table('authmodulopermisos')->insert(array(
+				'modulopermisoid'	=> 156,
+				'moduloid'        => 34,
+				'permisoid' 			=> 1
+			));
+
+			DB::table('authmodulopermisos')->insert(array(
+				'modulopermisoid'	=> 157,
+				'moduloid'        => 34,
+				'permisoid' 			=> 3
+			));
+
+			DB::table('authmodulopermisos')->insert(array(
+				'modulopermisoid'	=> 158,
+				'moduloid'        => 35,
+				'permisoid' 			=> 1
+			));
+
+			DB::table('authmodulopermisos')->insert(array(
+				'modulopermisoid'	=> 159,
+				'moduloid'        => 35,
+				'permisoid' 			=> 3
+			));
+
 		  DB::table('authmodulopermisos')->update(array('created_at'=>date_create(), 'updated_at'=>date_create()));
 		  DB::statement('SET FOREIGN_KEY_CHECKS=1');
 		}

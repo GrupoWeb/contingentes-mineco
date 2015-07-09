@@ -22,7 +22,8 @@ class historicoinscripcionesController extends crudController {
 		}
 
 		if(in_array(Auth::user()->rolid, Config::get('contingentes.rolempresa'))) {
-			Crud::setWhere('si.email', Auth::user()->email);
+			$nit = DB::table('empresas')->where('empresaid', Auth::user()->empresaid)->pluck('nit');
+			Crud::setWhere('si.nit', $nit);
 		}
 
 		Crud::setCampo(array('nombre'=>'Nombre','campo'=>'si.nombre'));

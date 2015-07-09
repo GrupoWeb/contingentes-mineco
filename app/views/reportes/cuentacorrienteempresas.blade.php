@@ -31,11 +31,12 @@
 					</tr>
 				</thead>
 				<tbody>
+		@else
+			<?php $saldo=0; $debitot=0; $creditot=0; ?>
 		@endif
-
 		<?php 
-			$saldo += (float)$movimiento->credito-(float)$movimiento->debito; 
-			$debitot += (float)$movimiento->debito;
+			$saldo    += (float)$movimiento->credito-(float)abs($movimiento->debito); 
+			$debitot  += (float)abs($movimiento->debito);
 			$creditot += (float)$movimiento->credito;
 		?>
 		<tr>
@@ -44,7 +45,7 @@
 			<td>{{ $movimiento->comentario }}</td>
 			<td class="text-right">{{ $movimiento->certificadoid }}</td>
 			<td class="text-right">{{ $movimiento->credito ? number_format($movimiento->credito, 2) : '&nbsp;' }}</td>
-			<td class="text-right">{{ $movimiento->debito  ? number_format($movimiento->debito, 2) : '&nbsp;' }}</td>
+			<td class="text-right">{{ $movimiento->debito  ? number_format(abs($movimiento->debito), 2) : '&nbsp;' }}</td>
 			<td class="text-right">{{ number_format($saldo, 2) }}</td>
 		</tr>
 		<?php $acreditadoLast = $movimiento->acreditadoa; ?>
