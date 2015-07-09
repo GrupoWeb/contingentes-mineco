@@ -17,9 +17,14 @@ class utilizacionempresaController extends BaseController {
   }
 
   public function store() {
+    try {
+      $tratadoid     = Crypt::decrypt(Input::get('tratadoid'));
+      $contingenteid = Crypt::decrypt(Input::get('contingentes'));
+    } catch (Exception $e) {
+      return 'Tratado o contingente inválido.';
+    }
+
     $empresaid     = Auth::user()->empresaid;
-    $tratadoid     = Crypt::decrypt(Input::get('tratadoid'));
-    $contingenteid = Crypt::decrypt(Input::get('contingentes'));
     $formato       = Input::get('formato');
 
     $movimientos   = Movimiento::getUtilizacionEmpresas($tratadoid, $contingenteid, $empresaid);

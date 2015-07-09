@@ -10,9 +10,14 @@ class utilizacionController extends BaseController {
   }
 
   public function store() {
-    $tratadoid     = Crypt::decrypt(Input::get('tratadoid'));
-    $contingenteid = Crypt::decrypt(Input::get('contingentes'));
-    $empresaid     = Crypt::decrypt(Input::get('cmbEmpresa'));
+    try {
+      $tratadoid     = Crypt::decrypt(Input::get('tratadoid'));
+      $contingenteid = Crypt::decrypt(Input::get('contingentes'));
+      $empresaid     = Crypt::decrypt(Input::get('cmbEmpresa'));
+    } catch (Exception $e) {
+      return 'Tratado, contingente o empresa inválida.';
+    }
+
     $fi            = Input::get('fechaini') . ' 00:00';
     $ff            = Input::get('fechafin') . ' 23:59';
     $formato       = Input::get('formato');
@@ -94,7 +99,6 @@ class utilizacionController extends BaseController {
     else
       $contingentes = Contingente::getContTratado($id);
 
-
     return View::make('partials/contingentelistado')
       ->with('contingentes', $contingentes)
       ->with('nombre', 'contingentes')
@@ -102,7 +106,13 @@ class utilizacionController extends BaseController {
   }
 
   public function getEmpresas($id) {
-    $id = Crypt::decrypt($id);
+    try {
+      $id = Crypt::decrypt($id);
+    } catch (Exception $e) {
+      return View::make('partials/empresas')
+        ->with('empresas', array());
+    }
+      
 
     return View::make('partials/empresas')
       ->with('empresas', Empresacontingente::listEmpresasContingente($id));
