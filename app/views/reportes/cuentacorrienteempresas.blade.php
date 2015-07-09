@@ -1,7 +1,9 @@
 @extends('template/reporte')
 
 @section('content')
-	<?php $acreditadoLast = '__Primero__'; ?>
+	<?php 
+		$acreditadoLast = '__Primero__';
+	?>
 	@foreach($movimientos as $movimiento)
 		@if($movimiento->acreditadoa<>$acreditadoLast)
 			@if($acreditadoLast<>'__Primero__')
@@ -17,7 +19,7 @@
 				</table>
 			@endif
 			<?php $saldo=0; $debitot=0; $creditot=0; ?>
-			<h3>{{ $movimiento->acreditadoa }}</h3>
+			<h3 class="text-primary">{{ $movimiento->acreditadoa }}</h3>
 			<table class="table table-striped table-bordered table-condensed">
 				<thead>
 					<tr>
@@ -31,13 +33,11 @@
 					</tr>
 				</thead>
 				<tbody>
-		@else
-			<?php $saldo=0; $debitot=0; $creditot=0; ?>
 		@endif
 		<?php 
-			$saldo    += (float)$movimiento->credito-(float)abs($movimiento->debito); 
-			$debitot  += (float)abs($movimiento->debito);
 			$creditot += (float)$movimiento->credito;
+			$debitot  += (float)$movimiento->debito;
+			$saldo    += (float)$movimiento->credito-(float)$movimiento->debito; 
 		?>
 		<tr>
 			<td>{{ $movimiento->fecha }}</td>
@@ -45,7 +45,7 @@
 			<td>{{ $movimiento->comentario }}</td>
 			<td class="text-right">{{ $movimiento->certificadoid }}</td>
 			<td class="text-right">{{ $movimiento->credito ? number_format($movimiento->credito, 2) : '&nbsp;' }}</td>
-			<td class="text-right">{{ $movimiento->debito  ? number_format(abs($movimiento->debito), 2) : '&nbsp;' }}</td>
+			<td class="text-right">{{ $movimiento->debito  ? number_format($movimiento->debito, 2) : '&nbsp;' }}</td>
 			<td class="text-right">{{ number_format($saldo, 2) }}</td>
 		</tr>
 		<?php $acreditadoLast = $movimiento->acreditadoa; ?>

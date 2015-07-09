@@ -1,6 +1,7 @@
 @extends('template/template')
 
 @section('content')
+  {{ HTML::script('js/highcharts.js') }}
 	@if(Session::has('message'))
 		<div class="alert alert-{{ Session::get('type') }} alert-dismissable">
 			{{ Session::get('message') }}
@@ -74,7 +75,7 @@
         </a>
       </div>
 	  </div>
-  <div class="clearfix"></div>
+    <div class="clearfix"></div>
   @foreach($contingentes as $contingente)
 		<div class="col-md-6">
 			<div class="panel panel-default">
@@ -82,12 +83,32 @@
 			    <i class="fa {{$contingente->icono}}"></i> {{$contingente->tratado}} - {{$contingente->producto}}
 			  </div>
 			  <div class="panel-body">
-			    Aqui va la grafica
+			    @include('reportes.saldos.consumoysaldo')
 			  </div>
 			</div>
 		</div>
   @endforeach
-  </div>
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+            <i class="fa fa-users fa-fw"></i> Mi Empresa
+        </div>
+        <div class="panel-body">
+          <ul class="list-group">
+            <li class="list-group-item"><strong>NIT:</strong> {{ $empresa->nit }}</dd>
+            <li class="list-group-item"><strong>Razón Social:</strong> {{ $empresa->razonsocial }}</dd>
+            <li class="list-group-item"><strong>Propietario:</strong> {{ $empresa->propietario }}</dd>
+            <li class="list-group-item"><strong>Domicilio Fiscal:</strong> {{ $empresa->domiciliofiscal }}</dd>
+            <li class="list-group-item"><strong>Domicilio Comercial:</strong> {{ $empresa->domiciliocomercial }}</dd>
+            <li class="list-group-item"><strong>Domicilio Notificaciones:</strong> {{ $empresa->direccionnotificaciones }}</dd>
+            <li class="list-group-item"><strong>Teléfono:</strong> {{ $empresa->telefono }}</dd>
+            <li class="list-group-item"><strong>FAX:</strong> {{ $empresa->fax }}</dd>
+            <li class="list-group-item"><strong>Encargado:</strong> {{ $empresa->encargadoimportaciones }}</dd>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div> <!--row -->
 
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	  <div class="modal-dialog">

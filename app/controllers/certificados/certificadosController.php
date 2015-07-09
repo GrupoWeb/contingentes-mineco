@@ -7,6 +7,7 @@ class certificadosController extends crudController {
 		Crud::setTabla('certificados');
 		Crud::setTablaId('certificadoid');
 		Crud::setLeftJoin('authusuarios AS u', 'certificados.usuarioid', '=', 'u.usuarioid');
+		Crud::setLeftJoin('movimientos AS m','certificados.certificadoid','=','m.certificadoid');
 
 		$tselected = Session::get('tselected');
 		if($tselected <> 0) {
@@ -31,8 +32,9 @@ class certificadosController extends crudController {
 		Crud::setCampo(array('nombre'=>'Fecha','campo'=>'certificados.fecha','tipo'=>'date'));
 		Crud::setCampo(array('nombre'=>'Nombre','campo'=>'certificados.nombre'));
 		Crud::setCampo(array('nombre'=>'Volúmen','campo'=>'certificados.volumen', 'class'=>'text-right'));
-		Crud::setCampo(array('nombre'=>'Liquidado','campo'=>'(IF(dua IS NULL, 0, 1))','tipo'=>'bool'));
-		Crud::setCampo(array('nombre'=>'Anulado','campo'=>'anulado','tipo'=>'bool'));
+		Crud::setCampo(array('nombre'=>'Liquidado','campo'=>'(IF(certificados.dua IS NULL, 0, 1))','tipo'=>'bool'));
+		Crud::setCampo(array('nombre'=>'Anulado','campo'=>'certificados.anulado','tipo'=>'bool'));
+		Crud::setCampo(array('nombre'=>'Comentario', 'campo'=>'m.comentario'));
 
 		Crud::setOrderBy(array('columna'=>1,'direccion'=>'desc'));
 

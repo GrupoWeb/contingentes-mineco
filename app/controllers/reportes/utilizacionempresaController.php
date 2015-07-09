@@ -3,18 +3,26 @@
 class utilizacionempresaController extends BaseController {
   
   public function index() {
+    $empresaid = Auth::user()->empresaid;
+
+    if($empresaid) 
+      $tratados = Tratado::getTratadosEmpresa($empresaid);
+    else 
+      $tratados = Tratado::getTratados();
+
     return View::make('reportes.filtros')
       ->with('titulo', 'Utilización de contingentes por empresa')
-      ->with('tratados', Tratado::getTratados())
+      ->with('tratados', $tratados)
       ->with('filters', array('solotratados','formato'));
   }
 
   public function store() {
+    $empresaid     = Auth::user()->empresaid;
     $tratadoid     = Crypt::decrypt(Input::get('tratadoid'));
     $contingenteid = Crypt::decrypt(Input::get('contingentes'));
     $formato       = Input::get('formato');
 
-    $movimientos   = Movimiento::getUtilizacionEmpresas($tratadoid, $contingenteid);
+    $movimientos   = Movimiento::getUtilizacionEmpresas($tratadoid, $contingenteid, $empresaid);
     $autorizado    = DB::table('tiposmovimiento')->where('nombre', 'Asignación')->pluck('tipomovimientoid');
     $certificado   = DB::table('tiposmovimiento')->where('nombre', 'Certificado')->pluck('tipomovimientoid');
     $data          = array();
@@ -41,9 +49,9 @@ class utilizacionempresaController extends BaseController {
           $vals['emitido'] = $movimiento->monto;
 
         if($movimiento->asignacion == 1)
-          $vals['saldo'] = ($vals['asignado'] - $liquidado);
+          $vals['saldo'] = ($vals['asignado'] - $vals['emitido']);
         else
-          $vals['saldo'] = ($vals['emitido'] - $liquidado);
+          $vals['saldo'] = ($vals['emitido'] - $vals['emitido']);
 
         $data[$movimiento->nombre][$movimiento->razonsocial] = $vals;
         $asigns[$movimiento->nombre]                         = $movimiento->asignacion;

@@ -87,9 +87,16 @@ class utilizacionController extends BaseController {
 
   public function getContingentes($id) {
     $id = Crypt::decrypt($id);
+    $empresaid = Auth::user()->empresaid;
+
+    if ($empresaid) 
+      $contingentes = Contingente::getContTratadoEmpresa($id, $empresaid);
+    else
+      $contingentes = Contingente::getContTratado($id);
+
 
     return View::make('partials/contingentelistado')
-      ->with('contingentes', Contingente::getContTratado($id))
+      ->with('contingentes', $contingentes)
       ->with('nombre', 'contingentes')
       ->with('id', 'contingentes');
   }

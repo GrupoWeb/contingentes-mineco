@@ -1,17 +1,14 @@
-@extends('template/reporte')
-
-@section('content')
-	{{ HTML::script('js/highcharts.js') }}
-	{{ HTML::script('js/highcharts-exporting.js') }}
-	<div id="container"></div>	
+	<div id="container{{$contingente->contingenteid}}"></div>	
 	<script>
 		$(function () {
-	    $('#container').highcharts({
+	    $('#container{{$contingente->contingenteid}}').highcharts({
 	        chart: {
 	            plotBackgroundColor: null,
 	            plotBorderWidth: null,
 	            plotShadow: false
 	        },
+					colors: 
+						['#337ab7', '#5cb85c', '#f7a35c', '#8085e9', '#f15c80', '#e4d354', '#2b908f', '#f45b5b', '#91e8e1'],
 	        title: {
 	            text: ''
 	        },
@@ -19,13 +16,14 @@
 	        	enabled: false
 	        },
 	        exporting: {
-	        	enabled: true
+	        	enabled: false
 	        },
 	        tooltip: {
 	            pointFormat: '{series.name}: <b>{point.y:.3f}</b>'
 	        },
 	        plotOptions: {
 	            pie: {
+	            		size: '80%',
 	                allowPointSelect: true,
 	                cursor: 'pointer',
 	                dataLabels: {
@@ -41,13 +39,10 @@
 	            type: 'pie',
 	            name: 'Monto',
 	            data: [
-	            		['Disponible', {{ $saldo }}],
-	            	@foreach($empresas as $empresa)
-	            		['{{ $empresa["nombre"] }}', {{ $empresa['consumido'] }}],
-	            	@endforeach
+	            		['Disponible', {{ $grafica[$contingente->contingenteid]['saldo'] }}],
+	            		['Utilizado', {{ $grafica[$contingente->contingenteid]['total'] - $grafica[$contingente->contingenteid]['saldo'] }}],
 	            ]
 	        }]
 	    });
 		});
 	</script>
-@stop

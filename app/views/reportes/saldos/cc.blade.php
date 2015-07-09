@@ -1,8 +1,8 @@
 @extends('template/reporte')
 
 @section('content')
-	{{ HTML::script('js/highcharts-exporting.js') }}
 	{{ HTML::script('js/highcharts.js') }}
+	{{ HTML::script('js/highcharts-exporting.js') }}
 
 	<div id="container"></div>
 
