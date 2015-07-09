@@ -3,6 +3,7 @@
 @section('content')
 	<?php 
 		$acreditadoLast = '__Primero__';
+		$saldo=0; $debitot=0; $creditot=0; 
 	?>
 	@foreach($movimientos as $movimiento)
 		@if($movimiento->acreditadoa<>$acreditadoLast)

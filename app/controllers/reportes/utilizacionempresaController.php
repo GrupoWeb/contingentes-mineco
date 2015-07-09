@@ -36,25 +36,25 @@ class utilizacionempresaController extends BaseController {
           $liquidado = Certificado::getLiquidado($movimiento->certificadoid);
 
         $vals = array(
-          'asignado'  => (isset($data[$movimiento->nombre][$movimiento->razonsocial]['asignado']) ? $data[$movimiento->nombre][$movimiento->razonsocial]['asignado'] : 0),
-          'emitido'   => (isset($data[$movimiento->nombre][$movimiento->razonsocial]['emitido']) ? $data[$movimiento->nombre][$movimiento->razonsocial]['emitido'] : 0),
+          'asignado'  => (isset($data[$movimiento->producto][$movimiento->razonsocial]['asignado']) ? $data[$movimiento->producto][$movimiento->razonsocial]['asignado'] : 0),
+          'emitido'   => (isset($data[$movimiento->producto][$movimiento->razonsocial]['emitido']) ? $data[$movimiento->producto][$movimiento->razonsocial]['emitido'] : 0),
           'liquidado' => $liquidado,
-          'saldo'     => (isset($data[$movimiento->nombre][$movimiento->razonsocial]['saldo']) ? $data[$movimiento->nombre][$movimiento->razonsocial]['saldo'] : 0)
+          'saldo'     => (isset($data[$movimiento->producto][$movimiento->razonsocial]['saldo']) ? $data[$movimiento->producto][$movimiento->razonsocial]['saldo'] : 0)
         );
 
         if($movimiento->tipomovimientoid == $autorizado)
           $vals['asignado'] = $movimiento->monto;
 
         if($movimiento->tipomovimientoid == $certificado)
-          $vals['emitido'] = $movimiento->monto;
+          $vals['emitido'] = $movimiento->monto*-1;
 
         if($movimiento->asignacion == 1)
           $vals['saldo'] = ($vals['asignado'] - $vals['emitido']);
         else
           $vals['saldo'] = ($vals['emitido'] - $vals['emitido']);
 
-        $data[$movimiento->nombre][$movimiento->razonsocial] = $vals;
-        $asigns[$movimiento->nombre]                         = $movimiento->asignacion;
+        $data[$movimiento->producto][$movimiento->razonsocial] = $vals;
+        $asigns[$movimiento->producto]                         = $movimiento->asignacion;
       }
     }
 

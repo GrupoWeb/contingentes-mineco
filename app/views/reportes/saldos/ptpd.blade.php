@@ -8,10 +8,13 @@
 		$(function () {
 	    $('#container').highcharts({
 	        chart: {
+	        		height: 800,
 	            plotBackgroundColor: null,
 	            plotBorderWidth: null,
 	            plotShadow: false
 	        },
+	        colors: 
+						['#337ab7', '#5cb85c', '#f7a35c', '#8085e9', '#f15c80', '#e4d354', '#2b908f', '#f45b5b', '#91e8e1'],
 	        title: {
 	            text: ''
 	        },

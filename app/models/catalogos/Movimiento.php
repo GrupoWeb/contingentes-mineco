@@ -142,8 +142,8 @@ class Movimiento extends Eloquent {
 	public static function getUtilizacionEmpresas($aTratadoId, $aContingenteId, $aEmpresaId=0) {
 		$aEmpresaId = (int)$aEmpresaId;
 		$query = DB::table('movimientos AS m')
-			->select('pr.nombre', 'e.razonsocial',  'm.tipomovimientoid', 'm.certificadoid', 'tt.asignacion',
-				DB::raw('SUM(ABS(m.cantidad)) AS monto'))
+			->select('pr.nombre AS producto', 'e.razonsocial',  'm.tipomovimientoid', 'm.certificadoid', 'tt.asignacion',
+				DB::raw('SUM(m.cantidad) AS monto'))
 			->leftJoin('periodos AS p', 'm.periodoid', '=', 'p.periodoid')
 			->leftJoin('contingentes AS c', 'p.contingenteid', '=', 'c.contingenteid')
 			->leftJoin('productos AS pr', 'c.productoid', '=', 'pr.productoid')
