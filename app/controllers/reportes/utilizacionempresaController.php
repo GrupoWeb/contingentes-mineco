@@ -21,7 +21,8 @@ class utilizacionempresaController extends BaseController {
       $tratadoid     = Crypt::decrypt(Input::get('tratadoid'));
       $contingenteid = Crypt::decrypt(Input::get('contingentes'));
     } catch (Exception $e) {
-      return 'Tratado o contingente inválido.';
+            return View::make('cancerbero::error')
+        ->with('mensaje','Tratado, contingente inválido.');
     }
 
     $empresaid     = Auth::user()->empresaid;

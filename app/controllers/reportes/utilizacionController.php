@@ -15,7 +15,8 @@ class utilizacionController extends BaseController {
       $contingenteid = Crypt::decrypt(Input::get('contingentes'));
       $empresaid     = Crypt::decrypt(Input::get('cmbEmpresa'));
     } catch (Exception $e) {
-      return 'Tratado, contingente o empresa inválida.';
+      return View::make('cancerbero::error')
+        ->with('mensaje','Tratado, contingente o empresa inválida.');
     }
 
     $fi            = Input::get('fechaini') . ' 00:00';

@@ -8,7 +8,15 @@ class emisionController extends BaseController {
 
 	function store() {
 		$contingenteid  = Input::get('cmbContingentes');
-		$contingente    = Crypt::decrypt($contingenteid);
+		
+		try {
+			$contingente    = Crypt::decrypt($contingenteid);
+		} catch (Exception $e) {
+			return View::make('cancerbero::error')
+        ->with('mensaje','Contingente inválido.');
+		}
+		
+
 		$requerimientos = Contingenterequerimiento::getRequerimientos($contingenteid, 'emision');
 		$producto       = Contingente::getNombre($contingente);
 		$solicitado     = Input::get('cantidad', 0);
