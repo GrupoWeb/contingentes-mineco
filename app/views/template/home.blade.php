@@ -9,7 +9,7 @@
 
   <title>Ministerio de Economía - Contingentes Arancelarios</title>
 
-  {{ HTML::style('http://fonts.googleapis.com/css?family=Archivo+Narrow|Raleway:400,700') }}
+  {{ HTML::style('http://fonts.googleapis.com/css?family=Archivo+Narrow|Lato:400,700') }}
   {{ HTML::style('packages/csgt/components/css/bootstrap.min.css'); }}
   {{ HTML::style('css/home.css'); }}
   {{ HTML::style('css/dace.css') }}

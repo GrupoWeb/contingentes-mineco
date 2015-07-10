@@ -14,8 +14,9 @@
   ?>
   {{Form::open($params) }}
     <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-    <h1 class="titulo">Solicitud de inscripci&oacute;n</h1>
     <div class="contenido contenido-full">
+      <h1 class="titulo">Solicitud de inscripci&oacute;n</h1>
+      <br>
       <div class="col-md-12">
         @if(Session::has('message'))
           <div class="alert alert-{{ Session::get('type') }} alert-dismissable">

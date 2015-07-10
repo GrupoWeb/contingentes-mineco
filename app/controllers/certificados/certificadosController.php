@@ -31,7 +31,7 @@ class certificadosController extends crudController {
 		Crud::setCampo(array('nombre'=>'No.','campo'=>'certificados.numerocertificado'));
 		Crud::setCampo(array('nombre'=>'Fecha','campo'=>'certificados.fecha','tipo'=>'date'));
 		Crud::setCampo(array('nombre'=>'Nombre','campo'=>'certificados.nombre'));
-		Crud::setCampo(array('nombre'=>'Volúmen','campo'=>'certificados.volumen', 'class'=>'text-right'));
+		Crud::setCampo(array('nombre'=>'Volúmen','campo'=>'certificados.volumen', 'class'=>'text-right', 'tipo'=>'numeric','decimales'=>3));
 		Crud::setCampo(array('nombre'=>'Liquidado','campo'=>'(IF(certificados.dua IS NULL, 0, 1))','tipo'=>'bool'));
 		Crud::setCampo(array('nombre'=>'Anulado','campo'=>'certificados.anulado','tipo'=>'bool'));
 		Crud::setCampo(array('nombre'=>'Comentario', 'campo'=>'m.comentario'));

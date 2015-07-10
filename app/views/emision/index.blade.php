@@ -5,8 +5,8 @@
   {{ HTML::script('packages/csgt/components/js/bootstrap-fileinput.min.js') }}
   
   {{Form::open(array('class'=>'form-horizontal','role'=>'form','files'=>true, 'id'=>'frmSolicitud')) }}
-    <h1 class="titulo">Solicitud de emisi&oacute;n</h1>
     <div class="contenido contenido-full">
+      <h1 class="titulo">Solicitud de emisi&oacute;n</h1><br>
       <div class="col-md-12">
         <div class="form-group">
           <label for="cmbContingente" class="col-sm-2 control-label">Contingente</label>
