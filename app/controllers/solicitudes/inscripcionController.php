@@ -104,7 +104,7 @@ class inscripcionController extends BaseController {
 		}
 
 		$nit       = Input::get('txNIT');
-		$empresa   = DB::table('empresas')->where('nit', $nit)->firts();
+		$empresa   = DB::table('empresas')->where('nit', $nit)->first();
 		$solicitud = DB::table('solicitudinscripciones')->where('nit', $nit)->where('estado', 'Pendiente')->first();
 
 		if($solicitud || $empresa) {
