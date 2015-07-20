@@ -86,10 +86,18 @@ class dashboardController extends BaseController {
 			$empresaid    = Auth::user()->empresaid;
 			$grafica      = array();
 			$contingentes = Empresacontingente::contingentesEmpresa($empresaid);
+
 			foreach ($contingentes as $contingente) {
-				$cys = Movimiento::getConsumoYSaldo($empresaid, $contingente->contingenteid);
-				$grafica[$contingente->contingenteid]['saldo'] = $cys->saldo;
-				$grafica[$contingente->contingenteid]['total'] = $cys->total;
+				$cys = Movimiento::getConsumoYSaldoActual($contingente->contingenteid, $empresaid);
+				$grafica[$contingente->contingenteid]['empresa']      = $cys->consumo;
+				$grafica[$contingente->contingenteid]['otros']        = $cys->consumototal-$cys->consumo;
+				if ($contingente->asignacion==1) {
+					$grafica[$contingente->contingenteid]['saldo']     = $cys->asignado-$cys->consumo;
+				}
+				else {
+					$grafica[$contingente->contingenteid]['saldo']        = $cys->total-$cys->consumototal;
+				}
+				$grafica[$contingente->contingenteid]['esasignacion'] = $contingente->asignacion;
 			}
 
 			return View::make('dashboard.index')

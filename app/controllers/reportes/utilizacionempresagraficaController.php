@@ -6,67 +6,32 @@ class utilizacionempresagraficaController extends BaseController {
     return View::make('reportes.filtros')
       ->with('titulo', 'Grafica utilización de contingentes por empresa')
       ->with('tratados', Tratado::getTratados())
-      ->with('filters', array('solotratados'));
+      ->with('filters', array('contingentes','tratados','periodos'))
+      ->with('todos', array());
   }
 
   public function store() {
     try {
       $tratadoid     = Crypt::decrypt(Input::get('tratadoid'));
-      $contingenteid = Crypt::decrypt(Input::get('contingentes'));
+      $contingenteid = Crypt::decrypt(Input::get('cmbContingente'));
+      $periodoid     = Crypt::decrypt(Input::get('cmbPeriodo'));
     } catch (Exception $e) {
       return View::make('cancerbero::error')
-        ->with('mensaje','Tratado o contingente inválido.');
+        ->with('mensaje','Tratado, período o contingente inválido.');
     }
 
     $formato       = Input::get('formato');
 
-    $movimientos   = Movimiento::getUtilizacionEmpresas($tratadoid, $contingenteid);
-    $autorizado    = DB::table('tiposmovimiento')->where('nombre', 'Asignación')->pluck('tipomovimientoid');
-    $certificado   = DB::table('tiposmovimiento')->where('nombre', 'Certificado')->pluck('tipomovimientoid');
-    $activado      = DB::table('tiposmovimiento')->where('nombre', 'Cuota')->pluck('tipomovimientoid');
+    $movimientos   = Movimiento::getUtilizacionEmpresas($periodoid, 0);
+  
+    $tratado = Contingente::getTratado($contingenteid);
 
-    $data          = array();
-    $asignacion    = 0;
 
-    foreach($movimientos as $movimiento) {
-      $asignacion = $movimiento->asignacion;
-      if($asignacion == 1) {
-        if($movimiento->tipomovimientoid == $autorizado || $movimiento->tipomovimientoid == $certificado) {
-          $vals = array(
-            'asignado'  => (isset($data[$movimiento->nombre][$movimiento->razonsocial]['asignado']) ? $data[$movimiento->nombre][$movimiento->razonsocial]['asignado'] : 0),
-            'emitido'   => (isset($data[$movimiento->nombre][$movimiento->razonsocial]['emitido']) ? $data[$movimiento->nombre][$movimiento->razonsocial]['emitido'] : 0)
-          );
-
-          if($movimiento->tipomovimientoid == $autorizado)
-            $vals['asignado'] = $movimiento->monto;
-
-          if($movimiento->tipomovimientoid == $certificado)
-            $vals['emitido'] = $movimiento->monto;
-         
-          $data[$movimiento->razonsocial] = $vals;
-        }
-      }
-
-      else {
-        if($movimiento->tipomovimientoid == $activado || $movimiento->tipomovimientoid == $certificado) {
-          $vals = array(
-            'emitido'   => (isset($data[$movimiento->nombre][$movimiento->razonsocial]['emitido']) ? $data[$movimiento->nombre][$movimiento->razonsocial]['emitido'] : 0)
-          );
-
-          if($movimiento->tipomovimientoid == $certificado)
-            $data[$movimiento->razonsocial] = $movimiento->monto;
-
-          else
-            $data['Activación de contingente'] = $movimiento->monto;
-        }
-      }
-    }
-    
     return View::make('reportes.utilizacionporempresagrafica')
-      ->with('movimientos', $data)
-      ->with('asignacion', $asignacion)
+      ->with('movimientos', $movimientos)
+      ->with('esAsignacion', $tratado->asignacion)
       ->with('titulo', 'Gráfica utilización de contingentes por empresa')
-      ->with('tratado', Tratado::getNombre($tratadoid))
+      ->with('tratado', $tratado->nombre)
       ->with('producto', Contingente::getProducto($contingenteid))
       ->with('formato', $formato);
   }

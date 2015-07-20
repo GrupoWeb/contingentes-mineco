@@ -19,7 +19,7 @@
 	        	enabled: false
 	        },
 	        tooltip: {
-	            pointFormat: '{series.name}: <b>{point.y:.3f}</b>'
+	            pointFormat: '{series.name}: <b>{point.y:,.3f}</b>'
 	        },
 	        plotOptions: {
 	            pie: {
@@ -28,7 +28,7 @@
 	                cursor: 'pointer',
 	                dataLabels: {
 	                    enabled: true,
-	                    format: '<b>{point.name}</b>: {point.y:.3f}',
+	                    format: '<b>{point.name}</b>: {point.y:,.3f}',
 	                    style: {
 	                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
 	                    }
@@ -39,8 +39,14 @@
 	            type: 'pie',
 	            name: 'Monto',
 	            data: [
+	            	@if($grafica[$contingente->contingenteid]['esasignacion'])
 	            		['Disponible', {{ $grafica[$contingente->contingenteid]['saldo'] }}],
-	            		['Utilizado', {{ $grafica[$contingente->contingenteid]['total'] - $grafica[$contingente->contingenteid]['saldo'] }}],
+		            	['Utilizado', {{ $grafica[$contingente->contingenteid]['empresa'] }}],
+	            	@else
+		            	['Disponible', {{ $grafica[$contingente->contingenteid]['saldo'] }}],
+		            	['Mi Empresa', {{ $grafica[$contingente->contingenteid]['empresa'] }}],
+		            	['Otras empresas', {{ $grafica[$contingente->contingenteid]['otros'] }}],
+	            	@endif
 	            ]
 	        }]
 	    });

@@ -21,10 +21,12 @@ class Empresacontingente extends Eloquent {
 	
   public static function contingentesEmpresa($aEmpresaId) {
 	  return DB::table('empresacontingentes AS uc')
-			->select('uc.contingenteid', 't.nombrecorto AS tratado', 'p.nombre AS producto', 'c.tratadoid', 't.icono')
+			->select('uc.contingenteid', 't.nombrecorto AS tratado', 'p.nombre AS producto', 
+				'c.tratadoid', 't.icono','tt.asignacion')
 			->leftJoin('contingentes AS c', 'uc.contingenteid', '=', 'c.contingenteid')
 			->leftJoin('tratados AS t', 'c.tratadoid', '=', 't.tratadoid')
 			->leftJoin('productos AS p', 'c.productoid', '=', 'p.productoid')
+			->leftJoin('tipotratados AS tt','c.tipotratadoid','=','tt.tipotratadoid')
 			->where('uc.empresaid',$aEmpresaId)
 			->orderBy('t.nombrecorto')
 			->orderBy('p.nombre')

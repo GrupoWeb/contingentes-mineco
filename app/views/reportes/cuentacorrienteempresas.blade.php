@@ -14,7 +14,9 @@
 							<td colspan="4">&nbsp;</td>
 							<td class="text-right text-primary">{{number_format($creditot,2)}}</td>
 							<td class="text-right text-primary">{{number_format($debitot,2)}}</td>
+							@if($asignacion)
 							<td class="text-right text-primary">{{ number_format($saldo, 2) }}</td>
+							@endif
 						</tr>
 					</tfoot>	
 				</table>
@@ -30,7 +32,9 @@
 						<th class="text-center">Certificado</th>
 						<th class="text-center">Crédito</th>
 						<th class="text-center">Débito</th>
+						@if($asignacion)
 						<th class="text-center">Saldo</th>
+						@endif
 					</tr>
 				</thead>
 				<tbody>
@@ -47,7 +51,9 @@
 			<td class="text-right">{{ $movimiento->certificadoid }}</td>
 			<td class="text-right">{{ $movimiento->credito ? number_format($movimiento->credito, 2) : '&nbsp;' }}</td>
 			<td class="text-right">{{ $movimiento->debito  ? number_format($movimiento->debito, 2) : '&nbsp;' }}</td>
+			@if($asignacion)
 			<td class="text-right">{{ number_format($saldo, 2) }}</td>
+			@endif
 		</tr>
 		<?php $acreditadoLast = $movimiento->acreditadoa; ?>
 	@endforeach
@@ -57,7 +63,9 @@
 				<td colspan="4">&nbsp;</td>
 				<td class="text-right text-primary">{{number_format($creditot,2)}}</td>
 				<td class="text-right text-primary">{{number_format($debitot,2)}}</td>
+				@if($asignacion)
 				<td class="text-right text-primary">{{ number_format($saldo, 2) }}</td>
+				@endif
 			</tr>
 		</tfoot>	
 	</table>

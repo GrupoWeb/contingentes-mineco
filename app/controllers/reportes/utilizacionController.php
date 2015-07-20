@@ -6,18 +6,22 @@ class utilizacionController extends BaseController {
     return View::make('reportes.filtros')
       ->with('titulo', 'Utilización de contingentes')
       ->with('tratados', Tratado::getTratados())
-      ->with('filters', array('tratados', 'fechaini', 'fechafin','formato'));
+      ->with('filters', array('tratados','contingentes', 'empresas',
+        'fechaini', 'fechafin','formato'))
+      ->with('todos',['empresas']);
   }
 
   public function store() {
     try {
       $tratadoid     = Crypt::decrypt(Input::get('tratadoid'));
-      $contingenteid = Crypt::decrypt(Input::get('contingentes'));
+      $contingenteid = Crypt::decrypt(Input::get('cmbContingente'));
       $empresaid     = Crypt::decrypt(Input::get('cmbEmpresa'));
     } catch (Exception $e) {
       return View::make('cancerbero::error')
         ->with('mensaje','Tratado, contingente o empresa inválida.');
     }
+
+    if ($empresaid==-1) $empresaid = 0;
 
     $fi            = Input::get('fechaini') . ' 00:00';
     $ff            = Input::get('fechafin') . ' 23:59';
@@ -102,8 +106,8 @@ class utilizacionController extends BaseController {
 
     return View::make('partials/contingentelistado')
       ->with('contingentes', $contingentes)
-      ->with('nombre', 'contingentes')
-      ->with('id', 'contingentes');
+      ->with('nombre', 'cmbContingente')
+      ->with('id', 'cmbContingente');
   }
 
   public function getEmpresas($id) {

@@ -183,4 +183,13 @@ class certificadosController extends crudController {
 
 		return Redirect::to('certificados');
 	}
+
+	public function buscar(){
+		return View::make('reportes.filtros')
+			->with('titulo','Búsqueda de certificados')
+			->with('filters',['tratados','contingentes','empresas','periodos'])
+			->with('todos',['tratados','contingentes','empresas','periodos'])
+			->with('tratados', Tratado::getTratados());
+	}
+
 }

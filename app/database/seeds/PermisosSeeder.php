@@ -5,89 +5,83 @@
 			DB::table('authpermisos')->truncate();
 
 			DB::table('authpermisos')->insert(array(
-				'permisoid'      => 1,
-				'nombre'         => 'index',
-				'nombrefriendly' => 'Ver'
-			));
-		
-			DB::table('authpermisos')->insert(array(
-				'permisoid'      => 2,
-				'nombre'         => 'create',
-				'nombrefriendly' => 'Crear'
-			));
-		
-			DB::table('authpermisos')->insert(array(
-				'permisoid'      => 3,
-				'nombre'         => 'store',
-				'nombrefriendly' => 'Guardar'
-			));
-		
-			DB::table('authpermisos')->insert(array(
-				'permisoid'      => 4,
-				'nombre'         => 'edit',
-				'nombrefriendly' => 'Editar'
-			));
-		
-			DB::table('authpermisos')->insert(array(
-				'permisoid'      => 5,
-				'nombre'         => 'update',
-				'nombrefriendly' => 'Actualizar'
-			));
-		
-			DB::table('authpermisos')->insert(array(
-				'permisoid'      => 6,
-				'nombre'         => 'destroy',
-				'nombrefriendly' => 'Borrar'
-			));
-		
-			DB::table('authpermisos')->insert(array(
-				'permisoid'      => 7,
-				'nombre'         => 'show',
-				'nombrefriendly' => 'Mostrar datos'
-			));
-		  
-		  DB::table('authpermisos')->insert(array(
-				'permisoid'      => 11,
-				'nombre'         => 'generar',
-				'nombrefriendly' => 'Generar'
-			));
-
-			DB::table('authpermisos')->insert(array(
-				'permisoid'      => 12,
-				'nombre'         => 'anular',
-				'nombrefriendly' => 'Anular'
-			));
-
-			DB::table('authpermisos')->insert(array(
-				'permisoid'      => 13,
-				'nombre'         => 'liquidar',
-				'nombrefriendly' => 'Liquidar'
-			));
-
-			DB::table('authpermisos')->insert(array(
-				'permisoid'      => 14,
-				'nombre'         => 'procesarliquidacion',
-				'nombrefriendly' => 'Procesar liquidación'
-			));
-
-			DB::table('authpermisos')->insert(array(
+				array(
+					'permisoid'      => 1,
+					'nombre'         => 'index',
+					'nombrefriendly' => 'Ver'
+				),
+				array(
+					'permisoid'      => 2,
+					'nombre'         => 'create',
+					'nombrefriendly' => 'Crear'
+				),
+				array(
+					'permisoid'      => 3,
+					'nombre'         => 'store',
+					'nombrefriendly' => 'Guardar'
+				),
+				array(
+					'permisoid'      => 4,
+					'nombre'         => 'edit',
+					'nombrefriendly' => 'Editar'
+				),
+				array(
+					'permisoid'      => 5,
+					'nombre'         => 'update',
+					'nombrefriendly' => 'Actualizar'
+				),
+				array(
+					'permisoid'      => 6,
+					'nombre'         => 'destroy',
+					'nombrefriendly' => 'Borrar'
+				),
+				array(
+					'permisoid'      => 7,
+					'nombre'         => 'show',
+					'nombrefriendly' => 'Mostrar datos'
+				),
+				array(
+					'permisoid'      => 11,
+					'nombre'         => 'generar',
+					'nombrefriendly' => 'Generar'
+				),
+				array(
+					'permisoid'      => 12,
+					'nombre'         => 'anular',
+					'nombrefriendly' => 'Anular'
+				),
+				array(
+					'permisoid'      => 13,
+					'nombre'         => 'liquidar',
+					'nombrefriendly' => 'Liquidar'
+				),
+				array(
+					'permisoid'      => 14,
+					'nombre'         => 'procesarliquidacion',
+					'nombrefriendly' => 'Procesar liquidación'
+				),
+				array(
 	        'permisoid'      => 16,
 	        'nombre'         => 'procesaranulacion',
 	        'nombrefriendly' => 'Procesar anulación'
-			));
-
-			DB::table('authpermisos')->insert(array(
+				),
+				array(
 	        'permisoid'      => 17,
 	        'nombre'         => 'saldo',
 	        'nombrefriendly' => 'Saldos'
-			));
-
-			DB::table('authpermisos')->insert(array(
+				),
+				array(
 	        'permisoid'      => 18,
 	        'nombre'         => 'archivos',
 	        'nombrefriendly' => 'Archivos'
+				),
+				array(
+	        'permisoid'      => 19,
+	        'nombre'         => 'buscar',
+	        'nombrefriendly' => 'Buscar'
+				)
 			));
-		  
+
 			DB::table('authpermisos')->update(array('created_at'=>date_create(), 'updated_at'=>date_create()));
 		  DB::statement('SET FOREIGN_KEY_CHECKS=1');
 		}

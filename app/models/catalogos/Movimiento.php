@@ -139,35 +139,45 @@ class Movimiento extends Eloquent {
 	}
 
 
-	public static function getUtilizacionEmpresas($aTratadoId, $aContingenteId, $aEmpresaId=0) {
+	public static function getUtilizacionEmpresas($aPeriodoId, $aEmpresaId=0) {
 		$aEmpresaId = (int)$aEmpresaId;
-		$query = DB::table('movimientos AS m')
-			->select('pr.nombre AS producto', 'e.razonsocial',  'm.tipomovimientoid', 'm.certificadoid', 'tt.asignacion',
-				DB::raw('SUM(m.cantidad) AS monto'))
-			->leftJoin('periodos AS p', 'm.periodoid', '=', 'p.periodoid')
-			->leftJoin('contingentes AS c', 'p.contingenteid', '=', 'c.contingenteid')
-			->leftJoin('productos AS pr', 'c.productoid', '=', 'pr.productoid')
-			->leftJoin('authusuarios AS u', 'm.usuarioid', '=', 'u.usuarioid')
-			->leftJoin('empresas AS e', 'u.empresaid', '=', 'e.empresaid')
-			->leftJoin('tipotratados AS tt', 'c.tipotratadoid', '=', 'tt.tipotratadoid')
-			->where('tratadoid', $aTratadoId)
-			->where('p.contingenteid', $aContingenteId)
-			->groupBy('razonsocial')
-			->groupBy('tipomovimientoid')
-			->orderBy('pr.nombre');
+		$query = DB::table('empresacontingentes AS ec')
+			->leftJoin('empresas AS e','ec.empresaid','=','e.empresaid')
+			->select('e.razonsocial','e.empresaid',
+				DB::raw('(SELECT getConsumoPeriodo(' . $aPeriodoId . ',e.empresaid)) AS consumo'),
+				DB::raw('(SELECT getTotalPeriodo(' . $aPeriodoId . ',e.empresaid)) AS totalperiodo'),
+				DB::raw('(SELECT getLiquidadoPeriodo(' . $aPeriodoId . ',e.empresaid)) AS liquidado'),
+				DB::raw('(SELECT getAsignacionPeriodo(' . $aPeriodoId . ',e.empresaid)) AS asignado')
+				)
+			->orderBy('e.razonsocial')
+			->orderBy('e.empresaid')
+			->groupBy('e.razonsocial')
+			->groupBy('e.empresaid');
 
 		if($aEmpresaId<>0)
-			$query->where('u.empresaid', $aEmpresaId);
-
+			$query->where('e.empresaid', $aEmpresaId);
+		else
+			$query->whereRaw('ec.contingenteid=(SELECT c.contingenteid 
+					FROM periodos AS p
+					LEFT JOIN contingentes AS c ON p.contingenteid=c.contingenteid
+					WHERE p.periodoid=' . $aPeriodoId . ')');
 		return $query->get();
 	}
 
-	public static function getConsumoYSaldo($aEmpresaId, $aContingenteId) {
+	public static function getConsumoYSaldo($aPeriodoId, $aEmpresaId) {
 		return DB::table('tipotratados')
 		    ->select(
-					DB::raw('(SELECT getTotalContingente(' . $aContingenteId . ',' . $aEmpresaId . ')) AS total'),
-					DB::raw('(SELECT getSaldo(' . $aContingenteId . ',' . $aEmpresaId . ')) AS saldo')
+					DB::raw('(SELECT getTotalPeriodo(' . $aPeriodoId . ',' . $aEmpresaId . ')) AS total'),
+					DB::raw('(SELECT getConsumoPeriodo(' . $aPeriodoId . ',' . $aEmpresaId . ')) AS consumo'),
+					DB::raw('(SELECT getConsumoPeriodo(' . $aPeriodoId . ',0)) AS consumototal'),
+					DB::raw('(SELECT getAsignacionPeriodo(' . $aPeriodoId . ',' . $aEmpresaId . ')) AS asignado')
 				)
 				->first();
+	}
+
+	public static function getConsumoYSaldoActual($aContingenteId, $aEmpresaId) {
+
+		$periodoid = Periodo::getPeriodo($aContingenteId);
+		return self::getConsumoYSaldo($periodoid, $aEmpresaId);
 	}
 } 

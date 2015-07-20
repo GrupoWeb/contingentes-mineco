@@ -5,6 +5,17 @@ class Contingente extends Eloquent {
 	protected $primaryKey = 'contingenteid';
 	protected $guarded    = array('contingenteid');
 
+
+	public static function getTratado($aContingenteId){
+		return DB::table('contingentes AS c')
+			->select('t.tratadoid', 't.nombre', 't.nombrecorto', 't.tipo', 
+				'c.tipotratadoid', 'tt.nombre AS tipotratado','tt.asignacion')
+			->leftJoin('tratados AS t','c.tratadoid','=','t.tratadoid')
+			->leftJoin('tipotratados AS tt','c.tipotratadoid','=','tt.tipotratadoid')
+			->where('c.contingenteid','=', $aContingenteId)
+			->first();
+	}
+
 	public static function getContingentes($filter=null) {
 		$query =  DB::table('contingentes AS c')
 			->select('contingenteid','t.nombrecorto AS tratado','p.nombre AS producto', 't.tipo',

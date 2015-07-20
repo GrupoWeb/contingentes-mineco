@@ -5,8 +5,10 @@ class cuentacorrienteController extends BaseController {
 	public function index() {
 		return View::make('reportes/filtros')
 			->with('titulo', 'Cuenta Corriente - Contingentes')
+			->with('tratados', Tratado::getTratados())
 			->with('contingentes', Contingente::getContingentes())
-			->with('filters', array('contingentes', 'periodos','formato'));
+			->with('filters', array('tratados','contingentes', 'periodos','formato'))
+    	->with('todos', array());
 	}
 
 	public function store() {
@@ -44,7 +46,7 @@ class cuentacorrienteController extends BaseController {
 		$response = array('codigoerror'=>0, 'error'=>'', 'data' => '');
 		$periodos = Periodo::getPeriodosContingente(Crypt::decrypt($aContingenteId));
 
-		if(count($periodos) <= 0){
+		if ((count($periodos) <= 0) && !Input::has('todos')) {
 			$response['codigoerror'] = 1;
 			$response['error']       = 'No se tienen períodos activos para el contingente seleccionado';
 		}
