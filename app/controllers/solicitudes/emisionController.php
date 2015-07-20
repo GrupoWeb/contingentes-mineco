@@ -8,7 +8,7 @@ class emisionController extends BaseController {
 
 	function store() {
 		$contingenteid  = Input::get('cmbContingentes');
-		
+
 		try {
 			$contingente    = Crypt::decrypt($contingenteid);
 		} catch (Exception $e) {
@@ -25,20 +25,18 @@ class emisionController extends BaseController {
 			Session::flash('message', 'No se ha cumplido con los requerimientos de archivos necesarios');
 			Session::flash('type', 'danger');
 
-			return Redirect::to('/');
+			return Redirect::to('inicio');
 		}
 
 		if($solicitado <= 0) {
 			Session::flash('message', 'El monto solicitado no es correcto');
 			Session::flash('type', 'danger');
 
-			return Redirect::to('/');
+			return Redirect::to('inicio');
 		}
-
 		
-		$query       = DB::select(DB::raw('SELECT getSaldo('.$contingente.','.Auth::id().') AS disponible'));
+		$query       = DB::select(DB::raw('SELECT getSaldo('.$contingente.','.Auth::user()->empresaid .') AS disponible'));
 		$disponible  = $query[0]->disponible;
-		
 
 		if($solicitado > $disponible){
 			$message = 'No es posible procesar la solicitud ya que el monto disponible no es suficiente';
@@ -120,7 +118,7 @@ class emisionController extends BaseController {
 		Session::flash('message', $message);
 		Session::flash('type', $type);
 
-		return Redirect::to('/');
+		return Redirect::to('inicio');
 	}
 
 	public function getPaises($aContingenteId) {
