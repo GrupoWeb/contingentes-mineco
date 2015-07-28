@@ -18,7 +18,7 @@ class utilizacionempresaController extends BaseController {
       ->with('titulo', 'Utilización de contingentes por empresa')
       ->with('tratados', $tratados)
       ->with('filters', $filters)
-      ->with('todos', array());
+      ->with('todos', array('empresas'));
   }
 
   public function store() {
