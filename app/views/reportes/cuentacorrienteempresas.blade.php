@@ -5,68 +5,67 @@
 		$acreditadoLast = '__Primero__';
 		$saldo=0; $debitot=0; $creditot=0; 
 	?>
-	@foreach($movimientos as $movimiento)
-		@if($movimiento->acreditadoa<>$acreditadoLast)
-			@if($acreditadoLast<>'__Primero__')
-				</tbody>
-					<tfoot>
-						<tr>
-							<td colspan="4">&nbsp;</td>
-							<td class="text-right text-primary">{{number_format($creditot,2)}}</td>
-							<td class="text-right text-primary">{{number_format($debitot,2)}}</td>
-							@if($asignacion)
-							<td class="text-right text-primary">{{ number_format($saldo, 2) }}</td>
-							@endif
-						</tr>
-					</tfoot>	
-				</table>
-			@endif
-			<?php $saldo=0; $debitot=0; $creditot=0; ?>
-			<h3 class="text-primary">{{ $movimiento->acreditadoa }}</h3>
-			<table class="table table-striped table-bordered table-condensed">
-				<thead>
-					<tr>
-						<th class="text-center">Fecha</th>
-						<th class="text-center">Acreditado por</th>
-						<th class="text-center">Comentario</th>
-						<th class="text-center">Certificado</th>
-						<th class="text-center">Crédito</th>
-						<th class="text-center">Débito</th>
-						@if($asignacion)
-						<th class="text-center">Saldo</th>
-						@endif
-					</tr>
-				</thead>
-				<tbody>
-		@endif
-		<?php 
-			$creditot += (float)$movimiento->credito;
-			$debitot  += (float)$movimiento->debito;
-			$saldo    += (float)$movimiento->credito-(float)$movimiento->debito; 
-		?>
-		<tr>
-			<td>{{ $movimiento->fecha }}</td>
-			<td>{{ $movimiento->acreditadopor }}</td>
-			<td>{{ $movimiento->comentario }}</td>
-			<td class="text-right">{{ $movimiento->certificadoid }}</td>
-			<td class="text-right">{{ $movimiento->credito ? number_format($movimiento->credito, 2) : '&nbsp;' }}</td>
-			<td class="text-right">{{ $movimiento->debito  ? number_format($movimiento->debito, 2) : '&nbsp;' }}</td>
-			@if($asignacion)
-			<td class="text-right">{{ number_format($saldo, 2) }}</td>
-			@endif
-		</tr>
-		<?php $acreditadoLast = $movimiento->acreditadoa; ?>
-	@endforeach
-		</tbody>
-		<tfoot>
+	<table class="table table-striped table-bordered table-condensed">
+		<thead>
 			<tr>
-				<td colspan="4">&nbsp;</td>
-				<td class="text-right text-primary">{{number_format($creditot,2)}}</td>
-				<td class="text-right text-primary">{{number_format($debitot,2)}}</td>
+				<th class="text-center">Fecha</th>
+				<th class="text-center">Acreditado por</th>
+				<th class="text-center">Comentario</th>
+				<th class="text-center">Certificado</th>
+				<th class="text-center">Crédito</th>
+				<th class="text-center">Débito</th>
 				@if($asignacion)
-				<td class="text-right text-primary">{{ number_format($saldo, 2) }}</td>
+					<th class="text-center">Saldo</th>
 				@endif
 			</tr>
-		</tfoot>	
+		</thead>
+		<tbody>
+			@foreach($movimientos as $empresa=>$datos)
+				<tr>
+					<td colspan="{{ $asignacion ? '7' : '6' }}" class="text-primary"><strong>{{ $empresa }}</strong></td>
+				</tr>
+				<?php $sumcredito=0; $sumdebito=0; $sumsaldo=0; ?>
+				@foreach($datos as $dato)
+					<tr>
+						<td>{{ $dato['fecha'] }}</td>
+						<td>{{ $dato['acreditadopor'] }}</td>
+						<td>{{ $dato['comentario'] }}</td>
+						<td class="text-right">{{ $dato['certificado'] }}</td>
+						<td class="text-right">{{ number_format($dato['credito'], 2) }}</td>
+						<td class="text-right">{{ number_format($dato['debito'], 2) }}</td>
+						@if($asignacion)
+							<?php 
+								$saldo = $sumsaldo + (float)$dato['credito'] - (float)$dato['debito']; 
+							?>
+							<td class="text-right">{{ number_format($saldo, 2) }}</td>
+						@endif
+					</tr>
+					<?php $sumcredito+=$dato['credito']; $sumdebito+=$dato['debito']; $sumsaldo=$saldo; ?>
+				@endforeach
+				<tr>
+					<td colspan="4">&nbsp;</td>
+					<td class="text-right text-primary">{{ number_format($sumcredito, 2) }}</td>
+					<td class="text-right text-primary">{{ number_format($sumdebito, 2) }}</td>
+					@if($asignacion)
+						<td class="text-right text-primary">{{ number_format($saldo, 2) }}</td>
+					@endif
+				</tr>
+			@endforeach
+		</tbody>
 	</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
 @stop
