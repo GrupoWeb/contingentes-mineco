@@ -19,30 +19,33 @@
 		{{ HTML::style('packages/csgt/components/css/bootstrap.min.css'); }}
 		{{ HTML::style('packages/csgt/components/css/bootstrap-theme.min.css'); }}
 		{{ HTML::style('packages/csgt/components/css/core.css'); }}
+		{{ HTML::style('css/reportes.css'); }}
 		{{ HTML::script('packages/csgt/components/js/jquery.min.js'); }}
 		{{ HTML::script('packages/csgt/components/js/bootstrap.min.js'); }}
 
 		</head>
 		<body>
-			<div class="container">
+			<div class="container header-fijo">
 				<table class="table table-condensed table-bordered">
 					<thead>
 						<tr>
-							<th rowspan="2" class="text-center" width="10%">
+							<th rowspan="2" class="text-center bg-white" width="10%">
 								@if($formato <> 'excel') 
 									{{ HTML::image('images/logo.jpg') }}
 								@endif
 								<br>DACE - MINECO
 							</th>
-							<th colspan="3" class="text-center"><h4>{{$titulo}}</h4></th>
+							<th colspan="3" class="text-center bg-white"><h4>{{$titulo}}</h4></th>
 						</tr>
 						<tr>
-							<th width="30%" class="text-center">{{ $tratado }}</th>
-							<th width="30%" class="text-center">{{ $producto }}</th>
-							<th width="30%" class="text-center">Reporte generado {{ date('d/m/Y') }}</th>
+							<th width="30%" class="text-center bg-white">{{ $tratado }}</th>
+							<th width="30%" class="text-center bg-white">{{ $producto }}</th>
+							<th width="30%" class="text-center bg-white">Reporte generado {{ date('d/m/Y') }}</th>
 						</tr>
 					</thead>
 				</table>
+			</div>
+			<div class="container">
 				@yield('content')
 			</div>
 		</body>
