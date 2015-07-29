@@ -47,20 +47,23 @@ class contingentesController extends crudController {
 	}
 
 	public function getSaldo($contingenteid) {
-		$disponible             = DB::select(DB::raw('SELECT getSaldo('.Crypt::decrypt($contingenteid).','.Auth::user()->empresaid.') AS disponible'));
+		$cid = Crypt::decrypt($contingenteid);
+
+		$disponible             = DB::select(DB::raw('SELECT getSaldo('.$cid.','.Auth::user()->empresaid.') AS disponible'));
 		$response['disponible'] = $disponible[0]->disponible;
-		$response['unidad']     = Contingente::getUnidadMedida($contingenteid);
+		$response['unidad']     = Contingente::getUnidadMedida($cid);
 
 		return Response::json($response);
 	}
 
 	public function getSaldoAsignacion($contingenteid) {
 		$response = array('codigoerror'=>0, 'error'=>'');
+		$cid      = Crypt::decrypt($contingenteid);
 
 		try {
-			$disponible             = DB::select(DB::raw('SELECT getSaldoAsignacion('.Crypt::decrypt($contingenteid).','.Auth::user()->empresaid.') AS disponible'));
+			$disponible             = DB::select(DB::raw('SELECT getSaldoAsignacion('.$cid.','.Auth::user()->empresaid.') AS disponible'));
 			$response['disponible'] = $disponible[0]->disponible;
-			$response['unidad']     = Contingente::getUnidadMedida($contingenteid);
+			$response['unidad']     = Contingente::getUnidadMedida($cid);
 		} catch(\Exception $e) {
 			$response['codigoerror'] = 2;
 			$response['error']       = 'Usuario/contingente invalido';

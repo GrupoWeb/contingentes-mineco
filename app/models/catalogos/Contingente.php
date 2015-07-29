@@ -76,6 +76,7 @@ class Contingente extends Eloquent {
 		return DB::table('contingentes AS c')
 			->leftJoin('productos AS p', 'c.productoid', '=', 'p.productoid')
 			->leftJoin('unidadesmedida AS u', 'p.unidadmedidaid', '=', 'u.unidadmedidaid')
+			->where('c.contingenteid', $aContingenteId)
 			->pluck('u.nombrecorto');
 	}
 

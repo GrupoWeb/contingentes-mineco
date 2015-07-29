@@ -33,18 +33,22 @@
         </div> <!-- partida arancelaria -->
         <div class="form-group">
           <label for="txCantidad" class="col-sm-2 control-label">Cantidad</label>
-          <div class="col-sm-6 div-contingente">
-            {{ Form::text('cantidad', '', array('class'=>'form-control',
-              'data-bv-notEmpty'              => 'true',
-              'data-bv-notEmpty-message'      => 'La cantidad es incorrecta',
-              'data-bv-greaterthan'           => 'true',
-              'data-bv-greaterthan-value'     => 0,
-              'data-bv-greaterthan-inclusive' => 'false',
-              'data-bv-greaterthan-message'   => 'El valor debe ser mayor que cero.',
-              'data-bv-numeric'               => 'true',
-              'data-bv-numeric-message'       => 'Solo se aceptan dígitos',
-              'autocomplete'                  => 'off'
-            )) }}
+          <div class="col-md-2 col-sm-6 div-contingente">
+            <div class="input-group">
+              {{ Form::text('cantidad', '', array('class'=>'form-control',
+                'data-bv-notEmpty'              => 'true',
+                'data-bv-notEmpty-message'      => 'La cantidad es incorrecta',
+                'data-bv-greaterthan'           => 'true',
+                'data-bv-greaterthan-value'     => 0,
+                'data-bv-greaterthan-inclusive' => 'false',
+                'data-bv-greaterthan-message'   => 'El valor debe ser mayor que cero.',
+                'data-bv-numeric'               => 'true',
+                'data-bv-numeric-message'       => 'Solo se aceptan dígitos',
+                'autocomplete'                  => 'off'
+              )) }}
+              <span class="input-group-addon" id="unidad"></span>
+            </div>
+            
             
             {{ Form::hidden('disponible', '') }}
           </div>
@@ -115,8 +119,8 @@
 
           $.get('/contingente/saldo/' + $(this).val() + '?tratado=' + $("#cmbContingentes option:selected").attr('data-tratado'), function(data){
             $('[name="disponible"]').val(data.disponible);
-            $('.disponible-block').text(data.disponible);
-            $('#disponible').text('Máximo Disponible (' + data.unidad + ')');
+            $('.disponible-block').text(data.disponible + ' ' + data.unidad);
+            $('#unidad').html(data.unidad);
           }).fail(function(xhr, textStatus, errorThrown)  {
             alert( "Error: Imposible calcular el disponible para este contingente.");
             window.location = '/';
