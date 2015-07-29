@@ -32,8 +32,8 @@ class Movimiento extends Eloquent {
 		$query = DB::table('movimientos AS m')
 			->select(DB::raw('DATE_FORMAT(m.created_at, "%d-%m-%Y") AS fecha'), 'u.nombre AS acreditadoa', 
 				'u2.nombre AS acreditadopor', 'comentario','c.numerocertificado AS certificadoid', 
-				DB::raw('IF( (m.tipomovimientoid=3) or (m.tipomovimientoid=2 and cantidad>0), cantidad, NULL) AS credito'),
-				DB::raw('IF( (m.tipomovimientoid=2 and cantidad<0), (cantidad*-1), NULL) AS debito'))
+				DB::raw('IF( (m.tipomovimientoid=3) OR (m.tipomovimientoid=2 and cantidad>0), cantidad, NULL) AS credito'),
+				DB::raw('IF( (m.tipomovimientoid=2 OR m.tipomovimientoid=4) and cantidad<0, (cantidad*-1), NULL) AS debito'))
 			->leftJoin('authusuarios AS u', 'm.usuarioid',  '=', 'u.usuarioid')
 			->leftJoin('authusuarios AS u2', 'm.created_by', '=', 'u2.usuarioid')
 			->leftJoin('empresas AS e', 'u.empresaid', '=', 'e.empresaid')
@@ -43,7 +43,7 @@ class Movimiento extends Eloquent {
 			->orderBy('m.created_at')
 			->orderBy('m.movimientoid')
 			->where('m.periodoid', $aPeriodoId)
-			->whereIn('m.tipomovimientoid', array(3, 2));
+			->whereIn('m.tipomovimientoid', array(4, 3, 2));
 
 			if($aEmpresaId <> 0)
 				$query->where('e.empresaid', $aEmpresaId);
