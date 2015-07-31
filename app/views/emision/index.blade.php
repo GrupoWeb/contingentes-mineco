@@ -48,8 +48,6 @@
               )) }}
               <span class="input-group-addon" id="unidad"></span>
             </div>
-            
-            
             {{ Form::hidden('disponible', '') }}
           </div>
         </div> <!-- cantidad -->
