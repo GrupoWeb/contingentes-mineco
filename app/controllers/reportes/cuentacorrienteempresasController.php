@@ -6,7 +6,9 @@ class cuentacorrienteempresasController extends BaseController {
 		return View::make('reportes/filtros')
 			->with('titulo', 'Cuenta Corriente - Empresas')
 			->with('contingentes', Contingente::getContingentesCuota())
-			->with('filters', array('contingentes', 'periodos','empresas','formato'));
+			->with('tratados', Tratado::getTratados())
+			->with('filters', ['tratados','contingentes', 'periodos','empresas','formato'])
+			->with('todos',['empresas']);
 	}
 
 	public function store() {
@@ -14,6 +16,8 @@ class cuentacorrienteempresasController extends BaseController {
 		$periodoId = Crypt::decrypt(Input::get('cmbPeriodo'));
 		$periodo   = Periodo::getPeriodoInfo($periodoId);
 		$formato   = Input::get('formato');
+
+		if ($empresaId==-1) $empresaId = 0;
 
 		if($formato == 'pdf') {
 			PDF::SetTitle('Cuenta Corriente - Empresas');
@@ -24,6 +28,7 @@ class cuentacorrienteempresasController extends BaseController {
 				->with('titulo', 'Cuenta Corriente - Empresas')
 				->with('tratado', $periodo->tratado)
 				->with('producto', $periodo->producto)
+				->with('asignacion', $periodo->asignacion)
 				->with('movimientos', Movimiento::getCuentaCorrienteEmpresa($periodoId, $empresaId))
 				->with('formato', 'html');
 
@@ -32,11 +37,25 @@ class cuentacorrienteempresasController extends BaseController {
 		}
 
 		else {
-			return View::make('reportes/cuentacorrienteempresas')
+			$movimientos = Movimiento::getCuentaCorrienteEmpresa($periodoId, $empresaId);
+			$tmp         = [];
+			foreach($movimientos as $movimiento) {
+				$tmp[$movimiento->acreditadoa][] = [
+					'fecha'         => $movimiento->fecha,
+					'acreditadopor' => $movimiento->acreditadopor,
+					'comentario'    => $movimiento->comentario,
+					'certificado'   => $movimiento->certificadoid,
+					'credito'       => $movimiento->credito,
+					'debito'        => $movimiento->debito,
+				];
+			}
+
+			return View::make('reportes.cuentacorrienteempresas')
 				->with('titulo', 'Cuenta Corriente - Empresas')
 				->with('tratado', $periodo->tratado)
 				->with('producto', $periodo->producto)
-				->with('movimientos', Movimiento::getCuentaCorrienteEmpresa($periodoId, $empresaId))
+				->with('asignacion', $periodo->asignacion)
+				->with('movimientos', $tmp)
 				->with('formato', $formato);
 		}
 	}

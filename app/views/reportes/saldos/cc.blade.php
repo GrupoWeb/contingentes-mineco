@@ -1,35 +1,38 @@
 @extends('template/reporte')
 
 @section('content')
-	{{ HTML::script('js/highcharts-exporting.js') }}
 	{{ HTML::script('js/highcharts.js') }}
+	{{ HTML::script('js/highcharts-exporting.js') }}
 
-	<div id="container"></div>
+	<div id="graficacc"></div>
 
 	<script>
 		$(function () {
-	    $('#container').highcharts({
+	    $('#graficacc').highcharts({
 	        chart: {
-	            type: 'bar'
+	        	height: 800,
+	          type: 'bar'
 	        },
+	        colors: 
+						['#337ab7', '#5cb85c', '#f7a35c', '#8085e9', '#f15c80', '#e4d354', '#2b908f', '#f45b5b', '#91e8e1'],
 	        title: {
-	            text: ''
+	          text: ''
 	        },
 	        xAxis: {
-	            categories: [
-	            	@foreach($empresas as $empresa)
-	            		'{{ $empresa["nombre"] }}', 
-	            	@endforeach
-	            ]
+            categories: [
+            	@foreach($empresas as $empresa)
+            		'{{ $empresa["nombre"] }}', 
+            	@endforeach
+            ]
 	        },
 	        yAxis: {
-	            min: 0,
-	            title: {
-	                text: ''
-	            }
+            min: 0,
+            title: {
+              text: ''
+            }
 	        },
 	        legend: {
-	            reversed: true
+	          reversed: true
 	        },
 	        credits : {
 	        	enabled: false
@@ -38,24 +41,25 @@
 	        	enabled: true
 	        },
 	        plotOptions: {
-	            series: {
-	                stacking: 'normal'
-	            }
+            series: {
+              stacking: 'normal'
+            }
 	        },
 	        series: [{
-	            name: 'Asignado',
-	            data: [
-	            	@foreach($empresas as $empresa)
-	            		{{ $empresa['asignado']. ',' }}
-	            	@endforeach
-	            ]
-	        }, {
-	            name: 'Consumido',
-	            data: [
-	            	@foreach($empresas as $empresa)
-	            		{{ $empresa['consumido'] . ',' }}
-	            	@endforeach
-	            ]
+            name: 'Saldo',
+            data: [
+            	@foreach($empresas as $empresa)
+            		{{ $empresa['saldo'] . ',' }}
+            	@endforeach
+            ]
+	        },
+	        {
+            name: 'Consumido',
+            data: [
+            	@foreach($empresas as $empresa)
+            		{{ $empresa['consumido']. ',' }}
+            	@endforeach
+            ]
 	        }]
 	    });
 		});

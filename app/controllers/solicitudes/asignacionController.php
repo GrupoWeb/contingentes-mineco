@@ -17,14 +17,14 @@ class asignacionController extends BaseController {
 			Session::flash('message', 'No se ha cumplido con los requerimientos de archivos necesarios');
 			Session::flash('type', 'danger');
 
-			return Redirect::to('/');
+			return Redirect::to('inicio');
 		}
 
 		if($solicitado <= 0) {
 			Session::flash('message', 'El monto solicitado no es correcto');
 			Session::flash('type', 'danger');
 
-			return Redirect::to('/');
+			return Redirect::to('inicio');
 		}
 
 		$query       = DB::select(DB::raw('SELECT getSaldoAsignacion('.$contingente.','.Auth::id().') AS disponible'));
@@ -56,7 +56,7 @@ class asignacionController extends BaseController {
 			      if ($key=='txArchivo') continue;
 			    	if ($val) {
 							$arch   = Input::file($key);
-							$nombre = date('YmdHis').$arch->getClientOriginalName();
+							$nombre = date('Ymdhis') . mt_rand(1, 1000) . '.' . strtolower($arch->getClientOriginalExtension());
 							$res    = $arch->move(public_path() . '/archivos/' . Auth::id(), $nombre);
 							DB::table('solicitudasignacionrequerimientos')->insert(array(
 								'solicitudasignacionid' => $solicitud->id,
@@ -103,6 +103,6 @@ class asignacionController extends BaseController {
 		Session::flash('message', $message);
 		Session::flash('type', $type);
 
-		return Redirect::to('/');
+		return Redirect::to('inicio');
 	}
 }

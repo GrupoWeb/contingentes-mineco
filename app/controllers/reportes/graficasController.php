@@ -18,12 +18,11 @@ class graficasController extends BaseController {
 		if($asignacion == 1) { //cuenta corriente
 			$data  = array();
 			foreach($empresas as $empresa) {
-				$consumido = Movimiento::getMovimientos($contingenteid, $empresa->empresaid, 2);
-				$asignado  = Movimiento::getMovimientos($contingenteid, $empresa->empresaid, 3);
-
-				$data[$empresa->empresaid]['nombre']    = $empresa->nombre;
-				$data[$empresa->empresaid]['asignado']  = $asignado->cantidad; 
-				$data[$empresa->empresaid]['consumido'] = $consumido->cantidad;
+				$datos = Movimiento::getConsumoYSaldo($empresa->empresaid, $contingenteid);
+			
+				$data[$empresa->empresaid]['nombre']     = $empresa->nombre;
+				$data[$empresa->empresaid]['consumido']  = $datos->total - $datos->saldo; 
+				$data[$empresa->empresaid]['saldo']      = $datos->saldo;
 			}
 
 			$view  = 'cc';

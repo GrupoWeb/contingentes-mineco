@@ -14,8 +14,9 @@
   ?>
   {{Form::open($params) }}
     <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-    <h1 class="titulo">Solicitud de inscripci&oacute;n</h1>
     <div class="contenido contenido-full">
+      <h1 class="titulo">Solicitud de inscripci&oacute;n</h1>
+      <br>
       <div class="col-md-12">
         @if(Session::has('message'))
           <div class="alert alert-{{ Session::get('type') }} alert-dismissable">
@@ -58,6 +59,12 @@
     </div>    
   {{Form::close()}}
 
+  <style>
+    .file-preview-frame {
+      display: none !important;
+    }
+  </style>
+
   <script>
     $(document).ready(function(){
       $('#tratados').change(function(){
@@ -85,12 +92,18 @@
                 $(".file").fileinput({
                   browseLabel: "Buscar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
                   browseClass: "btn btn-default",
-                  showPreview: false,
+                  allowedPreviewTypes: ["flash"],
+                  maxFileSize: 8000,
+                  allowedFileExtensions: ['jpg', 'png', 'pdf'],
+                  msgSizeTooLarge: "El archivo {name} ({size} KB) excede el límite máximo de {maxSize} KB. Por favor pruebe con otro archivo",
+                  msgInvalidFileExtension: 'Solo se permiten archivos jpg, png o pdf',
+                  showPreview: true,
                   showRemove:  false,
                   showUpload:  false,
-                  allowedFileExtensions: ['jpg', 'png', 'pdf'],
-                  msgInvalidFileExtension: 'Solo se permiten archivos jpg, png o pdf',
-                  msgValidationError : 'Solo se permiten archivos jpg, png o pdf',
+                  previewSettings: {
+                  image: {width: "20px", height: "20px"},
+                  other: {width: "20px", height: "20px"},
+                  }
                 });
               });     
             });       

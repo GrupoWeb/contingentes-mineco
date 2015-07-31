@@ -26,7 +26,7 @@ class solicitudreinscripcionController extends crudController {
 			Session::flash('message', 'No se ha cumplido con los requerimientos de archivos necesarios');
 			Session::flash('type', 'danger');
 
-			return Redirect::to('/');
+			return Redirect::to('inicio');
 		}
     
 		DB::transaction(function() use($contingenteid) {
@@ -57,7 +57,7 @@ class solicitudreinscripcionController extends crudController {
 	      if ($key == 'txArchivo') continue;
 	    	if ($val) {
 					$arch   = Input::file($key);
-					$nombre = date('YmdHis').$arch->getClientOriginalName();
+					$nombre = date('Ymdhis') . mt_rand(1, 1000) . '.' . strtolower($arch->getClientOriginalExtension());
 					$res    = $arch->move(public_path() . '/archivos/solicitudes/'.$inscripcion->solicitudinscripcionid, $nombre);
 					
 					$requerimiento                         = new Solicitudinscripcionrequemiento;
@@ -87,6 +87,6 @@ class solicitudreinscripcionController extends crudController {
 		Session::flash('message', 'Su solicitud de inscripción ha sido enviada');
 		Session::flash('type', 'success');
 
-  	return Redirect::to('/');
+  	return Redirect::to('inicio');
   }
 }

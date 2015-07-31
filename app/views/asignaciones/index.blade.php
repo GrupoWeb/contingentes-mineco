@@ -29,14 +29,21 @@
         </div> <!-- contingente -->
         <div class="form-group">
           <label for="txtCantidad" class="col-sm-2 control-label">Cantidad</label>
-          <div class="col-sm-6 div-contingente">
-            {{ Form::text('cantidad', '', array('class'=>'form-control',
-              'data-bv-notEmpty'           => 'true',
-              'data-bv-notEmpty-message'   => 'La cantidad es incorrecta',
-              'data-bv-numeric'            => 'true',
-              'data-bv-numeric-message'    => 'Solo se aceptan dígitos',
-              'autocomplete'               => 'off'
-            )) }}
+          <div class="col-md-2 col-sm-6 div-contingente">
+            <div class="input-group">
+              {{ Form::text('cantidad', '', array('class'=>'form-control',
+                'data-bv-notEmpty'              => 'true',
+                'data-bv-notEmpty-message'      => 'La cantidad es incorrecta',
+                'data-bv-numeric'               => 'true',
+                'data-bv-numeric-message'       => 'Solo se aceptan dígitos',
+                'data-bv-greaterthan'           => 'true',
+                'data-bv-greaterthan-value'     => '0',
+                'data-bv-greaterthan-inclusive' => 'false',
+                'data-bv-greaterthan-message'   => 'La cantidad debe ser mayor que cero',
+                'autocomplete'                  => 'off'
+              )) }}
+              <span class="input-group-addon" id="unidad"></span>
+            </div>
 
             {{ Form::hidden('disponible', '') }}
           </div>
@@ -101,8 +108,8 @@
 
             else {
               $('[name="disponible"]').val(data.disponible);
-              $('.disponible-block').text(data.disponible);
-              $('#disponible').text('Disponible (' + data.unidad + ')');
+              $('.disponible-block').text(data.disponible + ' ' + data.unidad);
+              $('#unidad').html(data.unidad);
             }
             
           }).fail(function(xhr, textStatus, errorThrown)  {

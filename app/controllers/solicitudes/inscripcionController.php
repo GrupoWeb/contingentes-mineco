@@ -90,7 +90,7 @@ class inscripcionController extends BaseController {
 			Session::flash('message', 'Se dio un error al seleccionar un contingente. Intentalo nuevamente');
 			Session::flash('type', 'danger');
 
-			return Redirect::to('/');
+			return Redirect::to('inicio');
 		}
 
 		$contingenteid  = Crypt::decrypt(Input::get('cmbContingente'));
@@ -100,15 +100,26 @@ class inscripcionController extends BaseController {
 			Session::flash('message', 'No se ha cumplido con los requerimientos de archivos necesarios');
 			Session::flash('type', 'danger');
 
-			return Redirect::to('/');
+			return Redirect::to('inicio');
 		}
 
-		DB::transaction(function() use($contingenteid) {
+		$nit       = Input::get('txNIT');
+		$empresa   = DB::table('empresas')->where('nit', $nit)->first();
+		$solicitud = DB::table('solicitudinscripciones')->where('nit', $nit)->where('estado', 'Pendiente')->first();
+
+		if($solicitud || $empresa) {
+			Session::flash('message', 'El NIT ya se encuentra registrado en el sistema');
+			Session::flash('type', 'danger');
+
+			return Redirect::to('inicio');
+		}
+
+		DB::transaction(function() use($contingenteid,$nit) {
 			$inscripcion                          = new Solicitudinscripcion;
 			$inscripcion->estado                  = 'Pendiente';
 			$inscripcion->email                   = Input::get('email');
 			$inscripcion->password                = Hash::make(Input::get('txPassword'));
-			$inscripcion->nit                     = Input::get('txNIT');
+			$inscripcion->nit                     = $nit;
 			$inscripcion->nombre                  = Input::get('txRazonSocial');
 			$inscripcion->propietario             = Input::get('txPropietario');
 			$inscripcion->domiciliofiscal         = Input::get('txDomicilioFiscal');
@@ -129,7 +140,7 @@ class inscripcionController extends BaseController {
 	      if ($key == 'txArchivo') continue;
 	    	if ($val) {
 					$arch   = Input::file($key);
-					$nombre = date('YmdHis').$arch->getClientOriginalName();
+					$nombre = date('Ymdhis') . mt_rand(1, 1000) . '.' . strtolower($arch->getClientOriginalExtension());
 					$res    = $arch->move(public_path() . '/archivos/solicitudes/'.$inscripcion->solicitudinscripcionid, $nombre);
 					
 					$requerimiento                         = new Solicitudinscripcionrequemiento;

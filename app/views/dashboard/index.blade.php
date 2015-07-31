@@ -1,13 +1,14 @@
 @extends('template/template')
 
 @section('content')
+  {{ HTML::script('js/highcharts.js') }}
 	@if(Session::has('message'))
 		<div class="alert alert-{{ Session::get('type') }} alert-dismissable">
 			{{ Session::get('message') }}
 		</div>
 	@endif
 
-	<!--<div class="row"> -->
+	<div class="row">
 		<div class="col-md-4 col-xs-12">
       <div class="panel panel-primary">
         <div class="panel-heading">
@@ -16,7 +17,7 @@
               <i class="fa fa-cart-plus fa-5x"></i>
             </div>
             <div class="col-xs-9 text-right">
-              <div class="huge">{{ $contingentes }}</div>
+              <div class="huge">{{ count($contingentes) }}</div>
               <div>Contingentes inscritos</div>
             </div>
           </div>
@@ -74,56 +75,43 @@
         </a>
       </div>
 	  </div>
-  <!--</div>-->
-  <div class="clearfix"></div>
-  <div class="row">
-  	<div class="col-md-6">
-			<div class="panel panel-default">
-			  <div class="panel-heading">
-			      <i class="fa fa-users fa-fw"></i> Mi Empresa
-			  </div>
-			  <div class="panel-body">
-			  	<ul class="list-group">
-					  <li class="list-group-item"><strong>NIT:</strong> {{ $empresa->nit }}</dd>
-					  <li class="list-group-item"><strong>Razón Social:</strong> {{ $empresa->razonsocial }}</dd>
-					  <li class="list-group-item"><strong>Propietario:</strong> {{ $empresa->propietario }}</dd>
-					  <li class="list-group-item"><strong>Domicilio Fiscal:</strong> {{ $empresa->domiciliofiscal }}</dd>
-					  <li class="list-group-item"><strong>Domicilio Comercial:</strong> {{ $empresa->domiciliocomercial }}</dd>
-					  <li class="list-group-item"><strong>Domicilio Notificaciones:</strong> {{ $empresa->direccionnotificaciones }}</dd>
-					  <li class="list-group-item"><strong>Teléfono:</strong> {{ $empresa->telefono }}</dd>
-					  <li class="list-group-item"><strong>FAX:</strong> {{ $empresa->fax }}</dd>
-					  <li class="list-group-item"><strong>Encargado:</strong> {{ $empresa->encargadoimportaciones }}</dd>
-					</ul>
-			  </div>
-			</div>
-		</div>
+    <div class="clearfix"></div>
+  @foreach($contingentes as $contingente)
 		<div class="col-md-6">
 			<div class="panel panel-default">
 			  <div class="panel-heading">
-			      <i class="fa fa-file-text fa-fw"></i> Listado de tratados
+			    <i class="fa {{$contingente->icono}}"></i> {{$contingente->tratado}} - {{$contingente->producto}}
 			  </div>
 			  <div class="panel-body">
-			    <ul class="list-group">
-			    	@foreach($tratados as $tratado)
-					  	<li class="list-group-item">
-					  		<a 
-									href        = "#" 
-									class       = "tratadolist" 
-									data-toggle = "modal"
-									data-target = "#myModal"
-									data-tid    = "{{ Crypt::encrypt($tratado->tratadoid) }}"
-									data-title  = "{{ $tratado->nombrecorto }}">
-					  				{{ $tratado->nombrecorto }}
-					  		</a>
-					  	</li>
-					  @endforeach
-					</ul>
+			    @include('reportes.saldos.consumoysaldo')
 			  </div>
 			</div>
 		</div>
-	</div>
+  @endforeach
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+            <i class="fa fa-users fa-fw"></i> Mi Empresa
+        </div>
+        <div class="panel-body">
+          <ul class="list-group">
+            <li class="list-group-item"><strong>NIT:</strong> {{ $empresa->nit }}</dd>
+            <li class="list-group-item"><strong>Razón Social:</strong> {{ $empresa->razonsocial }}</dd>
+            <li class="list-group-item"><strong>Propietario:</strong> {{ $empresa->propietario }}</dd>
+            <li class="list-group-item"><strong>Domicilio Fiscal:</strong> {{ $empresa->domiciliofiscal }}</dd>
+            <li class="list-group-item"><strong>Domicilio Comercial:</strong> {{ $empresa->domiciliocomercial }}</dd>
+            <li class="list-group-item"><strong>Domicilio Notificaciones:</strong> {{ $empresa->direccionnotificaciones }}</dd>
+            <li class="list-group-item"><strong>Teléfono:</strong> {{ $empresa->telefono }}</dd>
+            <li class="list-group-item"><strong>FAX:</strong> {{ $empresa->fax }}</dd>
+            <li class="list-group-item"><strong>Encargado:</strong> {{ $empresa->encargadoimportaciones }}</dd>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div> <!--row -->
+
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	  <div class="modal-dialog modal-lg">
+	  <div class="modal-dialog">
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>

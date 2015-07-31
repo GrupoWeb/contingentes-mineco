@@ -4,12 +4,21 @@ class Tratado extends Eloquent {
 	protected $primaryKey = 'tratadoid';
 
 	public static function getTratados() {
-		return DB::table('tratados')
+		return self::getTratadosEmpresa(0);
+	}
+
+	public static function getTratadosEmpresa($aEmpresaId) {
+		$query = DB::table('tratados AS t')
 			->select('tratadoid', 'nombre', 'nombrecorto', 'tipo', 'clase', 'icono')
-			->whereRaw('tratadoid IN (SELECT DISTINCT tratadoid FROM contingentes)')
 			->orderBy('tipo')
-			->orderBy('nombrecorto')
-			->get();
+			->orderBy('nombrecorto');
+		if ($aEmpresaId==0)
+			$query->whereRaw('tratadoid IN (SELECT DISTINCT tratadoid FROM contingentes)');
+		else
+			$query->whereRaw('tratadoid IN (SELECT DISTINCT(cc.tratadoid) 
+					FROM empresacontingentes ec LEFT JOIN contingentes cc ON cc.contingenteid=ec.contingenteid WHERE ec.empresaid=' . (int)$aEmpresaId . ')');
+
+		return $query->get();
 	}
 
 	public static function getNombre($aTratadoId) {

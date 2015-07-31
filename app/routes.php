@@ -98,6 +98,8 @@ Route::group(array('before' => array('tratados')), function() {
 		Route::post('certificados/anular/{id}', array('as'=>'certificados.procesaranulacion', 'uses'=>'certificadosController@procesaranulacion'));
 		Route::get('certificados/liquidar/{id}', array('as'=>'certificados.liquidar', 'uses'=>'certificadosController@liquidar'));
 		Route::post('certificados/liquidar/{id}', array('as'=>'certificados.procesarliquidacion', 'uses'=>'certificadosController@procesarliquidacion'));
+		Route::get('buscarcertificados', array('as'=>'certificados.buscar', 'uses'=>'certificadosController@buscar'));
+
 
 		//=== REPORTES
 		Route::resource('cuentacorriente', 'cuentacorrienteController', array('only'=>array('index','store')));

@@ -83,12 +83,29 @@ class dashboardController extends BaseController {
 		}
 
 		else {
+			$empresaid    = Auth::user()->empresaid;
+			$grafica      = array();
+			$contingentes = Empresacontingente::contingentesEmpresa($empresaid);
+
+			foreach ($contingentes as $contingente) {
+				$cys = Movimiento::getConsumoYSaldoActual($contingente->contingenteid, $empresaid);
+				$grafica[$contingente->contingenteid]['empresa']      = $cys->consumo;
+				$grafica[$contingente->contingenteid]['otros']        = $cys->consumototal-$cys->consumo;
+				if ($contingente->asignacion==1) {
+					$grafica[$contingente->contingenteid]['saldo']     = $cys->asignado-$cys->consumo;
+				}
+				else {
+					$grafica[$contingente->contingenteid]['saldo']        = $cys->total-$cys->consumototal;
+				}
+				$grafica[$contingente->contingenteid]['esasignacion'] = $contingente->asignacion;
+			}
+
 			return View::make('dashboard.index')
 				->with('admin', $admin)
-				->with('contingentes', Empresacontingente::getContingentesEmpresa(Auth::user()->empresaid))
-				->with('emisiones', Solicitudesemision::getEmisionesPendientes(Auth::user()->empresaid))
-				->with('certificados', Movimiento::getCuantosCertificadosEmpresa(Auth::user()->empresaid))
-				->with('tratados', Tratado::getTratadosDashboard())
+				->with('contingentes', $contingentes)
+				->with('grafica', $grafica)
+				->with('emisiones', Solicitudesemision::getEmisionesPendientes($empresaid))
+				->with('certificados', Movimiento::getCuantosCertificadosEmpresa($empresaid))
 				->with('empresa', Empresa::find(Auth::user()->empresaid));
 		}
 	}
@@ -100,7 +117,7 @@ class dashboardController extends BaseController {
 
 	public function detalletratado($id) {
 		$id = Crypt::decrypt($id);
-		
+
 		return View::make('dashboard.productos')
 			->with('info', Tratado::getTratadoDashboard($id))
 			->with('productos', Contingente::getProductos($id));

@@ -6,13 +6,23 @@ class utilizacionController extends BaseController {
     return View::make('reportes.filtros')
       ->with('titulo', 'Utilización de contingentes')
       ->with('tratados', Tratado::getTratados())
-      ->with('filters', array('tratados', 'fechaini', 'fechafin','formato'));
+      ->with('filters', array('tratados','contingentes', 'empresas',
+        'fechaini', 'fechafin','formato'))
+      ->with('todos',['empresas']);
   }
 
   public function store() {
-    $tratadoid     = Crypt::decrypt(Input::get('tratadoid'));
-    $contingenteid = Crypt::decrypt(Input::get('contingentes'));
-    $empresaid     = Crypt::decrypt(Input::get('cmbEmpresa'));
+    try {
+      $tratadoid     = Crypt::decrypt(Input::get('tratadoid'));
+      $contingenteid = Crypt::decrypt(Input::get('cmbContingente'));
+      $empresaid     = Crypt::decrypt(Input::get('cmbEmpresa'));
+    } catch (Exception $e) {
+      return View::make('cancerbero::error')
+        ->with('mensaje','Tratado, contingente o empresa inválida.');
+    }
+
+    if ($empresaid==-1) $empresaid = 0;
+
     $fi            = Input::get('fechaini') . ' 00:00';
     $ff            = Input::get('fechafin') . ' 23:59';
     $formato       = Input::get('formato');
@@ -87,15 +97,27 @@ class utilizacionController extends BaseController {
 
   public function getContingentes($id) {
     $id = Crypt::decrypt($id);
+    $empresaid = Auth::user()->empresaid;
+
+    if ($empresaid) 
+      $contingentes = Contingente::getContTratadoEmpresa($id, $empresaid);
+    else
+      $contingentes = Contingente::getContTratado($id);
 
     return View::make('partials/contingentelistado')
-      ->with('contingentes', Contingente::getContTratado($id))
-      ->with('nombre', 'contingentes')
-      ->with('id', 'contingentes');
+      ->with('contingentes', $contingentes)
+      ->with('nombre', 'cmbContingente')
+      ->with('id', 'cmbContingente');
   }
 
   public function getEmpresas($id) {
-    $id = Crypt::decrypt($id);
+    try {
+      $id = Crypt::decrypt($id);
+    } catch (Exception $e) {
+      return View::make('partials/empresas')
+        ->with('empresas', array());
+    }
+      
 
     return View::make('partials/empresas')
       ->with('empresas', Empresacontingente::listEmpresasContingente($id));

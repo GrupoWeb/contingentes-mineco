@@ -5,6 +5,17 @@ class Contingente extends Eloquent {
 	protected $primaryKey = 'contingenteid';
 	protected $guarded    = array('contingenteid');
 
+
+	public static function getTratado($aContingenteId){
+		return DB::table('contingentes AS c')
+			->select('t.tratadoid', 't.nombre', 't.nombrecorto', 't.tipo', 
+				'c.tipotratadoid', 'tt.nombre AS tipotratado','tt.asignacion')
+			->leftJoin('tratados AS t','c.tratadoid','=','t.tratadoid')
+			->leftJoin('tipotratados AS tt','c.tipotratadoid','=','tt.tipotratadoid')
+			->where('c.contingenteid','=', $aContingenteId)
+			->first();
+	}
+
 	public static function getContingentes($filter=null) {
 		$query =  DB::table('contingentes AS c')
 			->select('contingenteid','t.nombrecorto AS tratado','p.nombre AS producto', 't.tipo',
@@ -48,10 +59,24 @@ class Contingente extends Eloquent {
 		return $query->orderBy('p.nombre')->get();
 	}
 
+	public static function getContTratadoEmpresa($aTratadoId, $aEmpresaId) {
+		$query = DB::table('contingentes AS c')
+			->select('c.contingenteid', 'p.nombre AS producto')
+			->leftJoin('productos AS p', 'c.productoid', '=', 'p.productoid')
+			->leftJoin('periodos AS pe', 'c.contingenteid', '=', 'pe.contingenteid')
+			->whereRaw('now() BETWEEN pe.fechainicio AND pe.fechafin')
+			->where('c.tratadoid', $aTratadoId)
+			->whereRaw('c.contingenteid IN(SELECT ec.contingenteid FROM empresacontingentes ec WHERE ec.empresaid=' . (int)$aEmpresaId . ')');
+
+
+		return $query->orderBy('p.nombre')->get();
+	}
+
 	public static function getUnidadMedida($aContingenteId) {
 		return DB::table('contingentes AS c')
 			->leftJoin('productos AS p', 'c.productoid', '=', 'p.productoid')
 			->leftJoin('unidadesmedida AS u', 'p.unidadmedidaid', '=', 'u.unidadmedidaid')
+			->where('c.contingenteid', $aContingenteId)
 			->pluck('u.nombrecorto');
 	}
 

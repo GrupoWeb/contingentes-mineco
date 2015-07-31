@@ -9,7 +9,7 @@
 	
 	<title>DACE - MINECO</title>
 
-	{{ HTML::style('http://fonts.googleapis.com/css?family=Archivo+Narrow|Raleway:400,700') }}
+	{{ HTML::style('http://fonts.googleapis.com/css?family=Archivo+Narrow|Lato:400,700') }}
 
 	{{ HTML::style('packages/csgt/components/css/bootstrap.min.css') }}
 	{{ HTML::style('packages/csgt/components/css/bootstrap-theme.min.css') }}

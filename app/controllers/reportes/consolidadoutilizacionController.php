@@ -6,7 +6,8 @@ class consolidadoutilizacionController extends BaseController {
 		return View::make('reportes/filtros')
 			->with('titulo', 'Consolidado de utilización de contingentes')
 			->with('contingentes', Contingente::getContingentes())
-			->with('filters', array('fechaini','fechafin','formato'));
+			->with('filters', array('fechaini','fechafin','formato'))
+			->with('todos', array());
 	}
 
 	public function store() {
@@ -24,8 +25,10 @@ class consolidadoutilizacionController extends BaseController {
 
 		$tratados = Movimiento::getConsolidadoUtilizacion($finicio, $ffin);
 		$data     = array();
+		$tipos    = array();
 		foreach($tratados as $tratado) {
-			$data[$tratado->nombrecorto][] = array(
+			$data[$tratado->nombrecorto]['tipo']    = $tratado->tipocorto;
+			$data[$tratado->nombrecorto]['datos'][] = array(
 				'producto'  => $tratado->nombre,
 				'partidas'  => Contingentepartida::listPartidas($tratado->contingenteid),
 				'activado'  => $tratado->activado,
@@ -33,6 +36,8 @@ class consolidadoutilizacionController extends BaseController {
 				'emitido'   => $tratado->emitido,
 				'utilizado' => ($tratado->activado <> 0 ? number_format((($tratado->emitido * 100) / $tratado->activado), 2) : 0)
 			);
+
+			$tipos[$tratado->tipocorto] = $tratado->tipo;
 		}
 
 		if($formato == 'pdf') {
@@ -45,7 +50,8 @@ class consolidadoutilizacionController extends BaseController {
 				->with('tratado', '')
 	      ->with('producto', '')
 				->with('formato', $formato)
-				->with('tratados', $data);
+				->with('tratados', $data)
+				->with('tipos', $tipos);
 
       PDF::writeHTML($html, true, false, true, false, '');
       PDF::Output('Consolidado-utilizacion-Contingente.pdf');
@@ -57,7 +63,8 @@ class consolidadoutilizacionController extends BaseController {
 				->with('tratado', '')
 	      ->with('producto', '')
 				->with('formato', $formato)
-				->with('tratados', $data);
+				->with('tratados', $data)
+				->with('tipos', $tipos);
 		}
 	}
 }

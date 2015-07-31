@@ -1,11 +1,11 @@
 @extends('template/reporte')
 
 @section('content')
-	<?php echo HTML::script('js/highcharts-exporting.js'); ?>
 	<?php echo HTML::script('js/highcharts.js'); ?>
+	<?php echo HTML::script('js/highcharts-exporting.js'); ?>
 
-	<div id="container" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
-	@if($asignacion == 1)
+	<div id="container" style="width: 100%; height: 800px; margin: 0 auto"></div>
+	@if($esAsignacion == 1)
 		<script type="text/javascript">
 			$(function () {
 		    $('#container').highcharts({
@@ -17,8 +17,8 @@
 		        },
 		        xAxis: {
 		            categories: [
-		            	@foreach($movimientos as $empresa=>$valores)
-		            		{{ '"'.$empresa.'",' }}
+		            	@foreach($movimientos as $movimiento)
+		            		{{ '"'.$movimiento->razonsocial .'",' }}
 		            	@endforeach
 		            ]
 		        },
@@ -38,17 +38,17 @@
 		            }
 		        },
 		        series: [{
-		            name: 'Asignado',
+		            name: 'Saldo',
 		            data: [
-		            	@foreach($movimientos as $empresa=>$valores)
-		            		{{ $valores['asignado'].',' }}
+		            	@foreach($movimientos as $movimiento)
+		            		{{ $movimiento->asignado - $movimiento->consumo .',' }}
 		            	@endforeach
 		            ]
 		        }, {
-		            name: 'Emitido',
+		            name: 'Consumido',
 		            data: [
-		            	@foreach($movimientos as $empresa=>$valores)
-		            		{{ $valores['emitido'].',' }}
+		            	@foreach($movimientos as $movimiento)
+		            		{{ $movimiento->consumo .',' }}
 		            	@endforeach
 		            ]
 		        }]
@@ -62,32 +62,42 @@
 	        chart: {
 	            plotBackgroundColor: null,
 	            plotBorderWidth: null,
-	            plotShadow: false,
-	            type: 'pie'
+	            plotShadow: false
 	        },
-	        credits: false,
+					colors: 
+						['#337ab7', '#5cb85c', '#f7a35c', '#8085e9', '#f15c80', '#e4d354', '#2b908f', '#f45b5b', '#91e8e1'],
 	        title: {
 	            text: ''
 	        },
+	        credits : {
+	        	enabled: false
+	        },
+	        exporting: {
+	        	enabled: false
+	        },
 	        tooltip: {
-	            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+	            pointFormat: '{series.name}: <b>{point.y:,.3f}</b>'
 	        },
 	        plotOptions: {
 	            pie: {
+	            		size: '80%',
 	                allowPointSelect: true,
 	                cursor: 'pointer',
 	                dataLabels: {
-	                    enabled: false
-	                },
-	                showInLegend: true
+	                    enabled: true,
+	                    format: '<b>{point.name}</b>: {point.y:,.3f}',
+	                    style: {
+	                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+	                    }
+	                }
 	            }
 	        },
 	        series: [{
-	            name: "Brands",
-	            colorByPoint: true,
+	            type: 'pie',
+	            name: 'Monto',
 	            data: [
-	            	@foreach($movimientos as $empresa=>$monto)
-	            		{ name: "{{ $empresa }}", y: {{ $monto }}},
+	            	@foreach($movimientos as $movimiento)
+	            		["{{ addslashes($movimiento->razonsocial) }}", {{ $movimiento->consumo}} ],
 	            	@endforeach
 	            ]
 	        }]

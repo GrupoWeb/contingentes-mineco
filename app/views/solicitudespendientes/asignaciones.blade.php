@@ -45,9 +45,14 @@
 						'data-bv-greaterthan-value'     => 0,
 						'data-bv-greaterthan-inclusive' => 'false',
 						'data-bv-greaterthan-message'   => 'El valor debe ser mayor que cero.',
+						'data-bv-lessthan'              =>'true',
+						'data-bv-lessthan-value'        => $maximo,
+						'data-bv-lessthan-inclusive'    => 'true',
+						'data-bv-lessthan-message'      => 'El valor debe ser menor al monto disponible.',
 						'data-bv-notempty-message'      => 'La cantidad es requerida',
 						'data-bv-numeric-message'       => 'El valor debe ser numérico')) }}
 				</div>
+				<p>* Máximo disponible: {{ number_format($maximo, 3) }}</p>
 
 				<h4 class="titulo">Número de Acta</h4>
 				<div class="form-group" id="divActa">

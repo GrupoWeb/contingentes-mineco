@@ -114,7 +114,7 @@ class apiController extends BaseController {
 			$response['error']       = 'Número de NIT no encontrado';
 			return Response::json($response);
 		}
-		$saldo = Movimiento::getSaldo($empresa->usuarioid, Input::get('contingenteid'));
+		$saldo = Movimiento::getSaldo($empresa->empresaid, Input::get('contingenteid'));
 		
 		$response['data'] = $saldo;
 		return Response::json($response);

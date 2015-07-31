@@ -5,32 +5,15 @@
   {{Form::open(array('class'=>'form-horizontal', 'target'=>'_blank', 'id'=>'frmFiltros'))}}
 	  <div class="panel panel-default">
 	    <br>
-	    @if(in_array('solotratados', $filters))
-	      <div class="col-sm-12">
-	        <div class="form-group">
-	          <label class="col-sm-2 control-label" for="tratadoid">Tratados:</label>
-	          <div class="col-sm-10">
-	            <select id="tratadoid" name="tratadoid" class="selectpicker form-control">    
-	              @foreach ($tratados as $tratado)
-	                <option value="{{ Crypt::encrypt($tratado->tratadoid) }}">{{ $tratado->nombrecorto }}</option>
-	              @endforeach
-	            </select>
-	          </div>
-	        </div>
-	      </div>
-	      <div class="col-sm-12">
-	        <div class="form-group">
-	          <label class="col-sm-2 control-label" for="tratadoid">Contingentes:</label>
-	          <div class="col-sm-10"><div id="contingentediv"></div></div>
-	        </div>
-	      </div>
-	    @endif
 	    @if(in_array('tratados', $filters))
 	      <div class="col-sm-12">
 	        <div class="form-group">
 	          <label class="col-sm-2 control-label" for="tratadoid">Tratados:</label>
 	          <div class="col-sm-10">
 	            <select id="tratadoid" name="tratadoid" class="selectpicker form-control">    
+	            	@if(in_array('tratados', $todos))
+	            		<option value="{{Crypt::encrypt('-1')}}">Todos</option>
+	            	@endif
 	              @foreach ($tratados as $tratado)
 	                <option value="{{ Crypt::encrypt($tratado->tratadoid) }}">{{ $tratado->nombrecorto }}</option>
 	              @endforeach
@@ -38,12 +21,18 @@
 	          </div>
 	        </div>
 	      </div>
+	    @endif
+
+	    @if(in_array('contingentes', $filters))
 	      <div class="col-sm-12">
 	        <div class="form-group">
-	          <label class="col-sm-2 control-label" for="tratadoid">Contingentes:</label>
+	          <label class="col-sm-2 control-label" for="contingentes">Contingentes:</label>
 	          <div class="col-sm-10"><div id="contingentediv"></div></div>
 	        </div>
 	      </div>
+	    @endif
+
+	    @if(in_array('empresas', $filters))
 	      <div class="col-sm-12">
 	        <div class="form-group">
 	          <label class="col-sm-2 control-label" for="tratadoid">Empresas:</label>
@@ -51,20 +40,31 @@
 	        </div>
 	      </div>
 	    @endif
+
+	    @if(in_array('periodos', $filters))
+        <div class="col-sm-12">
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="cmbPeriodo">Periodo:</label>
+            <div class="col-sm-10" id="periodosdiv"></div>
+          </div>
+        </div>
+	    @endif
+
 	    @if(in_array('fechaini', $filters))
 	      <div class="col-sm-12">
 	        <div class="form-group">
 	          <label class="col-sm-2 control-label" for="fechaini">Fecha Inicial:</label>
 	          <div class="col-sm-10">
-	            <?php $iniciomes = date('01/m/Y'); ?>
+	            <?php $inicioano = date('01/01/Y'); ?>
 		          <div class="input-group date catalogoFecha">
-		            {{ Form::text('fechaini', $iniciomes , array('class'=>'form-control', 'data-format'=>'dd/MM/yyyy')) }}
+		            {{ Form::text('fechaini', $inicioano , array('class'=>'form-control', 'data-format'=>'dd/MM/yyyy')) }}
 		            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
 		          </div>
 	          </div>
 	        </div>
 	      </div>
 	    @endif
+
 	    @if(in_array('fechafin', $filters))
 	      <div class="col-sm-12">
 	        <div class="form-group">
@@ -79,32 +79,7 @@
 	        </div>
 	      </div>
 	    @endif
-	    @if (in_array('contingentes', $filters))
-	      <div class="col-sm-12">
-	        <div class="form-group">
-	          <label class="col-sm-2 control-label" for="cmbContingente">Contingente:</label>
-	          <div class="col-sm-8">
-	            @include('partials/contingente', array('nombre'=>'cmbContingente','id'=>'cmbContingente','tipo'=>'single'))
-	          </div>
-	        </div>
-	      </div>
-	      @if(in_array('periodos', $filters))
-	        <div class="col-sm-12">
-	          <div class="form-group">
-	            <label class="col-sm-2 control-label" for="cmbPeriodo">Periodo:</label>
-	            <div class="col-sm-10" id="pid"></div>
-	          </div>
-	        </div>
-	      @endif
-	      @if(in_array('empresas', $filters))
-	      <div class="col-sm-12">
-	        <div class="form-group">
-	          <label class="col-sm-2 control-label" for="cmbEmpresa">Empresa:</label>
-	          <div class="col-sm-8" id="eid"></div>
-	        </div>
-	      </div>
-	      @endif
-	    @endif
+
 	    @if(in_array('productos', $filters))
 	      <div class="col-sm-12">
 	        <div class="form-group">
@@ -120,6 +95,7 @@
 	        </div>
 	      </div>
 	    @endif
+
 	    @if(in_array('formato', $filters))
 		    <div class="col-sm-12">
 		      <div class="form-group">
@@ -169,55 +145,48 @@
 
 	    $('.selectpicker').selectpicker();
 
-	    @if(in_array('contingentes', $filters))
-	      $('#cmbContingente').change(function(){
-	        $('#pid').html('<p class="form-control-static"><i class="fa fa-lg fa-spinner fa-pulse"></i></p>');
-	        $('#eid').html('<p class="form-control-static"><i class="fa fa-lg fa-spinner fa-pulse"></i></p>');
-
-	        $.get('cuentacorriente/periodos/' + $(this).find('option:selected').val(), function(data){
-	        	console.log(data);
-            if(data.codigoerror != 0) {
-              alert( "Error: " + data.error);
-              window.location = '/';
-            }
-            else
-	          	$('#pid').html(data.data);
-	        });
-
-	        @if (in_array('empresas', $filters))
-	          $.get('cuentacorriente/empresas/' + $(this).find('option:selected').val(), function(data){
-	            $('#eid').html(data);
-	          });
-	        @endif
-
-	      });
-
-	      $('#cmbContingente').change();
-	    @endif
-
 	    @if(in_array('tratados', $filters))
 	    	$('#tratadoid').change(function(){
-	    		$('#contingentediv').html('<p class="form-control-static"><i class="fa fa-lg fa-spinner fa-pulse"></i></p>');
-	    		$('#empresadiv').html('<p class="form-control-static"><i class="fa fa-lg fa-spinner fa-pulse"></i></p>');
-
-	    		$.get('utilizacion/contingentes/' + $(this).find('option:selected').val(), function(data){
-	          $('#contingentediv').html(data);
-	        });
+	    		@if(in_array('empresas', $filters))
+	    			$('#empresadiv').html('<p class="form-control-static"><i class="fa fa-lg fa-spinner fa-pulse"></i></p>');
+	    		@endif
+	    		@if(in_array('periodos', $filters))
+	    			$('#periodosdiv').html('<p class="form-control-static"><i class="fa fa-lg fa-spinner fa-pulse"></i></p>');
+	    		@endif
+	    		@if(in_array('contingentes', $filters))
+	    			$('#contingentediv').html('<p class="form-control-static"><i class="fa fa-lg fa-spinner fa-pulse"></i></p>');
+	    			$.get('utilizacion/contingentes/' + $(this).find('option:selected').val() + '{{(in_array('contingentes', $todos)?'?todos=1':'')}}', function(data){
+	          	$('#contingentediv').html(data);
+	          	$('#cmbContingente').selectpicker();
+	          	$('#cmbContingente').change();
+	        	});
+	    		@endif
 	    	});
-
 	    	$('#tratadoid').change();
 	    @endif
 
-	    @if(in_array('solotratados', $filters))
-	    	$('#tratadoid').change(function(){
-	    		$('#contingentediv').html('<p class="form-control-static"><i class="fa fa-lg fa-spinner fa-pulse"></i></p>');
+	    @if(in_array('contingentes', $filters))
+	    	$(document).on('change','#cmbContingente', function(){
+	    		console.log('este se dispara');
+	    		@if(in_array('empresas', $filters))
+	    			$('#empresadiv').html('<p class="form-control-static"><i class="fa fa-lg fa-spinner fa-pulse"></i></p>');
+		    		$.get('utilizacion/empresas/' + $(this).find('option:selected').val() + '{{(in_array('empresas', $todos)?'?todos=1':'')}}', function(data){
+	        		$('#empresadiv').html(data);
+	      		});
+      		@endif
+      		
+      		@if(in_array('periodos', $filters))
+		    		$.get('cuentacorriente/periodos/' + $(this).find('option:selected').val() + '{{(in_array('periodos', $todos)?'?todos=1':'')}}', function(data){
+	        		if(data.codigoerror != 0) {
+              	alert( "Error: " + data.error);
+              	window.location = '/';
+	            }
+	            else
+		          	$('#periodosdiv').html(data.data);
+		      		});
+      		@endif
 
-	    		$.get('utilizacion/contingentes/' + $(this).find('option:selected').val(), function(data){
-	          $('#contingentediv').html(data);
-	        });
 	    	});
-
-	    	$('#tratadoid').change();
 	    @endif
 		});
 	</script>
