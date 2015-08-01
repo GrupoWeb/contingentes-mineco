@@ -30,6 +30,11 @@ Route::group(array('before' => array('auth_basic')), function() {
 	Route::get('api/solicitudemision','apiController@solicitudemision');
 });
 
+//FILTROS DE CERTIFICADOS
+Route::get('certificados/contingentes/{id}', 'certificadosController@getcontingentes');
+Route::get('certificados/periodos/{id}', 'certificadosController@getperiodos');
+Route::get('certificados/empresas/{id}', 'certificadosController@getempresas');
+
 
 Route::group(array('before' => array('tratados')), function() {
 	Route::get('c/{id}',array('as'=>'certificados.generar','uses'=>'certificadosController@generarPDF'));
@@ -91,9 +96,18 @@ Route::group(array('before' => array('tratados')), function() {
 		Route::resource('unidadesmedida','unidadesmedidaController');
 		Route::resource('usuarioempresas','usuariosdeempresaController');
 		Route::resource('usuariosextra','usuariosextraController');
+		Route::resource('editardatosempresa', 'editarempresaController');
 
 		//=== CERTIFICADOS
-		Route::resource('certificados', 'certificadosController', array('only'=>array('index','show')));
+		Route::get('certificados', array('as'=>'certificados.index', 'uses'=>'certificadosController@index'));
+
+
+
+
+
+
+
+		//Route::resource('certificados', 'certificadosController', array('only'=>array('index','show')));
 		Route::get('certificados/anular/{id}', array('as'=>'certificados.anular', 'uses'=>'certificadosController@anular'));
 		Route::post('certificados/anular/{id}', array('as'=>'certificados.procesaranulacion', 'uses'=>'certificadosController@procesaranulacion'));
 		Route::get('certificados/liquidar/{id}', array('as'=>'certificados.liquidar', 'uses'=>'certificadosController@liquidar'));

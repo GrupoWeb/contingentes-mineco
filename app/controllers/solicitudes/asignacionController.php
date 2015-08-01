@@ -17,14 +17,14 @@ class asignacionController extends BaseController {
 			Session::flash('message', 'No se ha cumplido con los requerimientos de archivos necesarios');
 			Session::flash('type', 'danger');
 
-			return Redirect::to('/');
+			return Redirect::to('inicio');
 		}
 
 		if($solicitado <= 0) {
 			Session::flash('message', 'El monto solicitado no es correcto');
 			Session::flash('type', 'danger');
 
-			return Redirect::to('/');
+			return Redirect::to('inicio');
 		}
 
 		$query       = DB::select(DB::raw('SELECT getSaldoAsignacion('.$contingente.','.Auth::id().') AS disponible'));
@@ -103,6 +103,6 @@ class asignacionController extends BaseController {
 		Session::flash('message', $message);
 		Session::flash('type', $type);
 
-		return Redirect::to('/');
+		return Redirect::to('inicio');
 	}
 }

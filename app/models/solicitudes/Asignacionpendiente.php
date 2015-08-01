@@ -9,7 +9,7 @@ class Asignacionpendiente extends Eloquent {
 			->select('e.razonsocial AS nombre','u.email','se.created_at', 'se.usuarioid', 'se.solicitado', 
 				't.nombrecorto AS tratado', 't.nombre AS tratadolargo', 
 				'd.nombre AS producto','m.nombrecorto AS unidad', 'e.domiciliocomercial',
-				'e.nit', 'e.telefono',
+				'e.nit', 'e.telefono', 'p.periodoid',
 				DB::raw('(SELECT DATE_ADD(NOW(), INTERVAL t.mesesvalidez MONTH)) AS vencimiento'))
 			->leftJoin('authusuarios AS u', 'se.usuarioid', '=', 'u.usuarioid')
 			->leftJoin('empresas AS e', 'u.empresaid','=','e.empresaid')

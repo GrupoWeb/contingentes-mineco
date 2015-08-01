@@ -25,4 +25,13 @@ class Empresa extends Eloquent {
 			->select('u.activo','u.empresaid')
 			->first();
 	}
+
+	public static function getInfoEmpresa($aEmpresa) {
+		return DB::table('empresas AS e')
+			->select('e.empresaid', 'e.nit', 'e.razonsocial', 'e.propietario', 'e.domiciliofiscal', 
+							  'e.domiciliocomercial', 'e.direccionnotificaciones', 'e.telefono', 'e.fax',
+								'e.encargadoimportaciones', 'codigovupe')
+			->where('e.empresaid', '=', $aEmpresa)
+			->first();
+	}
 }

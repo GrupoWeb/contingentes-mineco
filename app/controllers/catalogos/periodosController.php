@@ -30,6 +30,7 @@ class periodosController extends crudController {
 		Crud::setBotonExtra(array('url'=>'periodospenalizaciones?periodo={id}','icon'=>'glyphicon glyphicon-ban-circle','titulo'=>'Penalizaciones','class'=>'danger'));
 		
 		Crud::setOrderBy(array('columna'=>1,'direccion'=>'desc'));
+		Crud::setOrderBy(array('columna'=>0,'direccion'=>'asc'));
 
 		Crud::setPermisos(Cancerbero::tienePermisosCrud('periodos'));
 	}

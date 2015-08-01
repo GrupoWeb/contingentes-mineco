@@ -29,7 +29,7 @@ class periodospenalizacionesController extends BaseController {
 		$movimiento->tipomovimientoid = DB::table('tiposmovimiento')->where('nombre', 'Penalizaciones')->pluck('tipomovimientoid');
 		$movimiento->periodoid        = $periodoid;
 		$movimiento->cantidad         = (Input::get('txCantidad') * -1);
-		$movimiento->comentario       = Input::get('txComentario');
+		$movimiento->comentario       = 'Penalización: '. trim(Input::get('txComentario'));
 		$movimiento->created_by       = Auth::id();
 		$movimiento->usuarioid        = $usuarioid;
 		$movimiento->save();

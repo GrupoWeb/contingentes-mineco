@@ -26,7 +26,7 @@ class solicitudreinscripcionController extends crudController {
 			Session::flash('message', 'No se ha cumplido con los requerimientos de archivos necesarios');
 			Session::flash('type', 'danger');
 
-			return Redirect::to('/');
+			return Redirect::to('inicio');
 		}
     
 		DB::transaction(function() use($contingenteid) {
@@ -87,6 +87,6 @@ class solicitudreinscripcionController extends crudController {
 		Session::flash('message', 'Su solicitud de inscripción ha sido enviada');
 		Session::flash('type', 'success');
 
-  	return Redirect::to('/');
+  	return Redirect::to('inicio');
   }
 }
