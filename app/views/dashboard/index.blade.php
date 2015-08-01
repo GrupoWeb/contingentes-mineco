@@ -91,7 +91,7 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-            <i class="fa fa-users fa-fw"></i> Mi Empresa
+            <i class="fa fa-users fa-fw"></i> Mi Empresa <span class="pull-right "><a href="/empresaedit/{{$empresa->empresaid}}"><i class="fa fa-pencil"></i>Editar</span></a>
         </div>
         <div class="panel-body">
           <ul class="list-group">
