@@ -84,7 +84,9 @@ class Contingente extends Eloquent {
 		return DB::table('contingentes AS c')
 			->leftJoin('tratados AS t', 'c.tratadoid', '=', 't.tratadoid')
 			->leftJoin('productos AS p', 'c.productoid', '=', 'p.productoid')
+			->leftJoin('authusuarios AS r','c.responsableid','=','r.usuarioid')
 			->selectRaw('CONCAT(t.nombrecorto, " - ", p.nombre) AS nombre')
+			->addSelect('r.nombre AS responsable','r.email AS responsableemail')
 			->where('c.contingenteid', $aContingenteId)
 			->first();
 	}

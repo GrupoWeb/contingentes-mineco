@@ -155,10 +155,22 @@ class inscripcionController extends BaseController {
 		$email    = Input::get('email');
 		$admins   = Usuario::listAdminEmails();
 
+		$contingente = Contingente::getNombre($contingenteid);
+		if($contingente) {
+			$despedida = 'Para mayor información puede escribir a: 
+						<a href="mailto:' . $contingente->responsableemail . '">' . $contingente->responsable . 
+						' &lt;' . $contingente->responsableemail . '&gt;</a> o ingresando a la página web 
+						<a href="' . url() .'">' . url() . '</a>';
+		}
+		else {
+			$despedida = null;
+		}
+
 		try {
 			Mail::send('emails/solicitudinscripcion', array(
 	      'nombre' => Input::get('txRazonSocial'),
-	      'fecha'  => date('d-m-Y H:i')
+	      'fecha'  => date('d-m-Y H:i'),
+	      'despedida' => $despedida
 	      ), function($msg) use ($email, $admins, $empresas){
 	            $msg->to($email)->subject('Solicitud de inscripción');
 	            $msg->bcc($admins);

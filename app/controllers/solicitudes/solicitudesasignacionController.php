@@ -108,6 +108,7 @@ class solicitudesasignacionController extends crudController {
 						'contingente'   => $asignacion->producto,
 						'solicitado'    => $asignacion->solicitado,
 						'asignado'      => $cantidad,
+						'despedida'     => 'Puede ingresar al enlace <a href="' . url() . '">' . url() .'</a> para realizar sus solicitudes de certificados.',
 						'observaciones' => Input::get('txObservaciones')), function($msg) use ($email, $admins, $empresas){
 			       	$msg->to($email)->subject('Solicitud de Asignación DACE - MINECO');
 			       	$msg->cc($empresas);

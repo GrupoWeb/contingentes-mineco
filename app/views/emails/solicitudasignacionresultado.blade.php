@@ -12,7 +12,7 @@
 		<strong>Monto asignado:</strong> {{ number_format($asignado, 3) }}<br />
 	@endif
 	<br />
-	ha sido <h3 style="color: {{ $estado == 'Aprobada' ? 'green' : 'red' }}">{{ $estado }}</h3> 
+	ha sido <span style="text-transform:uppercase; color: {{ $estado == 'Aprobada' ? '#0054a4' : 'red' }}"><strong>{{ $estado }}</strong></span><br> 
 	@if ($observaciones<>'')
 		<strong>Observaciones:</strong><br />
 		{{ $observaciones }}
