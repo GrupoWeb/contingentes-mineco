@@ -214,6 +214,13 @@ class ModulosSeeder extends Seeder {
 			'nombrefriendly' => 'Gráfica utilización de contingentes por empresa'
 		));
 
+		DB::table('authmodulos')->insert(array(
+			'moduloid'       => 36,
+			'nombre'         => 'editardatosempresa',
+			'nombrefriendly' => 'Formulario para editar datos de la empresa'
+		));
+
+
 		DB::table('authmodulos')->update(array('created_at'=>date_create(), 'updated_at'=>date_create()));
 	  DB::statement('SET FOREIGN_KEY_CHECKS=1');
 	}

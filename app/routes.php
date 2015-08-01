@@ -96,6 +96,7 @@ Route::group(array('before' => array('tratados')), function() {
 		Route::resource('unidadesmedida','unidadesmedidaController');
 		Route::resource('usuarioempresas','usuariosdeempresaController');
 		Route::resource('usuariosextra','usuariosextraController');
+		Route::resource('editardatosempresa', 'editarempresaController');
 
 		//=== CERTIFICADOS
 		Route::get('certificados', array('as'=>'certificados.index', 'uses'=>'certificadosController@index'));
