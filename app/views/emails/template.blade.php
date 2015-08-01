@@ -18,11 +18,11 @@
 
 				<p style="font-size:12px;">
 				@if(!isset($despedida))
-				  Para mayor informaci&oacute;n puede escribir a <a href="mailto:{{Config::get('website.email')}}">{{Config::get('website.email')}}</a> 
+				  Para mayor informaci&oacute;n puede escribir a <a href="mailto:{{Config::get('website.email')}}">{{Config::get('website.email')}}</a> o ingresando a la página web <a href="{{url()}}}">{{url()}}</a>
 				@else
 				  {{$despedida}}
 				@endif
-				o ingresando a la página web <a href="{{url()}}}">{{url()}}</a></p>
+				</p>
 				<p style="font-size:12px;">Todas las gestiones que realice a través de este sistema <strong>NO TIENE NINGUN COSTO</strong>
 			</div>
 			&nbsp;
