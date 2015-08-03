@@ -90,7 +90,7 @@ class inscripcionController extends BaseController {
 			Session::flash('message', 'Se dio un error al seleccionar un contingente. Intentalo nuevamente');
 			Session::flash('type', 'danger');
 
-			return Redirect::to('inicio');
+			return Redirect::to('/signup');
 		}
 
 		$contingenteid  = Crypt::decrypt(Input::get('cmbContingente'));
@@ -100,7 +100,7 @@ class inscripcionController extends BaseController {
 			Session::flash('message', 'No se ha cumplido con los requerimientos de archivos necesarios');
 			Session::flash('type', 'danger');
 
-			return Redirect::to('inicio');
+			return Redirect::to('/signup');
 		}
 
 		$nit       = Input::get('txNIT');
@@ -111,7 +111,7 @@ class inscripcionController extends BaseController {
 			Session::flash('message', 'El NIT ya se encuentra registrado en el sistema');
 			Session::flash('type', 'danger');
 
-			return Redirect::to('inicio');
+			return Redirect::to('/signup');
 		}
 
 		DB::transaction(function() use($contingenteid,$nit) {
@@ -155,10 +155,22 @@ class inscripcionController extends BaseController {
 		$email    = Input::get('email');
 		$admins   = Usuario::listAdminEmails();
 
+		$contingente = Contingente::getNombre($contingenteid);
+		if($contingente) {
+			$despedida = 'Para mayor información puede escribir a: 
+						<a href="mailto:' . $contingente->responsableemail . '">' . $contingente->responsable . 
+						' &lt;' . $contingente->responsableemail . '&gt;</a> o ingresando a la página web 
+						<a href="' . url() .'">' . url() . '</a>';
+		}
+		else {
+			$despedida = null;
+		}
+
 		try {
 			Mail::send('emails/solicitudinscripcion', array(
 	      'nombre' => Input::get('txRazonSocial'),
-	      'fecha'  => date('d-m-Y H:i')
+	      'fecha'  => date('d-m-Y H:i'),
+	      'despedida' => $despedida
 	      ), function($msg) use ($email, $admins, $empresas){
 	            $msg->to($email)->subject('Solicitud de inscripción');
 	            $msg->bcc($admins);

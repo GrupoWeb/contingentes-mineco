@@ -15,7 +15,14 @@
 	    <div style="background-color: #d3d7d8; margin: 0 auto 8px auto; width: 90%; max-width: 800px; padding: 18px 10px 18px 10px;">
 				@yield('content')
 				<br />
-				<p style="font-size:12px;">Para mayor informaci&oacute;n puede escribir a <a href="mailto:{{Config::get('website.email')}}">{{Config::get('website.email')}}</a> o dirigiéndose a la página web <a href="{{Config::get('website.url')}}">{{Config::get('website.url')}}</a></p>
+
+				<p style="font-size:12px;">
+				@if(!isset($despedida))
+				  Para mayor informaci&oacute;n puede escribir a <a href="mailto:{{Config::get('website.email')}}">{{Config::get('website.email')}}</a> o ingresando a la página web <a href="{{url()}}}">{{url()}}</a>
+				@else
+				  {{$despedida}}
+				@endif
+				</p>
 				<p style="font-size:12px;">Todas las gestiones que realice a través de este sistema <strong>NO TIENE NINGUN COSTO</strong>
 			</div>
 			&nbsp;

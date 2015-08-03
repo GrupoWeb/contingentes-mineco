@@ -21,6 +21,7 @@ class contingentesController extends crudController {
 		Crud::setLeftJoin('tipotratados AS t', 'contingentes.tipotratadoid', '=', 't.tipotratadoid');
 		Crud::setLeftJoin('unidadesmedida AS u', 'contingentes.unidadmedidaid', '=', 'u.unidadmedidaid');
 		Crud::setLeftJoin('plantillascertificados AS pc', 'contingentes.plantillaid', '=', 'pc.plantillaid');
+		Crud::setLeftJoin('authusuarios AS r','contingentes.responsableid','=','r.usuarioid');
 		Crud::setWhere('tratadoid', $id);
 	
 		Crud::setCampo(array('nombre'=>'Producto','campo'=>'p.nombre', 'editable'=>false));
@@ -36,8 +37,8 @@ class contingentesController extends crudController {
 	 	Crud::setCampo(array('nombre'=>'Texto certificado','campo'=>'textocertificado', 'tipo'=>'textarea', 'show'=>false, 'reglas'=>array('notEmpty'),'reglasmensaje'=>'El texto es requerido'));
 	
 		Crud::setCampo(array('nombre'=>'Normativo', 'campo'=>'contingentes.normativo', 'tipo'=>'file','filepath'=>'/normativos/', 'class'=>'text-center'));	
-
-
+		Crud::setCampo(array('nombre'=>'Responsable', 'campo'=>'r.nombre', 'editable'=>false));
+		Crud::setCampo(array('nombre'=>'Responsable', 'campo'=>'responsableid', 'tipo'=>'combobox', 'query'=>'SELECT nombre, usuarioid FROM authusuarios WHERE rolid IN (' . implode(',', Config::get('contingentes.roldace')) . ') ORDER BY nombre', 'combokey'=>'responsableid', 'editable'=>true, 'show'=>false));
 	 	Crud::setBotonExtra(array('url'=>'contingente/requerimientos/{id}?tratado='.Input::get('tratado'),'icon'=>'glyphicon glyphicon-list-alt','titulo'=>'Requerimientos'));
 	 	Crud::setBotonExtra(array('url'=>'partidasarancelarias?contingente={id}','icon'=>'glyphicon glyphicon-th','titulo'=>'Fracciones arancelarias', 'class'=>'success'));
 

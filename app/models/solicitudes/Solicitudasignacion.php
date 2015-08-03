@@ -2,7 +2,7 @@
 
 class Solicitudasignacion extends Eloquent {
 	protected $table     = 'solicitudasignacion';
-	protected $primryKey = 'solicitudasignacionid';
+	protected $primaryKey = 'solicitudasignacionid';
 
 	public static function getSolicitudes($aContingentes) {
 		return DB::table('solicitudasignacion AS sa')

@@ -68,14 +68,8 @@ class solicitudesemisionController extends crudController {
 
 				$info = Emisionpendiente::getSolicitudPendiente($elID);
 
-				/*$letras = '';
-				try {
-					$objeto = new Numeroaletras($cantidad);
-					$letras = $objeto->getLetras();	
-				} catch (Exception $e) {*/
-					$letras = Components::numeroALetras($cantidad,null, 2);
-				//}
-				
+				$letras = Components::numeroALetras($cantidad,null, 2);
+					
 				$certificado                     = new Certificado;
 				$certificado->tratado            = $info->tratadolargo;
 				$certificado->producto           = $info->producto;
@@ -146,6 +140,7 @@ class solicitudesemisionController extends crudController {
 						'contingente'   => $producto,
 						'solicitado'    => $emision->solicitado,
 						'emitido'       => $cantidad,
+						'despedida'     => 'Puede ingresar al enlace <a href="' . url() . '">' . url() . '</a> para ver el estatus de su cuenta corriente.',
 						'observaciones' => Input::get('txObservaciones')), function($msg) use ($email, $admins, $empresas){
 			       	$msg->to($email)->subject('Certificado DACE - MINECO');
 			       	$msg->cc($empresas);
