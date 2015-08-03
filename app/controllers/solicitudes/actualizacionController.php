@@ -54,7 +54,7 @@ class actualizacionController extends crudController {
 		$empresas = Usuario::listEmpresaEmails(Auth::user()->empresaid, Auth::id());
 
 		try {
-			Mail::send('emails/solicitudactualizacionresultado', array(
+			Mail::send('emails/solicitudactualizacion', array(
 				'nombre'  => Auth::user()->nombre,
 				'empresa' => $empresa->razonsocial, function($msg) use ($admins, $empresas){
 	       	$msg->to(Auth::user()->email)->subject('Solicitud de Actualización DACE - MINECO');
