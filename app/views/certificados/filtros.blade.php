@@ -1,13 +1,19 @@
 @extends('template.template')
 
 @section('content')
+  @if(Session::has('message'))
+    <div class="alert alert-{{ Session::get('type') }} alert-dismissable">
+      {{ Session::get('message') }}
+    </div>
+  @endif
+  
 	<h3 class="text-primary">{{$titulo}}</h3>
 
-	{{Form::open(array('class'=>'form-horizontal', 'target'=>'_blank', 'id'=>'frmFiltros'))}}
+	{{Form::open(array('class'=>'form-horizontal','id'=>'frmFiltros', 'url'=>'certificados', 'target'=>'_blank'))}}
 	  <div class="panel panel-default"><br>
       <div class="col-sm-12">
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="tratadoid">Tratados:</label>
+          <label class="col-sm-2 control-label" for="tratadoid">Tratado:</label>
           <div class="col-sm-10">
             <select id="tratadoid" name="tratadoid" class="selectpicker form-control">    
             	@if(in_array('tratados', $todos))
@@ -22,7 +28,7 @@
       </div> <!-- PERIODOS -->
       <div class="col-sm-12">
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="contingentes">Contingentes:</label>
+          <label class="col-sm-2 control-label" for="contingentes">Contingente:</label>
           <div class="col-sm-10"><div id="contingentediv"></div></div>
         </div>
       </div> <!-- CONTINGENTES -->
@@ -34,7 +40,7 @@
       </div> <!-- PERIODOS -->
       <div class="col-sm-12">
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="tratadoid">Empresas:</label>
+          <label class="col-sm-2 control-label" for="tratadoid">Empresa:</label>
           <div class="col-sm-10"><div id="empresadiv"></div></div>
         </div>
       </div> <!-- EMPRESAS -->
@@ -62,6 +68,13 @@
           </div>
         </div>
       </div> <!-- FECHA FIN -->
+      <div class="col-sm-12">
+        <div class="form-group">
+          <div class="col-sm-10 col-sm-offset-2">
+            {{ Form::submit('Buscar Certificados', array('class'=>'btn btn-success')) }}
+          </div>
+        </div>
+      </div> <!-- GENERAR -->
 			<div class="clearfix"></div>
 	  </div>
 	{{Form::close()}}
@@ -80,28 +93,28 @@
 	    	$('#contingentediv').html('<p class="form-control-static"><i class="fa fa-lg fa-spinner fa-pulse"></i></p>');
 	    	$.get('certificados/contingentes/' + $(this).find('option:selected').val(), function(data) {
 	    		$('#contingentediv').html(data);
-	        $('#cmbContingente').selectpicker();
-	        $('#cmbContingente').change();
+	        $('#contingenteid').selectpicker();
+	        $('#contingenteid').change();
 	    	});
 	    });
 
 	    $('#tratadoid').change();
 
-	    $(document).on('change','#cmbContingente', function(){
+	    $(document).on('change','#contingenteid', function(){
 	    	$('#periodosdiv').html('<p class="form-control-static"><i class="fa fa-lg fa-spinner fa-pulse"></i></p>');
 	    	$.get('certificados/periodos/' + $(this).find('option:selected').val(), function(data) {
 	    		$('#periodosdiv').html(data);
-	        $('#cmbPeriodos').selectpicker();
-	        $('#cmbPeriodos').change();
+	        $('#periodoid').selectpicker();
+	        $('#periodoid').change();
 	    	});
 	    });
 
-	    $(document).on('change','#cmbPeriodos', function(){
+	    $(document).on('change','#periodoid', function(){
 	    	$('#empresadiv').html('<p class="form-control-static"><i class="fa fa-lg fa-spinner fa-pulse"></i></p>');
 
 	    	$.get('certificados/empresas/' + $(this).find('option:selected').val(), function(data) {
 	    		$('#empresadiv').html(data);
-	    		$('#cmbEmpresas').selectpicker();
+	    		$('#empresaid').selectpicker();
 	    	});
 	    });
 

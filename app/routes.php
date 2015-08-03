@@ -99,21 +99,11 @@ Route::group(array('before' => array('tratados')), function() {
 		Route::resource('editardatosempresa', 'editarempresaController');
 
 		//=== CERTIFICADOS
-		Route::get('certificados', array('as'=>'certificados.index', 'uses'=>'certificadosController@index'));
-
-
-
-
-
-
-
-		//Route::resource('certificados', 'certificadosController', array('only'=>array('index','show')));
+		Route::resource('certificados', 'certificadosController',array('only'=>array('index','store')));
 		Route::get('certificados/anular/{id}', array('as'=>'certificados.anular', 'uses'=>'certificadosController@anular'));
 		Route::post('certificados/anular/{id}', array('as'=>'certificados.procesaranulacion', 'uses'=>'certificadosController@procesaranulacion'));
 		Route::get('certificados/liquidar/{id}', array('as'=>'certificados.liquidar', 'uses'=>'certificadosController@liquidar'));
 		Route::post('certificados/liquidar/{id}', array('as'=>'certificados.procesarliquidacion', 'uses'=>'certificadosController@procesarliquidacion'));
-		Route::get('buscarcertificados', array('as'=>'certificados.buscar', 'uses'=>'certificadosController@buscar'));
-
 
 		//=== REPORTES
 		Route::resource('cuentacorriente', 'cuentacorrienteController', array('only'=>array('index','store')));
