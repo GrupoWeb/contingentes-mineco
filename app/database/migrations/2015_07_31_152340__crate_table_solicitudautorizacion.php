@@ -7,8 +7,8 @@ class CrateTableSolicitudautorizacion extends Migration {
 
 	public function up()
 	{
-		Schema::create('solicitudautorizacion', function($table){
-			$table->increments('solicitudautorizacionid');
+		Schema::create('solicitudactualizacion', function($table){
+			$table->increments('actualizacionid');
 			$table->integer('usuarioid')->unsigned();
 			$table->string('nit', 20)->nullable();
 			$table->string('razonsocial');
@@ -28,7 +28,7 @@ class CrateTableSolicitudautorizacion extends Migration {
 	}
 	public function down()
 	{
-		Schema::drop('solicitudautorizacion');
+		Schema::drop('solicitudactualizacion');
 	}
 
 }

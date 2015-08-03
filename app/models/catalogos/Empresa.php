@@ -34,4 +34,17 @@ class Empresa extends Eloquent {
 			->where('e.empresaid', '=', $aEmpresa)
 			->first();
 	}
+
+	public static function getEmpresasPeriodo($aPeriodoid, $aEmpresaId) {
+		$query = DB::table('empresas AS e')
+			->select('e.empresaid', 'e.razonsocial AS nombre')
+			->leftJoin('empresacontingentes AS ec', 'e.empresaid', '=', 'ec.empresaid')
+			->leftJoin('periodos AS p', 'ec.contingenteid', '=', 'p.contingenteid')
+			->where('p.periodoid', $aPeriodoid);
+
+		if($aEmpresaId)
+			$query->where('e.empresaid', $aEmpresaId);
+
+		return	$query->get();
+	}
 }
