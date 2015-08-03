@@ -4,7 +4,7 @@
   {{ HTML::style('packages/csgt/components/css/bootstrap-fileinput.min.css') }}
   {{ HTML::script('packages/csgt/components/js/bootstrap-fileinput.min.js') }}
 
-  {{Form::open(array('id'=>'frmRegistro','class'=>'form-horizontal', 'files'=>true, 'url'=>'solicitud/actualizacion')) }}
+  {{Form::open(array('id'=>'frmRegistro', 'class'=>'form-horizontal', 'files'=>true, 'url'=>'solicitud/actualizacion')) }}
 
   <div class="contenido">
       <h1 class="titulo">Actualizar datos</h1>

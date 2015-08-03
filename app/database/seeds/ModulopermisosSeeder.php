@@ -922,6 +922,18 @@
 				'moduloid'        => 37,
 				'permisoid' 			=> 7
 			));
+
+			DB::table('authmodulopermisos')->insert(array(
+				'modulopermisoid'	=> 171,
+				'moduloid'        => 38,
+				'permisoid' 			=> 1
+			));
+
+			DB::table('authmodulopermisos')->insert(array(
+				'modulopermisoid'	=> 172,
+				'moduloid'        => 38,
+				'permisoid' 			=> 7
+			));
 		
 
 		  DB::table('authmodulopermisos')->update(array('created_at'=>date_create(), 'updated_at'=>date_create()));

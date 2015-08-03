@@ -98,6 +98,7 @@ Route::group(array('before' => array('tratados')), function() {
 		Route::resource('unidadesmedida','unidadesmedidaController');
 		Route::resource('usuarioempresas','usuariosdeempresaController');
 		Route::resource('usuariosextra','usuariosextraController');
+		Route::resource('periodoconstancias', 'periodoconstanciasController', array('only'=>array('index','show')));
 
 		//=== CERTIFICADOS
 		Route::resource('certificados', 'certificadosController',array('only'=>array('index','store')));
