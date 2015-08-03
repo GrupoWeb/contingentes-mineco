@@ -19,6 +19,6 @@ return array(
 		'productos','requerimientos','solicitud','', 'unidadesmedida','inicio', 
 		'usuarios', 'usuarioempresas', 'roles','cuentacorrienteempresas','usuariosextra',
 		'utilizacion','utilizacionporempresa','utilizacionporempresagrafica','consolidadoutilizacion',
-		'buscarcertificados', 'certificados','editardatosempresa'),
+		'buscarcertificados', 'certificados'),
 	'variospaises'    => 8,
 );

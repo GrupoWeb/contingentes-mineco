@@ -216,10 +216,15 @@ class ModulosSeeder extends Seeder {
 
 		DB::table('authmodulos')->insert(array(
 			'moduloid'       => 36,
-			'nombre'         => 'editardatosempresa',
-			'nombrefriendly' => 'Formulario para editar datos de la empresa'
+			'nombre'         => 'solicitud.actualizacion',
+			'nombrefriendly' => 'Solicitud actualizacion'
 		));
 
+		DB::table('authmodulos')->insert(array(
+			'moduloid'       => 37,
+			'nombre'         => 'solicitudespendientes.actualizacion',
+			'nombrefriendly' => 'Solicitudes pendientes actualizacion'
+		));
 
 		DB::table('authmodulos')->update(array('created_at'=>date_create(), 'updated_at'=>date_create()));
 	  DB::statement('SET FOREIGN_KEY_CHECKS=1');

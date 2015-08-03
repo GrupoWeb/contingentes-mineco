@@ -887,7 +887,6 @@
 				'permisoid' 			=> 3
 			));
 
-		
 			DB::table('authmodulopermisos')->insert(array(
 				'modulopermisoid'	=> 161,
 				'moduloid'        => 36,
@@ -895,38 +894,32 @@
 			));
 		
 			DB::table('authmodulopermisos')->insert(array(
-				'modulopermisoid'	=> 162,
-				'moduloid'        => 36,
-				'permisoid' 			=> 2
-			));
-		
-			DB::table('authmodulopermisos')->insert(array(
 				'modulopermisoid'	=> 163,
 				'moduloid'        => 36,
 				'permisoid' 			=> 3
 			));
-		
+
 			DB::table('authmodulopermisos')->insert(array(
 				'modulopermisoid'	=> 164,
-				'moduloid'        => 36,
-				'permisoid' 			=> 4
+				'moduloid'        => 37,
+				'permisoid' 			=> 1
 			));
-		
-			DB::table('authmodulopermisos')->insert(array(
-				'modulopermisoid'	=> 165,
-				'moduloid'        => 36,
-				'permisoid' 			=> 5
-			));
-		
+
 			DB::table('authmodulopermisos')->insert(array(
 				'modulopermisoid'	=> 166,
-				'moduloid'        => 36,
-				'permisoid' 			=> 6
+				'moduloid'        => 37,
+				'permisoid' 			=> 3
 			));
-		
+
 			DB::table('authmodulopermisos')->insert(array(
 				'modulopermisoid'	=> 167,
-				'moduloid'        => 36,
+				'moduloid'        => 37,
+				'permisoid' 			=> 4
+			));
+
+			DB::table('authmodulopermisos')->insert(array(
+				'modulopermisoid'	=> 170,
+				'moduloid'        => 37,
 				'permisoid' 			=> 7
 			));
 		
