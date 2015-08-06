@@ -12,24 +12,24 @@
 			</tr>
 			<tr>
 				@if($esasignacion==1)
-					<th>Asignado</th>
-					<th>Adjudicado</th>
-					<th>Saldo</th>
+					<th class="text-center">Asignado</th>
+					<th class="text-center">Adjudicado</th>
+					<th class="text-center">Saldo</th>
 				@else
 					<th colspan="3">Adjudicado</th>
 				@endif
-				<th>No.</th>
-				<th>Fecha</th>
-				<th>Fracción</th>
-				<th>Venicimiento</th>
-				<th>TM</th>
-				<th>Fecha</th>
-				<th>DUA</th>
-				<th>TM</th>
-				<th>Variación</th>
-				<th>%</th>
-				<th>CIF</th>
-				<th>$/TM</th>
+				<th class="text-center">No.</th>
+				<th class="text-center">Fecha</th>
+				<th class="text-center">Fracción</th>
+				<th class="text-center">Venicimiento</th>
+				<th class="text-center">TM</th>
+				<th class="text-center">Fecha</th>
+				<th class="text-center">DUA</th>
+				<th class="text-center">TM</th>
+				<th class="text-center">Variación</th>
+				<th class="text-center">%</th>
+				<th class="text-center">CIF</th>
+				<th class="text-center">$/TM</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -68,19 +68,20 @@
 							@if ($i>1) 
 								{{'<tr>'}} 
 							@endif
-								<td>{{ $movimiento['certificado']  }}</td>
-								<td>{{ $movimiento['fecha'] }}</td>
-								<td>{{ $movimiento['fraccion'] }}</td>
-								<td>{{ $movimiento['fechavencimiento'] }}</td>
+								<?php $variacion = $movimiento['cantidad'] - $movimiento['real']; ?>
+								<td class="text-right">{{ $movimiento['certificado']  }}</td>
+								<td class="text-right">{{ $movimiento['fecha'] }}</td>
+								<td class="text-right">{{ $movimiento['fraccion'] }}</td>
+								<td class="text-right">{{ $movimiento['fechavencimiento'] }}</td>
 								<td class="text-right">{{ number_format($movimiento['cantidad'], 3) }}</td>
 								@if($movimiento['dua'] <> '')
-									<td>{{ $movimiento['fechaliquidacion'] }}</td>
-									<td>{{ $movimiento['dua'] }}</td>
-									<td>{{ number_format($movimiento['real'], 3) }}</td>
-									<td>{{ $movimiento['variacion'] }}</td>
-									<td>{{ number_format((($movimiento['real'] * 100)/$movimiento['cantidad']), 2) }}</td>
-									<td>{{ number_format($movimiento['cif'], 2) }}</td>
-									<td>{{ $movimiento['real'] <> 0 ? (number_format(($movimiento['cif']/$movimiento['real']), 2)) : '0.00' }}</td>
+									<td class="text-right">{{ $movimiento['fechaliquidacion'] }}</td>
+									<td class="text-right">{{ $movimiento['dua'] }}</td>
+									<td class="text-right">{{ number_format($movimiento['real'], 3) }}</td>
+									<td class="text-right">{{ number_format($variacion, 3)  }}</td>
+									<td class="text-right">{{ number_format((($variacion * 100)/$movimiento['real']), 3) }}</td>
+									<td class="text-right">{{ number_format($movimiento['cif'], 2) }}</td>
+									<td class="text-right">{{ $movimiento['real'] <> 0 ? (number_format(($movimiento['cif']/$movimiento['real']), 2)) : '0.00' }}</td>
 								@else
 									<td>&nbsp;</td>
 									<td>&nbsp;</td>
