@@ -72,9 +72,12 @@ class solicitudesasignacionController extends crudController {
 			
 			//TRANSACTION ===
 			$asignacion = DB::transaction(function() use($elID, $cantidad, $comentario, $asignacion) {
+				$acta = Input::get('txActa');
+
 				$asignacion->asignado      = $cantidad;
 				$asignacion->observaciones = $comentario;
 				$asignacion->estado        = 'Aprobada';
+				$asignacion->acta          = $acta;
 				$result                    = $asignacion->save();
 
 				$movimiento                   = new Movimiento;
@@ -84,7 +87,7 @@ class solicitudesasignacionController extends crudController {
 				$movimiento->comentario       = $comentario;
 				$movimiento->created_by       = Auth::id();
 				$movimiento->tipomovimientoid = DB::table('tiposmovimiento')->where('nombre', 'Asignación')->pluck('tipomovimientoid');
-				$movimiento->acta             = Input::get('txActa');
+				$movimiento->acta             = $acta;
 				$result2                      = $movimiento->save();
 
 				return $asignacion;
