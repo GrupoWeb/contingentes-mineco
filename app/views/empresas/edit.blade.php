@@ -16,7 +16,7 @@
         <div class="form-group">
           <label for="txNombre" class="col-sm-2 control-label">Representante Legal</label>
           <div class="col-sm-10">
-            {{ Form::text('txPropietario', ($data ? $data->razonsocial : ''), array('class'=>'form-control', 
+            {{ Form::text('txPropietario', ($data ? $data->propietario : ''), array('class'=>'form-control', 
               'data-bv-notEmpty'         =>'true',
               'data-bv-notEmpty-message' => 'El representante legal es requerido',
               'autocomplete'             => 'off',
@@ -98,9 +98,9 @@
       <!--encargado -->
       <div class="col-md-6">
         <div class="form-group">
-          <label for="txNombre" class="col-sm-4 control-label">Propietario</label>
+          <label for="txNombre" class="col-sm-4 control-label">Encargado</label>
           <div class="col-sm-8">
-            {{ Form::text('txEncargadoImportaciones', $data->propietario, array('class'=>'form-control', 
+            {{ Form::text('txEncargadoImportaciones', $data->encargadoimportaciones, array('class'=>'form-control', 
               'data-bv-notEmpty'         =>'true',
               'data-bv-notEmpty-message' => 'El nombre del contacto es requerido',
               'autocomplete'             => 'off',
@@ -125,6 +125,9 @@
 
       <div class="col-md-12">
         <h4 class="titulo">Adjuntar documentos</h4>
+      </div>
+      <div class="col-md-12">
+        <p>*NOTA: Para poder realizar los cambios requeridos es necesario adjuntar los documentos que respandan el cambio.</p>
       </div>
       <div class="col-md-12">
         <a href="javascript:void(0);" class="btn btn-primary agregar pull-right">Agregar</a>
