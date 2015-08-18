@@ -10,7 +10,7 @@
 	        <div class="form-group">
 	          <label class="col-sm-2 control-label" for="tratadoid">Tratados:</label>
 	          <div class="col-sm-10">
-	            <select id="tratadoid" name="tratadoid" class="selectpicker form-control">    
+	            <select id="tratadoid" name="tratadoid" class="selectize form-control" data-bv-notEmpty="true" data-bv-notEmpty-message="Campo requerido">    
 	            	@if(in_array('tratados', $todos))
 	            		<option value="{{Crypt::encrypt('-1')}}">Todos</option>
 	            	@endif
@@ -85,7 +85,7 @@
 	        <div class="form-group">
 	          <label class="col-sm-2 control-label" for="productoid">Productos:</label>
 	          <div class="col-sm-10">
-	            <select name="productoid" class="selectpicker">    
+	            <select name="productoid" class="selectize">    
 	              <option value="0">(Todos)</option>       
 	              @foreach ($productos as $producto)
 	                <option value="{{ $producto->productoid }}">{{$producto->nombre}}</option>
@@ -137,13 +137,24 @@
 
 	<script type="text/javascript">
 		$(function() {
+
+			$('#frmFiltros').bootstrapValidator({
+        excluded: [':disabled'],
+        feedbackIcons: {
+          valid: '',
+          invalid: '',
+          validating: ''
+        }
+      });
+
 			$('.catalogoFecha').datetimepicker({
 				locale: 'es',
         format : 'DD/MM/YYYY',
 				useCurrent: true
 			});
 
-	    $('.selectpicker').selectpicker();
+	    //$('.selectpicker').selectize();
+	    $('.selectize').selectize();
 
 	    @if(in_array('tratados', $filters))
 	    	$('#tratadoid').change(function(){
@@ -154,12 +165,15 @@
 	    			$('#periodosdiv').html('<p class="form-control-static"><i class="fa fa-lg fa-spinner fa-pulse"></i></p>');
 	    		@endif
 	    		@if(in_array('contingentes', $filters))
-	    			$('#contingentediv').html('<p class="form-control-static"><i class="fa fa-lg fa-spinner fa-pulse"></i></p>');
-	    			$.get('utilizacion/contingentes/' + $(this).find('option:selected').val() + '{{(in_array('contingentes', $todos)?'?todos=1':'')}}', function(data){
-	          	$('#contingentediv').html(data);
-	          	$('#cmbContingente').selectpicker();
-	          	$('#cmbContingente').change();
-	        	});
+	    			if($(this).find('option:selected').val() != '') {
+		    			$('#contingentediv').html('<p class="form-control-static"><i class="fa fa-lg fa-spinner fa-pulse"></i></p>');
+		    			$.get('utilizacion/contingentes/' + $(this).find('option:selected').val() + '{{(in_array('contingentes', $todos)?'?todos=1':'')}}', function(data){
+		          	$('#contingentediv').html(data);
+		          	$('#cmbContingente').selectize();
+		          	$('#frmFiltros').bootstrapValidator('addField', $('#cmbContingente'));
+		          	$('#cmbContingente').change();
+		        	});
+		        }
 	    		@endif
 	    	});
 	    	$('#tratadoid').change();
@@ -167,25 +181,30 @@
 
 	    @if(in_array('contingentes', $filters))
 	    	$(document).on('change','#cmbContingente', function(){
-	    		console.log('este se dispara');
-	    		@if(in_array('empresas', $filters))
-	    			$('#empresadiv').html('<p class="form-control-static"><i class="fa fa-lg fa-spinner fa-pulse"></i></p>');
-		    		$.get('utilizacion/empresas/' + $(this).find('option:selected').val() + '{{(in_array('empresas', $todos)?'?todos=1':'')}}', function(data){
-	        		$('#empresadiv').html(data);
-	      		});
-      		@endif
-      		
-      		@if(in_array('periodos', $filters))
-		    		$.get('cuentacorriente/periodos/' + $(this).find('option:selected').val() + '{{(in_array('periodos', $todos)?'?todos=1':'')}}', function(data){
-	        		if(data.codigoerror != 0) {
-              	alert( "Error: " + data.error);
-              	window.location = '/';
-	            }
-	            else
-		          	$('#periodosdiv').html(data.data);
+	    		if($(this).find('option:selected').val() != '') {
+		    		@if(in_array('empresas', $filters))
+		    			$('#empresadiv').html('<p class="form-control-static"><i class="fa fa-lg fa-spinner fa-pulse"></i></p>');
+			    		$.get('utilizacion/empresas/' + $(this).find('option:selected').val() + '{{(in_array('empresas', $todos)?'?todos=1':'')}}', function(data){
+		        		$('#empresadiv').html(data);
+		        		$('#cmbEmpresa').selectize();
+		        		$('#frmFiltros').bootstrapValidator('addField', $('#cmbEmpresa'));
 		      		});
-      		@endif
-
+	      		@endif
+	      		
+	      		@if(in_array('periodos', $filters))
+			    		$.get('cuentacorriente/periodos/' + $(this).find('option:selected').val() + '{{(in_array('periodos', $todos)?'?todos=1':'')}}', function(data){
+		        		if(data.codigoerror != 0) {
+	              	alert( "Error: " + data.error);
+	              	window.location = '/';
+		            }
+		            else {
+			          	$('#periodosdiv').html(data.data);
+			          	$('#cmbPeriodo').selectize();
+			          	$('#frmFiltros').bootstrapValidator('addField', $('#cmbPeriodo'));
+		            }
+			      	});
+	      		@endif
+	      	}
 	    	});
 	    @endif
 		});
