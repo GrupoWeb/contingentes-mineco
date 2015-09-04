@@ -77,7 +77,7 @@
 	</tr>
 	<tr>
 		<td class="center border">{{ $datos->volumen }}</td>
-		<td class="center border">{{ $datos->volumenletras }}</td>
+		<td class="center border" style="font-size: 9px;">{{ $datos->volumenletras }}</td>
 		<td class="center border">{{ $datos->unidades }}</td>
 		<td class="center border">+/- {{ $datos->variacion }}%</td>
 	</tr>
