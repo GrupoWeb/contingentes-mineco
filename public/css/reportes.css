@@ -1,4 +1,4 @@
-body {
+/*body {
 	padding-top: 160px;
 }
 
@@ -13,3 +13,5 @@ body {
 	background-color: #fff;
 }
 
+Esto va dentro del div table
+class= "table table-striped table-bordered table-condensed"

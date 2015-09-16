@@ -77,6 +77,7 @@ Route::group(array('before' => array('tratados')), function() {
 		Route::resource('historicosolicitudes/inscripcion', 'historicoinscripcionesController');
 		Route::resource('historicosolicitudes/asignacion', 'historicoasignacionesController');
 		Route::resource('historicosolicitudes/emision', 'historicoemisionesController');
+		Route::resource('historicosolicitudes/actualizacion', 'historicoactualizacionController');
 		Route::get('historicosolicitudes/inscripcion/archivos/{id}', array('as'=>'historicosolicitudes.inscripcion.archivos','uses'=>'historicoinscripcionesController@archivos'));
 		Route::get('historicosolicitudes/asignacion/archivos/{id}', array('as'=>'historicosolicitudes.asignacion.archivos','uses'=>'historicoasignacionesController@archivos'));
 		Route::get('historicosolicitudes/emision/archivos/{id}', array('as'=>'historicosolicitudes.emision.archivos','uses'=>'historicoemisionesController@archivos'));
