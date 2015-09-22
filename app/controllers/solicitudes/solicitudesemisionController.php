@@ -37,7 +37,7 @@ class solicitudesemisionController extends crudController {
 		$solicitud 			= Emisionpendiente::getSolicitudPendiente(Crypt::decrypt($id));
 		$requerimientos = Solicitudemisionrequerimiento::getEmisionRequerimientos(Crypt::decrypt($id));
 		$usuario        = Usuario::find($solicitud->usuarioid);
-		$query          = DB::select(DB::raw('SELECT getSaldo('.$solicitud->contingenteid.', '.$usuario->empresaid.') AS disponible'));
+		$query          = DB::select(DB::raw('SELECT getSaldoPeriodo('.$solicitud->periodoid.', '.$usuario->empresaid.') AS disponible'));
 		$disponible     = $query[0]->disponible;
 
 		return View::make('solicitudespendientes/emisiones')
@@ -60,10 +60,20 @@ class solicitudesemisionController extends crudController {
 		if(Input::has('btnAutorizar')) {
 			$cantidad   = Input::get('txCantidad');
 			$comentario = Input::get('txObservaciones');
+			$emision    = Emisionpendiente::find($elID);
+			$usuario    = Usuario::find($emision->usuarioid);
+			$query      = DB::select(DB::raw('SELECT getSaldoPeriodo('.$emision->periodoid.', '.$usuario->empresaid.') AS disponible'));
+			$disponible = $query[0]->disponible;
+
+			if($cantidad > $disponible){
+				Session::flash('type','danger');
+				Session::flash('message','No es posible procesar la solicitud ya que el monto disponible no es suficiente');
+				return Redirect::route('solicitudespendientes.asignacion.index');
+			}
 			
 			//TRANSACTION ===
-			$result = DB::transaction(function() use ($elID, $cantidad, $comentario) {
-				$emision                = Emisionpendiente::find($elID);
+			$result = DB::transaction(function() use ($elID, $cantidad, $comentario, $emision) {
+				
 				$emision->emitido       = $cantidad;
 				$emision->observaciones = $comentario;
 				$emision->estado        = 'Aprobada';
