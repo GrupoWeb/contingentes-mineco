@@ -48,10 +48,11 @@
 						'data-bv-greaterthan'           => 'true',
 						'data-bv-greaterthan-value'     => 0,
 						'data-bv-greaterthan-inclusive' => 'false',
-
-						'data-bv-lessthan-value'        => $disponible,
-						'data-bv-lessthan-inclusive'    => true,
 						'data-bv-greaterthan-message'   => 'El valor debe ser mayor que cero.',
+						'data-bv-lessthan'              => 'true',
+						'data-bv-lessthan-value'        => $disponible,
+						'data-bv-lessthan-inclusive'    => 'true',
+						'data-bv-lessthan-message'      => 'El valor no puede ser mayor al monto disponible.',
 						'data-bv-notempty-message'      => 'La cantidad es requerida',
 						'data-bv-numeric-message'       => 'El valor debe ser numérico')) }}
 				</div>
@@ -66,7 +67,11 @@
 				  	data-bv-notempty="true"
 				  	data-bv-notempty-message="La observación es requerida para rechazos"></textarea>
 				</div>
-				<button type="submit" class="btn btn-success-mineco" name="btnAutorizar" value="1" id="btnAutorizar" autocomplete="off">Autorizar</button>
+				@if($disponible >= $solicitud->solicitado)
+					<button type="submit" class="btn btn-success-mineco" name="btnAutorizar" value="1" id="btnAutorizar" autocomplete="off">Autorizar</button>
+				@else
+					<p class="text-danger">El monto solicitado sobrepasa la cantidad disponible</p><br />
+				@endif
 				<button type="submit" class="btn btn-danger-mineco" name="btnRechazar" value="1" id="btnRechazar" autocomplete="off">Rechazar</button>
 				{{Form::hidden('id',Request::segment(3))}}
 			{{Form::close()}}
