@@ -96,7 +96,7 @@ class utilizacionController extends BaseController {
   }
 
   public function getContingentes($id) {
-    $id = Crypt::decrypt($id);
+    $id        = Crypt::decrypt($id);
     $empresaid = Auth::user()->empresaid;
 
     if ($empresaid) 

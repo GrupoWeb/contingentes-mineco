@@ -1,8 +1,11 @@
 @extends('template/template')
 
 @section('content')
+  {{ HTML::style('packages/csgt/components/css/bootstrap-fileinput.min.css') }}
+  {{ HTML::script('packages/csgt/components/js/bootstrap-fileinput.min.js') }}
+
 	<h3 class="text-primary">Asignación de cuotas para períodos</h3>
-	{{ Form::open(array('url'=>'periodosasignaciones?periodo='.$periodoid, 'class'=>'form-horizontal', 'id'=>'frmAsignacion')) }}
+	{{ Form::open(array('url'=>'periodosasignaciones?periodo='.$periodoid, 'class'=>'form-horizontal', 'id'=>'frmAsignacion', 'files'=>true)) }}
 		<div class="form-group col-sm-6">
       <label for="txPeriodo" class="col-sm-4 control-label">Período:</label>
       <div class="col-sm-8">
@@ -34,6 +37,13 @@
       </div>
     </div>
     <div class="clearfix"></div>
+    <div class="form-group"> 
+      <label for="txCantidad" class="col-sm-2 control-label">Constancia:</label>
+      <div class="col-sm-10">
+        <input type="file" class="file form-control" name="constancia" />
+      </div>
+    </div>
+    <div class="clearfix"></div>
 		<div class="form-group">
       <label for="txComentario" class="col-sm-2 control-label">Comentario:</label>
       <div class="col-sm-10">
@@ -58,6 +68,18 @@
 	        validating: 'glyphicon glyphicon-refresh'
 	      }
 	  });
+
+    $('.file').fileinput({
+      browseLabel: "Buscar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
+      browseClass: "btn btn-default",
+      showPreview: false,
+      showRemove:  false,
+      showUpload:  false,
+      allowedFileExtensions: ['jpg', 'png', 'pdf'],
+      msgInvalidFileExtension: 'Solo se permiten archivos jpg, png o pdf',
+      msgValidationError : 'Solo se permiten archivos jpg, png o pdf',
+    });
+
 	});
 	</script>
 @stop

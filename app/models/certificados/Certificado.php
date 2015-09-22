@@ -31,4 +31,40 @@ class Certificado extends Eloquent {
 			->where('certificadoid', $aCertificadoId)
 			->pluck('real');
 	}
+
+	public static function getCertificados($aTratadoId, $aContingenteId, $aPeridoId, $aEmpresaId, $aFechaInicio, $aFechaFin) {
+		$query = DB::table('certificados AS c')
+			->select('c.certificadoid','c.numerocertificado', 'c.fecha', 'c.nombre',
+  			'c.volumen', 'c.anulado', 'm.comentario',
+  			DB::raw("IF(c.fechaliquidacion IS NULL, 0, 1) AS liquidado"))
+			->leftJoin('movimientos AS m', 'c.certificadoid', '=', 'm.certificadoid');
+
+		if($aTratadoId <> -1 || $aContingenteId <> -1 || $aPeridoId <> -1) {
+			$query->leftJoin('periodos AS p', 'm.periodoid', '=', 'p.periodoid')
+				->leftJoin('contingentes AS co', 'p.contingenteid', '=', 'co.contingenteid')
+				->leftJoin('tratados AS t', 'co.tratadoid', '=', 't.tratadoid');
+
+			if($aTratadoId <> -1)
+				$query->where('t.tratadoid', $aTratadoId);
+
+			if($aContingenteId <> -1)
+				$query->where('co.contingenteid', $aContingenteId);
+
+			if($aPeridoId <> -1)
+				$query->where('p.periodoid', $aPeridoId);
+		}
+
+		if($aEmpresaId <> -1) {
+			$query->leftJoin('authusuarios AS u', 'c.usuarioid', '=', 'u.usuarioid')
+				->leftJoin('empresas AS e', 'u.empresaid', '=', 'e.empresaid');
+
+			$query->where('e.empresaid', $aEmpresaId);
+		}
+
+		$query->whereBetween('c.fecha', array($aFechaInicio, $aFechaFin));
+
+		return $query->get();
+
+  
+	}
 }

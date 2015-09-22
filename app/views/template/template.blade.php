@@ -20,6 +20,8 @@
 	{{ HTML::style('packages/csgt/components/css/bootstrapValidator.min.css'); }}
 	{{ HTML::style('packages/csgt/components/css/font-awesome.min.css'); }}
 	{{ HTML::style('css/dace.css') }}
+	{{ HTML::style('css/selectize.css') }}
+	{{ HTML::style('css/selectize.bootstrap3.css') }}
 
 	{{ HTML::script('packages/csgt/components/js/jquery.min.js'); }}
 	{{ HTML::script('packages/csgt/components/js/moment-with-locales.min.js'); }}
@@ -30,6 +32,7 @@
 	{{ HTML::script('packages/csgt/components/js/dataTables.bootstrap.js'); }}
 	{{ HTML::script('packages/csgt/components/js/dataTables.tableTools.min.js'); }}
 	{{ HTML::script('packages/csgt/components/js/bootstrapValidator.min.js'); }}
+	{{ HTML::script('js/selectize.min.js'); }}
 	
 	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!--[if lt IE 9]>

@@ -214,6 +214,30 @@ class ModulosSeeder extends Seeder {
 			'nombrefriendly' => 'Gráfica utilización de contingentes por empresa'
 		));
 
+		DB::table('authmodulos')->insert(array(
+			'moduloid'       => 36,
+			'nombre'         => 'solicitud.actualizacion',
+			'nombrefriendly' => 'Solicitud actualizacion'
+		));
+
+		DB::table('authmodulos')->insert(array(
+			'moduloid'       => 37,
+			'nombre'         => 'solicitudespendientes.actualizacion',
+			'nombrefriendly' => 'Solicitudes pendientes actualizacion'
+		));
+
+		DB::table('authmodulos')->insert(array(
+			'moduloid'       => 38,
+			'nombre'         => 'periodoconstancias',
+			'nombrefriendly' => 'Periodo constancias'
+		));
+
+		DB::table('authmodulos')->insert(array(
+			'moduloid'       => 39,
+			'nombre'         => 'historicosolicitudes.actualizacion',
+			'nombrefriendly' => 'Histórico de Actualizaciones'
+		));
+
 		DB::table('authmodulos')->update(array('created_at'=>date_create(), 'updated_at'=>date_create()));
 	  DB::statement('SET FOREIGN_KEY_CHECKS=1');
 	}

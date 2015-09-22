@@ -13,8 +13,8 @@
 		<strong>Monto emitido:</strong> {{ number_format($emitido, 3) }}<br />
 	@endif
 	<br />
-	Ha sido <h3 style="color: {{ $estado == 'Aprobada' ? 'green' : 'red' }}">{{ $estado }}</h3>
-
+	Ha sido <span style="text-transform:uppercase; color: {{ $estado == 'Aprobada' ? '#0054a4' : 'red' }}"><strong>{{ $estado }}</strong></span><br> 
+	<br>
 	@if(1 == 2)
 		<p><a href="{{ $url }}">Presiona aquí para descargar el certificado en PDF.</a></p>
 	@endif

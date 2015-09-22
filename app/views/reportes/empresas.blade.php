@@ -9,8 +9,8 @@
 	@foreach($datos as $tratado => $contingentes)
 		<h4 class="titulo">{{ $tratado }}</h4>
 		
-		<table class="table table-bordered table-condensed">
-	  	<thead>
+		<table class="table table-striped table-bordered blue">
+	  	<thead class="">
 	  		<th>Nombre</th>
 	  		<th>NIT</th>
 	  		<th>Domicilio comercial</th>
@@ -24,13 +24,13 @@
 				  		<td>{{ $empresa['empresa'] }}</td>
 				  		<td>{{ $empresa['nit'] }}</td>
 				  		<td>{{ $empresa['domiciliocomercial'] }}</td>
-				  		<td class="text-right">{{ $empresa['telefono'] }}</td>
-				  		<td class="text-right">{{ $empresa['fechainscripcion'] }}</td>
+				  		<td class="text-center">{{ $empresa['telefono'] }}</td>
+				  		<td class="text-center">{{ $empresa['fechainscripcion'] }}</td>
 				  	</tbody>
 					@endforeach
 						<tr>
-							<td colspan="4" class="text-right"><strong>TOTAL</strong></td>
-							<td class="text-right"><strong>{{ number_format(count($empresas['empresas'])) }}</strong></td>
+							<td colspan="4" class="text-center"><strong>TOTAL</strong></td>
+							<td class="text-center"><strong>{{ number_format(count($empresas['empresas'])) }}</strong></td>
 						</tr>
 			@endforeach
 		</table>

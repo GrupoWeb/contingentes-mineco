@@ -36,10 +36,14 @@ class solicitudesemisionController extends crudController {
 	public function edit($id) {
 		$solicitud 			= Emisionpendiente::getSolicitudPendiente(Crypt::decrypt($id));
 		$requerimientos = Solicitudemisionrequerimiento::getEmisionRequerimientos(Crypt::decrypt($id));
+		$usuario        = Usuario::find($solicitud->usuarioid);
+		$query          = DB::select(DB::raw('SELECT getSaldoPeriodo('.$solicitud->periodoid.', '.$usuario->empresaid.') AS disponible'));
+		$disponible     = $query[0]->disponible;
 
 		return View::make('solicitudespendientes/emisiones')
 			->with('solicitud',$solicitud)
-			->with('requerimientos',$requerimientos);
+			->with('requerimientos',$requerimientos)
+			->with('disponible', $disponible);
 	}
 
 	public function store() {
@@ -56,10 +60,20 @@ class solicitudesemisionController extends crudController {
 		if(Input::has('btnAutorizar')) {
 			$cantidad   = Input::get('txCantidad');
 			$comentario = Input::get('txObservaciones');
+			$emision    = Emisionpendiente::find($elID);
+			$usuario    = Usuario::find($emision->usuarioid);
+			$query      = DB::select(DB::raw('SELECT getSaldoPeriodo('.$emision->periodoid.', '.$usuario->empresaid.') AS disponible'));
+			$disponible = $query[0]->disponible;
+
+			if($cantidad > $disponible){
+				Session::flash('type','danger');
+				Session::flash('message','No es posible procesar la solicitud ya que el monto disponible no es suficiente');
+				return Redirect::route('solicitudespendientes.asignacion.index');
+			}
 			
 			//TRANSACTION ===
-			$result = DB::transaction(function() use ($elID, $cantidad, $comentario) {
-				$emision                = Emisionpendiente::find($elID);
+			$result = DB::transaction(function() use ($elID, $cantidad, $comentario, $emision) {
+				
 				$emision->emitido       = $cantidad;
 				$emision->observaciones = $comentario;
 				$emision->estado        = 'Aprobada';
@@ -68,14 +82,8 @@ class solicitudesemisionController extends crudController {
 
 				$info = Emisionpendiente::getSolicitudPendiente($elID);
 
-				/*$letras = '';
-				try {
-					$objeto = new Numeroaletras($cantidad);
-					$letras = $objeto->getLetras();	
-				} catch (Exception $e) {*/
-					$letras = Components::numeroALetras($cantidad,null, 2);
-				//}
-				
+				$letras = Components::numeroALetras($cantidad,null, 2);
+					
 				$certificado                     = new Certificado;
 				$certificado->tratado            = $info->tratadolargo;
 				$certificado->producto           = $info->producto;
@@ -146,6 +154,7 @@ class solicitudesemisionController extends crudController {
 						'contingente'   => $producto,
 						'solicitado'    => $emision->solicitado,
 						'emitido'       => $cantidad,
+						'despedida'     => 'Puede ingresar al enlace <a href="' . url() . '">' . url() . '</a> para ver el estatus de su cuenta corriente.',
 						'observaciones' => Input::get('txObservaciones')), function($msg) use ($email, $admins, $empresas){
 			       	$msg->to($email)->subject('Certificado DACE - MINECO');
 			       	$msg->cc($empresas);

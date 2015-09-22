@@ -33,6 +33,7 @@ class historicoasignacionesController extends crudController {
 		Crud::setCampo(array('nombre'=>'Solicitado','campo'=>'solicitado','class'=>'text-right','tipo'=>'numeric','decimales'=>2));
 		Crud::setCampo(array('nombre'=>'Asignado','campo'=>'asignado','class'=>'text-right','tipo'=>'numeric','decimales'=>2));
 		Crud::setCampo(array('nombre'=>'Fecha de solicitud','campo'=>'solicitudasignacion.created_at', 'tipo'=>'datetime','class'=>'text-right'));
+		Crud::setCampo(array('nombre'=>'Acta','campo'=>'acta','class'=>'text-right'));
 		Crud::setCampo(array('nombre'=>'Observaciones','campo'=>'observaciones'));
 		Crud::setCampo(array('nombre'=>'Estado','campo'=>'estado'));
 

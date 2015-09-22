@@ -18,7 +18,6 @@ class emisionController extends BaseController {
 		
 
 		$requerimientos = Contingenterequerimiento::getRequerimientos($contingenteid, 'emision');
-		$producto       = Contingente::getNombre($contingente);
 		$solicitado     = Input::get('cantidad', 0);
 
 		if(count(Input::file()) <= 0 && count($requerimientos) > 0) {
@@ -54,7 +53,7 @@ class emisionController extends BaseController {
 				else {
 					$solicitud             = new Solicitudesemision;
 					$solicitud->usuarioid  = Auth::id();
-					$solicitud->periodoid  = $periodo; //Periodo::getPeriodo($contingente);
+					$solicitud->periodoid  = $periodo; 
 					$solicitud->solicitado = $solicitado;
 					$solicitud->estado     = 'Pendiente';
 
@@ -95,17 +94,29 @@ class emisionController extends BaseController {
 			}
 
 			else {
-				$message  = 'Solicitud ingresada exitosamente';
-				$type     = 'success';
-				$admins   = Usuario::listAdminEmails();
-				$email    = Auth::user()->email;
-				$empresas = Usuario::listEmpresaEmails(Auth::user()->empresaid, Auth::id());
+				$message     = 'Solicitud ingresada exitosamente';
+				$type        = 'success';
+				$admins      = Usuario::listAdminEmails();
+				$email       = Auth::user()->email;
+				$empresas    = Usuario::listEmpresaEmails(Auth::user()->empresaid, Auth::id());
+				$contindatos = Contingente::getNombre($contingente);
+
+				if($contindatos) {
+					$despedida = 'Para mayor información puede escribir a: 
+								<a href="mailto:' . $contindatos->responsableemail . '">' . $contindatos->responsable . 
+								' &lt;' . $contindatos->responsableemail . '&gt;</a> o ingresando a la página web 
+								<a href="' . url() .'">' . url() . '</a>';
+				}
+				else {
+					$despedida = null;
+				}
 
 				try {
 					Mail::send('emails/solicitudemision', array(
-			      'nombre' => Auth::user()->nombre,
-			      'contingente' => $producto,
-			      'fecha'  => date('d-m-Y H:i')
+						'nombre'      => Auth::user()->nombre,
+						'contingente' => $contindatos->nombre,
+						'despedida'   => $despedida,
+						'fecha'       => date('d-m-Y H:i')
 			      ), function($msg) use ($email, $admins, $empresas){
 			            $msg->to($email)->subject('Solicitud de emisión');
 			            $msg->cc($empresas);

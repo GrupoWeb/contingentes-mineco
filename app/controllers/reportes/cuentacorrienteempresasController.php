@@ -37,12 +37,25 @@ class cuentacorrienteempresasController extends BaseController {
 		}
 
 		else {
-			return View::make('reportes/cuentacorrienteempresas')
+			$movimientos = Movimiento::getCuentaCorrienteEmpresa($periodoId, $empresaId);
+			$tmp         = [];
+			foreach($movimientos as $movimiento) {
+				$tmp[$movimiento->acreditadoa][] = [
+					'fecha'         => $movimiento->fecha,
+					'acreditadopor' => $movimiento->acreditadopor,
+					'comentario'    => $movimiento->comentario,
+					'certificado'   => $movimiento->certificadoid,
+					'credito'       => $movimiento->credito,
+					'debito'        => $movimiento->debito,
+				];
+			}
+
+			return View::make('reportes.cuentacorrienteempresas')
 				->with('titulo', 'Cuenta Corriente - Empresas')
 				->with('tratado', $periodo->tratado)
 				->with('producto', $periodo->producto)
 				->with('asignacion', $periodo->asignacion)
-				->with('movimientos', Movimiento::getCuentaCorrienteEmpresa($periodoId, $empresaId))
+				->with('movimientos', $tmp)
 				->with('formato', $formato);
 		}
 	}

@@ -1,0 +1,17 @@
+/*body {
+	padding-top: 160px;
+}
+
+.header-fijo {
+	position: fixed;
+	top: 0;
+	left: 50%;
+	margin-left: -585px;
+}
+
+.bg-white {
+	background-color: #fff;
+}
+
+Esto va dentro del div table
+class= "table table-striped table-bordered table-condensed"

@@ -17,14 +17,14 @@ class asignacionController extends BaseController {
 			Session::flash('message', 'No se ha cumplido con los requerimientos de archivos necesarios');
 			Session::flash('type', 'danger');
 
-			return Redirect::to('/');
+			return Redirect::to('inicio');
 		}
 
 		if($solicitado <= 0) {
 			Session::flash('message', 'El monto solicitado no es correcto');
 			Session::flash('type', 'danger');
 
-			return Redirect::to('/');
+			return Redirect::to('inicio');
 		}
 
 		$query       = DB::select(DB::raw('SELECT getSaldoAsignacion('.$contingente.','.Auth::id().') AS disponible'));
@@ -78,23 +78,34 @@ class asignacionController extends BaseController {
 			}
 
 			else {
-				$message  = 'Solicitud ingresada exitosamente';
-				$type     = 'success';
-				$nombre   = Contingente::getNombre($contingente);
-				$email    = Auth::user()->email;
-				$admins   = Usuario::listAdminEmails();
-				$empresas = Usuario::listEmpresaEmails(Auth::user()->empresaid, Auth::id());
+				$message     = 'Solicitud ingresada exitosamente';
+				$type        = 'success';
+				$contingente = Contingente::getNombre($contingente);
+				$email       = Auth::user()->email;
+				$admins      = Usuario::listAdminEmails();
+				$empresas    = Usuario::listEmpresaEmails(Auth::user()->empresaid, Auth::id());
 
+				if($contingente) {
+					$despedida = 'Para mayor información puede escribir a: 
+								<a href="mailto:' . $contingente->responsableemail . '">' . $contingente->responsable . 
+								' &lt;' . $contingente->responsableemail . '&gt;</a> o ingresando a la página web 
+								<a href="' . url() .'">' . url() . '</a>';
+				}
+				else {
+					$despedida = null;
+				}
+				
 				try {
 					Mail::send('emails/solicitudasignacion', array(
 						'nombre'      => Auth::user()->nombre,
 						'fecha'       => date('d-m-Y H:i'),
-						'contingente' => $nombre->nombre,
+						'contingente' => $contingente->nombre,
+						'despedida'   => $despedida,
 						'monto'       => $solicitado
 			      ), function($msg) use ($email, $admins, $empresas){
-			            $msg->to($email)->subject('Solicitud de asignación');
-			            $msg->cc($empresas);
-			            $msg->bcc($admins);
+		            $msg->to($email)->subject('Solicitud de asignación');
+		            $msg->cc($empresas);
+		            $msg->bcc($admins);
 			    });
 				} catch (Exception $e) {}
 		  }
@@ -103,6 +114,6 @@ class asignacionController extends BaseController {
 		Session::flash('message', $message);
 		Session::flash('type', $type);
 
-		return Redirect::to('/');
+		return Redirect::to('inicio');
 	}
 }

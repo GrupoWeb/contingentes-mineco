@@ -80,7 +80,16 @@ Route::filter('csrf', function() {
 
 Route::filter('tratados', function(){
 	if(!Session::has('tselected')){
-		Session::put('tratados', Tratado::getTratados());
+		if (Auth::check()) {
+			if(in_array(Auth::user()->rolid, Config::get('contingentes.roladmin')))
+				Session::put('tratados', Tratado::getTratados());
+
+			else
+				Session::put('tratados', Tratado::getTratadosEmpresa(Auth::user()->empresaid));
+		}
+		else 
+			Session::put('tratados', Tratado::getTratados());
+
 		Session::put('tselected', 0);
 	}
 });

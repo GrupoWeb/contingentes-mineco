@@ -30,6 +30,11 @@ Route::group(array('before' => array('auth_basic')), function() {
 	Route::get('api/solicitudemision','apiController@solicitudemision');
 });
 
+//FILTROS DE CERTIFICADOS
+Route::get('certificados/contingentes/{id}', 'certificadosController@getcontingentes');
+Route::get('certificados/periodos/{id}', 'certificadosController@getperiodos');
+Route::get('certificados/empresas/{id}', 'certificadosController@getempresas');
+
 
 Route::group(array('before' => array('tratados')), function() {
 	Route::get('c/{id}',array('as'=>'certificados.generar','uses'=>'certificadosController@generarPDF'));
@@ -63,16 +68,21 @@ Route::group(array('before' => array('tratados')), function() {
 		Route::resource('solicitud/asignacion', 'asignacionController', array('only'=>array('index','store')));
 		Route::resource('solicitud/emision', 'emisionController', array('only'=>array('index','store')));
 		Route::resource('solicitud/inscripcion', 'solicitudreinscripcionController', array('only'=>array('index','store')));
+		Route::resource('solicitud/actualizacion', 'actualizacionController', array('only'=>array('index','store')));
 		Route::resource('solicitudespendientes/inscripcion', 'solicitudesinscripcionController',array('names' => array('index' => 'solicitudespendientes.inscripcion.index')));
 		Route::resource('solicitudespendientes/asignacion', 'solicitudesasignacionController');
 		Route::resource('solicitudespendientes/emision', 'solicitudesemisionController');
+		Route::resource('solicitudespendientes/actualizacion', 'solicitudactualizacionController');
 
 		Route::resource('historicosolicitudes/inscripcion', 'historicoinscripcionesController');
 		Route::resource('historicosolicitudes/asignacion', 'historicoasignacionesController');
 		Route::resource('historicosolicitudes/emision', 'historicoemisionesController');
+		Route::resource('historicosolicitudes/actualizacion', 'historicoactualizacionesController');
+		Route::resource('historicosolicitudes/actualizacion', 'historicoactualizacionController');
 		Route::get('historicosolicitudes/inscripcion/archivos/{id}', array('as'=>'historicosolicitudes.inscripcion.archivos','uses'=>'historicoinscripcionesController@archivos'));
 		Route::get('historicosolicitudes/asignacion/archivos/{id}', array('as'=>'historicosolicitudes.asignacion.archivos','uses'=>'historicoasignacionesController@archivos'));
 		Route::get('historicosolicitudes/emision/archivos/{id}', array('as'=>'historicosolicitudes.emision.archivos','uses'=>'historicoemisionesController@archivos'));
+		Route::get('historicosolicitudes/actualizacion/archivos/{id}', array('as'=>'historicosolicitudes.actualizacion.archivos','uses'=>'historicoactualizacionesController@archivos'));
 		
 		//=== CONTINGENTES
 		Route::get('contingente/requerimientos/{id}', array('as'=>'contingente.requerimientos.index','uses'=>'contingenterequerimientosController@index'));
@@ -91,15 +101,14 @@ Route::group(array('before' => array('tratados')), function() {
 		Route::resource('unidadesmedida','unidadesmedidaController');
 		Route::resource('usuarioempresas','usuariosdeempresaController');
 		Route::resource('usuariosextra','usuariosextraController');
+		Route::resource('periodoconstancias', 'periodoconstanciasController', array('only'=>array('index','show')));
 
 		//=== CERTIFICADOS
-		Route::resource('certificados', 'certificadosController', array('only'=>array('index','show')));
+		Route::resource('certificados', 'certificadosController',array('only'=>array('index','store')));
 		Route::get('certificados/anular/{id}', array('as'=>'certificados.anular', 'uses'=>'certificadosController@anular'));
 		Route::post('certificados/anular/{id}', array('as'=>'certificados.procesaranulacion', 'uses'=>'certificadosController@procesaranulacion'));
 		Route::get('certificados/liquidar/{id}', array('as'=>'certificados.liquidar', 'uses'=>'certificadosController@liquidar'));
 		Route::post('certificados/liquidar/{id}', array('as'=>'certificados.procesarliquidacion', 'uses'=>'certificadosController@procesarliquidacion'));
-		Route::get('buscarcertificados', array('as'=>'certificados.buscar', 'uses'=>'certificadosController@buscar'));
-
 
 		//=== REPORTES
 		Route::resource('cuentacorriente', 'cuentacorrienteController', array('only'=>array('index','store')));

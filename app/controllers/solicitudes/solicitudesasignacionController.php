@@ -34,12 +34,15 @@ class solicitudesasignacionController extends crudController {
 	}
 
 	public function edit($id) {
-		$solicitud 			= Asignacionpendiente::getSolicitudPendiente(Crypt::decrypt($id));
-		$requerimientos = Asignacionrequerimiento::getRequerimientos(Crypt::decrypt($id));
+		$id             = Crypt::decrypt($id);
+		$solicitud 			= Asignacionpendiente::getSolicitudPendiente($id);
+		$requerimientos = Asignacionrequerimiento::getRequerimientos($id);
+		$query          = DB::select(DB::raw('SELECT getSaldoAsignacionPeriodo('.$solicitud->periodoid.') AS disponible'));
 
 		return View::make('solicitudespendientes/asignaciones')
 			->with('solicitud',$solicitud)
-			->with('requerimientos',$requerimientos);
+			->with('requerimientos',$requerimientos)
+			->with('maximo', $query[0]->disponible);
 	}
 
 	public function store() {
@@ -54,14 +57,27 @@ class solicitudesasignacionController extends crudController {
 				return Redirect::route('solicitudespendientes.asignacion.index');
 			}
 
+			$asignacion = Asignacionpendiente::find($elID);
+
+			$query       = DB::select(DB::raw('SELECT getSaldoAsignacionPeriodo('.$asignacion->periodoid.') AS disponible'));
+			$disponible  = $query[0]->disponible;
+
+			if($cantidad > $disponible){
+				Session::flash('type','danger');
+				Session::flash('message','No es posible procesar la solicitud ya que el monto disponible no es suficiente');
+				return Redirect::route('solicitudespendientes.asignacion.index');
+			}
+
 			$comentario = Input::get('txObservaciones');
 			
 			//TRANSACTION ===
-			$asignacion = DB::transaction(function() use($elID, $cantidad, $comentario) {
-				$asignacion                = Asignacionpendiente::find($elID);
+			$asignacion = DB::transaction(function() use($elID, $cantidad, $comentario, $asignacion) {
+				$acta = Input::get('txActa');
+
 				$asignacion->asignado      = $cantidad;
 				$asignacion->observaciones = $comentario;
 				$asignacion->estado        = 'Aprobada';
+				$asignacion->acta          = $acta;
 				$result                    = $asignacion->save();
 
 				$movimiento                   = new Movimiento;
@@ -71,7 +87,7 @@ class solicitudesasignacionController extends crudController {
 				$movimiento->comentario       = $comentario;
 				$movimiento->created_by       = Auth::id();
 				$movimiento->tipomovimientoid = DB::table('tiposmovimiento')->where('nombre', 'Asignación')->pluck('tipomovimientoid');
-				$movimiento->acta             = Input::get('txActa');
+				$movimiento->acta             = $acta;
 				$result2                      = $movimiento->save();
 
 				return $asignacion;
@@ -95,6 +111,7 @@ class solicitudesasignacionController extends crudController {
 						'contingente'   => $asignacion->producto,
 						'solicitado'    => $asignacion->solicitado,
 						'asignado'      => $cantidad,
+						'despedida'     => 'Puede ingresar al enlace <a href="' . url() . '">' . url() .'</a> para realizar sus solicitudes de certificados.',
 						'observaciones' => Input::get('txObservaciones')), function($msg) use ($email, $admins, $empresas){
 			       	$msg->to($email)->subject('Solicitud de Asignación DACE - MINECO');
 			       	$msg->cc($empresas);

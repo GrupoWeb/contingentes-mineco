@@ -47,4 +47,14 @@ class Periodo extends Eloquent {
 			->where('p.periodoid', $aPeriodoId)
 			->first();
 	}
+
+	public static function getNombrePeriodo($aPeriodoId) {
+		return DB::table('periodos AS p')
+			->select('t.nombrecorto', 'pr.nombre')
+			->leftJoin('contingentes AS c','p.contingenteid','=','c.contingenteid')
+			->leftJoin('productos AS pr','pr.productoid','=','c.productoid')
+			->leftJoin('tratados AS t','t.tratadoid','=','c.tratadoid')
+			->where('p.periodoid', $aPeriodoId)
+			->first();
+	}
 }

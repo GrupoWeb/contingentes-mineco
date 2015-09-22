@@ -19,30 +19,17 @@
 		{{ HTML::style('packages/csgt/components/css/bootstrap.min.css'); }}
 		{{ HTML::style('packages/csgt/components/css/bootstrap-theme.min.css'); }}
 		{{ HTML::style('packages/csgt/components/css/core.css'); }}
+		{{ HTML::style('css/reportes.css'); }}
+		{{ HTML::style('css/table-scroll-reset.css'); }}
+		{{ HTML::style('css/table-scroll-style.css'); }}
+
 		{{ HTML::script('packages/csgt/components/js/jquery.min.js'); }}
 		{{ HTML::script('packages/csgt/components/js/bootstrap.min.js'); }}
+		{{ HTML::script('packages/csgt/components/js/table-scroll.js'); }}
 
 		</head>
 		<body>
 			<div class="container">
-				<table class="table table-condensed table-bordered">
-					<thead>
-						<tr>
-							<th rowspan="2" class="text-center" width="10%">
-								@if($formato <> 'excel') 
-									{{ HTML::image('images/logo.jpg') }}
-								@endif
-								<br>DACE - MINECO
-							</th>
-							<th colspan="3" class="text-center"><h4>{{$titulo}}</h4></th>
-						</tr>
-						<tr>
-							<th width="30%" class="text-center">{{ $tratado }}</th>
-							<th width="30%" class="text-center">{{ $producto }}</th>
-							<th width="30%" class="text-center">Reporte generado {{ date('d/m/Y') }}</th>
-						</tr>
-					</thead>
-				</table>
 				@yield('content')
 			</div>
 		</body>

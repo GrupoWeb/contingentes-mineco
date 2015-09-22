@@ -79,7 +79,7 @@
 	        'permisoid'      => 19,
 	        'nombre'         => 'buscar',
 	        'nombrefriendly' => 'Buscar'
-				)
+				),
 			));
 
 			DB::table('authpermisos')->update(array('created_at'=>date_create(), 'updated_at'=>date_create()));
