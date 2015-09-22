@@ -23,7 +23,7 @@
 	<?php echo HTML::script('js/highcharts.js'); ?>
 	<?php echo HTML::script('js/highcharts-exporting.js'); ?>
 
-	<div id="container" style="width: 100%; height: 800px; margin: 0 auto"></div>
+	<div id="container" style="height: 600px; margin: 0 auto"></div>
 	@if($esAsignacion == 1)
 		<script type="text/javascript">
 			$(function () {

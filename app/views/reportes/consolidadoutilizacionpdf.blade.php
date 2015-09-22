@@ -1,17 +1,14 @@
 <table width="500" cellpadding="3" style="font-size: 8px; line-height: 7px" border="1">
-	<tr>
-		<th rowspan="2">DACE - MINECO</th>
-		<th colspan="3" class="text-center"><h4>{{$titulo}}</h4></th>
-	</tr>
-	<tr>
-		<th>{{ $tratado }}</th>
-		<th>{{ $producto }}</th>
-		<th>Reporte generado {{ date('d/m/Y') }}</th>
-	</tr>
-</table>
-<br /><br /><br />
-<table width="500" cellpadding="3" style="font-size: 8px; line-height: 7px" border="1">
 	<thead>
+		<tr>
+			<th rowspan="2" colspan="2" style="text-align:center;"><img src="{{ public_path() }}/images/logo-menu.png"></th>
+			<th colspan="4" style="text-align:center;"><h4>{{$titulo}}</h4></th>
+		</tr>
+		<tr>
+			<th style="text-align:center;">{{ $tratado }}</th>
+			<th style="text-align:center;">{{ $producto }}</th>
+			<th colspan="2" style="text-align:center;">Reporte generado {{ date('d/m/Y') }}</th>
+		</tr>
 		<tr>
 			<th rowspan="2">Contingente</th>
 			<th rowspan="2">Fracción Arancelaria</th>

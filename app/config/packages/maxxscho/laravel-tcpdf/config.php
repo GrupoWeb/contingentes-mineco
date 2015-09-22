@@ -117,7 +117,7 @@ return [
     |
     */
 
-    'footer_on'                   => false,
+    'footer_on'                   => true,
     'footer_font'                 => 'helvetica',
     'footer_font_size'            => 8,
     'footer_margin'               => 10,
