@@ -29,7 +29,7 @@
 			<tr>
 				<td colspan="6" class="active"><strong>{{ $nombrecorto }}</strong></td>
 			</tr>
-			@foreach($contingentes as $contingente)
+			@foreach($contingentes['datos'] as $contingente)
 				<tr>
 					<td rowspan="{{ count($contingente['partidas']) }}" style="vertical-align: middle;">{{ $contingente['producto'] }}</td>
 					<td class="text-center">{{ reset($contingente['partidas']) }}</td>

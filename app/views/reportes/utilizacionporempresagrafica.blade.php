@@ -1,6 +1,25 @@
 @extends('template/reporte')
-
 @section('content')
+
+	<table class="table table-striped table-bordered blue">
+		<thead>
+			<tr>
+				<th rowspan="2" colspan="1" class="text-center bg-white">
+					@if($formato <> 'excel') 
+						{{ HTML::image('images/logo.jpg') }}
+					@endif
+					<br>DACE - MINECO
+				</th>
+				<th rowspan="1" colspan="3" class="text-center bg-white"><h4>{{$titulo}}</h4></th>				
+			</tr>
+
+			<tr>
+				<th rowspan="1" colspan="1" class="text-center bg-white">{{ $tratado }}</th>
+				<th rowspan="1" colspan="1" class="text-center bg-white">{{ $producto }}</th>
+				<th rowspan="1" colspan="1" class="text-center bg-white">Reporte generado {{ date('d/m/Y') }}</th>
+			</tr>
+		</thead>
+	</table>
 	<?php echo HTML::script('js/highcharts.js'); ?>
 	<?php echo HTML::script('js/highcharts-exporting.js'); ?>
 
