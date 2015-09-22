@@ -64,4 +64,8 @@ class Tratado extends Eloquent {
 			->where('tratadoid', $aTratadoId)
 			->first();
 	}
+
+	/*public function getTratadosConContingentes() {
+		
+	}*/
 }

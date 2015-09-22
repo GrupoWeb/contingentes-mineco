@@ -36,10 +36,16 @@ class solicitudesemisionController extends crudController {
 	public function edit($id) {
 		$solicitud 			= Emisionpendiente::getSolicitudPendiente(Crypt::decrypt($id));
 		$requerimientos = Solicitudemisionrequerimiento::getEmisionRequerimientos(Crypt::decrypt($id));
+		
+		$usuario     = Usuario::find($solicitud->usuarioid);
+		$query       = DB::select(DB::raw('SELECT getSaldo('.$solicitud->contingenteid.', '.$usuario->empresaid.') AS disponible'));
+		$disponible  = $query[0]->disponible;
 
+		//dd($disponible);
 		return View::make('solicitudespendientes/emisiones')
 			->with('solicitud',$solicitud)
-			->with('requerimientos',$requerimientos);
+			->with('requerimientos',$requerimientos)
+			->with('disponible', $disponible);
 	}
 
 	public function store() {
