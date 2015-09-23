@@ -35,47 +35,47 @@
 		border: 1px solid black;
 	}
 </style>
-<table width="500" cellpadding="3" style="font-size: 8px; line-height: 7px" border="1">
-	<tr>
-		<th rowspan="2">DACE - MINECO</th>
-		<th colspan="3" class="center"><h4>{{$titulo}}</h4></th>
-	</tr>
-	<tr>
-		<th>{{ $tratado }}</th>
-		<th>{{ $producto }}</th>
-		<th>Reporte generado {{ date('d/m/Y') }}</th>
-	</tr>
-</table>
-<br /><br /><br />
-<table width="500" cellpadding="3" style="font-size: 8px; line-height: 7px" border="1">
-	<tr>
-		<th rowspan="2">NIT</th>
-		<th rowspan="2">Importador</th>
-		<th colspan="3" class="center">Volúmen</th>
-		<th colspan="5" class="center">Adjudicado</th>
-		<th colspan="7" class="center">Liquidado</th>
-	</tr>
-	<tr>
-		@if($esasignacion==1)
-			<th>Asignado</th>
-			<th>Adjudicado</th>
-			<th>Saldo</th>
-		@else
-			<th colspan="3">Adjudicado</th>
-		@endif
-		<th>No.</th>
-		<th>Fecha</th>
-		<th>Fracción</th>
-		<th>Venicimiento</th>
-		<th>TM</th>
-		<th>Fecha</th>
-		<th>DUA</th>
-		<th>TM</th>
-		<th>Variación</th>
-		<th>%</th>
-		<th>CIF</th>
-		<th>$/TM</th>
-	</tr>
+<table width="100%" cellpadding="3" style="font-size: 8px; line-height: 7px" border="1">
+	<thead>
+		<tr>
+			<th rowspan="2" colspan="5" style="text-align:center;"><img src="{{ public_path() }}/images/logo-menu.png"></th>
+			<th colspan="9" style="text-align:center;"><h4>{{$titulo}}</h4></th>
+		</tr>
+		<tr>
+			<th colspan="3" style="text-align:center;">{{ $tratado }}</th>
+			<th colspan="3" style="text-align:center;">{{ $producto }}</th>
+			<th colspan="3" style="text-align:center;">Reporte generado {{ date('d/m/Y') }}</th>
+		</tr>
+		<tr>
+			@if($esasignacion==1)
+				<th rowspan="2" style="text-align: center;">Asignado</th>
+				<th rowspan="2" style="text-align: center;">Adjudicado</th>
+				<th rowspan="2" style="text-align: center;">Saldo</th>
+			@else
+				<th colspan="3">Adjudicado</th>
+			@endif
+			<th rowspan="2" style="text-align: center;">NIT</th>
+			<th rowspan="2" style="text-align: center;">Importador</th>
+			<th colspan="3" style="text-align: center;">Volúmen</th>
+			<th colspan="5" style="text-align: center;">Adjudicado</th>
+			<th style="text-align: center;">Liquidado</th>
+		</tr>
+		<tr>
+			<th style="text-align: center;">No.</th>
+			<th style="text-align: center;">Fecha</th>
+			<th style="text-align: center;">Fracción</th>
+			<th style="text-align: center;">Venicimiento</th>
+			<th style="text-align: center;">TM</th>
+			<th style="text-align: center;">Fecha</th>
+			<th style="text-align: center;">DUA</th>
+			<th style="text-align: center;">TM</th>
+			<th style="text-align: center;">Variación</th>
+			<th style="text-align: center;">%</th>
+			<th style="text-align: center;">CIF</th>
+			<th style="text-align: center;">$/TM</th>
+		</tr>
+	</thead>
+	<tbody>
 	<?php 
 		$asignadot     = 0;
 		$adjudicadot   = 0;
@@ -138,9 +138,10 @@
 				@endforeach
 		@endforeach
 	@endforeach
+	</tbody>
 </table>
 <br /><br /><br />
-<table width="500" cellpadding="3" style="font-size: 8px; line-height: 7px" border="1">
+<table width="50%" cellpadding="3" style="font-size: 8px; line-height: 7px" border="1">
 	<tr>
 		<td>Cuota total</td>
 		<td class="right"><strong>{{ number_format($volumentotalt, 3) }}</strong></td>

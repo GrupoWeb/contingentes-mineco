@@ -96,7 +96,7 @@
 	      </div>
 	    @endif
 
-	    @if(in_array('formato', $filters))
+	    @if(in_array('formato', $filters) || in_array('formatografica', $filters))
 		    <div class="col-sm-12">
 		      <div class="form-group">
 		        <label class="col-sm-2 control-label" for="formato">Formato:</label>
@@ -113,12 +113,14 @@
 		              PDF
 		            </label>
 		          </div>
-		          <div class="radio">
-		            <label>
-		              <input type="radio" name="formato" id="formatoExcel" value="excel">
-		              Excel
-		            </label>
-		          </div>
+		          @if(in_array('formato', $filters))
+			          <div class="radio">
+			            <label>
+			              <input type="radio" name="formato" id="formatoExcel" value="excel">
+			              Excel
+			            </label>
+			          </div>
+			        @endif
 		        </div>
 		      </div>
 		    </div>

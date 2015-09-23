@@ -20,19 +20,37 @@ class utilizacionempresagraficaController extends BaseController {
         ->with('mensaje','Tratado, período o contingente inválido.');
     }
 
-    $formato       = Input::get('formato');
+    $formato     = Input::get('formato');
+    $movimientos = Movimiento::getUtilizacionEmpresas($periodoid, 0);
+    $tratado     = Contingente::getTratado($contingenteid);
 
-    $movimientos   = Movimiento::getUtilizacionEmpresas($periodoid, 0);
-  
-    $tratado = Contingente::getTratado($contingenteid);
+    /*if($formato == 'pdf') {
+      PDF::SetTitle('Gráfica utilización de contingentes por empresa');
+      PDF::AddPage('L');
+      PDF::setLeftMargin(20);
 
+      PDF::imageSVG(public_path().'/grafica.svg');
 
-    return View::make('reportes.utilizacionporempresagrafica')
-      ->with('movimientos', $movimientos)
-      ->with('esAsignacion', $tratado->asignacion)
-      ->with('titulo', 'Gráfica utilización de contingentes por empresa')
-      ->with('tratado', $tratado->nombre)
-      ->with('producto', Contingente::getProducto($contingenteid))
-      ->with('formato', $formato);
+      $html = View::make('reportes.utilizacionporempresagraficapdf')
+        ->with('movimientos', $movimientos)
+        ->with('esAsignacion', $tratado->asignacion)
+        ->with('titulo', 'Gráfica utilización de contingentes por empresa')
+        ->with('tratado', $tratado->nombre)
+        ->with('producto', Contingente::getProducto($contingenteid))
+        ->with('formato', $formato);
+
+      PDF::writeHTML($html, true, false, true, false, '');
+      PDF::Output('grafica-utilizacion-contingentes.pdf');
+    }*/
+
+    //else {
+      return View::make('reportes.utilizacionporempresagrafica')
+        ->with('movimientos', $movimientos)
+        ->with('esAsignacion', $tratado->asignacion)
+        ->with('titulo', 'Gráfica utilización de contingentes por empresa')
+        ->with('tratado', $tratado->nombre)
+        ->with('producto', Contingente::getProducto($contingenteid))
+        ->with('formato', $formato);
+    //}
   }
 }

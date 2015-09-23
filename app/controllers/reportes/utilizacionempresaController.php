@@ -33,17 +33,34 @@ class utilizacionempresaController extends BaseController {
 
     $empresaid     = Auth::user()->empresaid;
     $formato       = Input::get('formato');
-
     $movimientos   = Movimiento::getUtilizacionEmpresas($periodoid, $empresaid);
-   
-    $tratado = Contingente::getTratado($contingenteid); 
-    //dd($movimientos);
-    return View::make('reportes.utilizacionporempresa')
-      ->with('movimientos', $movimientos)
-      ->with('titulo', 'Utilización de contingentes por empresa')
-      ->with('tratado', $tratado->nombre)
-      ->with('esAsignacion', $tratado->asignacion)
-      ->with('producto', Contingente::getProducto($contingenteid))
-      ->with('formato', $formato);
+    $tratado       = Contingente::getTratado($contingenteid); 
+
+    if($formato == 'pdf') {
+      PDF::SetTitle('Cuenta Corriente - Contingentes');
+      PDF::AddPage();
+      PDF::setLeftMargin(20);
+
+      $html = View::make('reportes.utilizacionporempresapdf')
+        ->with('movimientos', $movimientos)
+        ->with('titulo', 'Utilización de contingentes por empresa')
+        ->with('tratado', $tratado->nombre)
+        ->with('esAsignacion', $tratado->asignacion)
+        ->with('producto', Contingente::getProducto($contingenteid))
+        ->with('formato', $formato);
+
+      PDF::writeHTML($html, true, false, true, false, '');
+      PDF::Output('utilizacion-por-empresa.pdf');
+    }
+
+    else {
+      return View::make('reportes.utilizacionporempresa')
+        ->with('movimientos', $movimientos)
+        ->with('titulo', 'Utilización de contingentes por empresa')
+        ->with('tratado', $tratado->nombre)
+        ->with('esAsignacion', $tratado->asignacion)
+        ->with('producto', Contingente::getProducto($contingenteid))
+        ->with('formato', $formato);
+    }
   }
 }

@@ -151,7 +151,7 @@
 			DB::table('authmenu')->insert(array(
 				'menuid'					=> 20,
 				'padreid'        	=> null,
-				'modulopermisoid' => 79,
+				'modulopermisoid' => 61,
 				'nombre'         	=> 'Certificados',
 				'orden' 					=> 3000,
 				'icono'         	=> null

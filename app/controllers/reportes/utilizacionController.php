@@ -70,7 +70,7 @@ class utilizacionController extends BaseController {
 
     if($formato == 'pdf') {
       PDF::SetTitle('Utilización de contingentes');
-      PDF::AddPage();
+      PDF::AddPage('L');
       PDF::setLeftMargin(20);
 
       $html = View::make('reportes.utilizacionespdf')
