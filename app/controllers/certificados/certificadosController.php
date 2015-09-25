@@ -47,8 +47,8 @@ class certificadosController extends Controller {
     $contingenteid = Crypt::decrypt(Input::get('contingenteid'));
     $periodoid     = Crypt::decrypt(Input::get('periodoid'));
     $empresaid     = Crypt::decrypt(Input::get('empresaid'));
-    $fechaini      = Components::fechaHumanoAMySql(Input::get('fechaini'));
-    $fechafin      = Components::fechaHumanoAMySql(Input::get('fechafin'));
+    $fechaini      = Components::fechaHumanoAMySql(Input::get('fechaini')).' 00:00';
+    $fechafin      = Components::fechaHumanoAMySql(Input::get('fechafin')).' 23:59';
 
     $certificados  = Certificado::getCertificados($tratadoid, $contingenteid, $periodoid, $empresaid, $fechaini, $fechafin);
     $tmp           = array();
