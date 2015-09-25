@@ -10,19 +10,20 @@
 					@endif
 					<br>DACE - MINECO
 				</th>
-				<th rowspan="1" colspan="3" class="text-center bg-white"><h4>{{$titulo}}</h4></th>				
+				<th rowspan="1" colspan="3" class="text-center bg-white" id="titulo"><h4>{{$titulo}}</h4></th>				
 			</tr>
 
 			<tr>
-				<th rowspan="1" colspan="1" class="text-center bg-white">{{ $tratado }}</th>
-				<th rowspan="1" colspan="1" class="text-center bg-white">{{ $producto }}</th>
-				<th rowspan="1" colspan="1" class="text-center bg-white">Reporte generado {{ date('d/m/Y') }}</th>
+				<th rowspan="1" colspan="1" class="text-center bg-white" id="tratado">{{ $tratado }}</th>
+				<th rowspan="1" colspan="1" class="text-center bg-white" id="producto">{{ $producto }}</th>
+				<th rowspan="1" colspan="1" class="text-center bg-white" id="date">Reporte generado {{ date('d/m/Y') }}</th>
 			</tr>
 		</thead>
 	</table>
+	<p id = "pie" hidden>{{$esAsignacion}}</p>
 	<?php echo HTML::script('js/highcharts.js'); ?>
 	<?php echo HTML::script('js/highcharts-exporting.js'); ?>
-
+	
 	<div id="container" style="height: 600px; margin: 0 auto"></div>
 	@if($esAsignacion == 1)
 		<script type="text/javascript">
@@ -92,7 +93,7 @@
 	        	enabled: false
 	        },
 	        exporting: {
-	        	enabled: false
+	        	enabled: true
 	        },
 	        tooltip: {
 	            pointFormat: '{series.name}: <b>{point.y:,.3f}</b>'
