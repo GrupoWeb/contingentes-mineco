@@ -172,7 +172,7 @@
 		    			$.get('utilizacion/contingentes/' + $(this).find('option:selected').val() + '{{(in_array('contingentes', $todos)?'?todos=1':'')}}', function(data){
 		          	$('#contingentediv').html(data);
 		          	$('#cmbContingente').selectize();
-		          	$('#frmFiltros').bootstrapValidator('addField', $('#cmbContingente'));
+		          	//$('#frmFiltros').bootstrapValidator('addField', $('#cmbContingente'));
 		          	$('#cmbContingente').change();
 		        	});
 		        }
@@ -189,7 +189,7 @@
 			    		$.get('utilizacion/empresas/' + $(this).find('option:selected').val() + '{{(in_array('empresas', $todos)?'?todos=1':'')}}', function(data){
 		        		$('#empresadiv').html(data);
 		        		$('#cmbEmpresa').selectize();
-		        		$('#frmFiltros').bootstrapValidator('addField', $('#cmbEmpresa'));
+		        		//$('#frmFiltros').bootstrapValidator('addField', $('#cmbEmpresa'));
 		      		});
 	      		@endif
 	      		
@@ -202,7 +202,7 @@
 		            else {
 			          	$('#periodosdiv').html(data.data);
 			          	$('#cmbPeriodo').selectize();
-			          	$('#frmFiltros').bootstrapValidator('addField', $('#cmbPeriodo'));
+			          	//$('#frmFiltros').bootstrapValidator('addField', $('#cmbPeriodo'));
 		            }
 			      	});
 	      		@endif
