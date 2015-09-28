@@ -76,7 +76,7 @@
       $('.selectpicker').selectpicker();
 
       $("#cmbContingentes").change(function() {
-          $('.disponible-block').html('<p class="form-control-static"><i class="fa fa-lg fa-spinner fa-pulse"></i></p>');
+          //$('.disponible-block').html('<p class="form-control-static"><i class="fa fa-lg fa-spinner fa-pulse"></i></p>');
           $('.requerimientos').html($('.disponible-block').html());
           $('.nuevos').remove();
           $.get('/requerimientos/contingentes/' + $(this).val() + '/asignacion', function(data){
@@ -107,8 +107,8 @@
             }
 
             else {
-              $('[name="disponible"]').val(data.disponible);
-              $('.disponible-block').text(data.disponible + ' ' + data.unidad);
+              //$('[name="disponible"]').val(data.disponible);
+              //$('.disponible-block').text(data.disponible + ' ' + data.unidad);
               $('#unidad').html(data.unidad);
             }
             
