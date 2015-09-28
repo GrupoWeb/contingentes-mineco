@@ -23,6 +23,11 @@
 				'tipomovimientoid'  => 4,
 				'nombre'            => 'Penalizaciones'
 			));
+
+			DB::table('tiposmovimiento')->insert(array(
+				'tipomovimientoid'  => 5,
+				'nombre'            => 'Devoluciones'
+			));
 		
 			DB::table('tiposmovimiento')->update(array('created_at'=>date_create(), 'updated_at'=>date_create()));
 		  DB::statement('SET FOREIGN_KEY_CHECKS=1');
