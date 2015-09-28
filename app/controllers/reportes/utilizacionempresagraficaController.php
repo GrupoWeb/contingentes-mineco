@@ -11,39 +11,42 @@ class utilizacionempresagraficaController extends BaseController {
   }
 
   public function store() {
+
     try {
       $tratadoid     = Crypt::decrypt(Input::get('tratadoid'));
       $contingenteid = Crypt::decrypt(Input::get('cmbContingente'));
       $periodoid     = Crypt::decrypt(Input::get('cmbPeriodo'));
+
     } catch (Exception $e) {
-      return View::make('cancerbero::error')
+      
+      if(!empty($_REQUEST['svg'])){
+        PDF::SetTitle('Gráfica utilización de contingentes por empresa');
+        PDF::AddPage('L');
+        PDF::setLeftMargin(20);
+        if (Input::get('pie') == 1) {
+          PDF::imageSVG('@'.$_REQUEST['svg'], $x=10, $y=50, $w='', $h=150, $link='', $align='', $palign='', $border=0, $fitonpage=false);  
+        }else{
+          PDF::imageSVG('@'.$_REQUEST['svg'], $x=45, $y=70, $w=200, $h=100);
+        }
+        
+
+        $html = View::make('reportes.utilizacionporempresagraficapdf')
+          ->with('titulo', 'Gráfica utilización de contingentes por empresa')
+          ->with('tratado', Input::get('tratado'))
+          ->with('producto', Input::get('producto'));
+
+        PDF::writeHTML($html, true, false, true, false, '');
+        PDF::Output('grafica-utilizacion-contingentes.pdf');
+      }else{
+        return View::make('cancerbero::error')
         ->with('mensaje','Tratado, período o contingente inválido.');
+      }
     }
 
     $formato     = Input::get('formato');
     $movimientos = Movimiento::getUtilizacionEmpresas($periodoid, 0);
     $tratado     = Contingente::getTratado($contingenteid);
 
-    /*if($formato == 'pdf') {
-      PDF::SetTitle('Gráfica utilización de contingentes por empresa');
-      PDF::AddPage('L');
-      PDF::setLeftMargin(20);
-
-      PDF::imageSVG(public_path().'/grafica.svg');
-
-      $html = View::make('reportes.utilizacionporempresagraficapdf')
-        ->with('movimientos', $movimientos)
-        ->with('esAsignacion', $tratado->asignacion)
-        ->with('titulo', 'Gráfica utilización de contingentes por empresa')
-        ->with('tratado', $tratado->nombre)
-        ->with('producto', Contingente::getProducto($contingenteid))
-        ->with('formato', $formato);
-
-      PDF::writeHTML($html, true, false, true, false, '');
-      PDF::Output('grafica-utilizacion-contingentes.pdf');
-    }*/
-
-    //else {
       return View::make('reportes.utilizacionporempresagrafica')
         ->with('movimientos', $movimientos)
         ->with('esAsignacion', $tratado->asignacion)
@@ -51,6 +54,5 @@ class utilizacionempresagraficaController extends BaseController {
         ->with('tratado', $tratado->nombre)
         ->with('producto', Contingente::getProducto($contingenteid))
         ->with('formato', $formato);
-    //}
   }
 }
