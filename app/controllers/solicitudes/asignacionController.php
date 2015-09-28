@@ -20,7 +20,7 @@ class asignacionController extends BaseController {
 			return Redirect::to('inicio');
 		}
 
-		if($solicitado <= 0) {
+		/*if($solicitado <= 0) {
 			Session::flash('message', 'El monto solicitado no es correcto');
 			Session::flash('type', 'danger');
 
@@ -33,9 +33,9 @@ class asignacionController extends BaseController {
 		if($solicitado > $disponible){
 			$message = 'No es posible procesar la solicitud ya que el monto disponible no es suficiente';
 			$type    = 'danger';
-		}
+		}*/
 
-		else {
+		//else {
 			$res = DB::transaction(function() use($solicitado, $contingente) {
 
 				$periodo = Periodo::getPeriodo($contingente);
@@ -109,7 +109,7 @@ class asignacionController extends BaseController {
 			    });
 				} catch (Exception $e) {}
 		  }
-		}
+		//}
 
 		Session::flash('message', $message);
 		Session::flash('type', $type);
