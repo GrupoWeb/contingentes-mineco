@@ -48,7 +48,7 @@
       <div class="col-sm-8">
         <select id="cmbTipo" name="cmbTipo" class="selectpicker form-control">
           <option value="{{ Crypt::encrypt(4) }}">Penalización</option>
-          <option value="{{ Crypt::encrypt(2) }}">Devolución</option>
+          <option value="{{ Crypt::encrypt(3) }}">Devolución</option>
         </select>
       </div>
     </div>

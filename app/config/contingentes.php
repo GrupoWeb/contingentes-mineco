@@ -17,12 +17,8 @@ return array(
 	'rolempresa'			=> array(3),
 	
 	'roldace'					=> array(2),
-	
-	'tratadosExclude' => array('cuentacorriente', 'login', 'reset','cancerbero','paises',
-		'productos','requerimientos','solicitud','', 'unidadesmedida','inicio', 
-		'usuarios', 'usuarioempresas', 'roles','cuentacorrienteempresas','usuariosextra',
-		'utilizacion','utilizacionporempresa','utilizacionporempresagrafica','consolidadoutilizacion',
-		'buscarcertificados', 'certificados','periodoconstancias'),
+
+	'tratadosInclude' => array('inicio', 'tratados', 'periodos', 'solicitudespendientes', 'historicosolicitudes'),
 	
 	'variospaises'    => 8,
 );
