@@ -57,7 +57,7 @@
 		{{Session::get('menu')}} 
 		<div class="main">
 			<div class="container">
-				@if(!in_array(Request::segment(1), Config::get('contingentes.tratadosExclude')))
+				@if(in_array(Request::path(), Config::get('contingentes.tratadosInclude')))
 					<div class="pull-right">
 						<?php $tratados = Session::get('tratados'); $selected = Session::get('tselected'); ?>
 						@if($tratados)
