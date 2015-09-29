@@ -89,11 +89,11 @@
 								<td class="text-center">{{ $movimiento['fecha'] }}</td>
 								<td class="text-center">{{ $movimiento['fraccion'] }}</td>
 								<td class="text-center">{{ $movimiento['fechavencimiento'] }}</td>
-								<td class="text-center">{{ number_format($movimiento['cantidad'], 3) }}</td>
+								<td class="text-center">{{ number_format($movimiento['cantidad'], 2) }}</td>
 								@if($movimiento['dua'] <> '')
 									<td class="text-center">{{ $movimiento['fechaliquidacion'] }}</td>
 									<td class="text-center">{{ $movimiento['dua'] }}</td>
-									<td class="text-center">{{ number_format($movimiento['real'], 3) }}</td>
+									<td class="text-center">{{ number_format($movimiento['real'], 2) }}</td>
 									<td class="text-center">{{ number_format($variacion, 3)  }}</td>
 									<td class="text-center">{{ number_format((($variacion * 100)/$movimiento['real']), 3) }}</td>
 									<td class="text-center">{{ number_format($movimiento['cif'], 2) }}</td>
@@ -120,27 +120,27 @@
 			<table class="table table-striped table-bordered table-condensed blue">
 				<tbody>
 				<tr>
-					<td>Cuota total</td>
+					<td>Cuota total Contingente</td>
 					<td class="text-center"><strong>{{ number_format($volumentotalt, 3) }}</strong></td>
 				</tr>
 				@if($esasignacion==1)
 				<tr>
-					<td>Asignado</td>
+					<td>Pendiente por asignar</td>
 					<td class="text-center"><strong>{{ number_format($asignadot, 3) }}</strong></td>
 				</tr>
 				@endif
 				<tr>
-					<td>Adjudicado</td>
+					<td>Adjudicado en Certificados</td>
 					<td class="text-center"><strong>{{ number_format($adjudicadot, 3) }}</strong></td>
 				</tr>
 				@if($esasignacion==1)
 				<tr>
-					<td>Saldo</td>
+					<td>Pendiente por adjudicar</td>
 					<td class="text-center"><strong>{{ number_format($asignadot-$adjudicadot, 3) }}</strong></td>
 				</tr>
 				@else
 				<tr>
-					<td>Saldo</td>
+					<td>Pendiente por adjudicar</td>
 					<td class="text-center"><strong>{{ number_format($volumentotalt-$adjudicadot, 3) }}</strong></td>
 				</tr>
 				@endif
