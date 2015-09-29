@@ -1,7 +1,7 @@
 @extends('template/template')
 
 @section('content')
-	<h3 class="text-primary">Penalizaciones para períodos</h3>
+	<h3 class="text-primary">Penalizaciones y devoluciones para períodos</h3>
 	{{ Form::open(array('url'=>'periodospenalizaciones?periodo='.$periodoid, 'class'=>'form-horizontal', 'id'=>'frmAsignacion')) }}
 		<div class="form-group col-sm-6">
       <label for="txPeriodo" class="col-sm-4 control-label">Período:</label>
@@ -40,7 +40,16 @@
     <div class="form-group col-sm-6">
       <label for="txCantidad" class="col-sm-4 control-label">Cantidad:</label>
       <div class="col-sm-8">
-      	{{ Form::text('txCantidad', '', array('class'=>'form-control', 'data-bv-notEmpty'=>'true', 'data-bv-numeric'=>'true', 'data-bv-notempty-message'=>'La cantidad es requerida', 'data-bv-numeric-message'=>'La cantidad debe ser un número')) }}
+      	{{ Form::text('txCantidad', '', array('class'=>'form-control', 'data-bv-notEmpty'=>'true', 'data-bv-numeric'=>'true', 'data-bv-notempty-message'=>'La cantidad es requerida', 'data-bv-numeric-message'=>'La cantidad debe ser un número','data-bv-greaterthan'=>'true','data-bv-greaterthan-value'=> 0,'data-bv-greaterthan-inclusive'=>'false','data-bv-greaterthan-message'=>'El valor debe ser mayor que cero.')) }}
+      </div>
+    </div>
+    <div class="form-group col-sm-6">
+      <label for="txCantidad" class="col-sm-4 control-label">Tipo:</label>
+      <div class="col-sm-8">
+        <select id="cmbTipo" name="cmbTipo" class="selectpicker form-control">
+          <option value="{{ Crypt::encrypt(4) }}">Penalización</option>
+          <option value="{{ Crypt::encrypt(2) }}">Devolución</option>
+        </select>
       </div>
     </div>
     <div class="clearfix"></div>
@@ -52,7 +61,7 @@
     </div>
     <div class="form-group col-sm-6">
       <div class="col-sm-8 col-sm-offset-4">
-      	{{ Form::submit('Asignar', array('class'=>'btn btn-success')) }}
+      	{{ Form::submit('Guardar', array('class'=>'btn btn-success')) }}
       </div>
     </div>
 	{{ Form::close() }}

@@ -23,18 +23,19 @@ class periodospenalizacionesController extends BaseController {
 	public function store() {
 		$periodoid = Crypt::decrypt(Input::get('periodo'));
 		$empresaid = Crypt::decrypt(Input::get('cmbEmpresa'));
+		$tipoid    = Crypt::decrypt(Input::get('cmbTipo'));
 		$usuarioid = DB::table('authusuarios')->where('empresaid', $empresaid)->pluck('usuarioid');
 
 		$movimiento                   = new Movimiento;
-		$movimiento->tipomovimientoid = DB::table('tiposmovimiento')->where('nombre', 'Penalizaciones')->pluck('tipomovimientoid');
+		$movimiento->tipomovimientoid = $tipoid;
 		$movimiento->periodoid        = $periodoid;
 		$movimiento->cantidad         = (Input::get('txCantidad') * -1);
-		$movimiento->comentario       = 'Penalización: '. trim(Input::get('txComentario'));
+		$movimiento->comentario       = ($tipoid == 4 ? 'Penalización: ' : 'Devolución: ').trim(Input::get('txComentario'));
 		$movimiento->created_by       = Auth::id();
 		$movimiento->usuarioid        = $usuarioid;
 		$movimiento->save();
 
-		Session::flash('message', 'Penalización realizada exitosamente');
+		Session::flash('message', 'Operación realizada exitosamente');
 		Session::flash('type', 'success');
 
 		return Redirect::to('periodos');
