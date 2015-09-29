@@ -99,7 +99,7 @@
             });       
           });
           
-          $.get('/contingente/saldoasignacion/' + $(this).val() + '?tratado=' + $("#cmbContingentes option:selected").attr('data-tratado'), function(data){
+          /*$.get('/contingente/saldoasignacion/' + $(this).val() + '?tratado=' + $("#cmbContingentes option:selected").attr('data-tratado'), function(data){
             console.log(data);
             if(data.codigoerror != 0) {
               alert( "Error: " + data.error);
@@ -115,14 +115,14 @@
           }).fail(function(xhr, textStatus, errorThrown)  {
             alert( "Error: Imposible calcular el disponible para este contingente.");
             window.location = '/';
-          });
+          });*/
       });
 
       $("#cmbContingentes").change();
 
       $('#frmSolicitud').bootstrapValidator({
         live: 'submitted',
-        fields: {
+        /*fields: {
           cantidad: {
             validators: {
               lessThan: {
@@ -131,7 +131,7 @@
               }
             }
           }
-        }
+        }*/
       });
     });
   </script>
