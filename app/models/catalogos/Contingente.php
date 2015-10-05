@@ -16,6 +16,22 @@ class Contingente extends Eloquent {
 			->first();
 	}
 
+	public static function getContingente($filter=null) {
+		$query =  DB::table('contingentes AS c')
+			->select('contingenteid','t.nombrecorto AS tratado','p.nombre AS producto', 't.tipo',
+				DB::raw('IF(c.normativo IS NULL, t.normativo, c.normativo) AS normativopdf'))
+			->where('contingenteid','=',$filter)
+			->leftJoin('tratados AS t', 'c.tratadoid', '=', 't.tratadoid')
+			->leftJoin('productos AS p', 'c.productoid', '=', 'p.productoid')
+			->orderBy('t.tipo','DESC')
+			->orderBy('t.nombre')
+			->orderBy('p.nombre');
+
+        
+
+      return $query->get();
+	}
+
 	public static function getContingentes($filter=null) {
 		$query =  DB::table('contingentes AS c')
 			->select('contingenteid','t.nombrecorto AS tratado','p.nombre AS producto', 't.tipo',

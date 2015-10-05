@@ -116,10 +116,12 @@ Route::group(array('before' => array('tratados')), function() {
 		Route::resource('empresas', 'empresasController', array('only'=>array('index', 'store')));
 		Route::resource('utilizacion', 'utilizacionController', array('only'=>array('index', 'store')));
 		Route::resource('consolidadoutilizacion', 'consolidadoutilizacionController', array('only'=>array('index', 'store')));
+		Route::resource('totalcertificados', 'totalcertificadosController', array('only'=>array('index', 'store')));
 		Route::resource('utilizacionporempresa', 'utilizacionempresaController', array('only'=>array('index', 'store')));
+		Route::resource('utilizaciontodasempresa', 'utilizaciontodasempresaController', array('only'=>array('index','store')));
 		Route::resource('utilizacionporempresagrafica', 'utilizacionempresagraficaController', array('only'=>array('index', 'store')));
 		
-		//Route::post('utilizacionporempresagrafica/pdf', array('as'=>'utilizacionporempresagrafica.pdf', 'uses'=>'utilizacionempresagraficaController@pdf'));
+		
 		
 		Route::get('tratado/graficas/saldo/{id}', array('as'=>'tratado.graficas.saldo', 'uses'=>'graficasController@saldo'));
 	  

@@ -277,6 +277,13 @@ class ModulosSeeder extends Seeder {
 			'descripcion' => ''
 		));
 
+			DB::table('authmodulos')->insert(array(
+			'moduloid'       => 40,
+			'nombre'         => 'totalcertificados',
+			'nombrefriendly' => 'Total de Certificados',
+			'descripcion' => ''
+		));
+
 		DB::table('authmodulos')->update(array('created_at'=>date_create(), 'updated_at'=>date_create()));
 	  DB::statement('SET FOREIGN_KEY_CHECKS=1');
 	}

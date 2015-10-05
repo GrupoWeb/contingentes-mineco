@@ -982,6 +982,18 @@
 				'moduloid'        => 39,
 				'permisoid' 			=> 18
 			));
+
+			DB::table('authmodulopermisos')->insert(array(
+				'modulopermisoid'	=> 181,
+				'moduloid'        => 40,
+				'permisoid' 			=> 1
+			));
+
+			DB::table('authmodulopermisos')->insert(array(
+				'modulopermisoid'	=> 182,
+				'moduloid'        => 40,
+				'permisoid' 			=> 3
+			));
 		
 		  DB::table('authmodulopermisos')->update(array('created_at'=>date_create(), 'updated_at'=>date_create()));
 		  DB::statement('SET FOREIGN_KEY_CHECKS=1');
