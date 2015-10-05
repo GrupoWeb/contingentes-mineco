@@ -59,7 +59,7 @@ class asignacionController extends BaseController {
 							$nombre = date('Ymdhis') . mt_rand(1, 1000) . '.' . strtolower($arch->getClientOriginalExtension());
 							$res    = $arch->move(public_path() . '/archivos/' . Auth::id(), $nombre);
 							DB::table('solicitudasignacionrequerimientos')->insert(array(
-								'solicitudasignacionid' => $solicitud->id,
+								'solicitudasignacionid' => $solicitud->solicitudasignacionid,
 								'requerimientoid'       => substr($key,4),
 								'archivo'               => $nombre,
 								'created_at'            => date_create(),
