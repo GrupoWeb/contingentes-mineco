@@ -50,8 +50,8 @@
 					@if(!empty($value[1]))
 						@foreach($value[1] as $tbody)
 							<tr>
-								<td align="center">{{$tbody->nombre}}</td>
-								<td align="center">{{$tbody->numerocertificado}}</td>
+								<td align="center" style="font-size: 8px">{{$tbody->nombre}}</td>
+								<td align="center" style="font-size: 8px">{{$tbody->numerocertificado}}</td>
 							</tr>
 							<?php $tcertificados++; ?>
 						@endforeach
