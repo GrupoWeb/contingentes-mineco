@@ -39,7 +39,7 @@ class inscripcionController extends BaseController {
 	}
 
 	public function validateNIT() {
-    $aNIT = Input::get('txNIT');
+    /*$aNIT = Input::get('txNIT');
 
     $empresaid = 0;
     if(Input::has('u'))
@@ -61,7 +61,8 @@ class inscripcionController extends BaseController {
     		$val='false';
     	else 
     		$val='true';
-    }
+    }*/
+    $val = 'true';
 
     return json_encode(array('valid'=>$val));
 	}
