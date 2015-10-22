@@ -43,12 +43,18 @@ class certificadosController extends Controller {
 	}
 
   public function store() {
-    $tratadoid     = Crypt::decrypt(Input::get('tratadoid'));
-    $contingenteid = Crypt::decrypt(Input::get('contingenteid'));
-    $periodoid     = Crypt::decrypt(Input::get('periodoid'));
-    $empresaid     = Crypt::decrypt(Input::get('empresaid'));
+    try {
+      $tratadoid     = Crypt::decrypt(Input::get('tratadoid'));
+      $contingenteid = Crypt::decrypt(Input::get('contingenteid'));
+      $periodoid     = Crypt::decrypt(Input::get('periodoid'));
+      $empresaid     = Crypt::decrypt(Input::get('empresaid'));    
+    } catch (\Exception $e) {
+      return View::make('cancerbero::error')
+        ->with('mensaje','Tratado, período, contingente o empresa inválidos.');
+    }
+  
     $fechaini      = Components::fechaHumanoAMySql(Input::get('fechaini')).' 00:00';
-    $fechafin      = Components::fechaHumanoAMySql(Input::get('fechafin')).' 23:59';
+    $fechafin      = Components::fechaHumanoAMySql(Input::get('fechafin')).' 23:59';  
 
     $certificados  = Certificado::getCertificados($tratadoid, $contingenteid, $periodoid, $empresaid, $fechaini, $fechafin);
     $tmp           = array();
