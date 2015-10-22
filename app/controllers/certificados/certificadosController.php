@@ -11,7 +11,12 @@ class certificadosController extends Controller {
 	}
 
 	public function getcontingentes($id) {
-		$id        = Crypt::decrypt($id);
+    try {
+      $id = Crypt::decrypt($id);      
+    } catch (\Exception $e) {
+      return "Tratado inválido";
+    }
+
 		$empresaid = Auth::user()->empresaid;
 
     if ($empresaid) 

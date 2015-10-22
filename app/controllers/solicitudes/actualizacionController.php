@@ -3,6 +3,13 @@
 class actualizacionController extends crudController {
 	
 	public function index() {
+		if (!Auth::user()->empresaid) {
+			Session::flash('message', 'Este usuario no tiene empresa asociada.');
+			Session::flash('type', 'danger');
+
+			return Redirect::to('inicio');
+		}
+
 		$pendiente = Solictudactualizacion::getPendientes(Auth::user()->empresaid);
 
 		if($pendiente <> null) {			
