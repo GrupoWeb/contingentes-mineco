@@ -346,6 +346,24 @@
 				'icono'         	=> null
 			));
 
+			DB::table('authmenu')->insert(array(
+				'menuid'					=> 44,
+				'padreid'        	=> 2,
+				'modulopermisoid' => 185,
+				'nombre'         	=> 'Noticias',
+				'orden' 					=> 600,
+				'icono'         	=> null
+			));
+
+			DB::table('authmenu')->insert(array(
+				'menuid'					=> 45,
+				'padreid'        	=> null,
+				'modulopermisoid' => 192,
+				'nombre'         	=> 'Noticias',
+				'orden' 					=> 7000,
+				'icono'         	=> null
+			));
+
 			DB::table('authmenu')->update(array('created_at'=>date_create(), 'updated_at'=>date_create()));
 		  DB::statement('SET FOREIGN_KEY_CHECKS=1');
 		}
