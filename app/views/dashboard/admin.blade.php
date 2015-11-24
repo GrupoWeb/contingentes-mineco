@@ -1,20 +1,6 @@
 @extends('template/template')
 
 @section('content')
-	<div class="col-sm-12">
-		<div class="pull-right">
-			<?php $tratados = Session::get('tratados'); $selected = Session::get('tselected'); ?>
-			<select class="selectpicker" id="cmbTratado">
-				<option value="0" {{ (0 == $selected) ? 'selected' : '' }}>-- TODOS --</option>
-				@foreach($tratados as $tratado)
-					<?php $tid = $tratado->tratadoid; ?>
-					<option value="{{ $tid }}" {{ ($tid == $selected) ? 'selected' : '' }}>{{ $tratado->nombrecorto }}</option>
-				@endforeach
-			</select>
-		</div>
-	</div>
-	<div class="clearfix"></div>
-	<br />
 	@if(Session::has('message'))
 		<div class="alert alert-{{ Session::get('type') }} alert-dismissable">
 			{{ Session::get('message') }}
