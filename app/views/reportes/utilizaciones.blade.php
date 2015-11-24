@@ -124,7 +124,7 @@
 				</tr>
 				@if($esasignacion==1)
 				<tr>
-					<td>Pendiente por asignar</td>
+					<td>Asignado</td>
 					<td class="text-center"><strong>{{ number_format($asignadot, 3) }}</strong></td>
 				</tr>
 				@endif
@@ -134,12 +134,12 @@
 				</tr>
 				@if($esasignacion==1)
 				<tr>
-					<td>Pendiente por adjudicar</td>
+					<td>Saldo</td>
 					<td class="text-center"><strong>{{ number_format($asignadot-$adjudicadot, 3) }}</strong></td>
 				</tr>
 				@else
 				<tr>
-					<td>Pendiente por adjudicar</td>
+					<td>Saldo</td>
 					<td class="text-center"><strong>{{ number_format($volumentotalt-$adjudicadot, 3) }}</strong></td>
 				</tr>
 				@endif
