@@ -102,13 +102,13 @@ Route::group(array('before' => array('tratados')), function() {
 		Route::resource('usuarioempresas','usuariosdeempresaController');
 		Route::resource('usuariosextra','usuariosextraController');
 		Route::resource('periodoconstancias', 'periodoconstanciasController', array('only'=>array('index','show')));
+		Route::resource('catalogonoticias','catalogonoticiasController');
 
 		//=== CERTIFICADOS
 		Route::resource('certificados', 'certificadosController',array('only'=>array('index','store')));
 		Route::get('certificados/anular/{id}', array('as'=>'certificados.anular', 'uses'=>'certificadosController@anular'));
 		Route::post('certificados/anular/{id}', array('as'=>'certificados.procesaranulacion', 'uses'=>'certificadosController@procesaranulacion'));
-		Route::get('certificados/liquidar/{id}', array('as'=>'certificados.liquidar', 'uses'=>'certificadosController@liquidar'));
-		Route::post('certificados/liquidar/{id}', array('as'=>'certificados.procesarliquidacion', 'uses'=>'certificadosController@procesarliquidacion'));
+		Route::resource('solicitudliquidacion', 'solicitudliquidacionController', array('only'=>array('index','store','show')));
 
 		//=== REPORTES
 		Route::resource('cuentacorriente', 'cuentacorrienteController', array('only'=>array('index','store')));
@@ -116,12 +116,13 @@ Route::group(array('before' => array('tratados')), function() {
 		Route::resource('empresas', 'empresasController', array('only'=>array('index', 'store')));
 		Route::resource('utilizacion', 'utilizacionController', array('only'=>array('index', 'store')));
 		Route::resource('consolidadoutilizacion', 'consolidadoutilizacionController', array('only'=>array('index', 'store')));
-		Route::resource('totalcertificados', 'totalcertificadosController', array('only'=>array('index', 'store')));
 		Route::resource('utilizacionporempresa', 'utilizacionempresaController', array('only'=>array('index', 'store')));
 		Route::resource('utilizaciontodasempresa', 'utilizaciontodasempresaController', array('only'=>array('index','store')));
 		Route::resource('utilizacionporempresagrafica', 'utilizacionempresagraficaController', array('only'=>array('index', 'store')));
+		Route::resource('certificadosempresas', 'certificadosempresasController', array('only'=>array('index', 'store')));
 		
-		
+		//=== NOTICIAS
+		Route::get('noticas', array('as'=>'noticias.index', 'uses'=>'noticiasController@index'));
 		
 		Route::get('tratado/graficas/saldo/{id}', array('as'=>'tratado.graficas.saldo', 'uses'=>'graficasController@saldo'));
 	  
