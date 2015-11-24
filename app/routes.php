@@ -10,8 +10,11 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
-//Temp paltillas
+//Temp plantillas
 Route::get('plantilla1','plantillaController@plantilla1');
+Route::get('plantilla2','plantillaController@plantilla2');
+Route::get('plantilla3','plantillaController@plantilla3');
+
 //Legacy
 Route::get('api/vupe/','apiController@vupeLegacy');
 
