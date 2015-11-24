@@ -29,8 +29,8 @@
 
 		</head>
 		<body>
-			<div class="container" style="width:95%; margin: 5px auto;">
-				@yield('content')
+			<div class="container-full">
+					@yield('content')
 			</div>
 		</body>
 	</html>

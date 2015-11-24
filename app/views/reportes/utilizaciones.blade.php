@@ -4,18 +4,18 @@
 	<table class="table table-striped table-bordered blue">
 		<thead>
 			<tr>
-				<th rowspan="2" colspan="5" class="text-center bg-white">
+				<th rowspan="2" colspan="5" class="text-center">
 					@if($formato <> 'excel') 
 						{{ HTML::image('images/logo.jpg') }}
 					@endif
 					<br>DACE - MINECO
 				</th>
-				<th rowspan="1" colspan="12" class="text-center bg-white"><h4>{{$titulo}}</h4></th>				
+				<th rowspan="1" colspan="12" class="text-center"><h4>{{$titulo}}</h4></th>				
 			</tr>
 			<tr>
-				<th rowspan="1" colspan="3" class="text-center bg-white">{{ $tratado }}</th>
-				<th rowspan="1" colspan="4" class="text-center bg-white">{{ $producto }}</th>
-				<th rowspan="1" colspan="5" class="text-center bg-white">Reporte generado {{ date('d/m/Y') }}</th>
+				<th rowspan="1" colspan="3" class="text-center">{{ $tratado }}</th>
+				<th rowspan="1" colspan="4" class="text-center">{{ $producto }}</th>
+				<th rowspan="1" colspan="5" class="text-center">Reporte generado {{ date('d/m/Y') }}</th>
 			</tr>
 
 			<tr>
@@ -88,14 +88,14 @@
 								<td class="text-center">{{ $movimiento['fecha'] }}</td>
 								<td class="text-center">{{ $movimiento['fraccion'] }}</td>
 								<td class="text-center">{{ $movimiento['fechavencimiento'] }}</td>
-								<td class="text-center">{{ number_format($movimiento['cantidad'], 2) }}</td>
+								<td class="text-right">{{ number_format($movimiento['cantidad'], 2) }}</td>
 								@if($movimiento['dua'] <> '')
 									<td class="text-center">{{ $movimiento['fechaliquidacion'] }}</td>
 									<td class="text-center">{{ $movimiento['dua'] }}</td>
-									<td class="text-center">{{ number_format($movimiento['real'], 2) }}</td>
-									<td class="text-center">{{ number_format($variacion, 3)  }}</td>
-									<td class="text-center">{{ number_format((($variacion * 100)/$movimiento['real']), 3) }}</td>
-									<td class="text-center">{{ number_format($movimiento['cif'], 2) }}</td>
+									<td class="text-right">{{ number_format($movimiento['real'], 2) }}</td>
+									<td class="text-right">{{ number_format($variacion, 3)  }}</td>
+									<td class="text-right">{{ number_format((($variacion * 100)/$movimiento['real']), 3) }}</td>
+									<td class="text-right">{{ number_format($movimiento['cif'], 2) }}</td>
 									<td class="text-center">{{ $movimiento['real'] <> 0 ? (number_format(($movimiento['cif']/$movimiento['real']), 2)) : '0.00' }}</td>
 								@else
 									<td>&nbsp;</td>
@@ -113,38 +113,36 @@
 			@endforeach
 		</tbody>
 	</table>
-	<br><br>
-	<div class="row">
-		<div class="col-sm-6">
-			<table class="table table-striped table-bordered table-condensed blue">
-				<tbody>
-				<tr>
-					<td>Cuota total Contingente</td>
-					<td class="text-center"><strong>{{ number_format($volumentotalt, 3) }}</strong></td>
-				</tr>
-				@if($esasignacion==1)
-				<tr>
-					<td>Asignado</td>
-					<td class="text-center"><strong>{{ number_format($asignadot, 3) }}</strong></td>
-				</tr>
-				@endif
-				<tr>
-					<td>Adjudicado en Certificados</td>
-					<td class="text-center"><strong>{{ number_format($adjudicadot, 3) }}</strong></td>
-				</tr>
-				@if($esasignacion==1)
-				<tr>
-					<td>Saldo</td>
-					<td class="text-center"><strong>{{ number_format($asignadot-$adjudicadot, 3) }}</strong></td>
-				</tr>
-				@else
-				<tr>
-					<td>Saldo</td>
-					<td class="text-center"><strong>{{ number_format($volumentotalt-$adjudicadot, 3) }}</strong></td>
-				</tr>
-				@endif
-				
-			</table>
-		</div>
-	</div>
+</div>
+<br><br>
+<div class="col-sm-6">
+	<table class="table table-striped table-bordered table-condensed blue">
+		<tbody>
+		<tr>
+			<td>Cuota total Contingente</td>
+			<td class="text-right"><strong>{{ number_format($volumentotalt, 3) }}</strong></td>
+		</tr>
+		@if($esasignacion==1)
+		<tr>
+			<td>Asignado</td>
+			<td class="text-right"><strong>{{ number_format($asignadot, 3) }}</strong></td>
+		</tr>
+		@endif
+		<tr>
+			<td>Adjudicado en Certificados</td>
+			<td class="text-right"><strong>{{ number_format($adjudicadot, 3) }}</strong></td>
+		</tr>
+		@if($esasignacion==1)
+		<tr>
+			<td>Saldo</td>
+			<td class="text-right"><strong>{{ number_format($asignadot-$adjudicadot, 3) }}</strong></td>
+		</tr>
+		@else
+		<tr>
+			<td>Saldo</td>
+			<td class="text-right"><strong>{{ number_format($volumentotalt-$adjudicadot, 3) }}</strong></td>
+		</tr>
+		@endif
+		
+	</table>
 @stop

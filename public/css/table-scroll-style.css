@@ -1,5 +1,5 @@
 body{
-  font:0.8em normal "Times New Roman", Georgia, Serif;
+  font:normal "Times New Roman", Georgia, Serif;
   color:#34495E;
 }
 
@@ -37,11 +37,6 @@ thead{
   color:black;
 }
 
-/*th,td{
-  text-align:center;
-  padding:5px 0;
-}*/
-
 th{
   font-weight: bold;
 }
@@ -61,12 +56,4 @@ tbody tr:hover{
   width:auto;
   display:none;
   border:none;
-}
-
-.scrollMore{
-  margin-top:600px;
-}
-
-.up{
-  cursor:pointer;
 }
