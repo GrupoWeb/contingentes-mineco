@@ -1,7 +1,8 @@
 @extends('template/reporte')
 
 @section('content')
-	<table class="table table-striped table-bordered blue">
+
+	<table class="table table-striped table-bordered blue" style="font-size:10px;">
 		<thead>
 			<tr>
 				<th rowspan="2" colspan="5" class="text-center">
