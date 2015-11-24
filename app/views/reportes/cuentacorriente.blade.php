@@ -1,6 +1,6 @@
 @extends('template/reporte')
-@section('content')
 
+@section('content')
 	<table class="table table-striped table-bordered blue">
 		<thead>
 			<tr>

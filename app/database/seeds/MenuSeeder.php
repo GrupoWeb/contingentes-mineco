@@ -338,15 +338,6 @@
 			));
 
 			DB::table('authmenu')->insert(array(
-				'menuid'					=> 42,
-				'padreid'        	=> 21,
-				'modulopermisoid' => 181,
-				'nombre'         	=> 'Total de Certificados',
-				'orden' 					=> 369,
-				'icono'         	=> null
-			));
-
-			DB::table('authmenu')->insert(array(
 				'menuid'					=> 43,
 				'padreid'        	=> 21,
 				'modulopermisoid' => 183,

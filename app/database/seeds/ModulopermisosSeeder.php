@@ -984,18 +984,6 @@
 			));
 
 			DB::table('authmodulopermisos')->insert(array(
-				'modulopermisoid'	=> 181,
-				'moduloid'        => 40,
-				'permisoid' 			=> 1
-			));
-
-			DB::table('authmodulopermisos')->insert(array(
-				'modulopermisoid'	=> 182,
-				'moduloid'        => 40,
-				'permisoid' 			=> 3
-			));
-
-			DB::table('authmodulopermisos')->insert(array(
 				'modulopermisoid'	=> 183,
 				'moduloid'        => 41,
 				'permisoid' 			=> 1

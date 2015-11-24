@@ -41,8 +41,8 @@
 		</tbody>
 		<tfoot>
 			<tr>
-				<td class="text-left" colspan="4"><strong>TOTAL</strong></td>
-				<td class="text-right"><strong>{{ number_format($total) }}</strong></td>
+				<td class="text-left text-primary" colspan="4"><strong>TOTAL</strong></td>
+				<td class="text-right text-primary"><strong>{{ number_format($total) }}</strong></td>
 			</tr>
 		</tfoot>
 	</table>
