@@ -146,7 +146,8 @@
           valid: '',
           invalid: '',
           validating: ''
-        }
+        },
+        live: 'disabled',
       });
 
 			$('.catalogoFecha').datetimepicker({
