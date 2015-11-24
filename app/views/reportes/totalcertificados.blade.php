@@ -47,11 +47,15 @@
 					@if(!empty($value[1]))
 						@foreach($value[1] as $tbody)
 							<tr>
-								<td>{{$tbody->nombre}}</td>
-								<td>{{$tbody->numerocertificado}}</td>
+								<td class="text-left">{{$tbody->nombre}}</td>
+								<td class="textcenter">{{$tbody->numerocertificado}}</td>
 							</tr>
 							<?php $tcertificados++; ?>
 						@endforeach
+						<tr>
+							<td><strong>TOTAL</strong></td>
+							<td><strong></strong></td>
+						</tr>
 					@else
 						<tr>
 							<td colspan="2">No se encontraron certificados</td>
@@ -64,8 +68,8 @@
 
 <table class="table-striped table-bordered blue" style="font-family:'helvetica';">
 	<tr>
-		<td width="50%">Total de Certificados</td>
-		<td width="50%">{{$tcertificados}}</td>
+		<td width="50%" class="text-right">Total de Certificados</td>
+		<td width="50%" class="text-right">{{$tcertificados}}</td>
 	</tr>
 	<tr>
 		<td width="50%">Total de Contingentes</td>

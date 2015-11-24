@@ -178,8 +178,23 @@ class Movimiento extends Eloquent {
 	}
 
 	public static function getConsumoYSaldoActual($aContingenteId, $aEmpresaId) {
-
 		$periodoid = Periodo::getPeriodo($aContingenteId);
 		return self::getConsumoYSaldo($periodoid, $aEmpresaId);
 	}
-} 
+
+	public static function getCertificadosPorEmpresa($aPeriodoId, $aFechaIni, $aFechafin) {
+		return DB::table('movimientos AS m')
+			->select('razonsocial AS nombre', 'e.nit', 
+				'encargadoimportaciones AS encargado', 'e.telefono', 
+				DB::raw('count(*) AS cuenta'))
+			->leftJoin('authusuarios AS u', 'm.usuarioid', '=', 'u.usuarioid')
+			->leftJoin('empresas AS e', 'u.empresaid', '=', 'e.empresaid')
+			->whereNotNull('certificadoid')
+			->where('tipomovimientoid', 2) //certificado
+			->where('periodoid', $aPeriodoId)
+			->whereBetween('m.created_at', [$aFechaIni, $aFechafin])
+			->groupBy('nombre')
+			->orderBy('cuenta', 'desc')
+			->get();
+	}
+}

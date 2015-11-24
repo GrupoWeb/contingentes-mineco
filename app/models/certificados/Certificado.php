@@ -64,7 +64,5 @@ class Certificado extends Eloquent {
 		$query->whereBetween('c.fecha', array($aFechaInicio, $aFechaFin));
 		$query->orderBy('c.fecha', 'desc');
 		return $query->get();
-
-  
 	}
 }
