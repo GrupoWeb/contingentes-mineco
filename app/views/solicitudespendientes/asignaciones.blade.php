@@ -77,14 +77,23 @@
 			$('#btnAutorizar').click(function(){
 				$('#txObservaciones').hide();
 			});
+
+			$('#btnRechazar').click(function(){
+				$('#frmAuto').data('bootstrapValidator').enableFieldValidators('txCantidad', false);
+			});
+
 			$('#frmAuto').bootstrapValidator({
 				feedbackIcons: {
 	        valid: 'glyphicon glyphicon-ok',
 	        invalid: 'glyphicon glyphicon-remove',
 	        validating: 'glyphicon glyphicon-refresh'
 	      },
+	      live: 'disabled',
 	    });
 		});
 	</script>
+
+
+	
 
 @stop
