@@ -44,7 +44,7 @@ class emisionController extends BaseController {
 
 		else {
 			$res = DB::transaction(function() use($solicitado, $contingente) {
-				$periodo = Periodo::getPeriodo($contingente);
+			$periodo = Periodo::getPeriodo($contingente);
 
 				if(!$periodo) {
 					return false;

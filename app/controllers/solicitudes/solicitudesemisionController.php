@@ -12,6 +12,8 @@ class solicitudesemisionController extends crudController {
 		Crud::setLeftJoin('empresas AS e', 'u.empresaid', '=', 'e.empresaid');
 		Crud::setLeftJoin('periodos AS p', 'solicitudesemision.periodoid', '=', 'p.periodoid');
 		Crud::setLeftJoin('contingentes AS c', 'p.contingenteid', '=', 'c.contingenteid');
+		Crud::setLeftJoin('solicitudemisionpartidas AS emp', 'solicitudesemision.solicitudemisionid', '=', 'emp.solicitudemisionid');
+		Crud::setLeftJoin('contingentepartidas AS cp', 'emp.partidaid', '=', 'cp.partidaid');
 		Crud::setLeftJoin('tratados AS t', 'c.tratadoid', '=', 't.tratadoid');
 		Crud::setLeftJoin('productos AS d', 'c.productoid', '=', 'd.productoid');
 
@@ -26,6 +28,7 @@ class solicitudesemisionController extends crudController {
 		Crud::setCampo(array('nombre'=>'Usuario','campo'=>'u.nombre'));
 		Crud::setCampo(array('nombre'=>'Empresa','campo'=>'e.razonsocial'));
 		Crud::setCampo(array('nombre'=>'Tratado','campo'=>'t.nombrecorto'));
+		Crud::setCampo(array('nombre'=>'Fraccion','campo'=>'cp.partida'));
 		Crud::setCampo(array('nombre'=>'Producto','campo'=>'d.nombre'));
 		Crud::setCampo(array('nombre'=>'Fecha de solicitud','campo'=>'solicitudesemision.created_at', 'tipo'=>'datetime'));
 		Crud::setCampo(array('nombre'=>'Monto Solicitado','campo'=>'solicitado','tipo'=>'numeric', 'decimales'=>4,'class'=>'text-right'));
@@ -65,11 +68,11 @@ class solicitudesemisionController extends crudController {
 			$query      = DB::select(DB::raw('SELECT getSaldoPeriodo('.$emision->periodoid.', '.$usuario->empresaid.') AS disponible'));
 			$disponible = $query[0]->disponible;
 
-			/*if($cantidad > $disponible){
+			if($cantidad > $disponible){
 				Session::flash('type','danger');
 				Session::flash('message','No es posible procesar la solicitud ya que el monto disponible no es suficiente');
 				return Redirect::route('solicitudespendientes.asignacion.index');
-			}*/
+			}
 			
 			//TRANSACTION ===
 			$result = DB::transaction(function() use ($elID, $cantidad, $comentario, $emision) {

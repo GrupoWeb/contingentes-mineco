@@ -7,7 +7,7 @@ class Emisionpendiente extends Eloquent {
 	public static function getSolicitudPendiente($id){
 		return DB::table('solicitudesemision AS se')
 			->select('se.solicitudemisionid','e.razonsocial AS nombre','u.email','se.created_at', 'se.usuarioid', 'se.solicitado', 
-				't.nombrecorto AS tratado', 't.nombre AS tratadolargo', 'c.variacion', 'e.codigovupe', 'c.contingenteid',
+				't.nombrecorto AS tratado', 't.nombre AS tratadolargo', 'c.variacion', 'e.codigovupe', 'c.contingenteid', 'cp.partida',
 				'd.nombre AS producto','m.nombrecorto AS unidad', 'e.domiciliocomercial', 'p.periodoid', 'tt.asignacion',
 				'e.nit', 'e.telefono', 'c.textocertificado','se.paisid', 'pp.nombre AS pais', 'd.nombre AS producto', 'e.domiciliofiscal',
 				DB::raw('(SELECT CONCAT(cp.partida," ",cp.nombre) FROM solicitudemisionpartidas AS sep 
@@ -23,6 +23,8 @@ class Emisionpendiente extends Eloquent {
 			->leftJoin('productos AS d', 'c.productoid', '=', 'd.productoid')
 			->leftJoin('unidadesmedida AS m', 'd.unidadmedidaid', '=', 'm.unidadmedidaid')
 			->leftJoin('paises AS pp', 'se.paisid', '=', 'pp.paisid')
+			->leftJoin('solicitudemisionpartidas AS emp', 'se.solicitudemisionid', '=', 'emp.solicitudemisionid')
+			->leftJoin('contingentepartidas AS cp', 'emp.partidaid', '=', 'cp.partidaid')
 			->where('se.solicitudemisionid',$id)
 			->first();
 	}
