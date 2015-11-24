@@ -98,6 +98,7 @@ class certificadosController extends Controller {
     PDF::SetTitle('Certificado');
     PDF::AddPage();
     PDF::setLeftMargin(20);
+    PDF::setPrintFooter(false);
 
     $certificate = $datos->certificado;
     PDF::SetSignature($certificate, $certificate, 'cservice');
