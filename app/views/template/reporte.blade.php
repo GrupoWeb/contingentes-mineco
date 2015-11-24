@@ -29,7 +29,7 @@
 
 		</head>
 		<body>
-			<div class="container">
+			<div class="container" style="width:95%; margin: 5px auto;">
 				@yield('content')
 			</div>
 		</body>

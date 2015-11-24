@@ -1,6 +1,6 @@
 @extends('template/reporte')
-@section('content')
 
+@section('content')
 	<table class="table table-striped table-bordered blue">
 		<thead>
 			<tr>
@@ -33,7 +33,6 @@
 				<th rowspan="1" colspan="4" class="text-center">Liquidado</th>
 			</tr>
 			<tr>
-
 				<th class="text-center">No.</th>
 				<th class="text-center">Fecha</th>
 				<th class="text-center">Fracción</th>
