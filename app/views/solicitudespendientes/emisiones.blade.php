@@ -15,6 +15,8 @@
 			<div class="col-sm-10">{{$solicitud->tratado}}</div>
 			<div class="col-sm-2"><strong>Contingente:</strong></div>
 			<div class="col-sm-10">{{$solicitud->producto}}</div>
+			<div class="col-sm-2"><strong>Partida:</strong></div>
+			<div class="col-sm-10">{{$solicitud->partida}}</div>
 			@if($solicitud->paisid)
 				<div class="col-sm-2"><strong>Pais:</strong></div>
 				<div class="col-sm-10">{{$solicitud->pais}}</div>

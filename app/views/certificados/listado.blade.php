@@ -3,7 +3,7 @@
 @section('content')
 	<h3 class="text-primary">Certificados</h3> 
 	@if(count($certificados) > 0)
-		<table class="table table-bordered table-condensed table-striped">
+		<table class="table table-bordered table-condensed table-striped" id="certs">
 			<thead>
 				<tr>
 					<th>No.</th>
@@ -43,4 +43,27 @@
 	@else
 		<p>No se encontraron certificados que cumplan con los filtros seleccionados</p>
 	@endif
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+		  $('#certs').DataTable( {
+		  	"bLengthChange": false,
+		  	"oLanguage": {
+     			"sLengthMenu": "Mostrar _MENU_ resultados por p&aacute;gina",
+          "sZeroRecords": "No se encontraron registros",
+          "sInfo": "Mostrando _START_ a _END_ de _TOTAL_ resultados",
+          "sInfoEmpty": "Mostrando 0 a 0 de 0 resultados",
+          "sInfoFiltered": "(filtrado de _MAX_ resultados totales)",
+					"sSearch":"Buscar: ",
+					"sProcessing":"Procesando",
+					"oPaginate": {
+						"sPrevious":"Anterior",
+						"sNext":"Siguiente",
+						"sFirst":"Primera",
+						"sLast":"Ultima"
+					}
+				}
+		  });
+		});
+	</script>
 @stop
