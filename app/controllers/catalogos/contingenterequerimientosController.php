@@ -2,21 +2,26 @@
 class contingenterequerimientosController extends BaseController {
 
 	public function index($id) {
+		//declaracion de variables
 		$aAsignacion  = array();
 		$aEmision     = array();
 		$aInscripcion = array();
 
+		//consulta db segun id
 		$ContingenteN = DB::table('contingentes')->where('contingenteid', Crypt::decrypt($id))->first();
 
+		//obtener requirimientos
 		$requerimientos    = Requerimiento::getRequerimientos();
+		//consulta db segun id
 		$id                = Crypt::decrypt($id);
 		$nombreContingente = Contingenterequerimiento::getNombre($id);
 
-		
+		//consulta db segun id
 		$requerimientosAsignacion  = Contingenterequerimiento::getRequerimientosAsignados($id);
 		$requerimientosEmision     = Contingenterequerimiento::getRequerimientosEmision($id);
 		$requerimientosInscripcion = Contingenterequerimiento::getRequerimientosInscripcion($id);
 
+		//mete en areglo datos consultados
 		foreach ($requerimientosAsignacion as $requAsignados)
 			$aAsignacion[] = $requAsignados->requerimientoid;
 
@@ -26,8 +31,10 @@ class contingenterequerimientosController extends BaseController {
 		foreach ($requerimientosInscripcion as $requInscripcion)
 			$aInscripcion[]=$requInscripcion->requerimientoid;
 
+		//asigna valor del formulario
 		$tratadoid = Input::get('tratado');
 
+		//retorna datos a la vista
 		return View::make('contingentes.asignarrequerimientos')
 			->with('ContingenteN',$ContingenteN)
 			->with('requerimientos', $requerimientos)
@@ -43,13 +50,16 @@ class contingenterequerimientosController extends BaseController {
 
 
 	public function store() {
+		//obtiene id 
 		$contingenteid = Crypt::decrypt(Input::get('contingenteid'));
 			DB::table('contingenterequerimientos')->where('contingenteid', $contingenteid)->delete();
 
+		//asignacion de variables con datos del formulario	
 		$aAsignacion  = Input::get('reqAsignacion');
 		$aEmision     = Input::get('reqEmision');
 		$aInscripcion = Input::get('reqInscripcion');
 
+		//elimina elemento si $aAsignacion es null
 		if($aAsignacion==null) {
 			DB::table('contingenterequerimientos')
 				->where('contingenteid', '=', $contingenteid)
@@ -57,6 +67,7 @@ class contingenterequerimientosController extends BaseController {
 				->delete();
 		}
 
+		//inserta datos a la tabla
 		else {
 			 foreach ($aAsignacion as $contingenteid) {
 					$datos = (explode('-', $contingenteid));
@@ -66,6 +77,7 @@ class contingenterequerimientosController extends BaseController {
 			}
 		}
 		
+		//elimina elemnto si $aEmision es null
 		if($aEmision==null) {
 			DB::table('contingenterequerimientos')
 				->where('contingenteid', $contingenteid)
@@ -73,6 +85,7 @@ class contingenterequerimientosController extends BaseController {
 				->delete();
 		}
 
+		//inserta datos a la tabla
 		else{
 			foreach ($aEmision as $contingenteid) {
 				$datos = (explode('-', $contingenteid));
@@ -82,6 +95,7 @@ class contingenterequerimientosController extends BaseController {
 			}
 		}
 
+		//elimina elemnto si $aInscripcionn es null
 		if($aInscripcion==null) {
 			DB::table('contingenterequerimientos')
 				->where('contingenteid', '=', $contingenteid)
@@ -89,6 +103,7 @@ class contingenterequerimientosController extends BaseController {
 				->delete();
 		}
 
+		//inserta datos a la tabla
 		else{
 			foreach ($aInscripcion as $contingenteid) {
 				$datos = (explode('-', $contingenteid));
@@ -98,9 +113,11 @@ class contingenterequerimientosController extends BaseController {
 			}
 		}
 		
+		//despliega mensaje
 		Session::flash('message', 'Se asignaron los requerimientos con éxito.');
 		Session::flash('type', 'success');
 
+		//retorna la vista
 		return Redirect::to('contingentes?tratado='.Input::get('tratado'));
 	}
 }

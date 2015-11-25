@@ -4,19 +4,26 @@ class contingentesController extends crudController {
 	
 	public function __construct() {
 		$response = array('codigoerror'=>0, 'error'=>'');
+		
+		//captura id
 		try {
 			$id = Crypt::decrypt(Input::get('tratado'));
 		} catch (Exception $e) {
+			//define error
 			$id                      = -1;
 			$response['codigoerror'] = 1;
 			$response['error']       = 'Tratado invalido';
 		}
 
+		//funcion de exportar .xls
 		Crud::setExport(true); 
+		//titulo catalogo
 		Crud::setTitulo(Tratado::getNombre($id).' - Contingentes');
+		//conexion db
 		Crud::setTablaId('contingenteid');
 		Crud::setTabla('contingentes');
 
+		//relacion de tablas db
 		Crud::setLeftJoin('productos AS p', 'contingentes.productoid', '=', 'p.productoid');
 		Crud::setLeftJoin('tipotratados AS t', 'contingentes.tipotratadoid', '=', 't.tipotratadoid');
 		Crud::setLeftJoin('unidadesmedida AS u', 'contingentes.unidadmedidaid', '=', 'u.unidadmedidaid');
@@ -24,6 +31,7 @@ class contingentesController extends crudController {
 		Crud::setLeftJoin('authusuarios AS r','contingentes.responsableid','=','r.usuarioid');
 		Crud::setWhere('tratadoid', $id);
 	
+		//definicion de campos con la con la conexion y realaciones de tablas
 		Crud::setCampo(array('nombre'=>'Producto','campo'=>'p.nombre', 'editable'=>false));
 		Crud::setCampo(array('nombre'=>'Tipo','campo'=>'t.nombre', 'editable'=>false));
 		Crud::setCampo(array('nombre'=>'Unidad de medida','campo'=>'u.nombrecorto', 'editable'=>false));
@@ -42,15 +50,22 @@ class contingentesController extends crudController {
 	 	Crud::setBotonExtra(array('url'=>'contingente/requerimientos/{id}?tratado='.Input::get('tratado'),'icon'=>'glyphicon glyphicon-list-alt','titulo'=>'Requerimientos'));
 	 	Crud::setBotonExtra(array('url'=>'partidasarancelarias?contingente={id}','icon'=>'glyphicon glyphicon-th','titulo'=>'Fracciones arancelarias', 'class'=>'success'));
 
+	 	//mantiene id en vista
 	 	Crud::setHidden(array('campo'=>'tratadoid', 'valor'=>$id));
 	 	
+	 	//permisos cancerbero
 	 	Crud::setPermisos(Cancerbero::tienePermisosCrud('contingentes'));
 	}
 
+	//obtener saldo
 	public function getSaldo($contingenteid) {
+		//variable para id
 		$cid = Crypt::decrypt($contingenteid);
 
+		//consulta db segun $cid
 		$disponible             = DB::select(DB::raw('SELECT getSaldo('.$cid.','.Auth::user()->empresaid.') AS disponible'));
+
+		//declara valor de valiable al areglo
 		$response['disponible'] = $disponible[0]->disponible;
 		$response['unidad']     = Contingente::getUnidadMedida($cid);
 
@@ -58,18 +73,23 @@ class contingentesController extends crudController {
 	}
 
 	public function getSaldoAsignacion($contingenteid) {
+		//define un areglo a la variable
 		$response = array('codigoerror'=>0, 'error'=>'');
+		//captura id
 		$cid      = Crypt::decrypt($contingenteid);
 
 		try {
+			//consulta db segun $cid
 			$disponible             = DB::select(DB::raw('SELECT getSaldoAsignacion('.$cid.','.Auth::user()->empresaid.') AS disponible'));
+			//asigna valor a la variable
 			$response['disponible'] = $disponible[0]->disponible;
 			$response['unidad']     = Contingente::getUnidadMedida($cid);
 		} catch(\Exception $e) {
+			//muestra error
 			$response['codigoerror'] = 2;
 			$response['error']       = 'Usuario/contingente invalido';
 		}
-
+		//ingresa datos en json
 		return Response::json($response);
 	}
 }
