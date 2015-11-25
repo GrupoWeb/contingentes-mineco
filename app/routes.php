@@ -12,6 +12,7 @@
 */
 //Temp paltillas
 Route::get('plantilla1','plantillaController@plantilla1');
+
 //Legacy
 Route::get('api/vupe/','apiController@vupeLegacy');
 
