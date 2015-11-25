@@ -3,13 +3,16 @@
 class usuariosController extends crudController {
 
   public function __construct() {
+    //Titulo en catalogo
     Crud::setTitulo('Usuarios DACE');
+    //Conexion DB tabla usuarios
     Crud::setTablaId('usuarioid');
     Crud::setTabla('authusuarios');
 
 
     Crud::setWhereRaw("rolid IN (". implode(',', Config::get('contingentes.roladmin')) .")");
 
+    //Definicion de campos enlazado con conexion DB
     Crud::setCampo(array('nombre'=>'Nombre','campo'=>'authusuarios.nombre','reglas' => array('notEmpty'),'reglasmensaje'=>'El nombre es requerido'));
     Crud::setCampo(array('nombre'=>'Email','campo'=>'email','reglas' => array('notEmpty','email'),'reglasmensaje'=>'El email es requerido y debe ser valido'));
     Crud::setCampo(array('nombre'=>'Rol','campo'=>'rolid','tipo'=>'combobox','query'=>'SELECT nombre, rolid FROM authroles ORDER BY nombre','combokey'=>'rolid','show'=>false));
@@ -17,6 +20,7 @@ class usuariosController extends crudController {
     Crud::setCampo(array('nombre'=>'Activo','campo'=>'authusuarios.activo','tipo'=>'bool'));
     Crud::setCampo(array('nombre'=>'Contraseña','campo'=>'password','tipo'=>'password','show'=>false));
 
+    //Permiso para cancerbero
     Crud::setPermisos(Cancerbero::tienePermisosCrud('usuarios'));
   }
 }
