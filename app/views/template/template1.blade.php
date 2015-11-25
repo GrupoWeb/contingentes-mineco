@@ -6,13 +6,15 @@
 		<link rel="stylesheet" href="temp1/css/reset.css" type="text/css" media="all">
 		<link rel="stylesheet" href="temp1/css/layout.css" type="text/css" media="all">
 		<link rel="stylesheet" href="temp1/css/style.css" type="text/css" media="all">
-		{{ HTML::style('https://fonts.googleapis.com/css?family=Archivo+Narrow|Lato:400,700') }}
-  {{ HTML::style('packages/csgt/components/css/bootstrap.min.css'); }}
-  {{ HTML::style('css/home.css'); }}
-  {{ HTML::style('css/dace.css') }}
 
-  {{ HTML::script('packages/csgt/components/js/jquery.min.js'); }}
-  {{ HTML::script('packages/csgt/components/js/bootstrap.min.js'); }}
+		{{ HTML::style('https://fonts.googleapis.com/css?family=Archivo+Narrow|Lato:400,700') }}
+	  {{ HTML::style('packages/csgt/components/css/bootstrap.min.css'); }}
+	  {{ HTML::style('css/home.css'); }}
+	  {{ HTML::style('css/dace.css') }}
+
+	  {{ HTML::script('packages/csgt/components/js/jquery.min.js'); }}
+	  {{ HTML::script('packages/csgt/components/js/bootstrap.min.js'); }}
+	  
 		<script type="text/javascript" src="temp1/js/jquery-1.6.js" ></script>
 		<script type="text/javascript" src="temp1/js/cufon-yui.js"></script>
 		<script type="text/javascript" src="temp1/js/cufon-replace.js"></script>  
