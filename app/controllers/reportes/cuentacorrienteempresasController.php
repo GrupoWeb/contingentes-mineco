@@ -3,6 +3,7 @@
 class cuentacorrienteempresasController extends BaseController {
 	
 	public function index() {
+		//retorna valores a la vista
 		return View::make('reportes/filtros')
 			->with('titulo', 'Cuenta Corriente - Empresas')
 			->with('contingentes', Contingente::getContingentesCuota())
@@ -12,13 +13,16 @@ class cuentacorrienteempresasController extends BaseController {
 	}
 
 	public function store() {
+		//asigna valores del formulario
 		$empresaId = Crypt::decrypt(Input::get('cmbEmpresa'));
 		$periodoId = Crypt::decrypt(Input::get('cmbPeriodo'));
 		$periodo   = Periodo::getPeriodoInfo($periodoId);
 		$formato   = Input::get('formato');
 
+		//quema valor a $empresaid
 		if ($empresaId==-1) $empresaId = 0;
 
+		//valida pdf
 		if($formato == 'pdf') {
 			PDF::SetTitle('Cuenta Corriente - Empresas');
 			PDF::AddPage();
@@ -37,8 +41,11 @@ class cuentacorrienteempresasController extends BaseController {
 		}
 
 		else {
+			//consulta en db segun parametros
 			$movimientos = Movimiento::getCuentaCorrienteEmpresa($periodoId, $empresaId);
 			$tmp         = [];
+
+			//asigna valores del objeto a un areglo
 			foreach($movimientos as $movimiento) {
 				$tmp[$movimiento->acreditadoa][] = [
 					'fecha'         => $movimiento->fecha,
@@ -50,6 +57,7 @@ class cuentacorrienteempresasController extends BaseController {
 				];
 			}
 
+			//retona datos a la vista
 			return View::make('reportes.cuentacorrienteempresas')
 				->with('titulo', 'Cuenta Corriente - Empresas')
 				->with('tratado', $periodo->tratado)
@@ -61,6 +69,7 @@ class cuentacorrienteempresasController extends BaseController {
 	}
 
 	public function getEmpresas($aContingenteId) {
+		//retorna valores a la vista segun $aContingenteId
 		return View::make('partials/empresas')
 			->with('empresas', Empresacontingente::getEmpresasContingente(Crypt::decrypt($aContingenteId)));
 	}

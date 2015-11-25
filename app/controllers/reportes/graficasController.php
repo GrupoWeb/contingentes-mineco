@@ -10,7 +10,9 @@ class graficasController extends BaseController {
 	*/
 
 	public function saldo($id) {
+		//captura id de contingente
 		$contingenteid = Crypt::decrypt($id);
+		
 		$contingente   = Contingente::find($contingenteid);
 		$asignacion    = Tipotratado::getAsignacion($contingente->tipotratadoid);
 		$empresas      = Empresacontingente::getEmpresasContingente($contingenteid);
