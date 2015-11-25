@@ -70,7 +70,7 @@ class usuariosdeempresaController extends crudController {
     Session::flash('message', 'Usuario editado exitosamente');
     Session::flash('type', 'success');
 
-    //retorna a la vista
+    //retorna la vista
     return Redirect::to('usuarioempresas');
   }
 }
