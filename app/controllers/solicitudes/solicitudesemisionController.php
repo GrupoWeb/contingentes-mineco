@@ -68,11 +68,11 @@ class solicitudesemisionController extends crudController {
 			$query      = DB::select(DB::raw('SELECT getSaldoPeriodo('.$emision->periodoid.', '.$usuario->empresaid.') AS disponible'));
 			$disponible = $query[0]->disponible;
 
-			if($cantidad > $disponible){
+			/*if($cantidad > $disponible){
 				Session::flash('type','danger');
 				Session::flash('message','No es posible procesar la solicitud ya que el monto disponible no es suficiente');
 				return Redirect::route('solicitudespendientes.asignacion.index');
-			}
+			}*/
 			
 			//TRANSACTION ===
 			$result = DB::transaction(function() use ($elID, $cantidad, $comentario, $emision) {
