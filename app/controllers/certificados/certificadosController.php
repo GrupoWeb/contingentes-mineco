@@ -3,6 +3,7 @@
 class certificadosController extends Controller {
 
 	public function index() {
+    //retorna parametros a la vista
 		return View::make('certificados.filtros')
       ->with('titulo', 'Certificados')
       ->with('tratados', Tratado::getTratados())
@@ -12,6 +13,7 @@ class certificadosController extends Controller {
 
 	public function getcontingentes($id) {
     try {
+      //captura id
       $id = Crypt::decrypt($id);      
     } catch (\Exception $e) {
       return "Tratado inválido";
@@ -19,11 +21,13 @@ class certificadosController extends Controller {
 
 		$empresaid = Auth::user()->empresaid;
 
+    //verifiva $empresaid
     if ($empresaid) 
       $contingentes = Contingente::getContTratadoEmpresa($id, $empresaid);
     else
       $contingentes = Contingente::getContTratado($id);
 
+    //retorna datos a la vista
 		return View::make('partials.certificados.contingentes')
       ->with('contingentes', $contingentes)
       ->with('nombre', 'contingenteid')
@@ -31,6 +35,7 @@ class certificadosController extends Controller {
 	}
 
 	public function getperiodos($id) {
+    //retorna datos a la vista 
 		return View::make('partials.certificados.periodos')
       ->with('periodos', Periodo::getPeriodosContingente(Crypt::decrypt($id)))
       ->with('nombre', 'periodoid')
@@ -38,9 +43,12 @@ class certificadosController extends Controller {
 	}
 
 	public function getempresas($id) {
+    //captura id
 		$id        = Crypt::decrypt($id);
+
 		$empresaid = Auth::user()->empresaid;
 
+    //retorna datos a la vista
 		return View::make('partials.certificados.empresas')
       ->with('empresas', Empresa::getEmpresasPeriodo($id, $empresaid))
       ->with('nombre', 'empresaid')
@@ -49,20 +57,26 @@ class certificadosController extends Controller {
 
   public function store() {
     try {
+      //asignar valores a variables del formulario
       $tratadoid     = Crypt::decrypt(Input::get('tratadoid'));
       $contingenteid = Crypt::decrypt(Input::get('contingenteid'));
       $periodoid     = Crypt::decrypt(Input::get('periodoid'));
       $empresaid     = Crypt::decrypt(Input::get('empresaid'));    
     } catch (\Exception $e) {
+      //indica error
       return View::make('cancerbero::error')
         ->with('mensaje','Tratado, período, contingente o empresa inválidos.');
     }
   
+    //convierte fecha de sql a humano
     $fechaini      = Components::fechaHumanoAMySql(Input::get('fechaini')).' 00:00';
     $fechafin      = Components::fechaHumanoAMySql(Input::get('fechafin')).' 23:59';  
 
+    //consulta en db segun parametros
     $certificados  = Certificado::getCertificados($tratadoid, $contingenteid, $periodoid, $empresaid, $fechaini, $fechafin);
     $tmp           = array();
+
+    //se crea un areglo por cada objeto
     foreach($certificados as $certificado) {
       $tmp[$certificado->numerocertificado] = array(
         'fecha'         => $certificado->fecha,
@@ -75,26 +89,31 @@ class certificadosController extends Controller {
       );
     }
 
-    
+    //retona datos a la vista
     return View::make('certificados.listado')
       ->with('certificados', $tmp);
   }
 
   public function generarPDF($id) {
     try {
+      //captura id
       $id  = Crypt::decrypt($id);
     } catch (Exception $e) {
       return "El certificado no es valido";
     }
     
+    //consulta en db segun $id
     $datos = Certificado::getCertificado($id);
 
+    //verifica dato
     if($datos->anulado == 1)
       return "El certificado ha sido anulado";
   
+    //condiciona datos
     if(!$datos->certificado || $datos->certificado == '' || !$datos->firma || $datos->firma == '')
       return "Imposible generar el certificado debido a faltas de firma.";
 
+    //ingreso de datos para pdf
     PDF::SetTitle('Certificado');
     PDF::AddPage();
     PDF::setLeftMargin(20);
@@ -135,40 +154,53 @@ class certificadosController extends Controller {
   }
 
   public function anular($id) {
+    //consula en db segun $id
     $certificado = Certificado::find(Crypt::decrypt($id));
     
+    //verifica $certificado
     if($certificado->dua <> '') {
+      //muestra mensaje
       Session::flash('message', 'No es posible anular un certificado liquidado');
       Session::flash('type', 'danger');
 
+      //retorna a la vista
       return Redirect::to('certificados');
     }
 
+    //verifica certificado
     if($certificado->anulado == 1) {
+      //muestra mensaje
       Session::flash('message', 'El certificado ya se encuentra anulado');
       Session::flash('type', 'warning');
 
+      //retorna a la vista
       return Redirect::to('certificados');
     }
 
+    //retorna datos la vista
     return View::make('certificados.anulaciones')
         ->with('certificado', $id);
   }
 
   public function procesaranulacion(){
+    //guarda en db
     $certificado          = Certificado::find(Crypt::decrypt(Input::get('certificado')));
     $certificado->anulado = 1;
     $certificado->save();
 
+    //consulta en db segun parametros
     $movimientop = Movimiento::where('certificadoid', $certificado->certificadoid)->first();
 
+    //verifica movimientotop
     if(!$movimientop) {
       Session::flash('message', 'El certificado no existe en el sistema');
       Session::flash('type', 'danger');
 
+      //retorna a la vista
       return Redirect::to('certificados');
     }
 
+    //guarda nuevo en db
     $movimiento                   = new Movimiento;
     $movimiento->periodoid        = $movimientop->periodoid;
     $movimiento->usuarioid        = $certificado->usuarioid;
@@ -179,9 +211,11 @@ class certificadosController extends Controller {
     $movimiento->created_by       = Auth::id();
     $movimiento->save();
 
+    //mostrar mensaje
     Session::flash('message', 'Certificado anulado exitosamente');
     Session::flash('type', 'success');
 
+    //retorna a la vista
     return Redirect::to('certificados');
   }
 }
