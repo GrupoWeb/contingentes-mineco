@@ -65,4 +65,18 @@ class Certificado extends Eloquent {
 		$query->orderBy('c.fecha', 'desc');
 		return $query->get();
 	}
+
+	public static function getCertificadosPendientesUsuario($aUsuarioId) {
+		$certificados = DB::table('solicitudesliquidacion')
+			->where('usuarioid', $aUsuarioId)
+			->where('estado', 'Pendiente')
+			->lists('certificadoid');
+
+		return DB::table('certificados')
+			->select('certificadoid', 'numerocertificado')
+			->where('usuarioid', $aUsuarioId)
+			->whereNull('dua')
+			->whereNotIn('certificadoid', $certificados)
+			->get();
+	}
 }

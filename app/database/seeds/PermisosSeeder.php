@@ -51,16 +51,6 @@
 					'nombrefriendly' => 'Anular'
 				),
 				array(
-					'permisoid'      => 13,
-					'nombre'         => 'liquidar',
-					'nombrefriendly' => 'Liquidar'
-				),
-				array(
-					'permisoid'      => 14,
-					'nombre'         => 'procesarliquidacion',
-					'nombrefriendly' => 'Procesar liquidación'
-				),
-				array(
 	        'permisoid'      => 16,
 	        'nombre'         => 'procesaranulacion',
 	        'nombrefriendly' => 'Procesar anulación'

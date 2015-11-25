@@ -73,10 +73,12 @@ Route::group(array('before' => array('tratados')), function() {
 		Route::resource('solicitud/emision', 'emisionController', array('only'=>array('index','store')));
 		Route::resource('solicitud/inscripcion', 'solicitudreinscripcionController', array('only'=>array('index','store')));
 		Route::resource('solicitud/actualizacion', 'actualizacionController', array('only'=>array('index','store')));
+		Route::resource('solicitudliquidacion', 'solicitudliquidacionController', array('only'=>array('index','store','show')));
 		Route::resource('solicitudespendientes/inscripcion', 'solicitudesinscripcionController',array('names' => array('index' => 'solicitudespendientes.inscripcion.index')));
 		Route::resource('solicitudespendientes/asignacion', 'solicitudesasignacionController');
 		Route::resource('solicitudespendientes/emision', 'solicitudesemisionController');
 		Route::resource('solicitudespendientes/actualizacion', 'solicitudactualizacionController');
+		Route::resource('solicitudespendientes/liquidacion', 'liquidacionController');
 
 		Route::resource('historicosolicitudes/inscripcion', 'historicoinscripcionesController');
 		Route::resource('historicosolicitudes/asignacion', 'historicoasignacionesController');
@@ -112,7 +114,6 @@ Route::group(array('before' => array('tratados')), function() {
 		Route::resource('certificados', 'certificadosController',array('only'=>array('index','store')));
 		Route::get('certificados/anular/{id}', array('as'=>'certificados.anular', 'uses'=>'certificadosController@anular'));
 		Route::post('certificados/anular/{id}', array('as'=>'certificados.procesaranulacion', 'uses'=>'certificadosController@procesaranulacion'));
-		Route::resource('solicitudliquidacion', 'solicitudliquidacionController', array('only'=>array('index','store','show')));
 
 		//=== REPORTES
 		Route::resource('cuentacorriente', 'cuentacorrienteController', array('only'=>array('index','store')));

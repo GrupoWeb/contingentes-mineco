@@ -184,40 +184,4 @@ class certificadosController extends Controller {
 
     return Redirect::to('certificados');
   }
-
-  public function liquidar($id) { 
-    $certificado = Certificado::find(Crypt::decrypt($id));
-
-    if($certificado->anulado == 1) {
-      Session::flash('message', 'No es posible liquidar un certificado anulado');
-      Session::flash('type', 'danger');
-
-      return Redirect::to('certificados');
-    }
-
-    if($certificado->dua <> '') {
-      Session::flash('message', 'No es posible liquidar un certificado ya liquidado');
-      Session::flash('type', 'danger');
-
-      return Redirect::to('certificados');
-    }
-
-    return View::make('certificados.liquidaciones')
-      ->with('certificado', $id);
-  }
-
-  public function procesarliquidacion($id) {
-    $certificado                   = Certificado::find(Crypt::decrypt($id));
-    $certificado->dua              = Input::get('txDua');
-    $certificado->real             = Input::get('txCantidad');
-    $certificado->cif              = Input::get('txCIF');
-    $certificado->fechaliquidacion = Components::fechaHumanoAMysql(Input::get('txFecha'));
-    $certificado->save();
-
-    Session::flash('message', 'Certificado liquidado exitosamente');
-    Session::flash('type', 'warning');
-
-    return Redirect::to('certificados');
-  }
-
 }
