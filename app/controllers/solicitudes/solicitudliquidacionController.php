@@ -3,6 +3,7 @@
 class solicitudliquidacionController extends BaseController {
 
 	public function index() {
+		//retorna datos a la vista
 		$certificados = Certificado::getCertificadosPendientesUsuario(Auth::id());
     return View::make('certificados.liquidaciones')
       ->with('certificados', $certificados);
@@ -10,30 +11,38 @@ class solicitudliquidacionController extends BaseController {
 
 	public function show($id) {
 		try {
+			//asigna valor de id
 			$certificadoid = Crypt::decrypt($id);
 		} catch (Exception $e) {
+			//muestra mensaje
 			Session::flash('message', 'Certificado invalido');
 	    Session::flash('type', 'danger');
 	    return Redirect::to('solicitudliquidacion');
 		}
 
+		//consulta en db segun $certificadoid
 		$certificado = Certificado::getCertificado($certificadoid);
+		//retorna dato a la vista
 		return View::make('certificados.show', ['certificado'=>$certificado]);
 	}
 
 	public function store() {
 		try {
+			//asigna valor del hidden
 			$certificadoid = Crypt::decrypt(Input::get('cmbCertificados'));
 		} catch (Exception $e) {
+			//muestra mensaje si existe error
 			Session::flash('message', 'Certificado invalido');
 	    Session::flash('type', 'danger');
 	    return Redirect::to('solicitudliquidacion');
 		}
 
+		//asigna valores a las variables
 		$arch   = Input::file('txDocumento');
 		$nombre = date('Ymdhis') . mt_rand(1, 1000) . '.' . strtolower($arch->getClientOriginalExtension());
 		$res    = $arch->move(public_path() . '/liquidaciones/' . Auth::id(), $nombre);
 
+		//inserta datos en db
 		$solicitud                   = new Solicitudliquidacion;
 		$solicitud->usuarioid        = Auth::id();
 		$solicitud->certificadoid    = $certificadoid;
@@ -66,6 +75,7 @@ class solicitudliquidacionController extends BaseController {
 		Session::flash('message', 'Certificado liquidado exitosamente');
     Session::flash('type', 'success');
 
+    //retorna a la vista
     return Redirect::to('solicitudliquidacion');
 	}
 

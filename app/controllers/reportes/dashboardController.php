@@ -2,29 +2,39 @@
 
 class dashboardController extends BaseController {
 	public function index() {
+		//camptura datos usuario
 		$admin = in_array(Auth::user()->rolid, Config::get('contingentes.roladmin'));
 
 		if($admin){
+			//consulta en db 
 			$tratados              = Tratado::getTratados();
+
 			$pendientesinscripcion = 0;
 			$pendientesasignacion  = 0;
 			$pendientesemision     = 0;
 			$datos                 = array();
 
+			//se contruye la informacion de cada objeto
 			foreach($tratados as $tratado) {
+				//consulta en db segun parametros
 				$contingentes = Contingente::getContingentesTratado($tratado->tratadoid);
 				$empresas     = Tratado::getEmpresasTratado($tratado->tratadoid);
 				//dd(DB::getQueryLog());
+
 				$tingentes             = array();
+				//contruye informacion del objeto y lo almacena en areglo
 				foreach($contingentes as $contingente) {
+					//consulta en db tipotratado segun contingente
 					$asignacion = Contingente::getTipoTratado($contingente);
 					if($asignacion == 0)
 						$query = DB::select(DB::raw('SELECT getSaldo('.$contingente.', 0) AS saldo'));
 					else
 						$query = DB::select(DB::raw('SELECT getSaldoAsignacion('.$contingente.', 0) AS saldo'));
 					
+					//consulta en db segun contingente
 					$inscritos   = Empresacontingente::getEmpresasContingente($contingente);
 					//dd(DB::getQueryLog());
+					//asigna valores al arreglo
 					$tingentes[] = array(
 						'contingenteid' => $contingente,
 						'nombre'        => Contingente::getProducto($contingente),
@@ -33,6 +43,7 @@ class dashboardController extends BaseController {
 					);
 				}
 
+				//asigna valores al areglo bidimencional
 				$datos[$tratado->tratadoid]['nombre']       = $tratado->nombre;
 				$datos[$tratado->tratadoid]['nombrecorto']  = $tratado->nombrecorto;
 				$datos[$tratado->tratadoid]['tipo']         = $tratado->tipo;
@@ -75,6 +86,7 @@ class dashboardController extends BaseController {
 				}
 			}
 
+			//retorna datos a la vista
 			return View::make('dashboard.admin')
 				->with('datos', $datos)
 				->with('pendientesinscripcion', $pendientesinscripcion)
@@ -83,10 +95,13 @@ class dashboardController extends BaseController {
 		}
 
 		else {
+			//captura empresaid
 			$empresaid    = Auth::user()->empresaid;
 			$grafica      = [];
+			//consulta en db segun empresaid
 			$contingentes = Empresacontingente::contingentesEmpresa($empresaid);
 
+			//contruye la infomacion para el areglo grafica
 			foreach ($contingentes as $contingente) {
 				$grafica[$contingente->contingenteid]['esasignacion'] = $contingente->asignacion;
 				$cys = Movimiento::getConsumoYSaldoActual($contingente->contingenteid, $empresaid);
@@ -107,6 +122,7 @@ class dashboardController extends BaseController {
 				}
 			}
 
+			//retorna datos a la vista
 			return View::make('dashboard.index')
 				->with('admin', $admin)
 				->with('contingentes', $contingentes)
@@ -118,13 +134,16 @@ class dashboardController extends BaseController {
 	}
 
 	public function changetratado($id) {
+		//guarda valores a session
 		Session::put('tselected', $id);
 		return 'true';
 	}
 
 	public function detalletratado($id) {
+		//captura id
 		$id = Crypt::decrypt($id);
 
+		//retorna datos a la vista
 		return View::make('dashboard.productos')
 			->with('info', Tratado::getTratadoDashboard($id))
 			->with('productos', Contingente::getProductos($id));

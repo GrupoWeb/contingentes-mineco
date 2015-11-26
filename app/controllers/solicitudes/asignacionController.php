@@ -3,16 +3,19 @@
 class asignacionController extends BaseController {
 
 	public function index() {
+		//retorna valores a la vista
 		return View::make('asignaciones.index')
 			->with('contingentes', Empresacontingente::getContingentes(true));
 	}
 
 	public function store() {
+		//asigna valores a las variables del formulario
 		$contingenteid  = Input::get('cmbContingentes');
 		$contingente    = Crypt::decrypt($contingenteid);
 		$requerimientos = Contingenterequerimiento::getRequerimientos($contingenteid, 'asignacion');
 		$solicitado     = Input::get('cantidad', 0);
 
+		//condiciona valores del formulario
 		if(count(Input::file()) <= 0 && count($requerimientos) > 0) {
 			Session::flash('message', 'No se ha cumplido con los requerimientos de archivos necesarios');
 			Session::flash('type', 'danger');
@@ -36,6 +39,8 @@ class asignacionController extends BaseController {
 		}*/
 
 		//else {
+
+			//inserta datos en db
 			$res = DB::transaction(function() use($solicitado, $contingente) {
 
 				$periodo = Periodo::getPeriodo($contingente);
@@ -45,6 +50,7 @@ class asignacionController extends BaseController {
 				}
 
 				else { 
+					//asigna valores
 					$solicitud             = new Solicitudasignacion;
 					$solicitud->usuarioid  = Auth::id();
 					$solicitud->periodoid  = $periodo; //Periodo::getPeriodo($contingente);
@@ -72,6 +78,7 @@ class asignacionController extends BaseController {
 		  	}
 	  	});
 
+			//condiciona si exite error
 			if(!$res){
 				$message = 'Error al procesar solicitud';
 				$type    = 'danger';
@@ -111,9 +118,11 @@ class asignacionController extends BaseController {
 		  }
 		//}
 
+		//muestra mensaje
 		Session::flash('message', $message);
 		Session::flash('type', $type);
 
+		//retona a la vista
 		return Redirect::to('inicio');
 	}
 }

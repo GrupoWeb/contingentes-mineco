@@ -3,6 +3,7 @@
 class consolidadoutilizacionController extends BaseController {
 	
 	public function index() {
+		//retorna valores a la vista
 		return View::make('reportes/filtros')
 			->with('titulo', 'Consolidado de utilización de contingentes')
 			->with('contingentes', Contingente::getContingentes())
@@ -11,6 +12,7 @@ class consolidadoutilizacionController extends BaseController {
 	}
 
 	public function store() {
+		//recibe valores del formulario
 		$formato  = Input::get('formato');
 		$fi       = Input::get('fechaini') . ' 00:00';
     $ff       = Input::get('fechafin') . ' 23:59';
@@ -23,9 +25,12 @@ class consolidadoutilizacionController extends BaseController {
 		if($ff <> '')
 			$ffin = Components::fechaHumanoAMysql($ff);
 
+		//consulta en db segun parametros 
 		$tratados = Movimiento::getConsolidadoUtilizacion($finicio, $ffin);
 		$data     = array();
 		$tipos    = array();
+
+		//pasa valores del objeto a un areglo
 		foreach($tratados as $tratado) {
 			$data[$tratado->nombrecorto]['tipo']    = $tratado->tipocorto;
 			$data[$tratado->nombrecorto]['datos'][] = array(
@@ -40,11 +45,13 @@ class consolidadoutilizacionController extends BaseController {
 			$tipos[$tratado->tipocorto] = $tratado->tipo;
 		}
 
+		//valida formato pdf
 		if($formato == 'pdf') {
 			PDF::SetTitle('Consolidado utilización de contingentes');
       PDF::AddPage();
       PDF::setLeftMargin(20);
 
+      //retorna datos pdf
       $html = View::make('reportes.consolidadoutilizacionpdf')
 				->with('titulo', 'Consolidado de utilización de contingentes')
 				->with('tratado', '')
@@ -58,6 +65,7 @@ class consolidadoutilizacionController extends BaseController {
 		}
 
 		else {
+			//retorna datos a la vista
 			return View::make('reportes.consolidadoutilizacion')
 				->with('titulo', 'Consolidado de utilización de contingentes')
 				->with('tratado', '')
