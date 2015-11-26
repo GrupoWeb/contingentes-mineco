@@ -134,7 +134,7 @@ class dashboardController extends BaseController {
 	}
 
 	public function changetratado($id) {
-		//inserta valores a session
+		//guarda valores a session
 		Session::put('tselected', $id);
 		return 'true';
 	}
