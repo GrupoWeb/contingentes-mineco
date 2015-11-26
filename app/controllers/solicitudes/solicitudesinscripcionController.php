@@ -3,29 +3,39 @@
 class solicitudesinscripcionController extends crudController {
 
 	public function __construct() {
+		//funcion exporta .xls
 		Crud::setExport(false);
+		//funsion buscar
 		Crud::setSearch(false);
+		//titulo catalogo
 		Crud::setTitulo('Solicitudes pendientes - Inscripción');
+
+		//conexion en db a la tabla
 		Crud::setTabla('solicitudinscripciones');
 		Crud::setTablaId('solicitudinscripcionid');
 
+		//condicion db
 		Crud::setWhere('estado', 'Pendiente');
 
+		//definicion de campos con datos de la conexion
 		Crud::setCampo(array('nombre'=>'Nombre','campo'=>'solicitudinscripciones.nombre'));
 		Crud::setCampo(array('nombre'=>'Tratado','campo'=>'(SELECT t.nombrecorto FROM solicitudinscripcioncontingentes AS sic LEFT JOIN contingentes AS c ON sic.contingenteid = c.contingenteid LEFT JOIN tratados AS t ON c.tratadoid = t.tratadoid WHERE sic.solicitudinscripcionid = solicitudinscripciones.solicitudinscripcionid)'));
 		Crud::setCampo(array('nombre'=>'Tratado','campo'=>'(SELECT p.nombre FROM solicitudinscripcioncontingentes AS sic LEFT JOIN contingentes AS c ON sic.contingenteid = c.contingenteid LEFT JOIN productos AS p ON c.productoid = p.productoid WHERE sic.solicitudinscripcionid = solicitudinscripciones.solicitudinscripcionid)'));
 		Crud::setCampo(array('nombre'=>'Email','campo'=>'email'));
 		Crud::setCampo(array('nombre'=>'Fecha de solicitud','campo'=>'solicitudinscripciones.created_at', 'tipo'=>'datetime'));
 
+		//permisos cancerbero
 		Crud::setPermisos(Cancerbero::tienePermisosCrud('solicitudespendientes.inscripcion'));
 	}
 
 	public function edit($id){
+		//asigna valor del id y consulta en db segun parametros
 		$solicitudid    = Crypt::decrypt($id);
 		$solicitud      = Solicitudinscripcion::getSolicitudPendiente($solicitudid);
 		$contingente    = Solicitudinscripcioncontingente::where('solicitudinscripcionid', $solicitudid)->first();
 		$requerimientos = Solicitudinscripcionrequemiento::getRequerimientosSolicitud($solicitudid);
 
+		//retorna datos a la vista
 		return View::make('solicitudespendientes/inscripciones')
 			->with('solicitud', $solicitud)
 			->with('cid', Crypt::encrypt($contingente->contingenteid))
@@ -33,6 +43,7 @@ class solicitudesinscripcionController extends crudController {
 	}
 
 	public function store(){
+		//captura ids del hidden
 		$solicitudid   = Crypt::decrypt(Input::get('id'));
 		$contingenteid = Crypt::decrypt(Input::get('cid'));
       
@@ -46,7 +57,9 @@ class solicitudesinscripcionController extends crudController {
 				$rolempresa = Config::get('contingentes.rolempresa');
 
 				$findempresa = Empresa::where('nit', $solicitud->nit)->first();
+				//condiciona $finempresa
 				if(!$findempresa) {
+					//asigna valores al areglo
 					$empresaid = DB::table('empresas')->insertGetId(
 						array(					
 							'nit'                     => $solicitud->nit,
@@ -69,8 +82,10 @@ class solicitudesinscripcionController extends crudController {
 
 				if($empresaid == 0) return 0;
 
+				//condiciona $finusuario
 				$findusuario = Usuario::where('email', $solicitud->email)->first();
 				if(!$findusuario) {
+					//asigna valores al areglo
 					$usuarioid  = DB::table('authusuarios')->insertGetId(
 						array(
 							'empresaid'  => $empresaid,
@@ -142,6 +157,7 @@ class solicitudesinscripcionController extends crudController {
 				Session::flash('type','success');
 				Session::flash('message','La solicitud de inscripción fue procesada correctamente');
 
+				//manda email
 				try {
 					Mail::send('emails/solicitudinscripcionresultado', array(
 						'nombre'        => $usuario->nombre,
@@ -193,6 +209,7 @@ class solicitudesinscripcionController extends crudController {
 			}
 		}
 
+		//retorna a la vista
 		return Redirect::route('solicitudespendientes.inscripcion.index');
 	}
 }

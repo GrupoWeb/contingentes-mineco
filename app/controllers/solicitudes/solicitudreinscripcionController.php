@@ -2,33 +2,41 @@
 
 class solicitudreinscripcionController extends crudController {
 	public function index(){    
+		//retorna datos a la vista
     return View::make('inscripcion/reinscripcion')
     	->with('tratados', Tratado::getTratados());
   }
   
   public function store(){
+  	//captura valor del hidden y valida
   	if (!Input::has('cmbContingente')) {
   		Session::flash('message', 'Contingente inválido');
 			Session::flash('type', 'danger');
 			return Redirect::to('/solicitud/inscripcion');
   	}
+
+  	//asigna valor de hidden
   	$contingenteid  = Crypt::decrypt(Input::get('cmbContingente'));
 
+  	//condiciona y consulta en db segun condicion
 		$requerimientos = array();
 		if(Auth::check()) {
 			$requerimientos = Empresarequerimiento::getEmpresaRequerimientosIds();
 		}
 
+		//consulta en db segun parametros
 		$requerimientos = Contingenterequerimiento::getRequerimientos($contingenteid, 'Inscripcion', $requerimientos);
 
-		
+		//mostrar mensaje
 		if(count(Input::file()) <= 0 && count($requerimientos) > 0) {
 			Session::flash('message', 'No se ha cumplido con los requerimientos de archivos necesarios');
 			Session::flash('type', 'danger');
 
+			//retona a la vista
 			return Redirect::to('inicio');
 		}
     
+    //inserta datos en db
 		DB::transaction(function() use($contingenteid) {
 			$empresa = Empresa::find(Auth::user()->empresaid);
 
@@ -69,6 +77,7 @@ class solicitudreinscripcionController extends crudController {
 	    }
 	  }); //DB Transaction
 
+		//manda email
 		$email    = Auth::user()->email;
 		$admins   = Usuario::listAdminEmails();
 		$empresas = Usuario::listEmpresaEmails(Auth::user()->empresaid, Auth::id());
@@ -84,9 +93,11 @@ class solicitudreinscripcionController extends crudController {
 	    });
 	  } catch (Exception $e) {}
 
+		//muestra mensaje
 		Session::flash('message', 'Su solicitud de inscripción ha sido enviada');
 		Session::flash('type', 'success');
 
+		//retorna a la vista
   	return Redirect::to('inicio');
   }
 }

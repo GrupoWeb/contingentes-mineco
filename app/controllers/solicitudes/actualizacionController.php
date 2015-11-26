@@ -3,29 +3,37 @@
 class actualizacionController extends crudController {
 	
 	public function index() {
+		//verifica usuario
 		if (!Auth::user()->empresaid) {
+			//muestra mensaje
 			Session::flash('message', 'Este usuario no tiene empresa asociada.');
 			Session::flash('type', 'danger');
 
+			//retorna a la vista
 			return Redirect::to('inicio');
 		}
 
+		//consulta en db usuario
 		$pendiente = Solictudactualizacion::getPendientes(Auth::user()->empresaid);
 
+		//condiciona la consulta
 		if($pendiente <> null) {			
 			Session::flash('message', 'La empresa tiene actualizaciones de datos pendientes. Debe esperar a que se autorice/rechace');
 			Session::flash('type', 'danger');
 
+			//retorna a la vista
 			return Redirect::to('inicio');
 		}
 
 		else {
+			//retorna datos a la vista
 			return View::make('empresas.edit')
 				->with('data', Empresa::getInfoEmpresa(Auth::user()->empresaid));
 		}
 	}
 
 	public function store() {
+		//inserta datos en db
 		DB::transaction(function() {
 			$ac                          = new Solictudactualizacion;
 			$ac->empresaid               = Auth::user()->empresaid;
@@ -53,6 +61,7 @@ class actualizacionController extends crudController {
 	    }
 		});
 
+		//muestra mensaje
 		Session::flash('message', 'Solicitud de actualización de información ingresada exitosamente.');
 		Session::flash('type', 'success');
 

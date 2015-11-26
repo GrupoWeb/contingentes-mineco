@@ -2,12 +2,18 @@
 class solicitudesemisionController extends crudController {
 
 	public function __construct() {
+		//funcion exporta .xls
 		Crud::setExport(false);
+		//funcion buscar
 		Crud::setSearch(false);
+		//titulo catalogo
 		Crud::setTitulo('Solicitudes pendientes - Emisión');
+
+		//conexion sn a la tabla
 		Crud::setTabla('solicitudesemision');
 		Crud::setTablaId('solicitudemisionid');
 		
+		//relacion entre tablas
 		Crud::setLeftJoin('authusuarios AS u', 'solicitudesemision.usuarioid', '=', 'u.usuarioid');
 		Crud::setLeftJoin('empresas AS e', 'u.empresaid', '=', 'e.empresaid');
 		Crud::setLeftJoin('periodos AS p', 'solicitudesemision.periodoid', '=', 'p.periodoid');
@@ -17,14 +23,17 @@ class solicitudesemisionController extends crudController {
 		Crud::setLeftJoin('tratados AS t', 'c.tratadoid', '=', 't.tratadoid');
 		Crud::setLeftJoin('productos AS d', 'c.productoid', '=', 'd.productoid');
 
+		//condicion db
 		Crud::setWhere('estado', 'Pendiente');
 
+		//asigna valor de session y condiciona db
 		$tselected = Session::get('tselected');
 		if($tselected <> 0) {
 			Crud::setWhere('c.tratadoid', $tselected);
 			Crud::setTitulo('Solicitudes pendientes - Emisión - '.Tratado::getNombre($tselected));
 		}
 
+		//definicio de campos con datos de la conexion db
 		Crud::setCampo(array('nombre'=>'Usuario','campo'=>'u.nombre'));
 		Crud::setCampo(array('nombre'=>'Empresa','campo'=>'e.razonsocial'));
 		Crud::setCampo(array('nombre'=>'Tratado','campo'=>'t.nombrecorto'));
@@ -33,16 +42,21 @@ class solicitudesemisionController extends crudController {
 		Crud::setCampo(array('nombre'=>'Fecha de solicitud','campo'=>'solicitudesemision.created_at', 'tipo'=>'datetime'));
 		Crud::setCampo(array('nombre'=>'Monto Solicitado','campo'=>'solicitado','tipo'=>'numeric', 'decimales'=>4,'class'=>'text-right'));
 
+		//permisos cancerbero
 		Crud::setPermisos(Cancerbero::tienePermisosCrud('solicitudespendientes.emision'));
 	}
 
 	public function edit($id) {
+		//captura id  y consulta en db segun id
 		$solicitud 			= Emisionpendiente::getSolicitudPendiente(Crypt::decrypt($id));
 		$requerimientos = Solicitudemisionrequerimiento::getEmisionRequerimientos(Crypt::decrypt($id));
+		//trae objeto segun usuarioid
 		$usuario        = Usuario::find($solicitud->usuarioid);
+		//asigna valores de query
 		$query          = DB::select(DB::raw('SELECT getSaldoPeriodo('.$solicitud->periodoid.', '.$usuario->empresaid.') AS disponible'));
 		$disponible     = $query[0]->disponible;
 
+		//retorna datos a la vista
 		return View::make('solicitudespendientes/emisiones')
 			->with('solicitud',$solicitud)
 			->with('requerimientos',$requerimientos)
@@ -50,8 +64,10 @@ class solicitudesemisionController extends crudController {
 	}
 
 	public function store() {
+		//captura id del hidden
 		$elID = Crypt::decrypt(Input::get('id'));
 
+		//verifica usuario
 		if(!Auth::user()->certificado || Auth::user()->certificado == '' || !Auth::user()->firma || Auth::user()->firma == '') {
 			Session::flash('type','danger');
 			Session::flash('message','Imposible procesar solicitud ya que no se ha encontrado firma para tu usuario.');
@@ -59,7 +75,7 @@ class solicitudesemisionController extends crudController {
 			return Redirect::route('solicitudespendientes.emision.index');
 		}
 
-
+		//condiciona valares del formulario
 		if(Input::has('btnAutorizar')) {
 			$cantidad   = Input::get('txCantidad');
 			$comentario = Input::get('txObservaciones');
@@ -75,6 +91,7 @@ class solicitudesemisionController extends crudController {
 			}*/
 			
 			//TRANSACTION ===
+			//insertar datos en db 
 			$result = DB::transaction(function() use ($elID, $cantidad, $comentario, $emision) {
 				
 				$emision->emitido       = $cantidad;
@@ -131,13 +148,15 @@ class solicitudesemisionController extends crudController {
 				$movimiento->created_by       = Auth::id();
 				$res = $movimiento->save();
 				if (!$res) return false;
+				//retorna un areglo
 				return array('emision'=>$emision, 'certificado'=>$certificado);
 			});
 
 			//====
-
+			//trae datos admin
 			$admins = Usuario::listAdminEmails();
 
+			//asigna valores a variables 
 			if($result) {
 				$usuario  = Authusuario::find($result['emision']->usuarioid);
 				$email    = $usuario->email;
@@ -148,6 +167,7 @@ class solicitudesemisionController extends crudController {
 				Session::flash('type','success');
 				Session::flash('message','La solicitud de emisión fue procesada correctamente');
 
+				//manda email
 				try {
 					Mail::send('emails/solicitudemisionresultado', array(
 						'nombre'        => $usuario->nombre,
@@ -165,6 +185,7 @@ class solicitudesemisionController extends crudController {
 					});
 				} catch (Exception $e) {}
 			}
+			//muestra mensaje
 			else {
 				Session::flash('type','warning');
 				Session::flash('message','Ocurrió un error al intentar autorizar, intente de nuevo.');
@@ -172,11 +193,13 @@ class solicitudesemisionController extends crudController {
 		}
 
 		else {
+			//asigna valores a las variables
 			$emision                = Emisionpendiente::find($elID);
 			$emision->observaciones = Input::get('txObservaciones');
 			$emision->estado        = 'Rechazada';
 			$result                 = $emision->save();
 
+			//valida result
 			if($result) {
 				Session::flash('type','success');
 				Session::flash('message','La solicitud de inscripción fue rechazada');
@@ -185,6 +208,7 @@ class solicitudesemisionController extends crudController {
 				$email    = $usuario->email;
 				$empresas = Usuario::listEmpresaEmails($usuario->empresaid, $usuario->usuarioid);
 
+				//manda email
 				try {
 					Mail::send('emails/solicitudemisionresultado', array(
 						'nombre'        => $usuario->nombre,
@@ -205,6 +229,7 @@ class solicitudesemisionController extends crudController {
 			}
 		}
 		
+		//retorna a la vista
 		return Redirect::route('solicitudespendientes.emision.index');
 	}
 }

@@ -2,11 +2,13 @@
 class emisionController extends BaseController {
 	
 	function index() {
+		//retorna valores a la vista
 		return View::make('emision.index')
 			->with('contingentes', Empresacontingente::getContingentes());
 	}
 
 	function store() {
+		//asigna valores del formulario
 		$contingenteid  = Input::get('cmbContingentes');
 
 		try {
@@ -16,33 +18,43 @@ class emisionController extends BaseController {
         ->with('mensaje','Contingente inválido.');
 		}
 		
-
+		//consulta en db segun parametros
 		$requerimientos = Contingenterequerimiento::getRequerimientos($contingenteid, 'emision');
+		//asigna valor del formulario
 		$solicitado     = Input::get('cantidad', 0);
 
+		//considiciona valores
 		if(count(Input::file()) <= 0 && count($requerimientos) > 0) {
+			//muestra mensaje
 			Session::flash('message', 'No se ha cumplido con los requerimientos de archivos necesarios');
 			Session::flash('type', 'danger');
 
+			//retorna a la vista
 			return Redirect::to('inicio');
 		}
 
+		//verifica valor del formulario
 		if($solicitado <= 0) {
+			//muestra mensaje
 			Session::flash('message', 'El monto solicitado no es correcto');
 			Session::flash('type', 'danger');
 
+			//retorna la vista
 			return Redirect::to('inicio');
 		}
 		
+		//asigna valores de db
 		$query       = DB::select(DB::raw('SELECT getSaldo('.$contingente.','.Auth::user()->empresaid .') AS disponible'));
 		$disponible  = $query[0]->disponible;
 
+		//condiciona solicitud
 		if($solicitado > $disponible){
 			$message = 'No es posible procesar la solicitud ya que el monto disponible no es suficiente';
 			$type    = 'danger';
 		}
 
 		else {
+			//inserta valores en db
 			$res = DB::transaction(function() use($solicitado, $contingente) {
 			$periodo = Periodo::getPeriodo($contingente);
 
@@ -88,6 +100,7 @@ class emisionController extends BaseController {
 			  }
 		  });
 			
+			//condiciona mensaje al insertar
 			if(!$res){
 				$message = 'Error al procesar solicitud';
 				$type    = 'danger';
@@ -112,6 +125,7 @@ class emisionController extends BaseController {
 				}
 
 				try {
+					//manda correo
 					Mail::send('emails/solicitudemision', array(
 						'nombre'      => Auth::user()->nombre,
 						'contingente' => $contindatos->nombre,
@@ -126,15 +140,19 @@ class emisionController extends BaseController {
 		  }
 		}
 
+		//muestra mensaje
 		Session::flash('message', $message);
 		Session::flash('type', $type);
 
+		//retorna a la vista
 		return Redirect::to('inicio');
 	}
 
 	public function getPaises($aContingenteId) {
+		//consulta en db segun parametros
 		$contingentepais = Contingente::getPais(Crypt::decrypt($aContingenteId));
 		
+		//retorna datos a la vista
 		return View::make('emision.paises')
 			->with('contingentepais', $contingentepais)
 			->with('paises', Pais::getPaises());

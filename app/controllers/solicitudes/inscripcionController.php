@@ -3,29 +3,37 @@
 class inscripcionController extends BaseController {
 
 	public function index() {
+		//retorna valores a la vista
 		return View::make('inscripcion/index')
 			->with('route', 'signup.store')
 			->with('tratados', Tratado::getTratados());
 	}
 
 	public function validateEmail() {
+		//captura email de formulario
     $aEmail = Input::get('email');
 
     $userid = 0;
+    //condiciona valor de formulario
     if(Input::has('u'))
     	$userid = Crypt::decrypt(Input::get('u'));
 
+    //asigna valor de la consulta del db
 		$result = DB::table('authusuarios')->where('email', $aEmail);
 
+		//condiciona $userid
 		if($userid <> 0)
 			$result->where('usuarioid', '<>', $userid);
 
+		//asigna valor de la condicion
 		$result = $result->first();
     
+    //condiciona $result
     if ($result) 
     	$val='false';
 
     else {
+    	//asigna valor de consulta en db segun parametros
     	$result = DB::table('solicitudinscripciones')->where('email', $aEmail)->where('estado', 'Pendiente')->first();
 
     	if ($result) 
@@ -35,6 +43,7 @@ class inscripcionController extends BaseController {
     		$val='true';
     }
 
+    //retorna los datos al areglo
     return json_encode(array('valid'=>$val));
 	}
 
@@ -63,12 +72,14 @@ class inscripcionController extends BaseController {
     		$val='true';
     }*/
     $val = 'true';
-
+    //retorna datos
     return json_encode(array('valid'=>$val));
 	}
 
 	public function getContingentes($tratadoid) {
+		//captura tratadoid
 		$tratadoid = Crypt::decrypt($tratadoid);
+
 		if(Auth::check()) {
 			$usuarioCon = array();
     	$con        = DB::table("empresacontingentes")->select("contingenteid")->where("empresaid",Auth::user()->empresaid) ->get();
@@ -82,21 +93,27 @@ class inscripcionController extends BaseController {
 		else
 			$contingentes = Contingente::getContTratado($tratadoid);
 
+		//retorna datos a la vista
 		return View::make('inscripcion.contingentes')
 			->with('contingentes', $contingentes);
 	}
 	
 	public function store() {
+		//verifica valor del formulario
 		if(!Input::has('cmbContingente')) {
+			//muestra mensaje
 			Session::flash('message', 'Se dio un error al seleccionar un contingente. Intentalo nuevamente');
 			Session::flash('type', 'danger');
 
+			//retorna a la vistas
 			return Redirect::to('/signup');
 		}
 
+		//asigna valor del formulario y consulta en db segun los paremetros
 		$contingenteid  = Crypt::decrypt(Input::get('cmbContingente'));
 		$requerimientos = Contingenterequerimiento::getRequerimientos($contingenteid, 'inscripcion');
 
+		//condiciona file
 		if(count(Input::file()) <= 0 && count($requerimientos) > 0) {
 			Session::flash('message', 'No se ha cumplido con los requerimientos de archivos necesarios');
 			Session::flash('type', 'danger');
@@ -104,17 +121,21 @@ class inscripcionController extends BaseController {
 			return Redirect::to('/signup');
 		}
 
+		//asigna valores
 		$nit       = Input::get('txNIT');
 		$empresa   = DB::table('empresas')->where('nit', $nit)->first();
 		$solicitud = DB::table('solicitudinscripciones')->where('nit', $nit)->where('estado', 'Pendiente')->first();
 
+		//condiciona solicitud y empresa y muetra mensaje
 		if($solicitud || $empresa) {
 			Session::flash('message', 'El NIT ya se encuentra registrado en el sistema');
 			Session::flash('type', 'danger');
 
+			//retorna a la vista
 			return Redirect::to('/signup');
 		}
 
+		//inserta valores a la db
 		DB::transaction(function() use($contingenteid,$nit) {
 			$inscripcion                          = new Solicitudinscripcion;
 			$inscripcion->estado                  = 'Pendiente';
@@ -153,10 +174,13 @@ class inscripcionController extends BaseController {
 	    }
 	  }); //DB Transaction
 
+		//asigna valores del formulario
 		$email    = Input::get('email');
 		$admins   = Usuario::listAdminEmails();
 
+		//consulta en db segun parametros
 		$contingente = Contingente::getNombre($contingenteid);
+		//condiciona le objeto
 		if($contingente) {
 			$despedida = 'Para mayor información puede escribir a: 
 						<a href="mailto:' . $contingente->responsableemail . '">' . $contingente->responsable . 
@@ -167,6 +191,7 @@ class inscripcionController extends BaseController {
 			$despedida = null;
 		}
 
+		//manda email
 		try {
 			Mail::send('emails/solicitudinscripcion', array(
 	      'nombre' => Input::get('txRazonSocial'),
@@ -178,6 +203,7 @@ class inscripcionController extends BaseController {
 	    });
 		} catch (Exception $e) {}
 
+		//retorna a la vista si existe error
     return Redirect::to('/login')
       ->with('flashMessage',Config::get('login::signupexitoso'))
       ->with('flashType','success');
