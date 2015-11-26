@@ -19,7 +19,6 @@ App::error(function(Exception $exception, $code) {
 });
 
 App::down(function() {
-  return Response::make("Be right back!", 503);
+	return Response::view('template/mantenimiento', array(), 503);
 });
-
 require app_path().'/filters.php';
