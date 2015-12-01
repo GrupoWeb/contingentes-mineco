@@ -33,7 +33,6 @@
 						<td>
 							<?php $id = Crypt::encrypt($datos['certificadoid']); ?>
 							<a target="_blank" href="c/{{ $id }}" title="Generar" class="btn btn-xs btn-primary"><span class="fa fa-file-pdf-o"></span></a>
-							<a href="certificados/liquidar/{{ $id }}" title="Liquidar" class="btn btn-xs btn-success"><span class="fa fa-check-square "></span></a>
 							<a href="certificados/anular/{{ $id }}" title="Anular" class="btn btn-xs btn-danger"><span class="fa fa-minus-square-o"></span></a>
 						</td>
 					</tr>
