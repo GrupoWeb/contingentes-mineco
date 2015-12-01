@@ -34,7 +34,7 @@
           <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href="/">
-          <img src="/images/logo-menu.png" alt="Ministerio de economía - DACE">
+          <img src="/images/logo-menu.jpg" alt="Ministerio de economía - DACE">
         </a>
       </div>
       <!-- Collect the nav links, forms, and other content for toggling -->
