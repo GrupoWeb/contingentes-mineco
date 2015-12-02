@@ -6,7 +6,7 @@ class Noticia extends Eloquent {
 
 	public static function getNoticias() {
 		return DB::table('noticias')
-			->select('titulo', 'contenido', 'imagen',
+			->select('titulo', 'contenido', 'imagen', 'documento',
 				DB::raw('DATE_FORMAT(updated_at, "%d-%m-%Y") AS fecha'))
 			->orderBy('updated_at', 'desc')
 			->get();
