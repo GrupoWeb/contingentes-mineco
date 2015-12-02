@@ -74,7 +74,7 @@
               </div>
             </div> <!-- valor CIF -->
             <div class="form-group">
-              <label for="txDocumento" class="col-sm-2 control-label">Documento Adunto (DUA)</label>
+              <label for="txDocumento" class="col-sm-2 control-label">Documentos Aduntos</label>
               <div class="col-sm-6 div-contingente">
                 {{ Form::file('txDocumento', array(
                   'data-bv-notEmpty'         => 'true',
@@ -83,6 +83,7 @@
                 )) }}
               </div>
             </div> <!-- documento adjunto -->
+            <p class="col-sm-offset-2">*Es necesario unificar los documentos un un solo archivo. Para más información sobre que documentos adjuntar ingresar a la sección de <a href="noticas" target="_blank">noticias</a>.</p>
             <div class="form-group">
               <label for="txFecha" class="col-sm-2 control-label">Fecha de liquidación:</label>
               <div class="col-sm-6">
