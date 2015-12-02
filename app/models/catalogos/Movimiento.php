@@ -184,8 +184,8 @@ class Movimiento extends Eloquent {
 
 	public static function getCertificadosPorEmpresa($aPeriodoId, $aFechaIni, $aFechafin) {
 		return DB::table('movimientos AS m')
-			->select('razonsocial AS nombre', 'e.nit', 
-				'encargadoimportaciones AS encargado', 'e.telefono', 
+			->select('razonsocial AS nombre', 'e.nit', 'e.domiciliofiscal', 'u.email',
+				'encargadoimportaciones AS encargado', 'e.telefono', 'e.propietario',
 				DB::raw('count(*) AS cuenta'))
 			->leftJoin('authusuarios AS u', 'm.usuarioid', '=', 'u.usuarioid')
 			->leftJoin('empresas AS e', 'u.empresaid', '=', 'e.empresaid')

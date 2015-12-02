@@ -8,7 +8,7 @@ class certificadosempresasController extends BaseController {
 			->with('titulo', 'Certificados por empresa')
 			->with('contingentes', Contingente::getContingentesCuota())
 			->with('tratados', Tratado::getTratados())
-			->with('filters', ['tratados','contingentes','periodos','formato','fechaini','fechafin'])
+			->with('filters', ['tratados','contingentes','periodos','formato','fechaini','fechafin','columnas'])
 			->with('todos',['empresas']);
   }
 
@@ -20,6 +20,10 @@ class certificadosempresasController extends BaseController {
 		$fechaini      = Components::fechaHumanoAMySql(Input::get('fechaini')).' 00:00';
 		$fechafin      = Components::fechaHumanoAMySql(Input::get('fechafin')).' 23:59';
 		$formato       = Input::get('formato');
+    $campos        = Input::get('campos');
+
+    if(!$campos)
+      $campos = [];
 
 		//consulta en db segun parametros
   	$certificados  = Movimiento::getCertificadosPorEmpresa($periodoid, $fechaini, $fechafin);
@@ -54,6 +58,7 @@ class certificadosempresasController extends BaseController {
 			'tratado'      => $tratado,
 			'producto'     => $producto,
 			'formato'      => $formato,
+      'campos'       => $campos,
   	]);
   }
 }

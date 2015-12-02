@@ -96,6 +96,24 @@
 	      </div>
 	    @endif
 
+	    @if(in_array('columnas', $filters))
+	      <div class="col-sm-12">
+	        <div class="form-group">
+	          <label class="col-sm-2 control-label" for="campos">Campos:</label>
+	          <div class="col-sm-10">
+	            <select name="campos[]" class="selectize" multiple>          
+	              <option value="0">NIT</option>
+	              <option value="1">Teléfono</option>
+	              <option value="2">Email</option>
+	              <option value="3">Domicilio Fiscal</option>
+	              <option value="4">Representante Legal</option>
+	              <option value="5">Encargado</option>
+	            </select>
+	          </div>
+	        </div>
+	      </div>
+	    @endif
+
 	    @if(in_array('formato', $filters) || in_array('formatografica', $filters))
 		    <div class="col-sm-12">
 		      <div class="form-group">
