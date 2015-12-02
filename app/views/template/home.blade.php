@@ -64,15 +64,22 @@
   <div class="row fondo">
     <div class="container">
       @yield('content')
-      <footer>
-        <div class="row">
-          <div class="col-lg-12">
-            <p class="text-muted text-center">
-              <a href="http://cs.com.gt" target="_blank">Compuservice Webdesigns </a> &copy; {{ date('Y') }}
-            </p>
-          </div>
-        </div>
-      </footer>
+      <div class="footer">
+      <div class="col-sm-6">
+        <p class="text-muted">8a. Avenida 10-43 Zona 1. 01001 Guatemala, C.A. PBX  (502) 2412-0200</p>
+        <p class="text-muted">Horarios de atención Lunes a Viernes 08:00 - 16:00Hrs</p>
+      </div>
+      <div class="col-sm-6 text-right">
+        <p><a href="http://mineco.gob.gt/contactenos" target="_blank">Contáctenos</a></p>
+        <p><a href="http://mineco.gob.gt/directorio-sedes-departamentales-y-municipales" target="_blank">Directorio de sedes departamentales, municipales</a></p>
+        <p>Última Actualización 02/12/2015</p>
+      </div>
+      <div class="clearfix"></div>
+      <hr>
+      <p class="text-muted text-center">
+        Todos los derechos reservados | <a href="https://contingentesarancelarios.mineco.gob.gt/">contingentesarancelarios.mineco.gob.gt</a> | {{ date('Y') }} | Powered by <a href="http://cs.com.gt" target="_blank">Compuservice Webdesigns</a>
+      </p>
+    </div>
     </div>
   </div>
 </body>
