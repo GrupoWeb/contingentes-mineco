@@ -61,17 +61,19 @@
   </nav>
 
   <!-- Page Content -->
-  <div class="container">
-    @yield('content')
-    <footer>
-      <div class="row">
-        <div class="col-lg-12">
-          <p class="text-muted text-center">
-            <a href="http://cs.com.gt" target="_blank">Compuservice Webdesigns </a> &copy; {{ date('Y') }}
-          </p>
+  <div class="row fondo">
+    <div class="container">
+      @yield('content')
+      <footer>
+        <div class="row">
+          <div class="col-lg-12">
+            <p class="text-muted text-center">
+              <a href="http://cs.com.gt" target="_blank">Compuservice Webdesigns </a> &copy; {{ date('Y') }}
+            </p>
+          </div>
         </div>
-      </div>
-    </footer>
+      </footer>
+    </div>
   </div>
 </body>
 </html>

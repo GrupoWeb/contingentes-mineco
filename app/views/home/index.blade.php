@@ -37,5 +37,10 @@
       <p class="text-justify">Aquí podrás consultar los manuales de utilización del sistema en formato PDF. Los mismos los puedes descargar o consultar diretamente desde la página.</p>
       <a class="btn btn-primary" href="/manuales">Ver manuales</a>
 	  </div>
-	</div>
+	</div><br>
+
+	<iframe class="entity_iframe entity_iframe_node margen-iframe" frameborder="0" height="550" 
+		id="iframe_herramientas_transparencia" scrolling="yes" 
+		src="http://datos.transparencia.gob.gt/entity_iframe/node/16?entidad=mineco&amp;entidad_ipl_id=242&amp;"
+		width="100%"></iframe>
 @stop
