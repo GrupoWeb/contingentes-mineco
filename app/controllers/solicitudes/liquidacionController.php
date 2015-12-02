@@ -82,7 +82,7 @@ class liquidacionController extends crudController {
 				$certificado->save();
 			}
 
-			return $solicitud
+			return $solicitud;
 		});
 
 		if($solicitud) {
