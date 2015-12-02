@@ -96,12 +96,10 @@
 				</tr>
 				<?php $total += $certificado->cuenta; $i++; ?>
 			@endforeach
-		</tbody>
-		<tfoot>
 			<tr>
 				<td class="text-left text-primary" colspan="{{ $coltotal }}"><strong>TOTAL</strong></td>
 				<td class="text-right text-primary"><strong>{{ number_format($total) }}</strong></td>
 			</tr>
-		</tfoot>
+		</tbody>
 	</table>
 @stop
