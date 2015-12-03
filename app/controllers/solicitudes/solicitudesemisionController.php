@@ -162,7 +162,7 @@ class solicitudesemisionController extends crudController {
 				$email    = $usuario->email;
 				$emision  = Emisionpendiente::find($elID);
 				$empresas = Usuario::listEmpresaEmails($usuario->empresaid, $usuario->usuarioid);
-				$producto = $result['emision']->producto;
+				$producto = Periodo::getProductoFromPeriodo($result['emision']->periodoid);
 
 				Session::flash('type','success');
 				Session::flash('message','La solicitud de emisión fue procesada correctamente');
@@ -199,6 +199,8 @@ class solicitudesemisionController extends crudController {
 			$emision->estado        = 'Rechazada';
 			$result                 = $emision->save();
 
+			$producto = Periodo::getProductoFromPeriodo($emision->periodoid);
+
 			//valida result
 			if($result) {
 				Session::flash('type','success');
@@ -214,6 +216,7 @@ class solicitudesemisionController extends crudController {
 						'nombre'        => $usuario->nombre,
 						'fecha'         => $emision->created_at,
 						'estado'        => 'Rechazada',
+						'contingente'   => $producto,
 						'solicitado'    => $emision->solicitado,
 						'emitido'       => 0,
 						'observaciones' => Input::get('txObservaciones')), function($msg) use ($email, $admins, $empresas){
