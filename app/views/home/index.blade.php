@@ -7,7 +7,7 @@
 	  </div>
 	  <div class="col-md-4">
 	    <h2 class="text-center landing-title" style="background-color: #f5f5f5; color:black;">Tus certificados en línea sin ningún costo</h2>
-	    <p class="text-justify">Haz tus solicitudes en linea, consulta tu saldo en tiempo real y obtén tus certificados fácilmente. Todas las gestiones que realice a través de este Sistema NO TIENEN NINGUN COSTO. Inscribe a tu empresa accediendo al siguiente formulario.</p>
+	    <p class="text-justify" style="color: white;">Haz tus solicitudes en linea, consulta tu saldo en tiempo real y obtén tus certificados fácilmente. Todas las gestiones que realice a través de este Sistema NO TIENEN NINGUN COSTO. Inscribe a tu empresa accediendo al siguiente formulario.</p>
 	    <a class="btn btn-default btn-lg" href="/signup">Solicitud de Inscripción</a>
 	  </div>
 	</div>
