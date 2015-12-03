@@ -55,7 +55,7 @@
 	</head>
 	<body>
 		{{Session::get('menu')}} 
-		<div class="main">
+		<div class="main main-margin">
 			<div class="container">
 				@if(in_array(Request::path(), Config::get('contingentes.tratadosInclude')))
 					<div class="pull-right">
