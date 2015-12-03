@@ -216,4 +216,18 @@ class apiController extends BaseController {
 		}	
 		return json_encode($ret); 
 	}
+
+	public function enviarcertificados() {
+		$response         = ['codigoerror'=>0,'error'=>'','data'=>[]];
+		$response['data'] = Certificado::getCertificadosPendientesSat();
+		
+		return Response::json($response);
+	}
+
+	public function estadocertificados() {
+		$response         = ['codigoerror'=>0,'error'=>'','data'=>[]];
+		$response['data'] = Certificado::getEstadoCertificados();
+		
+		return Response::json($response);
+	}
 }

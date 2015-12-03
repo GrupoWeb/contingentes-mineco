@@ -79,4 +79,21 @@ class Certificado extends Eloquent {
 			->whereNotIn('certificadoid', $certificados)
 			->get();
 	}
+
+	public static function getCertificadosPendientesSat() {
+		return DB::table('certificados AS c')
+			->select('c.*', 'u.nombre AS usuario', 'p.nombre AS pais')
+			->leftJoin('authusuarios AS u', 'c.usuarioid', '=', 'u.usuarioid')
+			->leftJoin('paises AS p', 'c.paisid', '=', 'p.paisid')
+			->where('enviadosat', 0)
+			->get();
+	}
+
+	public static function getEstadoCertificados() {
+		return DB::table('certificados AS c')
+			->select('certificadoid')
+			->whereNotNull('fechaliquidacion')
+			->where('anulado', 0)
+			->get();
+	}
 }

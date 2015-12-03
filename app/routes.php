@@ -32,6 +32,10 @@ Route::group(array('before' => array('auth_basic')), function() {
 	Route::get('api/cuentacorriente','apiController@cuentacorriente');
 	Route::get('api/solicitudasignacion','apiController@solicitudasignacion');
 	Route::get('api/solicitudemision','apiController@solicitudemision');
+
+	//=== SAT
+	Route::get('api/sat/enviarcertificados','apiController@enviarcertificados');
+	Route::get('api/sat/estadocertificados','apiController@estadocertificados');
 });
 
 //FILTROS DE CERTIFICADOS
