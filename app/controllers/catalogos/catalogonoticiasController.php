@@ -17,7 +17,9 @@ class catalogonoticiasController extends crudController {
 	 	Crud::setCampo(array('nombre'=>'Imágen','campo'=>'imagen','tipo'=>'image','filepath'=>'/noticias/'));
 	 	Crud::setCampo(['nombre'=>'Documento','campo'=>'documento','tipo'=>'file','filepath'=>'/noticias/documentos']);
 
+	 	Crud::setSlug(['columnas'=>['titulo'],'campo'=>'slug','separator'=>'-']);
+
 	 	//permiso de cancerbero
 	 	Crud::setPermisos(Cancerbero::tienePermisosCrud('catalogonoticias'));
-	}	
+	}
 }

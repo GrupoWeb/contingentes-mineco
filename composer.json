@@ -15,7 +15,8 @@
 		"maxxscho/laravel-tcpdf": "0.*",
 		"xethron/migrations-generator": "dev-master",
 		"csgt/hermes": "dev-master",
-		"guzzlehttp/guzzle": "~4.0"
+		"guzzlehttp/guzzle": "~4.0",
+		"cviebrock/eloquent-sluggable": "~2.0"
 	},
 	"autoload": {
 		"classmap": [

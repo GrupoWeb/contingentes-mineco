@@ -132,6 +132,7 @@ Route::group(array('before' => array('tratados')), function() {
 		
 		//=== NOTICIAS
 		Route::get('noticas', array('as'=>'noticias.index', 'uses'=>'noticiasController@index'));
+		Route::get('noticas/{id}', array('as'=>'noticias.show', 'uses'=>'noticiasController@show'));
 		
 		Route::get('tratado/graficas/saldo/{id}', array('as'=>'tratado.graficas.saldo', 'uses'=>'graficasController@saldo'));
 	  

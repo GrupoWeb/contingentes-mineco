@@ -2,27 +2,39 @@
 
 @section('content')
 	<h3 class="text-primary">Noticias</h3>
-	<hr />
-	@foreach($noticias as $noticia)
-		<div class="media">
-		  <div class="media-body">
-		    <h4 class="media-heading">{{ $noticia->titulo.' ('.$noticia->fecha.')' }}</h4>
-		    
-		    @if($noticia->imagen<>null)
-					<p class="text-center"><img class="media-object" src="/noticias/{{ $noticia->imagen }}"></p>
-		    @endif
-		    
-		    <p class="text-justify">{{ $noticia->contenido }}</p>
-		    
-		    @if($noticia->documento<>null)
-			    <div class="list-group col-sm-3 text-center">
-					  <a href="/noticias/documentos/{{ $noticia->documento }}" class="list-group-item" target="on_black">
-					  	Descargar documento adjunto
-					  </a>
-					</div>
-				@endif
-		  </div>
-		</div>
-		<hr />
-	@endforeach
+
+	<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+	  <ol class="carousel-indicators">
+	  	<?php $i=0; ?>
+	  	@foreach($noticias as $noticia)
+				<li data-target="#carousel-example-generic" data-slide-to="{{ $i }}" class="{{ ($i==0 ? 'active' : '') }}"></li>
+				<?php $i++; ?>
+			@endforeach
+	  </ol>
+
+	  <div class="carousel-inner" role="listbox">
+	  	<?php $i=0; ?>
+	  	@foreach($noticias as $noticia)
+	  		<div class="item {{ ($i==0 ? 'active' : '') }}">
+				  <img src="/noticias/{{ $noticia->imagen }}" alt="...">
+				  <div class="carousel-caption">
+				    <h3>{{ $noticia->titulo.' ('.$noticia->fecha.')' }}</h3>
+				    <p>{{ str_limit($noticia->contenido, 200) }}</p>
+				    <p><a href="noticas/{{ $noticia->slug }}" target="_blank">Ver más</a></p>
+				  </div>
+				</div>
+				<?php $i++; ?>
+			@endforeach
+	  </div>
+
+	  <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+	    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+	    <span class="sr-only">Previous</span>
+	  </a>
+	  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+	    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+	    <span class="sr-only">Next</span>
+	  </a>
+	</div>
+	<br /><br /><br />
 @stop
