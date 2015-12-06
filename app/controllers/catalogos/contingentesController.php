@@ -60,17 +60,36 @@ class contingentesController extends crudController {
 	//obtener saldo
 	public function getSaldo($contingenteid) {
 		//variable para id
-		$cid = Crypt::decrypt($contingenteid);
+		try {
+			$cid = Crypt::decrypt($contingenteid);
+		} catch (Exception $e) {
+			$response['codigoerror'] = 1;
+			$response['error']       = 'Contingente inválido';
+			return Response::json($response);
+		}
+		
+		if (Auth::user()) {
+			$empresaid = Auth::user()->empresaid;
+		}
+		else {
+			$response['codigoerror'] = 2;
+			$response['error']       = 'Usuario no encontrado';
+			return Response::json($response);
+		}
 
 		//consulta db segun $cid
 		$disponible             = DB::select(DB::raw('SELECT getSaldo('.$cid.','.Auth::user()->empresaid.') AS disponible'));
-
-		//declara valor de valiable al areglo
+		if (!$disponible) {
+			$response['codigoerror'] = 3;
+			$response['error']       = 'Error obtieniendo saldo';
+			return Response::json($response);
+		}
+		//declara valor de variable al arreglo
 		$response['disponible'] = $disponible[0]->disponible;
 		$response['unidad']     = Contingente::getUnidadMedida($cid);
-
 		return Response::json($response);
 	}
+
 
 	public function getSaldoAsignacion($contingenteid) {
 		//define un areglo a la variable
