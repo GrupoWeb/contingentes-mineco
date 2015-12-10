@@ -88,7 +88,7 @@ class liquidacionController extends crudController {
 		if($solicitud) {
 			//enviar correo
 			$usuario  = Authusuario::find($solicitud->usuarioid);
-			$empresa  = Empresa::fing($usuario->empresaid);
+			$empresa  = Empresa::find($usuario->empresaid);
 			$empresas = Usuario::listEmpresaEmails($usuario->empresaid, $usuario->usuarioid);
 			$admins   = Usuario::listAdminEmails();
 
