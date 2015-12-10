@@ -56,7 +56,7 @@ class solicitudliquidacionController extends BaseController {
 
     //enviar correo
 		$usuario     = Authusuario::find($solicitud->usuarioid);
-		$empresa     = Empresa::fing($usuario->empresaid);
+		$empresa     = Empresa::find($usuario->empresaid);
 		$empresas    = Usuario::listEmpresaEmails($usuario->empresaid, $usuario->usuarioid);
 		$admins      = Usuario::listAdminEmails();
 		$certificado = Certificado::find($certificadoid);
