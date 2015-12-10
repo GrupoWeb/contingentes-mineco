@@ -20,6 +20,8 @@
 			</tr>
 
 			<tr>
+				<th rowspan="2" colspan="1" style="vertical-align: middle;">NIT</th>
+				<th rowspan="2" colspan="1" style="vertical-align: middle;">Importador</th>
 				@if($esasignacion==1)
 					<th rowspan="2" colspan="1" style="vertical-align: middle;">Asignado</th>
 					<th rowspan="2" colspan="1" style="vertical-align: middle;">Adjudicado</th>
@@ -27,8 +29,6 @@
 				@else
 					<th colspan="3">Adjudicado</th>
 				@endif
-				<th rowspan="2" colspan="1" style="vertical-align: middle;">NIT</th>
-				<th rowspan="2" colspan="1" style="vertical-align: middle;">Importador</th>
 				<th rowspan="1" colspan="3" class="text-center">Volúmen</th>
 				<th rowspan="1" colspan="5" class="text-center">Adjudicado</th>
 				<th rowspan="1" colspan="4" class="text-center">Liquidado</th>
@@ -65,6 +65,8 @@
 						if ($cuantos==0) $cuantos=1;
 					?>
 					<tr>
+						<td rowspan="{{ $cuantos }}" style="vertical-align: middle;">{{ $nit }}</td>
+						<td rowspan="{{ $cuantos }}" style="vertical-align: middle;">{{ $nombre }}</td>
 						@if($esasignacion==1)
 							<td rowspan="{{ $cuantos }}" class="text-right">{{ number_format($movimientos['asignado'], 3) }}</td>
 							<td rowspan="{{ $cuantos }}" class="text-right">{{ number_format($movimientos['adjudicado'], 3) }}</td>
@@ -72,8 +74,6 @@
 						@else
 							<td rowspan="{{ $cuantos }}" colspan="3" class="text-right" style="vertical-align: middle;">{{ number_format($movimientos['adjudicado'], 3) }}</td>
 						@endif
-						<td rowspan="{{ $cuantos }}" style="vertical-align: middle;">{{ $nit }}</td>
-						<td rowspan="{{ $cuantos }}" style="vertical-align: middle;">{{ $nombre }}</td>
 						<?php $i=1; ?>
 						@if(count($movimientos['movimientos'])==0)
 							<td colspan="12">&nbsp;</td>

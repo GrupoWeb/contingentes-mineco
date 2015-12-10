@@ -14,9 +14,15 @@ class certificadosempresasController extends BaseController {
 
   public function store() {
   	//asigna valores ingresado en formulario
-		$periodoid     = Crypt::decrypt(Input::get('cmbPeriodo'));
-		$tratadoid     = Crypt::decrypt(Input::get('tratadoid'));
-		$contingenteid = Crypt::decrypt(Input::get('cmbContingente'));
+    try {
+      $periodoid     = Crypt::decrypt(Input::get('cmbPeriodo'));
+      $tratadoid     = Crypt::decrypt(Input::get('tratadoid'));
+      $contingenteid = Crypt::decrypt(Input::get('cmbContingente'));        
+    } catch (\Exception $e) {
+      return View::make('cancerbero::error')
+        ->with('mensaje','Tratado, período, contingente o empresa inválidos.');
+    }
+
 		$fechaini      = Components::fechaHumanoAMySql(Input::get('fechaini')).' 00:00';
 		$fechafin      = Components::fechaHumanoAMySql(Input::get('fechafin')).' 23:59';
 		$formato       = Input::get('formato');

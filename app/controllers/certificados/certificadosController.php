@@ -56,12 +56,14 @@ class certificadosController extends Controller {
 	}
 
   public function store() {
+    $empresaid = Auth::user()->empresaid;
     try {
       //asignar valores a variables del formulario
       $tratadoid     = Crypt::decrypt(Input::get('tratadoid'));
       $contingenteid = Crypt::decrypt(Input::get('contingenteid'));
       $periodoid     = Crypt::decrypt(Input::get('periodoid'));
-      $empresaid     = Crypt::decrypt(Input::get('empresaid'));    
+      if ($empresaid==0)
+        $empresaid     = Crypt::decrypt(Input::get('empresaid'));    
     } catch (\Exception $e) {
       //indica error
       return View::make('cancerbero::error')

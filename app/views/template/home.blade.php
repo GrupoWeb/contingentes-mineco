@@ -77,7 +77,7 @@
       <div class="clearfix"></div>
       <hr>
       <p class="text-muted text-center">
-        Todos los derechos reservados | <a href="https://contingentesarancelarios.mineco.gob.gt/">contingentesarancelarios.mineco.gob.gt</a> | {{ date('Y') }} | Powered by <a href="http://cs.com.gt" target="_blank">Compuservice Webdesigns</a>
+        Todos los derechos reservados | <a href="https://contingentesarancelarios.mineco.gob.gt/">contingentesarancelarios.mineco.gob.gt</a> | {{ date('Y') }} | <a href="http://cs.com.gt" target="_blank">Compuservice Webdesigns</a>
       </p>
     </div>
     </div>
