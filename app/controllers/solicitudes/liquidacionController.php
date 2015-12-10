@@ -67,7 +67,7 @@ class liquidacionController extends crudController {
 		$observaciones = Input::get('txObservaciones');
 
 		//inserta datos al db
-		$solicitud = DB::transaction(function() use ($solicitudid, $estado) {
+		$solicitud = DB::transaction(function() use ($solicitudid, $estado, $observaciones) {
 			$solicitud                       = Solicitudliquidacion::find($solicitudid);
 			$solicitud->estado               = $estado;
 			$solicitud->observaciones        = $observaciones;
