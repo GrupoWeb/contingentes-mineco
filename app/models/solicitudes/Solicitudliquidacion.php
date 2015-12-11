@@ -7,7 +7,8 @@ class Solicitudliquidacion extends Eloquent {
 
 	public static function getSolicitud($aSolicitudId) {
 		return DB::table('solicitudesliquidacion AS sl')
-			->select('sl.dua', 'sl.real', 'sl.cif', 'sl.documento',
+			->select('sl.dua', 'sl.real', 'sl.cif', 'sl.documento', 'e.razonsocial', 'e.nit',
+				'sl.estado', 'sl.observaciones', 'sl.solicitudliquidacionid',
 				'u.nombre', 'e.razonsocial AS empresa', 'c.numerocertificado',
 				'c.volumen', 'c.fraccion', 'u.email', 'u.usuarioid', 'solicitudliquidacionid AS id',
 				DB::raw('DATE_FORMAT(sl.fechaliquidacion, "%d-%m-%Y %H:%i") AS fecha'))

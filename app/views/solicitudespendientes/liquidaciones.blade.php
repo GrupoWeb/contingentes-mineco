@@ -25,7 +25,7 @@
 			@else
 				<ul class="list-group">
 			    <li class="list-group-item">
-			    	<a target="_blank" href="/liquidaciones/{{ $solicitud->usuarioid. '/' . $solicitud->documento }}">{{ $solicitud->documento }}
+			    	<a target="_blank" href="/archivos/liquidaciones/{{ $solicitud->usuarioid. '/' . $solicitud->documento }}">{{ $solicitud->documento }}
 			    	</a>
 			    </li>
 				</ul>

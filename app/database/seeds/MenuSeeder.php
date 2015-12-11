@@ -382,6 +382,15 @@
 				'icono'         	=> null
 			));
 
+			DB::table('authmenu')->insert(array(
+				'menuid'					=> 48,
+				'padreid'        	=> 23,
+				'modulopermisoid' => 201,
+				'nombre'         	=> 'Liquidación',
+				'orden' 					=> 50,
+				'icono'         	=> null
+			));
+
 			DB::table('authmenu')->update(array('created_at'=>date_create(), 'updated_at'=>date_create()));
 		  DB::statement('SET FOREIGN_KEY_CHECKS=1');
 		}

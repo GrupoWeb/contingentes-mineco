@@ -312,6 +312,13 @@ class ModulosSeeder extends Seeder {
 			'descripcion'    => ''
 		));
 
+		DB::table('authmodulos')->insert(array(
+			'moduloid'       => 46,
+			'nombre'         => 'historicosolicitudes.liquidacion',
+			'nombrefriendly' => 'Histórico de Liquidaciones',
+			'descripcion' => ''
+		));
+
 		DB::table('authmodulos')->update(array('created_at'=>date_create(), 'updated_at'=>date_create()));
 	  DB::statement('SET FOREIGN_KEY_CHECKS=1');
 	}

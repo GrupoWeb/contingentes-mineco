@@ -40,7 +40,7 @@ class solicitudliquidacionController extends BaseController {
 		//asigna valores a las variables
 		$arch   = Input::file('txDocumento');
 		$nombre = date('Ymdhis') . mt_rand(1, 1000) . '.' . strtolower($arch->getClientOriginalExtension());
-		$res    = $arch->move(public_path() . '/liquidaciones/' . Auth::id(), $nombre);
+		$res    = $arch->move(public_path() . 'archivos/liquidaciones/' . Auth::id(), $nombre);
 
 		//inserta datos en db
 		$solicitud                   = new Solicitudliquidacion;
@@ -72,7 +72,7 @@ class solicitudliquidacionController extends BaseController {
 			});
 		} catch (Exception $e) {}
 
-		Session::flash('message', 'Certificado liquidado exitosamente');
+		Session::flash('message', 'Liquidación enviada exitosamente');
     Session::flash('type', 'success');
 
     //retorna a la vista
