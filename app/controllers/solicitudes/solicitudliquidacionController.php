@@ -40,7 +40,7 @@ class solicitudliquidacionController extends BaseController {
 		//asigna valores a las variables
 		$arch   = Input::file('txDocumento');
 		$nombre = date('Ymdhis') . mt_rand(1, 1000) . '.' . strtolower($arch->getClientOriginalExtension());
-		$res    = $arch->move(public_path() . 'archivos/liquidaciones/' . Auth::id(), $nombre);
+		$res    = $arch->move(public_path() . '/archivos/liquidaciones/' . Auth::id(), $nombre);
 
 		//inserta datos en db
 		$solicitud                   = new Solicitudliquidacion;
