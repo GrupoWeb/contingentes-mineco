@@ -2,13 +2,25 @@
 
 class certificadosController extends Controller {
 
+  public function getRol(){
+    return Config::get('contingentes.roladmin');
+  }
+
 	public function index() {
     //retorna parametros a la vista
+    if(in_array(Auth::user()->rolid,$this->getRol())){
+      $tratados = Tratado::getTratados();
+      $todos = ['tratados'];
+    }else{
+      $tratados = Tratado::getTratadosEmpresa(Auth::user()->rolid,$this->getRol());
+      $todos = ['null'];
+    }
+
 		return View::make('certificados.filtros')
       ->with('titulo', 'Certificados')
-      ->with('tratados', Tratado::getTratados())
+      ->with('tratados', $tratados)
       ->with('filters', array('tratados', 'contingentes', 'periodos', 'empresas', 'fechaini', 'fechafin'))
-      ->with('todos',['tratados']);
+      ->with('todos',$todos);
 	}
 
 	public function getcontingentes($id) {
@@ -22,10 +34,15 @@ class certificadosController extends Controller {
 		$empresaid = Auth::user()->empresaid;
 
     //verifiva $empresaid
-    if ($empresaid) 
+    if(in_array(Auth::user()->rolid,$this->getRol())){
+      if ($empresaid) {
+        $contingentes = Contingente::getContTratadoEmpresa($id, $empresaid);
+      }else{
+        $contingentes = Contingente::getContTratado($id);  
+      }
+    }else{
       $contingentes = Contingente::getContTratadoEmpresa($id, $empresaid);
-    else
-      $contingentes = Contingente::getContTratado($id);
+    }
 
     //retorna datos a la vista
 		return View::make('partials.certificados.contingentes')
@@ -35,11 +52,17 @@ class certificadosController extends Controller {
 	}
 
 	public function getperiodos($id) {
-    //retorna datos a la vista 
-		return View::make('partials.certificados.periodos')
+    
+    if ($id = 'undefined') {
+      $id = Crypt::encrypt(0);
+    }
+
+    return View::make('partials.certificados.periodos')
       ->with('periodos', Periodo::getPeriodosContingente(Crypt::decrypt($id)))
       ->with('nombre', 'periodoid')
       ->with('id', 'periodoid');
+    //retorna datos a la vista 
+		
 	}
 
 	public function getempresas($id) {

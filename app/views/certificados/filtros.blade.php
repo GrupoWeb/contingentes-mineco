@@ -113,7 +113,8 @@
 	    	$('#empresadiv').html('<p class="form-control-static"><i class="fa fa-lg fa-spinner fa-pulse"></i></p>');
 
 	    	$.get('certificados/empresas/' + $(this).find('option:selected').val(), function(data) {
-	    		$('#empresadiv').html(data);
+	    		console.log(data);
+          $('#empresadiv').html(data);
 	    		$('#empresaid').selectpicker();
 	    	});
 	    });
