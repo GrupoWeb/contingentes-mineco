@@ -38,7 +38,7 @@
 			{{Form::open(array('id'=>'frmAuto', 'route'=>'solicitudespendientes.asignacion.store'))}}
 				<div class="form-group" id="divCantidad">
 					{{ Form::text('txCantidad', $solicitud->solicitado, array(
-						'class'                         => 'form-control',
+						'class'                         => 'form-control two-digits',
 						'data-bv-notempty'              => 'true',
 						'data-bv-numeric'               => 'true',
 						'data-bv-greaterthan'           =>'true',
@@ -74,6 +74,18 @@
 	{{Form::close()}}
 	<script>
 		$(document).ready(function(){
+			$( function() {
+        $('.two-digits').keyup(function(){
+          if($(this).val().indexOf('.')!=-1){         
+            if($(this).val().split(".")[1].length > 2){                
+              if( isNaN( parseFloat( this.value ) ) ) return;
+              this.value = parseFloat(this.value).toFixed(2);
+            }  
+           }            
+           return this; //for chaining
+        });
+      });
+
 			$('#btnAutorizar').click(function(){
 				$('#txObservaciones').hide();
 			});

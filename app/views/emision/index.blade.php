@@ -35,7 +35,7 @@
           <label for="txCantidad" class="col-sm-2 control-label">Cantidad</label>
           <div class="col-md-2 col-sm-6 div-contingente">
             <div class="input-group">
-              {{ Form::text('cantidad', '', array('class'=>'form-control',
+              {{ Form::text('cantidad', '', array('class'=>'form-control two-digits',
                 'data-bv-notEmpty'              => 'true',
                 'data-bv-notEmpty-message'      => 'La cantidad es incorrecta',
                 'data-bv-greaterthan'           => 'true',
@@ -76,6 +76,18 @@
   {{Form::close()}}
   <script>
     $(document).ready(function(){
+      $( function() {
+        $('.two-digits').keyup(function(){
+          if($(this).val().indexOf('.')!=-1){         
+            if($(this).val().split(".")[1].length > 2){                
+              if( isNaN( parseFloat( this.value ) ) ) return;
+              this.value = parseFloat(this.value).toFixed(2);
+            }  
+           }            
+           return this; //for chaining
+        });
+      });
+
       $('.selectpicker').selectpicker();
 
       $("#cmbContingentes").change(function() {
@@ -108,6 +120,8 @@
               });     
             });       
           });
+          
+
 
           $.get('/contingente/partidas/' + $(this).val(), function(data){
             $('#divPartidas').html(data);
