@@ -21,4 +21,6 @@ return array(
 	'tratadosInclude' => array('inicio', 'tratados', 'periodos', 'solicitudespendientes', 'historicosolicitudes'),
 	
 	'variospaises'    => 8,
+
+	'slugNoticia'			=> 'slugAqui',
 );

@@ -35,16 +35,16 @@
 		border: 1px solid black;
 	}
 </style>
-<table width="100%" cellpadding="3" style="font-size: 8px; line-height: 7px" border="1">
+<table width="100%" cellpadding="2" style="font-size: 8px; line-height: 7px" border="1">
 	<thead>
 		<tr>
 			<th rowspan="2" colspan="5" style="text-align:center;"><img src="{{ public_path() }}/images/logo-menu.png"></th>
 			<th colspan="9" style="text-align:center;"><h4>{{$titulo}}</h4></th>
 		</tr>
 		<tr>
-			<th colspan="3" style="text-align:center;">{{ $tratado }}</th>
-			<th colspan="3" style="text-align:center;">{{ $producto }}</th>
-			<th colspan="3" style="text-align:center;">Reporte generado {{ date('d/m/Y') }}</th>
+			<th colspan="3" style="text-align:center;" {{($esasignacion==1)? 'width="18%"':''}}>{{ $tratado }}</th>
+			<th colspan="3" style="text-align:center;"{{($esasignacion==1)? 'width="26%"':''}}>{{ $producto }}</th>
+			<th colspan="3" style="text-align:center;" {{($esasignacion==1)? 'width="20%"':''}}>Reporte generado {{ date('d/m/Y') }}</th>
 		</tr>
 		<tr>
 			<th rowspan="2" style="text-align: center;">NIT</th>
@@ -57,24 +57,41 @@
 				<th colspan="3">Adjudicado</th>
 			@endif
 			
-			<th colspan="3" style="text-align: center;">Volúmen</th>
-			<th colspan="5" style="text-align: center;">Adjudicado</th>
-			<th style="text-align: center;">Liquidado</th>
+			<th colspan="3" style="text-align: center;" {{($esasignacion==1)? 'width="18%"':''}}>Volúmen</th>
+			<th colspan="5" style="text-align: center;"{{($esasignacion==1)? 'width="26%"':''}}>Adjudicado</th>
+			<th style="text-align: center;"{{($esasignacion==1)? 'width="20%"':''}}>Liquidado</th>
 		</tr>
+		@if($esasignacion==1)
+			<tr>
+				<th width="6%" style="text-align: center;">No.</th>
+				<th width="6%" style="text-align: center;">Fecha</th>
+				<th width="6%" style="text-align: center;">Fracción</th>
+				<th width="6%" style="text-align: center; font-size:8px;">Venicimiento</th>
+				<th width="5%" style="text-align: center;">TM</th>
+				<th width="5%" style="text-align: center;">Fecha</th>
+				<th width="5%" style="text-align: center;">DUA</th>
+				<th width="5%" style="text-align: center;">TM</th>
+				<th width="5%" style="text-align: center;">Variación</th>
+				<th width="5%" style="text-align: center;">%</th>
+				<th width="5%" style="text-align: center;">CIF</th>
+				<th width="5%" style="text-align: center;">$/TM</th>
+			</tr>
+		@else
 		<tr>
-			<th style="text-align: center;">No.</th>
-			<th style="text-align: center;">Fecha</th>
-			<th style="text-align: center;">Fracción</th>
-			<th style="text-align: center;">Venicimiento</th>
-			<th style="text-align: center;">TM</th>
-			<th style="text-align: center;">Fecha</th>
-			<th style="text-align: center;">DUA</th>
-			<th style="text-align: center;">TM</th>
-			<th style="text-align: center;">Variación</th>
-			<th style="text-align: center;">%</th>
-			<th style="text-align: center;">CIF</th>
-			<th style="text-align: center;">$/TM</th>
-		</tr>
+				<th style="text-align: center;">No.</th>
+				<th style="text-align: center;">Fecha</th>
+				<th style="text-align: center;">Fracción</th>
+				<th style="text-align: center;">Venicimiento</th>
+				<th style="text-align: center;">TM</th>
+				<th style="text-align: center;">Fecha</th>
+				<th style="text-align: center;">DUA</th>
+				<th style="text-align: center;">TM</th>
+				<th style="text-align: center;">Variación</th>
+				<th style="text-align: center;">%</th>
+				<th style="text-align: center;">CIF</th>
+				<th style="text-align: center;">$/TM</th>
+			</tr>
+		@endif
 	</thead>
 	<tbody>
 	<?php 
@@ -112,11 +129,11 @@
 					@if ($i>1) 
 						{{'<tr>'}} 
 					@endif
-						<td>{{ $movimiento['certificado']  }}</td>
-						<td>{{ $movimiento['fecha'] }}</td>
-						<td>{{ $movimiento['fraccion'] }}</td>
-						<td>{{ $movimiento['fechavencimiento'] }}</td>
-						<td class="right">{{ number_format($movimiento['cantidad'], 3) }}</td>
+						<td {{($esasignacion==1)? 'width="6%"':''}}>{{ $movimiento['certificado']  }}</td>
+						<td {{($esasignacion==1)? 'width="6%"':''}}>{{ $movimiento['fecha'] }}</td>
+						<td {{($esasignacion==1)? 'width="6%"':''}}>{{ $movimiento['fraccion'] }}</td>
+						<td {{($esasignacion==1)? 'width="6%"':''}}>{{ $movimiento['fechavencimiento'] }}</td>
+						<td {{($esasignacion==1)? 'width="5%"':''}} class="right">{{ number_format($movimiento['cantidad'], 3) }}</td>
 						@if($movimiento['dua'] <> '')
 							<td>{{ $movimiento['fechaliquidacion'] }}</td>
 							<td>{{ $movimiento['dua'] }}</td>
@@ -126,13 +143,13 @@
 							<td>{{ number_format($movimiento['cif'], 2) }}</td>
 							<td>{{ $movimiento['real'] <> 0 ? (number_format(($movimiento['cif']/$movimiento['real']), 2)) : '0.00' }}</td>
 						@else
-							<td>&nbsp;</td>
-							<td>&nbsp;</td>
-							<td>&nbsp;</td>
-							<td>&nbsp;</td>
-							<td>&nbsp;</td>
-							<td>&nbsp;</td>
-							<td>&nbsp;</td>
+							<td {{($esasignacion==1)? 'width="5%"':''}}>&nbsp;</td>
+							<td {{($esasignacion==1)? 'width="5%"':''}}>&nbsp;</td>
+							<td {{($esasignacion==1)? 'width="5%"':''}}>&nbsp;</td>
+							<td {{($esasignacion==1)? 'width="5%"':''}}>&nbsp;</td>
+							<td {{($esasignacion==1)? 'width="5%"':''}}>&nbsp;</td>
+							<td {{($esasignacion==1)? 'width="5%"':''}}>&nbsp;</td>
+							<td {{($esasignacion==1)? 'width="5%"':''}}>&nbsp;</td>
 						@endif
 					</tr>
 					<?php $i++; ?>

@@ -4,7 +4,7 @@ class solicitudliquidacionController extends BaseController {
 
 	public function index() {
 		//retorna datos a la vista
-		$noticia = 'pruebaslugdos';
+		$noticia = Config::get('contingentes.slugNoticia');
 		$certificados = Certificado::getCertificadosPendientesUsuario(Auth::id());
     return View::make('certificados.liquidaciones')
       ->with('certificados', $certificados)

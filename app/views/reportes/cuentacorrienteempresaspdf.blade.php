@@ -32,7 +32,7 @@
 	}
 </style>
 
-<?php $acreditadoLast = '__Primero__'; ?>
+<?php $acreditadoLast = '__Primero__'; $i = 0 ?>
 @foreach($movimientos as $movimiento)
 	@if($movimiento->acreditadoa<>$acreditadoLast)
 		@if($acreditadoLast<>'__Primero__')
@@ -51,10 +51,18 @@
 		<h6>{{ $movimiento->acreditadoa }}</h6>
 		<table width="500" cellpadding="3" style="font-size: 8px; line-height: 7px" border="1">
 			<thead>
-				<tr>
-					<th rowspan="2" colspan="3" style="text-align:center;"><img src="{{ public_path() }}/images/logo-menu.png"></th>
-					<th colspan="4" style="text-align:center;"><h4>{{$titulo}}</h4></th>
-				</tr>
+				@if($i == 0)
+					<tr>
+						<th rowspan="2" colspan="3" style="text-align:center;"><img src="{{ public_path() }}/images/logo-menu.png"></th>
+						<th colspan="4" style="text-align:center;"><h4>{{$titulo}}</h4></th>
+					</tr>
+					<?php $i = 1; ?>
+				@else
+					<tr>
+						<th rowspan="1" colspan="3" style="text-align:center;"></th>
+						<th colspan="4" style="text-align:center;"></th>
+					</tr>
+				@endif				
 				<tr>
 					<th style="text-align:center;">{{ $tratado }}</th>
 					<th style="text-align:center;">{{ $producto }}</th>
