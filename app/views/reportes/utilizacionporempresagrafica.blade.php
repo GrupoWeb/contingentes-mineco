@@ -23,8 +23,12 @@
 	<p id = "pie" hidden>{{$esAsignacion}}</p>
 	<?php echo HTML::script('js/highcharts.js'); ?>
 	<?php echo HTML::script('js/highcharts-exporting.js'); ?>
-	
-	<div id="container" style="height: 600px; margin: 0 auto"></div>
+	@if(!empty($movimientos))
+		<div id="container" style="height: 600px; margin: 0 auto"></div>
+	@else
+		<h1><font color="red">Noy se encotraron datos para este periodo.</font></h1>
+	@endif
+
 	@if($esAsignacion == 1)
 		<script type="text/javascript">
 			$(function () {

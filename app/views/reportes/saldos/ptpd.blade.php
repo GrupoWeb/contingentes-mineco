@@ -44,7 +44,7 @@
 	            type: 'pie',
 	            name: 'Monto',
 	            data: [
-	            		['Disponible', {{ $saldo }}],
+	            		['Disponible', {{$saldo }}],
 	            	@foreach($empresas as $empresa)
 	            		['{{ $empresa["nombre"] }}', {{ $empresa['consumido'] }}],
 	            	@endforeach

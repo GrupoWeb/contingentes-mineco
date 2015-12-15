@@ -45,7 +45,7 @@ class utilizacionempresagraficaController extends BaseController {
         ->with('mensaje','Tratado, período o contingente inválido.');
       }
     }
-
+    //dd($periodoid);
     //asigna valores a las variables
     $formato     = Input::get('formato');
     $movimientos = Movimiento::getUtilizacionEmpresas($periodoid, 0);
