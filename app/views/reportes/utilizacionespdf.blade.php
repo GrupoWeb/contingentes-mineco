@@ -47,6 +47,8 @@
 			<th colspan="3" style="text-align:center;">Reporte generado {{ date('d/m/Y') }}</th>
 		</tr>
 		<tr>
+			<th rowspan="2" style="text-align: center;">NIT</th>
+			<th rowspan="2" style="text-align: center;">Importador</th>
 			@if($esasignacion==1)
 				<th rowspan="2" style="text-align: center;">Asignado</th>
 				<th rowspan="2" style="text-align: center;">Adjudicado</th>
@@ -54,8 +56,7 @@
 			@else
 				<th colspan="3">Adjudicado</th>
 			@endif
-			<th rowspan="2" style="text-align: center;">NIT</th>
-			<th rowspan="2" style="text-align: center;">Importador</th>
+			
 			<th colspan="3" style="text-align: center;">Volúmen</th>
 			<th colspan="5" style="text-align: center;">Adjudicado</th>
 			<th style="text-align: center;">Liquidado</th>
@@ -163,7 +164,7 @@
 	</tr>
 	@else
 	<tr>
-		<td>Pendiente por adjudicar</td>
+		<td>Saldo</td>
 		<td class="right"><strong>{{ number_format($volumentotalt-$adjudicadot, 3) }}</strong></td>
 	</tr>
 	@endif
