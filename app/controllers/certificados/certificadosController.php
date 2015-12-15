@@ -7,12 +7,14 @@ class certificadosController extends Controller {
   }
 
 	public function index() {
+    
     //retorna parametros a la vista
+
     if(in_array(Auth::user()->rolid,$this->getRol())){
       $tratados = Tratado::getTratados();
       $todos = ['tratados'];
     }else{
-      $tratados = Tratado::getTratadosEmpresa(Auth::user()->rolid,$this->getRol());
+      $tratados = Tratado::getTratadosEmpresa(Auth::user()->empresaid);
       $todos = ['null'];
     }
 
@@ -52,8 +54,7 @@ class certificadosController extends Controller {
 	}
 
 	public function getperiodos($id) {
-    
-    if ($id = 'undefined') {
+    if ($id == 'undefined') {
       $id = Crypt::encrypt(0);
     }
 
