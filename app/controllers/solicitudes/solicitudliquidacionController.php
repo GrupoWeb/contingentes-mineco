@@ -4,9 +4,11 @@ class solicitudliquidacionController extends BaseController {
 
 	public function index() {
 		//retorna datos a la vista
+		$noticia = 'pruebaslugdos';
 		$certificados = Certificado::getCertificadosPendientesUsuario(Auth::id());
     return View::make('certificados.liquidaciones')
-      ->with('certificados', $certificados);
+      ->with('certificados', $certificados)
+      ->with('noticia', $noticia);
 	}
 
 	public function show($id) {
