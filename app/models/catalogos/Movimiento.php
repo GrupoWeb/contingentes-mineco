@@ -179,6 +179,7 @@ class Movimiento extends Eloquent {
 
 	public static function getConsumoYSaldoActual($aContingenteId, $aEmpresaId) {
 		$periodoid = Periodo::getPeriodo($aContingenteId);
+		if (!$periodoid) return null;
 		return self::getConsumoYSaldo($periodoid, $aEmpresaId);
 	}
 

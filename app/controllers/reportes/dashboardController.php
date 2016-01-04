@@ -100,7 +100,6 @@ class dashboardController extends BaseController {
 			$grafica      = [];
 			//consulta en db segun empresaid
 			$contingentes = Empresacontingente::contingentesEmpresa($empresaid);
-
 			//contruye la infomacion para el areglo grafica
 			foreach ($contingentes as $contingente) {
 				$grafica[$contingente->contingenteid]['esasignacion'] = $contingente->asignacion;
@@ -112,13 +111,13 @@ class dashboardController extends BaseController {
 					continue;
 				}
 
-				$grafica[$contingente->contingenteid]['empresa']      = $cys->consumo;
-				$grafica[$contingente->contingenteid]['otros']        = $cys->consumototal-$cys->consumo;
+				$grafica[$contingente->contingenteid]['empresa'] = $cys->consumo;
+				$grafica[$contingente->contingenteid]['otros']   = $cys->consumototal-$cys->consumo;
 				if ($contingente->asignacion==1) {
-					$grafica[$contingente->contingenteid]['saldo']     = $cys->asignado-$cys->consumo;
+					$grafica[$contingente->contingenteid]['saldo'] = $cys->asignado-$cys->consumo;
 				}
 				else {
-					$grafica[$contingente->contingenteid]['saldo']        = $cys->total-$cys->consumototal;
+					$grafica[$contingente->contingenteid]['saldo'] = $cys->total-$cys->consumototal;
 				}
 			}
 
