@@ -22,5 +22,5 @@ return array(
 	
 	'variospaises'    => 8,
 
-	'slugNoticia'			=> 'slugAqui',
+	'slugNoticia'			=> 'requisitosdeliquidacion',
 );
