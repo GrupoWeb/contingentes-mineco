@@ -82,14 +82,10 @@ class inscripcionController extends BaseController {
 
 		if(Auth::check()) {
 			$usuarioCon = array();
-    	$con        = DB::table("empresacontingentes")->select("contingenteid")->where("empresaid",Auth::user()->empresaid) ->get();
-
-	    foreach($con as $k=>$v)
-	      array_push($usuarioCon,$v->contingenteid);
-
-	    $contingentes =  Contingente::getContTratado($tratadoid, $usuarioCon);
+    	$exclude    = DB::table("empresacontingentes")
+    		->where("empresaid",Auth::user()->empresaid)->lists("contingenteid");
+	    $contingentes =  Contingente::getContTratado($tratadoid, $exclude);
 		}
-
 		else
 			$contingentes = Contingente::getContTratado($tratadoid);
 
@@ -102,7 +98,7 @@ class inscripcionController extends BaseController {
 		//verifica valor del formulario
 		if(!Input::has('cmbContingente')) {
 			//muestra mensaje
-			Session::flash('message', 'Se dio un error al seleccionar un contingente. Intentalo nuevamente');
+			Session::flash('message', 'Se dio un error al seleccionar un contingente. Inténtalo nuevamente');
 			Session::flash('type', 'danger');
 
 			//retorna a la vistas

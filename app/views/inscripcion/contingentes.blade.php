@@ -6,6 +6,6 @@
 
 <script>
   $(document).ready(function(){
-  	$('#cmbContingente').selectpicker();
+  	$('#cmbContingente').selectpicker({'noneSelectedText':'No hay períodos abiertos para este tratado'});
   });
 </script>
