@@ -3,8 +3,16 @@ class emisionController extends BaseController {
 	
 	function index() {
 		//retorna valores a la vista
+		$contingentes = Empresacontingente::getContingentes();
+		
+		if(count($contingentes) <= 0) {
+			Session::flash('message', 'No se tienen contingente inscritos por lo que es imposible realizar solicitudes de emisión');
+			Session::flash('type', 'danger');
+			return Redirect::to('inicio');
+		}
+
 		return View::make('emision.index')
-			->with('contingentes', Empresacontingente::getContingentes());
+			->with('contingentes', $contingentes);
 	}
 
 	function store() {
