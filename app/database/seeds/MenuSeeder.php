@@ -391,6 +391,15 @@
 				'icono'         	=> null
 			));
 
+			DB::table('authmenu')->insert(array(
+				'menuid'					=> 49,
+				'padreid'        	=> 21,
+				'modulopermisoid' => 204,
+				'nombre'         	=> 'Indicadores de Gestión',
+				'orden' 					=> 900,
+				'icono'         	=> null
+			));
+
 			DB::table('authmenu')->update(array('created_at'=>date_create(), 'updated_at'=>date_create()));
 		  DB::statement('SET FOREIGN_KEY_CHECKS=1');
 		}

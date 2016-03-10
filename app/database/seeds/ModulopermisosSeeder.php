@@ -722,7 +722,42 @@
 					'modulopermisoid'	=> 203,
 					'moduloid'        => 46,
 					'permisoid' 			=> 18
-				]
+				],
+				[
+					'modulopermisoid'	=> 204,
+					'moduloid'        => 47,
+					'permisoid' 			=> 1
+				],
+				[
+					'modulopermisoid'	=> 205,
+					'moduloid'        => 47,
+					'permisoid' 			=> 2
+				],
+				[
+					'modulopermisoid'	=> 206,
+					'moduloid'        => 47,
+					'permisoid' 			=> 3
+				],
+				[
+					'modulopermisoid'	=> 207,
+					'moduloid'        => 47,
+					'permisoid' 			=> 4
+				],
+				[
+					'modulopermisoid'	=> 208,
+					'moduloid'        => 47,
+					'permisoid' 			=> 5
+				],
+				[
+					'modulopermisoid'	=> 209,
+					'moduloid'        => 47,
+					'permisoid' 			=> 6
+				],
+				[
+					'modulopermisoid'	=> 210,
+					'moduloid'        => 47,
+					'permisoid' 			=> 7
+				],
 			]);
 		
 		  DB::table('authmodulopermisos')->update(array('created_at'=>date_create(), 'updated_at'=>date_create()));

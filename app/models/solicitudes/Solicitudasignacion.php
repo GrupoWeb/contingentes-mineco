@@ -25,4 +25,19 @@ class Solicitudasignacion extends Eloquent {
 			->where('solicitudasignacionid', $aSolicitudId)
 			->first();
 	}
+
+	public static function getIndicadores($aContingenteId, $aEmpresaId) {
+		return DB::table('solicitudasignacion AS sa')
+			->select('sa.solicitado', 'sa.asignado', 'sa.acta', 'sa.observaciones',
+				DB::raw("date_format(sa.created_at, '%d-%m-%Y %H:%i') AS fechasolicitud"),
+				DB::raw("date_format(sa.updated_at, '%d-%m-%Y %H:%i') AS fechaprocesamiento"))
+			->leftJoin('periodos AS p', 'sa.periodoid', '=', 'p.periodoid')
+			->leftJoin('authusuarios AS u', 'sa.usuarioid', '=', 'u.usuarioid')
+			->where('estado', 'Aprobada')
+			->where('p.contingenteid', $aContingenteId)
+			->where('u.empresaid', $aEmpresaId)
+			->get();
+	}
 }
+
+

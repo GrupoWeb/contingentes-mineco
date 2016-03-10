@@ -130,6 +130,7 @@ Route::group(array('before' => array('tratados')), function() {
 		Route::resource('utilizaciontodasempresa', 'utilizaciontodasempresaController', array('only'=>array('index','store')));
 		Route::resource('utilizacionporempresagrafica', 'utilizacionempresagraficaController', array('only'=>array('index', 'store')));
 		Route::resource('certificadosempresas', 'certificadosempresasController', array('only'=>array('index', 'store')));
+		Route::resource('indicadoresgestion', 'indicadoresgestionController', array('only'=>array('index', 'store')));
 		
 		//=== NOTICIAS
 		Route::get('noticas', array('as'=>'noticias.index', 'uses'=>'noticiasController@index'));

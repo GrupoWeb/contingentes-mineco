@@ -157,17 +157,23 @@ class Contingente extends Eloquent {
 			->orderBy('pr.nombre')
 			->get();
 	}
+
+	public static function getIndicadores($aTratadoId) {
+		return DB::table('contingentes AS c')
+			->select('c.contingenteid', 't.nombrecorto AS tratado',
+				'p.nombre AS contingente', 'si.nombre AS empresa',
+				'si.observaciones AS observaciones', 'u.nombre AS responsable',
+				DB::raw("date_format(si.created_at, '%d-%m-%Y %H:%i') AS fechasolicitud"),
+				DB::raw("date_format(si.updated_at, '%d-%m-%Y %H:%i') AS fechaprocesamiento"))
+			->leftJoin('tratados AS t', 'c.tratadoid', '=', 't.tratadoid')
+			->leftJoin('productos AS p', 'c.productoid', '=', 'p.productoid')
+			->leftJoin('solicitudinscripcioncontingentes AS sic', 'c.contingenteid', '=', 'sic.contingenteid')
+			->leftJoin('solicitudinscripciones AS si', 'sic.solicitudinscripcionid', '=', 'si.solicitudinscripcionid')
+			->leftJoin('authusuarios AS u', 'c.responsableid', '=', 'u.usuarioid')
+			->where('t.tratadoid', $aTratadoId)
+			->where('estado', 'Aprobada')
+			->orderBy('p.nombre')
+			->orderBy('si.nombre')
+			->get();
+	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

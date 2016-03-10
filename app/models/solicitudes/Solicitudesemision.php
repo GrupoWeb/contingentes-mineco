@@ -33,4 +33,19 @@ class Solicitudesemision extends Eloquent {
 			->where('solicitudemisionid', $aSolicitudId)
 			->first();
 	}
+
+	public static function getIndicadores($aContingenteId, $aEmpresaId) {
+		return DB::table('solicitudesemision AS se')
+			->select('se.solicitado', 'se.emitido', 'se.observaciones', 'cp.partida',
+				DB::raw("date_format(se.created_at, '%d-%m-%Y %H:%i') AS fechasolicitud"),
+				DB::raw("date_format(se.updated_at, '%d-%m-%Y %H:%i') AS fechaprocesamiento"))
+			->leftJoin('periodos AS p', 'se.periodoid', '=', 'p.periodoid')
+			->leftJoin('authusuarios AS u', 'se.usuarioid', '=', 'u.usuarioid')
+			->leftJoin('solicitudemisionpartidas AS sep', 'se.solicitudemisionid', '=', 'sep.solicitudemisionid')
+			->leftJoin('contingentepartidas AS cp', 'sep.partidaid', '=', 'cp.partidaid')
+			->where('estado', 'Aprobada')
+			->where('p.contingenteid', $aContingenteId)
+			->where('u.empresaid', $aEmpresaId)
+			->get();
+	}
 }
