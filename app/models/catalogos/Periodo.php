@@ -62,6 +62,7 @@ class Periodo extends Eloquent {
 		return DB::table('periodos AS p')
 			->leftJoin('contingentes AS c', 'p.contingenteid', '=', 'c.contingenteid')
 			->leftJoin('productos as pr', 'c.productoid', '=', 'pr.productoid')
+			->where('p.periodoid', $aPeriodoId)
 			->pluck('pr.nombre');
 	}
 }
