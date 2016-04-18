@@ -40,7 +40,7 @@ return array(
 	| stay compatible with the Mailgun e-mail applications by default.
 	|
 	*/
-	'port' => 587,
+	'port' => 465,
 
 	/*
 	|--------------------------------------------------------------------------
@@ -53,7 +53,7 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => 'contingentes@mineco.gob.gt', 'name' => 'DACE - Ministerio de Economía'),
+	'from' => ['address' => 'contingentes@mineco.gob.gt', 'name' => 'DACE - Ministerio de Economía'],
 
 	/*
 	|--------------------------------------------------------------------------
@@ -66,7 +66,7 @@ return array(
 	|
 	*/
 
-	'encryption' => 'tls',
+	'encryption' => 'ssl',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return array(
 	*/
 
 	'username' => 'contingentes@mineco.gob.gt',
-        'password' => '$$$CTGdace$$$',
+ 
 	/*
 	|--------------------------------------------------------------------------
 	| SMTP Server Password
@@ -92,7 +92,8 @@ return array(
 	|
 	*/
 
-
+	'password' => '$$$CTGdace$$$',
+	
 	/*
 	|--------------------------------------------------------------------------
 	| Sendmail System Path
