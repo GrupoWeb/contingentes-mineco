@@ -40,7 +40,7 @@ return array(
 	| stay compatible with the Mailgun e-mail applications by default.
 	|
 	*/
-	'port' => 465,
+	'port' => 25,
 
 	/*
 	|--------------------------------------------------------------------------
