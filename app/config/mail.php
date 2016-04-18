@@ -15,7 +15,7 @@ return array(
 	|
 	*/
 
-	'driver' => 'mailgun',
+	'driver' => 'smtp',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -28,7 +28,7 @@ return array(
 	|
 	*/
 
-	'host' => 'smtp.mailgun.org',
+	'host' => '128.5.8.50',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -40,7 +40,6 @@ return array(
 	| stay compatible with the Mailgun e-mail applications by default.
 	|
 	*/
-
 	'port' => 587,
 
 	/*
@@ -54,7 +53,7 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => 'postmaster@mailgun.cs.com.gt', 'name' => 'DACE - Ministerio de Economía'),
+	'from' => array('address' => 'contingentes@mineco.gob.gt', 'name' => 'DACE - Ministerio de Economía'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,8 +79,8 @@ return array(
 	|
 	*/
 
-	'username' => 'postmaster@mailgun.cs.com.gt',
-
+	'username' => 'contingentes@mineco.gob.gt',
+        'password' => '$$$CTGdace$$$',
 	/*
 	|--------------------------------------------------------------------------
 	| SMTP Server Password
@@ -93,7 +92,6 @@ return array(
 	|
 	*/
 
-	'password' => 'b4f0fd1a9ba7059e018110bdd3d95ef5',
 
 	/*
 	|--------------------------------------------------------------------------
