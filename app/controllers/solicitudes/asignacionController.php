@@ -14,6 +14,7 @@ class asignacionController extends BaseController {
 		$contingente    = Crypt::decrypt($contingenteid);
 		$requerimientos = Contingenterequerimiento::getRequerimientos($contingenteid, 'asignacion');
 		$solicitado     = Input::get('cantidad', 0);
+		$periodoid      = Periodo::getPeriodo($contingente);
 
 		//condiciona valores del formulario
 		if(count(Input::file()) <= 0 && count($requerimientos) > 0) {
@@ -23,22 +24,22 @@ class asignacionController extends BaseController {
 			return Redirect::to('inicio');
 		}
 
-		/*if($solicitado <= 0) {
+		if($solicitado <= 0) {
 			Session::flash('message', 'El monto solicitado no es correcto');
 			Session::flash('type', 'danger');
 
 			return Redirect::to('inicio');
 		}
 
-		$query       = DB::select(DB::raw('SELECT getSaldoAsignacion('.$contingente.','.Auth::id().') AS disponible'));
+		$query       = DB::select(DB::raw('SELECT getSaldoAsignacionPeriodo('.$periodoid.') AS disponible'));
 		$disponible  = $query[0]->disponible;
 
 		if($solicitado > $disponible){
 			$message = 'No es posible procesar la solicitud ya que el monto disponible no es suficiente';
 			$type    = 'danger';
-		}*/
+		}
 
-		//else {
+		else {
 
 			//inserta datos en db
 			$res = DB::transaction(function() use($solicitado, $contingente) {
@@ -116,7 +117,7 @@ class asignacionController extends BaseController {
 			    });
 				} catch (Exception $e) {}
 		  }
-		//}
+		}
 
 		//muestra mensaje
 		Session::flash('message', $message);

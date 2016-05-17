@@ -95,11 +95,12 @@ class contingentesController extends crudController {
 		//define un areglo a la variable
 		$response = array('codigoerror'=>0, 'error'=>'');
 		//captura id
-		$cid      = Crypt::decrypt($contingenteid);
+		$cid       = Crypt::decrypt($contingenteid);
+		$periodoid = Periodo::getPeriodo($cid);
 
 		try {
 			//consulta db segun $cid
-			$disponible             = DB::select(DB::raw('SELECT getSaldoAsignacion('.$cid.','.Auth::user()->empresaid.') AS disponible'));
+			$disponible = DB::select(DB::raw('SELECT getSaldoAsignacionPeriodo('.$periodoid.') AS disponible'));
 			//asigna valor a la variable
 			$response['disponible'] = $disponible[0]->disponible;
 			$response['unidad']     = Contingente::getUnidadMedida($cid);
