@@ -4,5 +4,6 @@ return array(
 	'notificaciontitulo' => 'Mineco',
 	'notificacionemail'  => 'hermes@cs.com.gt',
 	'notificacionfrom'   => 'Hermes',
-	'notificacionview'   => 'hermes::error'
+	'notificacionview'   => 'hermes::error',
+	'ignorecodes'	     => [404],
 );
