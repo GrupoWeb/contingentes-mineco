@@ -94,11 +94,12 @@ class contingentesController extends crudController {
 	public function getSaldoAsignacion($contingenteid) {
 		//define un areglo a la variable
 		$response = array('codigoerror'=>0, 'error'=>'');
-		//captura id
-		$cid       = Crypt::decrypt($contingenteid);
-		$periodoid = Periodo::getPeriodo($cid);
-
+		
 		try {
+			//captura id
+			$cid       = Crypt::decrypt($contingenteid);
+			$periodoid = Periodo::getPeriodo($cid);
+
 			//consulta db segun $cid
 			$disponible = DB::select(DB::raw('SELECT getSaldoAsignacionPeriodo('.$periodoid.') AS disponible'));
 			//asigna valor a la variable
@@ -107,7 +108,7 @@ class contingentesController extends crudController {
 		} catch(\Exception $e) {
 			//muestra error
 			$response['codigoerror'] = 2;
-			$response['error']       = 'Usuario/contingente invalido';
+			$response['error']       = 'Error al calcular saldo del contingente. Posible contingente invalido';
 		}
 		//ingresa datos en json
 		return Response::json($response);

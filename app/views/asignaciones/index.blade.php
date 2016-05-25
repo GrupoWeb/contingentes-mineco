@@ -91,6 +91,8 @@
           //$('.disponible-block').html('<p class="form-control-static"><i class="fa fa-lg fa-spinner fa-pulse"></i></p>');
           $('.requerimientos').html($('.disponible-block').html());
           $('.nuevos').remove();
+          var valor = $(this).val();
+          console.log(valor);
           $.get('/requerimientos/contingentes/' + $(this).val() + '/asignacion', function(data){
             $('.requerimientos').html('');
             $.each(data, function(key, datos){

@@ -4,8 +4,10 @@ class asignacionController extends BaseController {
 
 	public function index() {
 		//retorna valores a la vista
+		$contingentes = Empresacontingente::getContingentes(true);
+
 		return View::make('asignaciones.index')
-			->with('contingentes', Empresacontingente::getContingentes(true));
+			->with('contingentes', $contingentes);
 	}
 
 	public function store() {
