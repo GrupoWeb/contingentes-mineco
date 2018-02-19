@@ -38,6 +38,7 @@ class Contingente extends Eloquent {
 				DB::raw('IF(c.normativo IS NULL, t.normativo, c.normativo) AS normativopdf'))
 			->leftJoin('tratados AS t', 'c.tratadoid', '=', 't.tratadoid')
 			->leftJoin('productos AS p', 'c.productoid', '=', 'p.productoid')
+			->where('activo','=',1)
 			->orderBy('t.tipo','DESC')
 			->orderBy('t.nombre')
 			->orderBy('p.nombre');
