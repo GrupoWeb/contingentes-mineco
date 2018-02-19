@@ -7,7 +7,7 @@ class periodospenalizacionesController extends BaseController {
 		$periodoid = Input::get('periodo');
 		//consulta en db segun $periodoid
 		$periodo   = Periodo::getPeridoAsignacion(Crypt::decrypt($periodoid));
-		//consulta en db segun $periodo 
+		//consulta en db segun $periodo
 		$empresas  = Empresacontingente::getEmpresasContingente($periodo->contingenteid);
 
 		//retorna mensaje si no existe
@@ -38,13 +38,13 @@ class periodospenalizacionesController extends BaseController {
 		$movimiento                   = new Movimiento;
 		$movimiento->tipomovimientoid = $tipoid;
 		$movimiento->periodoid        = $periodoid;
-		$movimiento->cantidad         = (Input::get('txCantidad') * -1);
+		$movimiento->cantidad         = ($tipoid == 4? (Input::get('txCantidad') * -1), Input::get('txCantidad'));
 		$movimiento->comentario       = ($tipoid == 4 ? 'Penalización: ' : 'Devolución: ').trim(Input::get('txComentario'));
 		$movimiento->created_by       = Auth::id();
 		$movimiento->usuarioid        = $usuarioid;
 		$movimiento->save();
 
-		//muestra mensaje 
+		//muestra mensaje
 		Session::flash('message', 'Operación realizada exitosamente');
 		Session::flash('type', 'success');
 
