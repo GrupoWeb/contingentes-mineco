@@ -1,0 +1,14 @@
+FROM php:7.1-fpm
+
+RUN echo 'alias migrate="php artisan migrate"' >> ~/.bashrc
+RUN echo 'alias rollback="php artisan migrate:rollback"' >> ~/.bashrc
+RUN echo 'alias seed="php artisan db:seed"' >> ~/.bashrc
+RUN echo 'alias seedgod="php artisan db:seed --class=GodSeeder"' >> ~/.bashrc
+RUN echo 'alias cda="composer dump-autoload"' >> ~/.bashrc
+
+RUN apt-get update && apt-get install -y libmcrypt-dev mariadb-client \
+    libgd-dev \
+    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+    && docker-php-ext-install mcrypt pdo_mysql gd
+
+WORKDIR /var/www
