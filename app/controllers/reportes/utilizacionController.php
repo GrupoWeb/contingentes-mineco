@@ -1,138 +1,150 @@
 <?php
 
-class utilizacionController extends BaseController {
-  
-  public function index() {
-    //retorna valores a la vista
-    return View::make('reportes.filtros')
-      ->with('titulo', 'Utilización de contingentes')
-      ->with('tratados', Tratado::getTratados())
-      ->with('filters', array('tratados','contingentes', 'empresas',
-        'fechaini', 'fechafin','formato'))
-      ->with('todos',['empresas']);
-  }
+class utilizacionController extends BaseController
+{
 
-  public function store() {
-    try {
-      //asigna valores del formulario
-      $tratadoid     = Crypt::decrypt(Input::get('tratadoid'));
-      $contingenteid = Crypt::decrypt(Input::get('cmbContingente'));
-      $empresaid     = Crypt::decrypt(Input::get('cmbEmpresa'));
-    } catch (Exception $e) {
-      return View::make('cancerbero::error')
-        ->with('mensaje','Tratado, contingente o empresa inválida.');
+    public function index()
+    {
+        //retorna valores a la vista
+        return View::make('reportes.filtros')
+            ->with('titulo', 'Utilización de contingentes')
+            ->with('tratados', Tratado::getTratados())
+            ->with('filters', ['tratados', 'contingentes', 'empresas',
+                'fechaini', 'fechafin', 'formato'])
+            ->with('todos', ['empresas']);
     }
 
-    //verifica id
-    if ($empresaid==-1) $empresaid = 0;
+    public function store()
+    {
+        try {
+            //asigna valores del formulario
+            $tratadoid     = Crypt::decrypt(Input::get('tratadoid'));
+            $contingenteid = Crypt::decrypt(Input::get('cmbContingente'));
+            $empresaid     = Crypt::decrypt(Input::get('cmbEmpresa'));
+        } catch (Exception $e) {
+            return View::make('cancerbero::error')
+                ->with('mensaje', 'Tratado, contingente o empresa inválida.');
+        }
 
-    //asigna valores del formulario
-    $fi            = Input::get('fechaini') . ' 00:00';
-    $ff            = Input::get('fechafin') . ' 23:59';
-    $formato       = Input::get('formato');
+        //verifica id
+        if ($empresaid == -1) {
+            $empresaid = 0;
+        }
 
-    //Validamos el tipo de tratado para mostrar cantidad asignada, de lo contrario
-    //solo mandamos la suma de lo adjudicado
-    $asignacion    = Contingente::getTipoTratado($contingenteid);
-  
-    $utilizaciones = Movimiento::getUtilizaciones($contingenteid, $empresaid, ($fi <> '' ? Components::fechaHumanoAMysql($fi) : ''), ($ff <> '' ? Components::fechaHumanoAMysql($ff) : ''));
-    //dd(DB::getQueryLog());
+        //asigna valores del formulario
+        $fi      = Input::get('fechaini') . ' 00:00';
+        $ff      = Input::get('fechafin') . ' 23:59';
+        $formato = Input::get('formato');
 
-    $data          = array();
-    //asigna valores al areglo
-    foreach($utilizaciones as $utilizacion) {
-      $data[$utilizacion->nit][$utilizacion->razonsocial]['asignado']     = $utilizacion->asignado;
-      $data[$utilizacion->nit][$utilizacion->razonsocial]['volumentotal'] = $utilizacion->volumentotal;
-      
-      if ($utilizacion->tipomovimientoid==2) {       
-        if(isset($data[$utilizacion->nit][$utilizacion->razonsocial]['adjudicado']))
-          $data[$utilizacion->nit][$utilizacion->razonsocial]['adjudicado'] += $utilizacion->cantidad;
-        else
-          $data[$utilizacion->nit][$utilizacion->razonsocial]['adjudicado'] = $utilizacion->cantidad;
+        //Validamos el tipo de tratado para mostrar cantidad asignada, de lo contrario
+        //solo mandamos la suma de lo adjudicado
+        $asignacion = Contingente::getTipoTratado($contingenteid);
 
-        $fraccion = explode(' ', $utilizacion->fraccion);
+        $utilizaciones = Movimiento::getUtilizaciones($contingenteid, $empresaid, ($fi != '' ? Components::fechaHumanoAMysql($fi, '/') : ''), ($ff != '' ? Components::fechaHumanoAMysql($ff, '/') : ''));
+        //dd(DB::getQueryLog());
 
-        //se ingresan valores al areglo
-        $data[$utilizacion->nit][$utilizacion->razonsocial]['movimientos'][] = array(
-          'fecha'            => $utilizacion->fecha,
-          'certificado'      => $utilizacion->numerocertificado,
-          'fraccion'         => $fraccion[0],
-          'fechavencimiento' => $utilizacion->fechavencimiento,
-          'dua'              => $utilizacion->dua,
-          'real'             => $utilizacion->real,
-          'cif'              => $utilizacion->cif,
-          'fechaliquidacion' => $utilizacion->fechaliquidacion,
-          'cantidad'         => $utilizacion->cantidad,
-          'variacion'        => $utilizacion->variacion
-        );
-      }
-      else {
-        if (!isset($data[$utilizacion->nit][$utilizacion->razonsocial]['movimientos']))
-          $data[$utilizacion->nit][$utilizacion->razonsocial]['movimientos'] = array();
-        if (!isset($data[$utilizacion->nit][$utilizacion->razonsocial]['adjudicado']))
-          $data[$utilizacion->nit][$utilizacion->razonsocial]['adjudicado'] = 0;
-      }
+        $data = [];
+        //asigna valores al areglo
+        foreach ($utilizaciones as $utilizacion) {
+            $data[$utilizacion->nit][$utilizacion->razonsocial]['asignado']     = $utilizacion->asignado;
+            $data[$utilizacion->nit][$utilizacion->razonsocial]['volumentotal'] = $utilizacion->volumentotal;
+
+            if ($utilizacion->tipomovimientoid == 2) {
+                if (isset($data[$utilizacion->nit][$utilizacion->razonsocial]['adjudicado'])) {
+                    $data[$utilizacion->nit][$utilizacion->razonsocial]['adjudicado'] += $utilizacion->cantidad;
+                } else {
+                    $data[$utilizacion->nit][$utilizacion->razonsocial]['adjudicado'] = $utilizacion->cantidad;
+                }
+
+                $fraccion = explode(' ', $utilizacion->fraccion);
+
+                //se ingresan valores al areglo
+                $data[$utilizacion->nit][$utilizacion->razonsocial]['movimientos'][] = [
+                    'fecha'            => $utilizacion->fecha,
+                    'certificado'      => $utilizacion->numerocertificado,
+                    'fraccion'         => $fraccion[0],
+                    'fechavencimiento' => $utilizacion->fechavencimiento,
+                    'dua'              => $utilizacion->dua,
+                    'real'             => $utilizacion->real,
+                    'cif'              => $utilizacion->cif,
+                    'fechaliquidacion' => $utilizacion->fechaliquidacion,
+                    'cantidad'         => $utilizacion->cantidad,
+                    'variacion'        => $utilizacion->variacion,
+                ];
+            } else {
+                if (!isset($data[$utilizacion->nit][$utilizacion->razonsocial]['movimientos'])) {
+                    $data[$utilizacion->nit][$utilizacion->razonsocial]['movimientos'] = [];
+                }
+
+                if (!isset($data[$utilizacion->nit][$utilizacion->razonsocial]['adjudicado'])) {
+                    $data[$utilizacion->nit][$utilizacion->razonsocial]['adjudicado'] = 0;
+                }
+
+            }
+        }
+
+        //valida pdf
+        if ($formato == 'pdf') {
+            PDF::SetTitle('Utilización de contingentes');
+            PDF::AddPage('L');
+            PDF::setLeftMargin(20);
+
+            $html = View::make('reportes.utilizacionespdf')
+                ->with('utilizaciones', $data)
+                ->with('esasignacion', $asignacion)
+                ->with('titulo', 'Utilización de contingentes')
+                ->with('tratado', Tratado::getNombre($tratadoid))
+                ->with('producto', Contingente::getProducto($contingenteid));
+
+            PDF::writeHTML($html, true, false, true, false, '');
+            PDF::Output('Utilizacion-Contingente.pdf');
+        } else {
+            //retorna datos a la vista
+            return View::make('reportes.utilizaciones')
+                ->with('utilizaciones', $data)
+                ->with('esasignacion', $asignacion)
+                ->with('titulo', 'Utilización de contingentes')
+                ->with('tratado', Tratado::getNombre($tratadoid))
+                ->with('producto', Contingente::getProducto($contingenteid))
+                ->with('formato', $formato);
+        }
     }
 
-    //valida pdf
-    if($formato == 'pdf') {
-      PDF::SetTitle('Utilización de contingentes');
-      PDF::AddPage('L');
-      PDF::setLeftMargin(20);
+    public function getContingentes($id)
+    {
+        //captura id
+        $id = Crypt::decrypt($id);
+        //captura id empresa
+        $empresaid = Auth::user()->empresaid;
 
-      $html = View::make('reportes.utilizacionespdf')
-        ->with('utilizaciones', $data)
-        ->with('esasignacion', $asignacion)
-        ->with('titulo', 'Utilización de contingentes')
-        ->with('tratado', Tratado::getNombre($tratadoid))
-        ->with('producto', Contingente::getProducto($contingenteid));
+        //condiciona para consulta en db
+        if ($empresaid) {
+            $contingentes = Contingente::getContTratadoEmpresa($id, $empresaid);
+        } else {
+            $contingentes = Contingente::getContTratado($id);
+        }
 
-      PDF::writeHTML($html, true, false, true, false, '');
-      PDF::Output('Utilizacion-Contingente.pdf');
+        //retorna datos a la vista
+
+        return View::make('partials/contingentelistado')
+            ->with('contingentes', $contingentes)
+            ->with('nombre', 'cmbContingente')
+            ->with('id', 'cmbContingente');
     }
-    
-    else {
-      //retorna datos a la vista
-      return View::make('reportes.utilizaciones')
-        ->with('utilizaciones', $data)
-        ->with('esasignacion', $asignacion)
-        ->with('titulo', 'Utilización de contingentes')
-        ->with('tratado', Tratado::getNombre($tratadoid))
-        ->with('producto', Contingente::getProducto($contingenteid))
-        ->with('formato', $formato);
+
+    public function getEmpresas($id)
+    {
+        try {
+            //captura id
+            $id = Crypt::decrypt($id);
+        } catch (Exception $e) {
+            return View::make('partials/empresas')
+                ->with('empresas', []);
+        }
+
+        //retorna datos a la vista
+
+        return View::make('partials/empresas')
+            ->with('empresas', Empresacontingente::listEmpresasContingente($id));
     }
-  }
-
-  public function getContingentes($id) {
-    //captura id
-    $id        = Crypt::decrypt($id);
-    //captura id empresa
-    $empresaid = Auth::user()->empresaid;
-
-    //condiciona para consulta en db
-    if ($empresaid) 
-      $contingentes = Contingente::getContTratadoEmpresa($id, $empresaid);
-    else
-      $contingentes = Contingente::getContTratado($id);
-
-    //retorna datos a la vista
-    return View::make('partials/contingentelistado')
-      ->with('contingentes', $contingentes)
-      ->with('nombre', 'cmbContingente')
-      ->with('id', 'cmbContingente');
-  }
-
-  public function getEmpresas($id) {
-    try {
-      //captura id
-      $id = Crypt::decrypt($id);
-    } catch (Exception $e) {
-      return View::make('partials/empresas')
-        ->with('empresas', array());
-    }
-      
-    //retorna datos a la vista
-    return View::make('partials/empresas')
-      ->with('empresas', Empresacontingente::listEmpresasContingente($id));
-  }
 }

@@ -26,7 +26,7 @@ $app = new Illuminate\Foundation\Application;
 
 $env = $app->detectEnvironment([
 
-    'local' => ['dockderdev.local', 'dockerdev'],
+    'local' => ['dockerdev.local', 'dockerdev'],
 
 ]);
 
