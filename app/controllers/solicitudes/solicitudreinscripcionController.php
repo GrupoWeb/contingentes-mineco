@@ -40,7 +40,6 @@ class solicitudreinscripcionController extends crudController
 
             return Redirect::to('inicio');
         }
-
         //inserta datos en db
         DB::transaction(function () use ($contingenteid) {
             $empresa = Empresa::find(Auth::user()->empresaid);
@@ -87,6 +86,7 @@ class solicitudreinscripcionController extends crudController
                     $requerimiento->save();
                 }
             }
+
         }); //DB Transaction
 
         //manda email
