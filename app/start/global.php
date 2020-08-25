@@ -10,10 +10,6 @@ ClassLoader::addDirectories([
 
 Log::useFiles(storage_path() . '/logs/laravel.log');
 
-App::missing(function ($exception) {
-    return View::make('components::404');
-});
-
 App::down(function () {
     return Response::view('template/mantenimiento', [], 503);
 });

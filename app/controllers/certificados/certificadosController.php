@@ -2,6 +2,33 @@
 
 class certificadosController extends Controller
 {
+    public function update($id)
+    {
+        $rules = [
+            'dua' => 'required',
+        ];
+
+        $validator = Validator::make(Request::all(), $rules);
+
+        if ($validator->fails()) {
+            $messages = $validator->messages();
+            App::abort(422, $messages);
+        }
+
+        $id = (int) preg_replace("/[^0-9\s]/", "", $id);
+
+        $certificado = Certificado::where('certificadoid', $id)->first();
+        if (!$certificado) {
+            App::abort(404, 'Certificado no encontrado');
+        }
+
+        $certificado->dua = Request::get('dua');
+        $certificado->save();
+
+        return Response::json([
+            'id' => $certificado->certificadoid,
+        ]);
+    }
 
     public function getRol()
     {
@@ -10,9 +37,7 @@ class certificadosController extends Controller
 
     public function index()
     {
-
         //retorna parametros a la vista
-
         if (in_array(Auth::user()->rolid, $this->getRol())) {
             $tratados = Tratado::getTratados();
             $todos    = ['tratados'];
