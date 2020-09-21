@@ -5,6 +5,21 @@ class Certificado extends Eloquent
     protected $primaryKey = 'certificadoid';
     protected $guarded    = ['certificadoid'];
 
+    public function movimiento()
+    {
+        return $this->hasOne(Movimiento::class, 'certificadoid', 'certificadoid');
+    }
+
+    public function pais()
+    {
+        return $this->hasOne(Pais::class, 'paisid', 'paisid');
+    }
+
+    public function partida()
+    {
+        return $this->hasOne(Contingentepartida::class, 'partidaid', 'partidaid');
+    }
+
     public static function getCertificado($aId)
     {
         return DB::table('certificados AS c')

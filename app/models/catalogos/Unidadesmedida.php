@@ -1,6 +1,7 @@
 <?php
 
-class Unidadesmedida extends Eloquent {
-	protected $table     = 'unidadesmedida';
-	protected $primryKey = 'unidadmedidaid';
+class Unidadesmedida extends Eloquent
+{
+    protected $table      = 'unidadesmedida';
+    protected $primaryKey = 'unidadmedidaid';
 }

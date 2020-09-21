@@ -1,13 +1,14 @@
 <?php
 
-class Requerimiento extends Eloquent {
+class Requerimiento extends Eloquent
+{
 
-	protected $primryKey = 'requerimientoid';
+    protected $primaryKey = 'requerimientoid';
 
-	public static function getRequerimientos() {
-		return DB::table('requerimientos')
-			->select('nombre','requerimientoid')
-			->orderBy('nombre')
-			->get();
-	}
+    public static function getRequerimientos()
+    {
+        return self::select('nombre', 'requerimientoid')
+            ->orderBy('nombre')
+            ->get();
+    }
 }

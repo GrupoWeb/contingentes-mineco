@@ -1,13 +1,14 @@
 <?php
 
-class Pais extends Eloquent {
-	protected $table     = 'paises';
-	protected $primryKey = 'paisid';
+class Pais extends Eloquent
+{
+    protected $table      = 'paises';
+    protected $primaryKey = 'paisid';
 
-	public static function getPaises() {
-		return DB::table('paises')
-			->select('paisid', 'nombre')
-			->orderBy('nombre')
-			->get();
-	}
+    public static function getPaises()
+    {
+        return self::select('paisid', 'nombre')
+            ->orderBy('nombre')
+            ->get();
+    }
 }

@@ -14,23 +14,9 @@ return [
     |
      */
 
-    'mailgun'  => [
-        'domain' => 'mailgun.mineco.gob.gt',
-        'secret' => 'key-f996f7b8526574618',
-    ],
-
-    'mandrill' => [
-        'secret' => '',
-    ],
-
-    'stripe'   => [
-        'model'  => 'User',
-        'secret' => '',
-    ],
-    'sat'      => [
-        'url'      => 'https://farm3.sat.gob.gt/mineco-ws/rest/privado/mineco/',
+    'sat' => [
+        'url'      => 'https://prefarm3.sat.gob.gt/mineco-ws/rest/privado/mineco/',
         'usuario'  => 'minecoPruebas',
         'password' => 'mineco2020!',
     ],
-
 ];

@@ -1,5 +1,6 @@
 <?php
 
-class Solicitudemisionpartida extends Eloquent {
-	protected $primryKey = 'solicitudemisionpartidaid';
+class Solicitudemisionpartida extends Eloquent
+{
+    protected $primaryKey = 'solicitudemisionpartidaid';
 }

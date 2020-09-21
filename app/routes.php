@@ -10,6 +10,9 @@
 | and give it the Closure to execute when that URI is requested.
 |
  */
+Route::group(['before' => ['auth.basic']], function () {
+    Route::get('prueba/{id}', 'SapController@enviarcertificado');
+});
 //Temp plantillas
 Route::get('plantilla1', 'plantillaController@plantilla1');
 Route::get('plantilla2', 'plantillaController@plantilla2');
