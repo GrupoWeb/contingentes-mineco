@@ -6,12 +6,12 @@
 		<thead>
 			<tr>
 				<th rowspan="2" colspan="5" class="text-center">
-					@if($formato <> 'excel') 
+					@if($formato <> 'excel')
 						{{ HTML::image('images/logo.jpg') }}
 					@endif
 					<br>DACE - MINECO
 				</th>
-				<th rowspan="1" colspan="12" class="text-center"><h4>{{$titulo}}</h4></th>				
+				<th rowspan="1" colspan="12" class="text-center"><h4>{{$titulo}}</h4></th>
 			</tr>
 			<tr>
 				<th rowspan="1" colspan="3" class="text-center">{{ $tratado }}</th>
@@ -49,21 +49,24 @@
 			</tr>
 		</thead>
 		<tbody>
-			<?php 
-				$asignadot     = 0;
-				$adjudicadot   = 0;
-				$volumentotalt = 0;
-			?>
+			<?php
+$asignadot     = 0;
+$adjudicadot   = 0;
+$volumentotalt = 0;
+?>
 			@foreach($utilizaciones as $nit=>$valores)
 				@foreach($valores as $nombre=>$movimientos)
 					<?php
-						$cuantos        = count($movimientos['movimientos']);
-						$asignadot     += $movimientos['asignado'];
-						$adjudicadot   += $movimientos['adjudicado'];
-						$volumentotalt  = $movimientos['volumentotal'];
+$cuantos = count($movimientos['movimientos']);
+$asignadot += $movimientos['asignado'];
+$adjudicadot += $movimientos['adjudicado'];
+$volumentotalt = $movimientos['volumentotal'];
 
-						if ($cuantos==0) $cuantos=1;
-					?>
+if ($cuantos == 0) {
+    $cuantos = 1;
+}
+
+?>
 					<tr>
 						<td rowspan="{{ $cuantos }}" style="vertical-align: middle;">{{ $nit }}</td>
 						<td rowspan="{{ $cuantos }}" style="vertical-align: middle;">{{ $nombre }}</td>
@@ -74,17 +77,17 @@
 						@else
 							<td rowspan="{{ $cuantos }}" colspan="3" class="text-right" style="vertical-align: middle;">{{ number_format($movimientos['adjudicado'], 3) }}</td>
 						@endif
-						<?php $i=1; ?>
+						<?php $i = 1;?>
 						@if(count($movimientos['movimientos'])==0)
 							<td colspan="12">&nbsp;</td>
 						</tr>
 						@endif
 
 						@foreach($movimientos['movimientos'] as $movimiento)
-							@if ($i>1) 
-								{{'<tr>'}} 
+							@if ($i>1)
+								{{'<tr>'}}
 							@endif
-								<?php $variacion = $movimiento['cantidad'] - $movimiento['real']; ?>
+								<?php $variacion = $movimiento['cantidad'] - $movimiento['real'];?>
 								<td class="text-center">{{ $movimiento['certificado']  }}</td>
 								<td class="text-center">{{ $movimiento['fecha'] }}</td>
 								<td class="text-center">{{ $movimiento['fraccion'] }}</td>
@@ -95,7 +98,10 @@
 									<td class="text-center">{{ $movimiento['dua'] }}</td>
 									<td class="text-right">{{ number_format($movimiento['real'], 2) }}</td>
 									<td class="text-right">{{ number_format($variacion, 3)  }}</td>
-									<td class="text-right">{{ number_format((($variacion * 100)/$movimiento['real']), 3) }}</td>
+									<td class="text-right">{{
+										$movimiento['real'] <> 0 ? (number_format((($variacion * 100)/$movimiento['real']), 3)) : '0.00'
+									}}
+									</td>
 									<td class="text-right">{{ number_format($movimiento['cif'], 2) }}</td>
 									<td class="text-center">{{ $movimiento['real'] <> 0 ? (number_format(($movimiento['cif']/$movimiento['real']), 2)) : '0.00' }}</td>
 								@else
@@ -108,7 +114,7 @@
 									<td>&nbsp;</td>
 								@endif
 							</tr>
-							<?php $i++; ?>
+							<?php $i++;?>
 						@endforeach
 				@endforeach
 			@endforeach
@@ -144,6 +150,6 @@
 			<td class="text-right"><strong>{{ number_format($volumentotalt-$adjudicadot, 3) }}</strong></td>
 		</tr>
 		@endif
-		
+
 	</table>
 @stop
