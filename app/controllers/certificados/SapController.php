@@ -9,8 +9,15 @@ class SapController extends Controller
     {
         $c = Certificado::query()
             ->select(
-                'certificadoid', 'paisid', 'nit', 'nombre', 'fecha',
-                'fechavencimiento', 'numerocertificado', 'producto',
+                'certificadoid',
+                'paisid',
+                'partidaid',
+                'nit',
+                'nombre',
+                'fecha',
+                'fechavencimiento',
+                'numerocertificado',
+                'producto',
                 'volumen'
             )
             ->with([
@@ -38,7 +45,7 @@ class SapController extends Controller
                     $query->select('productoid', 'unidadmedidaid', 'nombre');
                 },
                 'movimiento.periodo.contingente.producto.unidad' => function ($query) {
-                    $query->select('unidadmedidaid', 'nombrecorto');
+                    $query->select('unidadmedidaid', 'factor_sat', 'unidad_sat');
                 },
             ])
             ->findOrFail($id);
@@ -61,15 +68,15 @@ class SapController extends Controller
             'numeroCertificado'   => $c->numerocertificado,
             'acuerdoComercial'    => $c->movimiento->periodo->contingente->tratado->codigo,
             'cuotaContingente'    => $c->partida->codigo_cuota,
-            'incisoArancelario'   => $c->partida->partida,
+            'incisoArancelario'   => str_replace(".", "", $c->partida->partida),
             'fechaEmision'        => $fecha->format('d/m/Y'),
             'fechaExpiracion'     => $vencimiento->format('d/m/Y'),
             'nitImportador'       => $nit,
             'nombreImportador'    => $c->nombre,
             'codigoAdicional'     => $c->partida->codigo_adicional,
             'descripcionProducto' => $c->producto,
-            'cantidadVolumen'     => $c->volumen,
-            'unidadMedida'        => $c->movimiento->periodo->contingente->producto->unidad->nombrecorto,
+            'cantidadVolumen'     => $c->volumen * ($c->movimiento->periodo->contingente->producto->unidad->factor_sat),
+            'unidadMedida'        => $c->movimiento->periodo->contingente->producto->unidad->unidad_sat,
         ];
 
         print_r($params);

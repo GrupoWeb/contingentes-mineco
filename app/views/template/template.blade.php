@@ -4,35 +4,35 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="">
-	<meta name="author" content="">
-	
+	<meta name="description" content="Contingentes Arancelarios Ministerio de Economía">
+	<meta name="author" content="Softlogic, S.A.">
+
 	<title>DACE - MINECO</title>
 
-  {{ HTML::style('https://fonts.googleapis.com/css?family=Archivo+Narrow|Lato:400,700') }}
-	{{ HTML::style('packages/csgt/components/css/bootstrap.min.css'); }}
-	{{ HTML::style('packages/csgt/components/css/bootstrap-theme.min.css'); }}
-	{{ HTML::style('packages/csgt/components/css/bootstrap-datetimepicker.min.css'); }}
-	{{ HTML::style('packages/csgt/components/css/bootstrap-select.min.css'); }}
-	{{ HTML::style('packages/csgt/components/css/dataTables.bootstrap.css'); }}
-	{{ HTML::style('packages/csgt/components/css/dataTables.tableTools.min.css'); }}
-	{{ HTML::style('packages/csgt/components/css/core.css'); }}
-	{{ HTML::style('packages/csgt/components/css/bootstrapValidator.min.css'); }}
-	{{ HTML::style('packages/csgt/components/css/font-awesome.min.css'); }}
-	{{ HTML::style('css/dace.css') }}
-	{{ HTML::style('css/selectize.css') }}
-	{{ HTML::style('css/selectize.bootstrap3.css') }}
+    <link rel="stylesheet" type="text/css" href='https://fonts.googleapis.com/css?family=Archivo+Narrow|Lato:400,700'>
+	<link rel="stylesheet" type="text/css" href='/packages/csgt/components/css/bootstrap.min.css'>
+	<link rel="stylesheet" type="text/css" href='/packages/csgt/components/css/bootstrap-theme.min.css'>
+	<link rel="stylesheet" type="text/css" href='/packages/csgt/components/css/bootstrap-datetimepicker.min.css'>
+	<link rel="stylesheet" type="text/css" href='/packages/csgt/components/css/bootstrap-select.min.css'>
+	<link rel="stylesheet" type="text/css" href='/packages/csgt/components/css/dataTables.bootstrap.css'>
+	<link rel="stylesheet" type="text/css" href='/packages/csgt/components/css/dataTables.tableTools.min.css'>
+	<link rel="stylesheet" type="text/css" href='/packages/csgt/components/css/core.css'>
+	<link rel="stylesheet" type="text/css" href='/packages/csgt/components/css/bootstrapValidator.min.css'>
+	<link rel="stylesheet" type="text/css" href='/packages/csgt/components/css/font-awesome.min.css'>
+	<link rel="stylesheet" type="text/css" href='/css/dace.css'>
+	<link rel="stylesheet" type="text/css" href='/css/selectize.css'>
+	<link rel="stylesheet" type="text/css" href='/css/selectize.bootstrap3.css'>
 
-	{{ HTML::script('packages/csgt/components/js/jquery.min.js'); }}
-	{{ HTML::script('packages/csgt/components/js/moment-with-locales.min.js'); }}
-	{{ HTML::script('packages/csgt/components/js/bootstrap.min.js'); }}
-	{{ HTML::script('packages/csgt/components/js/bootstrap-datetimepicker.min.js'); }}
-	{{ HTML::script('packages/csgt/components/js/bootstrap-select.min.js'); }}
-	{{ HTML::script('packages/csgt/components/js/jquery.dataTables.min.js'); }}
-	{{ HTML::script('packages/csgt/components/js/dataTables.bootstrap.js'); }}
-	{{ HTML::script('packages/csgt/components/js/dataTables.tableTools.min.js'); }}
-	{{ HTML::script('packages/csgt/components/js/bootstrapValidator.min.js'); }}
-	{{ HTML::script('js/selectize.min.js'); }}
+	<script src='/packages/csgt/components/js/jquery.min.js'></script>
+	<script src='/packages/csgt/components/js/moment-with-locales.min.js'></script>
+	<script src='/packages/csgt/components/js/bootstrap.min.js'></script>
+	<script src='/packages/csgt/components/js/bootstrap-datetimepicker.min.js'></script>
+	<script src='/packages/csgt/components/js/bootstrap-select.min.js'></script>
+	<script src='/packages/csgt/components/js/jquery.dataTables.min.js'></script>
+	<script src='/packages/csgt/components/js/dataTables.bootstrap.js'></script>
+	<script src='/packages/csgt/components/js/dataTables.tableTools.min.js'></script>
+	<script src='/packages/csgt/components/js/bootstrapValidator.min.js'></script>
+	<script src='/js/selectize.min.js'></script>
 	
 	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!--[if lt IE 9]>
@@ -42,9 +42,7 @@
 	<script>
 		$(document).ready(function(){
 			$(".alert").delay(5000).fadeOut('slow');
-
 			$('.selectpicker').selectpicker();
-
 			$('#cmbTratado').change(function(){
 				$.get('/changetratado/' + $(this).find('option:selected').val(), function(data){
 					location.reload(); 
@@ -55,7 +53,7 @@
 	</head>
 	<body>
 		{{Session::get('menu')}} 
-		<div class="main main-margin">
+	    <div class="main main-margin">
 			<div class="container">
 				@if(in_array(Request::path(), Config::get('contingentes.tratadosInclude')))
 					<div class="pull-right">
@@ -82,14 +80,14 @@
 				<p class="text-muted">Horarios de atención Lunes a Viernes 08:00 - 16:00Hrs</p>
 			</div>
 			<div class="col-sm-4 text-right">
-				<p><a href="http://mineco.gob.gt/contactenos" target="_blank">Contáctenos</a></p>
+				<p><a href="https://www.mineco.gob.gt/contactenos" target="_blank">Contáctenos</a></p>
 				<p><a href="http://mineco.gob.gt/directorio-sedes-departamentales-y-municipales" target="_blank">Directorio de sedes departamentales, municipales</a></p>
-				<p>Última Actualización 02/12/2015</p>
+				<p>Última Actualización 29/09/2020</p>
 			</div>
 			<div class="clearfix"></div>
 			<hr>
 			<p class="text-muted text-center">
-				Todos los derechos reservados | <a href="https://contingentesarancelarios.mineco.gob.gt/">contingentesarancelarios.mineco.gob.gt</a> | {{ date('Y') }} | Powered by <a href="http://cs.com.gt" target="_blank">Compuservice Webdesigns</a>
+				Todos los derechos reservados | <a href="https://contingentesarancelarios.mineco.gob.gt/">contingentesarancelarios.mineco.gob.gt</a> | 2015-{{ date('Y') }} | Powered by <a href="https://softlogic.com.gt" target="_blank">Softlogic, S.A.</a>
 			</p>
 		</div>
 	</body>

@@ -31,12 +31,14 @@ class tratadosController extends crudController
         Crud::setCampo(['nombre' => 'Contingentes', 'campo' => '(SELECT count(*) FROM contingentes AS c WHERE c.tratadoid = tratados.tratadoid)', 'class' => 'text-right', 'editable' => false]);
         Crud::setCampo(['nombre' => 'Validez (meses)', 'campo' => 'mesesvalidez', 'class' => 'text-right', 'reglas' => ['numeric', 'notEmpty'], 'reglasmensaje' => 'El valor debe ser numérico']);
         Crud::setCampo(['nombre' => 'País', 'campo' => 'p.nombre', 'editable' => false]);
-        Crud::setCampo(['nombre' => 'País',
+        Crud::setCampo([
+            'nombre' => 'País',
             'campo'                  => 'tratados.paisid',
             'tipo'                   => 'combobox',
             'query'                  => 'SELECT  nombre, paisid FROM paises ORDER BY nombre',
             'combokey'               => 'paisid',
-            'show'                   => false]);
+            'show'                   => false
+        ]);
         Crud::setCampo(['nombre' => 'Activo', 'campo' => 'activo', 'tipo' => 'bool']);
         Crud::setCampo(['nombre' => 'Color', 'campo' => 'clase', 'tipo' => 'enum', 'enumarray' => ['sucess', 'warning', 'danger', 'primary', 'info', 'default'], 'show' => false]);
         Crud::setCampo(['nombre' => 'Icono', 'campo' => 'icono', 'tipo' => 'enum', 'enumarray' => ['sucess', 'warning', 'danger', 'primary', 'info', 'default'], 'show' => false]);
