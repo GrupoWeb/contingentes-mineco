@@ -11,8 +11,11 @@
 |
  */
 Route::group(['before' => ['auth.basic']], function () {
-    Route::get('prueba/{id}', 'SapController@enviarcertificado');
+    Route::get('sat/recepcion/{id}', 'SatController@recepcionCertificado');
+    Route::get('sat/consulta/{id}', 'SatController@consultaCertificado');
+    Route::get('sat/anulacion/{id}', 'SatController@anulacionCertificado');
 });
+
 //Temp plantillas
 Route::get('plantilla1', 'plantillaController@plantilla1');
 Route::get('plantilla2', 'plantillaController@plantilla2');

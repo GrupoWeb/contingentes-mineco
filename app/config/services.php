@@ -29,8 +29,8 @@ return [
     ],
     'sat'      => [
         'url'      => 'https://farm3.sat.gob.gt/mineco-ws/rest/privado/mineco/',
-        'usuario'  => 'minecoPruebas',
-        'password' => 'mineco2020!',
+        'usuario'  => '2648009-3',
+        'password' => 'Mineco@2020',
     ],
 
 ];

@@ -13,4 +13,9 @@ Log::useFiles(storage_path() . '/logs/laravel.log');
 App::down(function () {
     return Response::view('template/mantenimiento', [], 503);
 });
+
+App::error(function (Exception $exception) {
+    Log::error($exception);
+});
+
 require app_path() . '/filters.php';

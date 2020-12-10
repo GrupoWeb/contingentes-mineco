@@ -109,7 +109,7 @@ class Certificado extends Eloquent
             ->select('c.*', 'u.nombre AS usuario', 'p.nombre AS pais')
             ->leftJoin('authusuarios AS u', 'c.usuarioid', '=', 'u.usuarioid')
             ->leftJoin('paises AS p', 'c.paisid', '=', 'p.paisid')
-            ->where('enviadosat', 0)
+            ->whereNull('sat_at')
             ->get();
     }
 

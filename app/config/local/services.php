@@ -16,7 +16,7 @@ return [
 
     'sat' => [
         'url'      => 'https://prefarm3.sat.gob.gt/mineco-ws/rest/privado/mineco/',
-        'usuario'  => 'minecoPruebas',
-        'password' => 'mineco2020!',
+        'usuario'  => 'testMINECO',
+        'password' => 'mineco2020',
     ],
 ];
