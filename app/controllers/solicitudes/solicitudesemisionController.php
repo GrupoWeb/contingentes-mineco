@@ -69,6 +69,7 @@ class solicitudesemisionController extends crudController
 
     public function store()
     {
+        $admins = [];
         //captura id del hidden
         $elID = Crypt::decrypt(Input::get('id'));
 

@@ -4,14 +4,14 @@
 <link rel="stylesheet" type="text/css" href='/packages/csgt/components/css/bootstrap-fileinput.min.css'>
 <script src='/packages/csgt/components/js/bootstrap-fileinput.min.js'></script>
 
-<form class="form-horizontal" role="form" id="frmSolicitud" enctype="multipart/form-data">
+<form class="form-horizontal" role="form" id="frmSolicitud" enctype="multipart/form-data" method="post">
     <div class="contenido contenido-full">
         <h1 class="titulo">Solicitud de emisión</h1><br>
         <div class="col-md-12">
             <div class="form-group">
                 <label for="cmbContingente" class="col-sm-2 control-label">Contingente</label>
                 <div class="col-sm-6 div-contingente">
-                    <?php $grupoActual = 'primero'; ?>
+                    <?php $grupoActual = 'primero';?>
                     <select name="cmbContingentes" class="selectpicker form-control" id="cmbContingentes"
                         title="Seleccione uno">
                         @foreach($contingentes as $contingente)
@@ -20,7 +20,7 @@
                                 </optgroup>
                                 @endif
                                 <optgroup label="{{ $contingente->tratado }}">
-                                    <?php $grupoActual = $contingente->tratado; ?>
+                                    <?php $grupoActual = $contingente->tratado;?>
                                     @endif
                                     <option value="{{ Crypt::encrypt($contingente->contingenteid) }}"
                                         data-tratado="{{Crypt::encrypt($contingente->tratadoid) }}"
@@ -39,7 +39,7 @@
                 <label for="txCantidad" class="col-sm-2 control-label">Cantidad</label>
                 <div class="col-md-2 col-sm-6 div-contingente">
                     <div class="input-group">
-                        <input type="text" class='form-control two-digits' data-bv-notEmpty='true'
+                        <input type="text" name="cantidad" class='form-control two-digits' data-bv-notEmpty='true'
                             data-bv-notEmpty-message='La cantidad es incorrecta' data-bv-numeric='true'
                             data-bv-numeric-message='Solo se aceptan dígitos' data-bv-greaterthan='true'
                             data-bv-greaterthan-value='0' data-bv-greaterthan-inclusive='false'

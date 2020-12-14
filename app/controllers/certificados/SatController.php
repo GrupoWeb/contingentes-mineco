@@ -80,7 +80,7 @@ class SatController extends Controller
             'nombreImportador'    => $c->nombre,
             'codigoAdicional'     => $c->partida->codigo_adicional,
             'descripcionProducto' => $c->producto,
-            'cantidadVolumen'     => round($kgsTotal),
+            'cantidadVolumen'     => round($kgsTotal, 2),
             'unidadMedida'        => $c->movimiento->periodo->contingente->producto->unidad->unidad_sat,
         ];
 
@@ -240,7 +240,7 @@ class SatController extends Controller
         $json = json_decode($html);
 
         switch ($json->codigo) {
-            0:
+            case 0:
                 $c->sat_error = null;
                 $c->save();
             default:
