@@ -93,7 +93,7 @@ class SatController extends Controller
                 Config::get('services.sat.usuario'),
                 Config::get('services.sat.password'),
             ],
-            'timeout' => 25,
+            'timeout' => 180,
         ]);
         $html             = (string) $response->getBody();
         $c->sat_respuesta = $html;
@@ -148,7 +148,7 @@ class SatController extends Controller
                 Config::get('services.sat.usuario'),
                 Config::get('services.sat.password'),
             ],
-            'timeout' => 25,
+            'timeout' => 180,
         ]);
         $html = (string) $response->getBody();
 
@@ -230,7 +230,7 @@ class SatController extends Controller
                 Config::get('services.sat.usuario'),
                 Config::get('services.sat.password'),
             ],
-            'timeout' => 25,
+            'timeout' => 180,
         ]);
         $html             = (string) $response->getBody();
         $c->sat_respuesta = $html;
