@@ -29,7 +29,7 @@ return [
     ],
     'sat'      => [
         'url'      => 'https://farm3.sat.gob.gt/mineco-ws/rest/privado/mineco/',
-        'usuario'  => '2648009-3',
+        'usuario'  => '26480093',
         'password' => 'Mineco@2020',
     ],
 

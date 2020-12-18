@@ -118,7 +118,7 @@ class SatController extends Controller
                 break;
         }
 
-        return response()->json('ok');
+        return Response::json('ok');
     }
 
     public function consultaCertificado($id)
@@ -176,7 +176,7 @@ class SatController extends Controller
                 break;
         }
 
-        return response()->json('ok');
+        return Response::json('ok');
     }
 
     public function anulacionCertificado($id)
@@ -249,6 +249,6 @@ class SatController extends Controller
                 break;
         }
 
-        return response()->json('ok');
+        return Response::json('ok');
     }
 }
