@@ -174,9 +174,9 @@ class certificadosController extends Controller
         }
 
         //condiciona datos
-        if (!$datos->certificado || $datos->certificado == '' || !$datos->firma || $datos->firma == '') {
-            return "Imposible generar el certificado debido a faltas de firma.";
-        }
+        // if (!$datos->certificado || $datos->certificado == '' || !$datos->firma || $datos->firma == '') {
+        //     return "Imposible generar el certificado debido a faltas de firma.";
+        // }
 
         //ingreso de datos para pdf
         PDF::SetTitle('Certificado');
@@ -184,8 +184,8 @@ class certificadosController extends Controller
         PDF::setLeftMargin(20);
         PDF::setPrintFooter(false);
 
-        $certificate = $datos->certificado;
-        PDF::SetSignature($certificate, $certificate, 'cservice');
+        // $certificate = $datos->certificado;
+        // PDF::SetSignature($certificate, $certificate, 'cservice');
 
         $html = View::make($datos->vista)
             ->with('datos', $datos);
