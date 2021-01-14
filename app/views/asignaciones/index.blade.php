@@ -33,7 +33,7 @@
                 <label for="txtCantidad" class="col-sm-2 control-label">Cantidad</label>
                 <div class="col-md-2 col-sm-6 div-contingente">
                     <div class="input-group">
-                        <input type="text" class='form-control two-digits' data-bv-notEmpty='true'
+                        <input type="text" name="cantidad" class='form-control two-digits' data-bv-notEmpty='true'
                             data-bv-notEmpty-message='La cantidad es incorrecta' data-bv-numeric='true'
                             data-bv-numeric-message='Solo se aceptan dígitos' data-bv-greaterthan='true'
                             data-bv-greaterthan-value='0' data-bv-greaterthan-inclusive='false'
