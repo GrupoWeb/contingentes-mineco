@@ -51,7 +51,7 @@ class SatController extends Controller
             ->findOrFail($id);
 
         if ($c->movimiento->periodo->contingente->tratado->tipo == 'Exportación') {
-            App::abort(400, "Solo se sincronizan importaciones");
+            return false;
         }
 
         $client  = new Client;

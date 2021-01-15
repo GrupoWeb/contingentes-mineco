@@ -1,4 +1,5 @@
 <?php
+
 class solicitudesemisionController extends crudController
 {
 
@@ -56,7 +57,10 @@ class solicitudesemisionController extends crudController
         //trae objeto segun usuarioid
         $usuario = Usuario::find($solicitud->usuarioid);
         //asigna valores de query
-        $query      = DB::select(DB::raw('SELECT getSaldoPeriodo(' . $solicitud->periodoid . ', ' . $usuario->empresaid . ') AS disponible'));
+        $query = DB::select(DB::raw('SELECT getSaldoPeriodo(' . $solicitud->periodoid . ', ' . $usuario->empresaid . ') AS disponible'));
+        if (!$query) {
+            App::abort(404, "No se encontró saldo para este período");
+        }
         $disponible = $query[0]->disponible;
 
         //retorna datos a la vista
@@ -88,6 +92,9 @@ class solicitudesemisionController extends crudController
             $emision    = Emisionpendiente::find($elID);
             $usuario    = Usuario::find($emision->usuarioid);
             $query      = DB::select(DB::raw('SELECT getSaldoPeriodo(' . $emision->periodoid . ', ' . $usuario->empresaid . ') AS disponible'));
+            if (!$query) {
+                abort(404, "No se encontró saldo para este período");
+            }
             $disponible = $query[0]->disponible;
 
             /*if($cantidad > $disponible){
@@ -105,7 +112,7 @@ class solicitudesemisionController extends crudController
                 $emision->estado        = 'Aprobada';
                 $res                    = $emision->save();
                 if (!$res) {
-                    return false;
+                    App::abort(501, 'No fue posible guardar la emisión');
                 }
 
                 $info = Emisionpendiente::getSolicitudPendiente($elID);
@@ -132,7 +139,7 @@ class solicitudesemisionController extends crudController
                 $certificado->fechavencimiento   = $info->vencimiento;
                 $res                             = $certificado->save();
                 if (!$res) {
-                    return false;
+                    App::abort(501, 'No fue posible guardar el certificado');
                 }
 
                 $p           = Periodo::where('periodoid', $emision->periodoid)->pluck('contingenteid');
@@ -163,8 +170,12 @@ class solicitudesemisionController extends crudController
                 $movimiento->created_by       = Auth::id();
                 $res                          = $movimiento->save();
                 if (!$res) {
-                    return false;
+                    App::abort(501, 'No fue posible guardar el movimiento');
                 }
+
+                //Enviar a la SAT y obtener respuesta correcta
+                $sc = new SatController;
+                $sc->recepcionCertificado($certificado->certificadoid);
 
                 //retorna un areglo
 
