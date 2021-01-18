@@ -84,7 +84,7 @@ class SatController extends Controller
             'unidadMedida'        => $c->movimiento->periodo->contingente->producto->unidad->unidad_sat,
         ];
 
-        print_r($params);
+        //print_r($params);
 
         $response = $client->post($url, [
             'json'    => $params,
@@ -139,7 +139,7 @@ class SatController extends Controller
             'nit'               => $nit,
         ];
 
-        print_r($params);
+        //print_r($params);
 
         $response = $client->post($url, [
             'body'    => $params,
@@ -221,7 +221,7 @@ class SatController extends Controller
             'cuotaContingente'  => $c->partida->codigo_cuota,
         ];
 
-        print_r($params);
+        //print_r($params);
 
         $response = $client->post($url, [
             'body'    => $params,
