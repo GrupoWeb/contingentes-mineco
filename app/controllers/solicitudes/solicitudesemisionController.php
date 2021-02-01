@@ -77,14 +77,6 @@ class solicitudesemisionController extends crudController
         //captura id del hidden
         $elID = Crypt::decrypt(Input::get('id'));
 
-        //verifica usuario
-        if (!Auth::user()->certificado || Auth::user()->certificado == '' || !Auth::user()->firma || Auth::user()->firma == '') {
-            Session::flash('type', 'danger');
-            Session::flash('message', 'Imposible procesar solicitud ya que no se ha encontrado firma para tu usuario.');
-
-            return Redirect::route('solicitudespendientes.emision.index');
-        }
-
         //condiciona valares del formulario
         if (Input::has('btnAutorizar')) {
             $cantidad   = Input::get('txCantidad');
