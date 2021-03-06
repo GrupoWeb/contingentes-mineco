@@ -54,7 +54,7 @@ class SatController extends Controller
             return false;
         }
 
-        $client  = new Client;
+        $client  = new Client(['defaults' => ['verify' => false]]);
         $url     = Config::get('services.sat.url') . 'recepcionCertificado';
         $headers = [
             'Content-Type' => 'application/json;charset=iso-8859-1',
@@ -125,7 +125,7 @@ class SatController extends Controller
     {
         $c = Certificado::findOrFail($id);
 
-        $client  = new Client;
+        $client  = new Client(['defaults' => ['verify' => false]]);
         $url     = Config::get('services.sat.url') . 'consultaCertificado';
         $headers = [
             'Content-Type' => 'application/json;charset=iso-8859-1',
@@ -205,7 +205,7 @@ class SatController extends Controller
             ])
             ->findOrFail($id);
 
-        $client  = new Client;
+        $client  = new Client(['defaults' => ['verify' => false]]);
         $url     = Config::get('services.sat.url') . 'anulacionCertificado';
         $headers = [
             'Content-Type' => 'application/json;charset=iso-8859-1',
