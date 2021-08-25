@@ -43,6 +43,7 @@ class contingentesController extends crudController
         Crud::setCampo(['nombre' => 'Tipo tratado', 'campo' => 'tipotratadoid', 'tipo' => 'combobox', 'query' => 'SELECT nombre, tipotratadoid FROM tipotratados', 'combokey' => 'tipotratadoid', 'editable' => true, 'show' => false]);
         Crud::setCampo(['nombre' => 'Variación (%)', 'campo' => 'variacion', 'class' => 'text-right', 'reglas' => ['numeric', 'notEmpty'], 'reglasmensaje' => 'El valor debe ser numérico']);
         Crud::setCampo(['nombre' => 'Plantilla certificado', 'campo' => 'plantillaid', 'tipo' => 'combobox', 'query' => 'SELECT nombre, plantillaid FROM plantillascertificados', 'combokey' => 'plantillaid', 'editable' => true, 'show' => false]);
+        Crud::setCampo(['nombre' => 'Tipo correlativo', 'campo' => 'tipocorrelativoid', 'tipo' => 'combobox', 'query' => 'SELECT nombre, tipocorrelativoid FROM tiposcorrelativos', 'combokey' => 'tipcorrelativoid', 'editable' => true, 'show' => false]);
         Crud::setCampo(['nombre' => 'Requiere Asignación', 'campo' => 't.asignacion', 'tipo' => 'bool', 'editable' => false]);
         Crud::setCampo(['nombre' => 'Texto certificado', 'campo' => 'textocertificado', 'tipo' => 'textarea', 'show' => false, 'reglas' => ['notEmpty'], 'reglasmensaje' => 'El texto es requerido']);
 
