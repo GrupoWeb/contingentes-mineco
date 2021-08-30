@@ -14,6 +14,10 @@ App::down(function () {
     return Response::view('template/mantenimiento', [], 503);
 });
 
+App::missing(function ($exception) {
+    return Response::view('errors.missing', [], 404);
+});
+
 App::error(function (Exception $exception) {
     Log::error($exception);
 });

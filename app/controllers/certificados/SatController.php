@@ -96,6 +96,7 @@ class SatController extends Controller
                 'timeout' => 180,
             ]);
         } catch (\Throwable $th) {
+            Log::error($th->getMessage());
             dd($th->getMessage());
         }
 
@@ -119,6 +120,8 @@ class SatController extends Controller
             default:
                 $c->sat_error = $json->mensaje;
                 $c->save();
+
+                App::abort(501, $json->mensaje);
                 break;
         }
 
