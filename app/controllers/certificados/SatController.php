@@ -96,8 +96,7 @@ class SatController extends Controller
                 'timeout' => 180,
             ]);
         } catch (\Throwable $th) {
-            Log::error($th->getMessage());
-            dd($th->getMessage());
+            App::abort(500, "Error SAT: " . PHP_EOL . "URL: " . $url . PHP_EOL . "Payload: " . PHP_EOL . json_encode($params) . PHP_EOL . $th->getMessage());
         }
 
         $html             = (string) $response->getBody();
