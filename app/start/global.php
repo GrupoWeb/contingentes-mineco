@@ -15,12 +15,13 @@ App::down(function () {
 });
 
 App::missing(function ($exception) {
-    return Response::view('errors.error', [], 404)->with('message', 'La página que busca no fue encontrada');
+    return View('errors.error')->with('message', 'La página que busca no fue encontrada');
 });
 
 App::error(function (Exception $exception) {
-    return Response::view('errors.error', [], 404)->with('message', $exception->getMessage());
     Log::error($exception);
+
+    return View('errors.error')->with('message', $exception->getMessage());
 });
 
 require app_path() . '/filters.php';
