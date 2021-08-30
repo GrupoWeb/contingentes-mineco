@@ -120,7 +120,7 @@ class SatController extends Controller
                 $c->sat_error = $json->mensaje;
                 $c->save();
 
-                App::abort(501, $json->mensaje);
+                App::abort(500, "Error SAT: " . $json->mensaje . PHP_EOL . "URL: " . $url . PHP_EOL . "Payload: " . PHP_EOL . json_encode($params));
                 break;
         }
 
