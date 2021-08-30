@@ -96,7 +96,7 @@ class SatController extends Controller
                 'timeout' => 180,
             ]);
         } catch (\Throwable $th) {
-            App::abort(500, "Error SAT: " . PHP_EOL . "URL: " . $url . PHP_EOL . "Payload: " . PHP_EOL . json_encode($params) . PHP_EOL . $th->getMessage());
+            App::abort(500, "Error SAT: " . $th->getMessage() . '<br>' . "URL: " . $url . '<br>' . "Payload: " . '<br>' . json_encode($params, JSON_PRETTY_PRINT));
         }
 
         $html             = (string) $response->getBody();
@@ -120,7 +120,9 @@ class SatController extends Controller
                 $c->sat_error = $json->mensaje;
                 $c->save();
 
-                App::abort(500, "Error SAT: " . $json->mensaje . PHP_EOL . "URL: " . $url . PHP_EOL . "Payload: " . PHP_EOL . json_encode($params));
+                App::abort(500, "Error SAT: " . $json->mensaje . '<br>' . "URL: " . $url . '<br>' . "Payload: " . '<br>' .
+                    json_encode($params, JSON_PRETTY_PRINT))
+                ;
                 break;
         }
 
