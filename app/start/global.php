@@ -15,10 +15,11 @@ App::down(function () {
 });
 
 App::missing(function ($exception) {
-    return Response::view('errors.missing', [], 404);
+    return Response::view('errors.error', [], 404)->with('message', 'La página que busca no fue encontrada');
 });
 
 App::error(function (Exception $exception) {
+    return Response::view('errors.error', [], 404)->with('message', $exception->getMessage());
     Log::error($exception);
 });
 
