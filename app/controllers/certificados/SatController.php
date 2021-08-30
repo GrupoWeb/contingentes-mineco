@@ -85,16 +85,20 @@ class SatController extends Controller
         ];
 
         //print_r($params);
+        try {
+            $response = $client->post($url, [
+                'json'    => $params,
+                'headers' => $headers,
+                'auth'    => [
+                    Config::get('services.sat.usuario'),
+                    Config::get('services.sat.password'),
+                ],
+                'timeout' => 180,
+            ]);
+        } catch (\Throwable $th) {
+            dd($th->getMessage());
+        }
 
-        $response = $client->post($url, [
-            'json'    => $params,
-            'headers' => $headers,
-            'auth'    => [
-                Config::get('services.sat.usuario'),
-                Config::get('services.sat.password'),
-            ],
-            'timeout' => 180,
-        ]);
         $html             = (string) $response->getBody();
         $c->sat_respuesta = $html;
         $c->save();
