@@ -29,9 +29,11 @@ return [
     ],
     'sat'      => [
         //'url'      => 'https://farm3.sat.gob.gt/mineco-ws/rest/privado/mineco/',
-        'url'      => 'https://10.1.0.40/mineco-ws/rest/privado/mineco/',
+        'url'      => 'https://farm3.sat.gob.gt/mineco-ws/rest/privado/mineco/',
+        // 'url'      => 'https://10.1.0.40/mineco-ws/rest/privado/mineco/',
         'usuario'  => '26480093',
-        'password' => 'Mineco@2020',
+        //'password' => 'Mineco@2020',
+        'password' => 'DNR.alv3',
     ],
 
 ];

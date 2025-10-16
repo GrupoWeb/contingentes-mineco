@@ -22,6 +22,9 @@ class Contingenterequerimiento extends Eloquent
 
         $query->orderBy('contingenterequerimientoid');
 
+
+        // return $aReq;
+        // return $query->toSql();
         return $query->get();
     }
 

@@ -31,12 +31,22 @@ class requerimientosController extends crudController {
 		
 		$requerimientos = array();
 
-		//verifica $requerimientos
-		if(Auth::check())
-			$requerimientos = Empresarequerimiento::getEmpresaRequerimientosIds();
+		
 
+		//verifica $requerimientos
+		// if(Auth::check())
+		// 	$requerimientos = Empresarequerimiento::getEmpresaRequerimientosIds();
+
+			if (Auth::check()) {
+				$requerimientos = Empresarequerimiento::getEmpresaRequerimientosIds();
+				// }else{
+					// 	return "Usuario no autenticado";
+				}
+			
+				return Response::json(Contingenterequerimiento::getRequerimientos($id, $tipo, $requerimientos));
+			
 		//mada a json los datos
-		return Response::json(Contingenterequerimiento::getRequerimientos($id, $tipo, $requerimientos));
+		// return Response::json(Contingenterequerimiento::getRequerimientos($id, $tipo, $requerimientos));
 	}
 
 	public function getVacio() {

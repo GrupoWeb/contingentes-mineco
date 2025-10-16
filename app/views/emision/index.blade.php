@@ -1,5 +1,6 @@
 @extends('template/template')
 
+
 @section('content')
 <link rel="stylesheet" type="text/css" href='/packages/csgt/components/css/bootstrap-fileinput.min.css'>
 <script src='/packages/csgt/components/js/bootstrap-fileinput.min.js'></script>
@@ -15,6 +16,7 @@
                     <select name="cmbContingentes" class="selectpicker form-control" id="cmbContingentes"
                         title="Seleccione uno">
                         @foreach($contingentes as $contingente)
+                           
                         @if($contingente->tratado <> $grupoActual)
                             @if($grupoActual <> 'primero')
                                 </optgroup>
@@ -24,7 +26,8 @@
                                     @endif
                                     <option value="{{ Crypt::encrypt($contingente->contingenteid) }}"
                                         data-tratado="{{Crypt::encrypt($contingente->tratadoid) }}"
-                                        data-pais="{{ $contingente->paisid ? $contingente->paisid : 0 }}">
+                                        data-pais="{{ $contingente->paisid ? $contingente->paisid : 0 }}"
+                                        data-contingente="{{ $contingente->productoid }}">
                                         {{ $contingente->producto }}</option>
                                     @endforeach
                                 </optgroup>
@@ -60,13 +63,14 @@
             <h4 class="titulo">Requerimientos</h4>
             A continuación se enumeran los requerimientos para todos los contingentes seleccionados.
             <hr>
+            <div class="requerimiento_frijol"></div>
             <div class="requerimientos"></div>
             <div class="row">
                 <div class="col-xs-4 pull-left">
                     <div id="mensajes"></div>
                 </div>
-                <div class="col-md-12 text-center">
-                    <input type="submit" class="btn btn-large btn-primary" value="Enviar solicitud de emisión">
+                <div class="col-md-12 text-center" id="botonera">
+                    <!-- <input type="submit" class="btn btn-large btn-primary desabilitar"  value="Enviar solicitud de emisión"> -->
                 </div>
             </div>
         </div>
@@ -74,7 +78,18 @@
     </div>
 </form>
 <script>
+
+    function cargarBoton(bandera){
+        if(bandera){
+            $('#botonera').html('<input type="submit" class="btn btn-large btn-primary"  value="Enviar solicitud de emisión" disabled>')
+        }else{
+            $('#botonera').html('<input type="submit" class="btn btn-large btn-primary"  value="Enviar solicitud de emisión">')
+        }
+        
+    }
+
     $(document).ready(function () {
+        
         $(function () {
             $('.two-digits').keyup(function () {
                 if ($(this).val().indexOf('.') != -1) {
@@ -91,6 +106,15 @@
 
         $("#cmbContingentes").change(function () {
             var pais = $('option:selected', this).attr('data-pais');
+            var contingente_id = $('option:selected', this).attr('data-contingente');
+            if(contingente_id == 16){
+                console.log("Test")
+                cargarBoton(true)
+                $('.requerimiento_frijol').html('<label for="txCantidad" class="control-label">Cantidad</label><input type="text" name="cantidad" class="form-control two-digits">');
+            }else{
+                cargarBoton(false)
+                $('.requerimiento_frijol').html('');
+            }
 
             $('#divPartidas').html('<p class="form-control-static"><i class="fa fa-lg fa-spinner fa-pulse"></i></p>');
             $('.disponible-block').html($('#divPartidas').html());

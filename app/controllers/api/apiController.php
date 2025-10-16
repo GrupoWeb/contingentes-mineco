@@ -176,6 +176,7 @@ class apiController extends BaseController {
 		
 		if(!Input::has('dace')) {
 			//$ret['error'] = 'Parámetros incompletos';
+			
 			return json_encode($ret);
 		}
 
@@ -191,6 +192,8 @@ class apiController extends BaseController {
 			//$ret['error'] = 'Datos invalidos';
 			return json_encode($ret);
 		}
+
+		
 
 		$corr = $json->correlativo;
 		$corr = substr($corr, 1);

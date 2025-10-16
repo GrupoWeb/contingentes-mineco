@@ -109,6 +109,8 @@ class Movimiento extends Eloquent
                 DB::raw('DATE_FORMAT(m.created_at, "%d/%m/%y") AS fecha'),
                 DB::raw('DATE_FORMAT(c.fechavencimiento, "%d/%m/%y") AS fechavencimiento'),
                 DB::raw('DATE_FORMAT(c.fechaliquidacion, "%d/%m/%y") AS fechaliquidacion'),
+                DB::raw('DATE_FORMAT(c.fecha, "%d/%m/%y") AS fecha_solicitud'),
+                DB::raw('DATE_FORMAT(c.sat_at, "%d/%m/%y") AS fechaImportacion'),
                 DB::raw('(SELECT SUM(m2.cantidad) FROM movimientos m2
 					LEFT JOIN authusuarios AS u2 ON m2.usuarioid=u2.usuarioid
 					LEFT JOIN empresas AS e2 ON e2.empresaid=u2.empresaid
@@ -225,5 +227,18 @@ class Movimiento extends Eloquent
             ->groupBy('nombre')
             ->orderBy('cuenta', 'desc')
             ->get();
+        // dd(DB::table('movimientos AS m')
+        //     ->select('razonsocial AS nombre', 'e.nit', 'e.domiciliofiscal', 'u.email',
+        //         'encargadoimportaciones AS encargado', 'e.telefono', 'e.propietario',
+        //         DB::raw('count(*) AS cuenta'))
+        //     ->leftJoin('authusuarios AS u', 'm.usuarioid', '=', 'u.usuarioid')
+        //     ->leftJoin('empresas AS e', 'u.empresaid', '=', 'e.empresaid')
+        //     ->whereNotNull('certificadoid')
+        //     ->where('tipomovimientoid', 2) //certificado
+        //     ->where('periodoid', $aPeriodoId)
+        //     ->whereBetween('m.created_at', [$aFechaIni, $aFechafin])
+        //     ->groupBy('nombre')
+        //     ->orderBy('cuenta', 'desc')
+        //     ->toSQL());
     }
 }

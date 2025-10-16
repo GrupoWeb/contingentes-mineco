@@ -8,6 +8,7 @@
   <meta name="author" content="Compuservice, S.A.">
 
   <title>Ministerio de Economía - Contingentes Arancelarios</title>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   {{ HTML::style('https://fonts.googleapis.com/css?family=Archivo+Narrow|Lato:400,700') }}
   {{ HTML::style('packages/csgt/components/css/bootstrap.min.css'); }}

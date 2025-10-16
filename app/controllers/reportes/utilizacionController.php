@@ -9,8 +9,7 @@ class utilizacionController extends BaseController
         return View::make('reportes.filtros')
             ->with('titulo', 'Utilización de contingentes')
             ->with('tratados', Tratado::getTratados())
-            ->with('filters', ['tratados', 'contingentes', 'empresas',
-                'fechaini', 'fechafin', 'formato'])
+            ->with('filters', ['tratados', 'contingentes', 'empresas','fechaini', 'fechafin', 'formato'])
             ->with('todos', ['empresas']);
     }
 
@@ -41,7 +40,21 @@ class utilizacionController extends BaseController
         $asignacion = Contingente::getTipoTratado($contingenteid);
 
         $utilizaciones = Movimiento::getUtilizaciones($contingenteid, $empresaid, ($fi != '' ? Components::fechaHumanoAMysql($fi, '/') : ''), ($ff != '' ? Components::fechaHumanoAMysql($ff, '/') : ''));
-        //dd(DB::getQueryLog());
+        
+        /*$queries = DB::getQueryLog();
+ 
+         $fullQueries = array_map(function($q) {
+             $sql = $q['query'];
+             foreach ($q['bindings'] as $binding) {
+                 // Limpia los valores (agrega comillas si es texto)
+                 $value = is_numeric($binding) ? $binding : "'".addslashes($binding)."'";
+                 $sql = preg_replace('/\?/', $value, $sql, 1);
+             }
+             return $sql;
+         }, $queries);
+         
+         return Response::json($fullQueries);*/
+
 
         $data = [];
         //asigna valores al areglo
@@ -50,6 +63,7 @@ class utilizacionController extends BaseController
             $data[$utilizacion->nit][$utilizacion->razonsocial]['volumentotal'] = $utilizacion->volumentotal;
 
             if ($utilizacion->tipomovimientoid == 2) {
+                  
                 if (isset($data[$utilizacion->nit][$utilizacion->razonsocial]['adjudicado'])) {
                     $data[$utilizacion->nit][$utilizacion->razonsocial]['adjudicado'] += $utilizacion->cantidad;
                 } else {
@@ -64,6 +78,8 @@ class utilizacionController extends BaseController
                     'certificado'      => $utilizacion->numerocertificado,
                     'fraccion'         => $fraccion[0],
                     'fechavencimiento' => $utilizacion->fechavencimiento,
+                    'fecha_solicitud'  => $utilizacion->fecha_solicitud,
+                    'fechaImportacion'  => $utilizacion->fechaImportacion,
                     'dua'              => $utilizacion->dua,
                     'real'             => $utilizacion->real,
                     'cif'              => $utilizacion->cif,
@@ -99,6 +115,8 @@ class utilizacionController extends BaseController
             PDF::writeHTML($html, true, false, true, false, '');
             PDF::Output('Utilizacion-Contingente.pdf');
         } else {
+        
+                
             //retorna datos a la vista
             return View::make('reportes.utilizaciones')
                 ->with('utilizaciones', $data)

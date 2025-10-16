@@ -33,6 +33,7 @@
 	<script src='/packages/csgt/components/js/dataTables.tableTools.min.js'></script>
 	<script src='/packages/csgt/components/js/bootstrapValidator.min.js'></script>
 	<script src='/js/selectize.min.js'></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	
 	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!--[if lt IE 9]>

@@ -253,6 +253,11 @@ class certificadosController extends Controller
 
     public function procesaranulacion()
     {
+
+        //Enviar a la SAT y obtener respuesta correcta
+        $sc = new SatController;
+
+
         //guarda en db
         $certificado          = Certificado::find(Crypt::decrypt(Input::get('certificado')));
         $certificado->anulado = 1;
@@ -281,6 +286,8 @@ class certificadosController extends Controller
         $movimiento->tipomovimientoid = DB::table('tiposmovimiento')->where('nombre', 'Certificado')->pluck('tipomovimientoid');
         $movimiento->created_by       = Auth::id();
         $movimiento->save();
+
+        $sc->anulacionCertificado($certificado->certificadoid);
 
         //mostrar mensaje
         Session::flash('message', 'Certificado anulado exitosamente');

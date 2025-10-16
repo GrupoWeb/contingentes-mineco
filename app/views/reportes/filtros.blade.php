@@ -5,6 +5,7 @@
   {{Form::open(array('class'=>'form-horizontal', 'target'=>'_blank', 'id'=>'frmFiltros'))}}
 	  <div class="panel panel-default">
 	    <br>
+		
 	    @if(in_array('tratados', $filters))
 	      <div class="col-sm-12">
 	        <div class="form-group">
@@ -178,6 +179,7 @@
 	    $('.selectize').selectize();
 
 	    @if(in_array('tratados', $filters))
+		
 	    	$('#tratadoid').change(function(){
 	    		@if(in_array('empresas', $filters))
 	    			$('#empresadiv').html('<p class="form-control-static"><i class="fa fa-lg fa-spinner fa-pulse"></i></p>');
@@ -187,6 +189,7 @@
 	    		@endif
 	    		@if(in_array('contingentes', $filters))
 	    			if($(this).find('option:selected').val() != '') {
+						console.log('seelect ', $(this).find('option:selected').val());
 		    			$('#contingentediv').html('<p class="form-control-static"><i class="fa fa-lg fa-spinner fa-pulse"></i></p>');
 		    			$.get('utilizacion/contingentes/' + $(this).find('option:selected').val() + '{{(in_array('contingentes', $todos)?'?todos=1':'')}}', function(data){
 		          	$('#contingentediv').html(data);

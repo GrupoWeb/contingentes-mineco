@@ -41,6 +41,8 @@
     <link rel="stylesheet" href="temp3/css/responsive.css">
     <link rel="stylesheet" href="temp3/css/animate.css">
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     {{ HTML::style('https://fonts.googleapis.com/css?family=Archivo+Narrow|Lato:400,700') }}
     {{ HTML::style('packages/csgt/components/css/bootstrap.min.css'); }}
     {{ HTML::style('css/home.css'); }}
@@ -104,7 +106,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <img src="/images/logo-menu.png" alt="">
+              <img src="/images/logo.png" alt="">
             </div>
 
             <div class="collapse navbar-collapse">

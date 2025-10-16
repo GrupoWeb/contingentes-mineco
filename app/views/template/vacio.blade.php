@@ -34,7 +34,7 @@
           <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href="/">
-          <img style="max-width:161px; margin-top: -7px;" src="/images/logo-menu.jpg" alt="Ministerio de economía - DACE">
+          <img style="max-width:161px; margin-top: -7px;" src="/images/Logo_Mineco_2024_Blanco.png?v=2024" alt="Ministerio de economía - DACE">
         </a>
       </div>
     </div>

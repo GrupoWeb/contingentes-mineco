@@ -22,10 +22,11 @@ class Tratado extends Eloquent
             ->orderBy('tipo')
             ->orderBy('nombrecorto');
         if ($aEmpresaId != 0) {
+            
             $query->whereRaw('tratadoid IN (SELECT DISTINCT(cc.tratadoid)
 					FROM empresacontingentes ec LEFT JOIN contingentes cc ON cc.contingenteid=ec.contingenteid WHERE ec.empresaid=' . (int) $aEmpresaId . ')');
         }
-
+        
         return $query->get();
     }
 

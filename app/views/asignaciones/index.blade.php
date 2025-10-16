@@ -88,7 +88,7 @@
             $('.requerimientos').html($('.disponible-block').html());
             $('.nuevos').remove();
             var valor = $(this).val();
-            console.log(valor);
+            // console.log(valor);
             $.get('/requerimientos/contingentes/' + $(this).val() + '/asignacion', function (data) {
                 $('.requerimientos').html('');
                 $.each(data, function (key, datos) {
@@ -110,10 +110,16 @@
             });
 
             $.get('/contingente/saldoasignacion/' + $(this).val() + '?tratado=' + $("#cmbContingentes option:selected").attr('data-tratado'), function (data) {
-                console.log(data);
+                // console.log(data);
                 if (data.codigoerror != 0) {
-                    alert("Error: " + data.error);
-                    window.location = '/';
+                    // Swal.fire({
+                    //     title: 'Error!',
+                    //     text: data.error,
+                    //     icon: 'error',
+                    //     confirmButtonText: 'Cool'
+                    //     })
+                    // alert("Error: " + data.error);
+                    // window.location = '/';
                 }
 
                 else {

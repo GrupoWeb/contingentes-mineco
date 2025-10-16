@@ -56,7 +56,8 @@ class solicitudesinscripcionController extends crudController {
 				$solicitud  = Solicitudinscripcion::find($solicitudid);
 				$rolempresa = Config::get('contingentes.rolempresa');
 
-				$findempresa = Empresa::where('nit', $solicitud->nit)->first();
+				$findempresa = Empresa::where(['nit' => $solicitud->nit,'razonsocial' => $solicitud->nombre])->first();
+				//$findempresa = Empresa::where('nit', $solicitud->nit)->first();
 				//condiciona $finempresa
 				if(!$findempresa) {
 					//asigna valores al areglo
@@ -79,6 +80,7 @@ class solicitudesinscripcionController extends crudController {
 				}
 				else
 					$empresaid = $findempresa->empresaid;
+					//$empresaid = $findempresa[0]->empresaid;
 
 				if($empresaid == 0) return 0;
 

@@ -8,6 +8,8 @@
   <meta name="author" content="Compuservice, S.A.">
 
   <title>Ministerio de Economía - Contingentes Arancelarios</title>
+  
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   {{ HTML::style('https://fonts.googleapis.com/css?family=Archivo+Narrow|Lato:400,700') }}
   {{ HTML::style('packages/csgt/components/css/bootstrap.min.css'); }}
@@ -34,7 +36,7 @@
           <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href="/">
-          <img style="max-width:161px; margin-top: -7px;" src="/images/logo-menu.jpg" alt="Ministerio de economía - DACE">
+          <img style="max-width:161px; margin-top: -7px;" src="/images/Logo_Mineco_2024_Blanco.png" alt="Ministerio de economía - DACE">
         </a>
       </div>
       <!-- Collect the nav links, forms, and other content for toggling -->
@@ -49,6 +51,9 @@
           <li>
             <a href="/manuales">Manuales</a>
           </li>
+          <li>
+            <a href="https://tramitesdeorigen.mineco.gob.gt/tramite/6">Denuncias y Quejas</a>
+         </li>
         </ul>
 
         <ul class="nav navbar-nav navbar-right">

@@ -16,6 +16,8 @@
 		
 		<title>DACE - MINECO</title>
 
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 		{{ HTML::style('packages/csgt/components/css/bootstrap.min.css'); }}
 		{{ HTML::style('packages/csgt/components/css/bootstrap-theme.min.css'); }}
 		{{ HTML::style('packages/csgt/components/css/core.css'); }}

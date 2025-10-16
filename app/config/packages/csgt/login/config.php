@@ -42,7 +42,7 @@ return array(
 
 	'logo' => array(
 		'habilitado' => true,
-		'path'       => 'images/logo.jpg',
+		'path'       => 'images/logo.png?v=2024',
 		'alt'        => 'Logo'
 	),
 

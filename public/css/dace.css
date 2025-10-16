@@ -145,3 +145,12 @@ h4.titulo {
 	margin-bottom:250px;
 	padding-bottom: 30px;
 }
+
+
+.logo_mineco {
+	width: 80% !important;
+}
+
+.logo_menu {
+	width: 20% !important;
+}

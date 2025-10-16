@@ -291,7 +291,8 @@
 
         $('.nuevos').remove();
 
-        $.get('/requerimientos/contingentes/' + $(this).val() + '/inscripcion', function(data){
+        // console.log("valor ", $(this).val());  
+ 	$.get('/requerimientos/contingentes/' + $(this).val() + '/inscripcion', function(data){
             $.each(data, function(key, datos){
               $.get('/requerimientos/contingentes/vacio?nombre=' + datos.nombre + '&id=' + datos.requerimientoid, function(template){
                 $('.requerimientos').append(template);

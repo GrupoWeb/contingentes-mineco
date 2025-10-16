@@ -25,6 +25,7 @@
 		<script type="text/javascript" src="temp1/js/tms_presets.js"></script>
 		<script type="text/javascript" src="temp1/js/jquery.easing.1.3.js"></script>
 		<script type="text/javascript" src="temp1/js/atooltip.jquery.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 		<!--[if lt IE 9]>
 		<script type="text/javascript" src="js/html5.js"></script>
 		<link rel="stylesheet" href="css/ie.css" type="text/css" media="all">
@@ -49,7 +50,7 @@
 					</nav>
 				</div>
 				<div class="col-md-3" align="right">
-					<img style="margin-top:40px; margin-left:43px" class="center-block" src="/images/logo-menu.png" alt="">
+					<img style="margin-top:40px; margin-left:43px" class="center-block" src="/images/logo.png" alt="">
 				</div>
 				<div>
 					<div class="col-md-6">

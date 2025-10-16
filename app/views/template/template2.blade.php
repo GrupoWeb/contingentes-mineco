@@ -25,6 +25,8 @@
 <!-- Theme skin -->
 <link href="temp2/skins/default.css" rel="stylesheet" />
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -44,7 +46,7 @@
             <span class="icon-bar"></span>
           </button>
           <div style="margin-top:20px">
-          	<img src="/images/logo-menu.png" alt="">
+          	<img src="/images/logo.png" alt="">
           </div>
         </div>
         <div class="navbar-collapse collapse ">

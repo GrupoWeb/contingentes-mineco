@@ -36,7 +36,7 @@
 <table width="500" cellpadding="3" style="font-size: 8px; line-height: 7px" border="1">
 	<thead>
 		<tr>
-			<th rowspan="2" colspan="3" style="text-align:center;"><img src="{{ public_path() }}/images/logo-menu.png"></th>
+			<th rowspan="2" colspan="3" style="text-align:center;"><img src="{{ public_path() }}/images/logo.png" class="logo_mineco"></th>
 			<th colspan="5" style="text-align:center;"><h4>{{$titulo}}</h4></th>
 		</tr>
 		<tr>
